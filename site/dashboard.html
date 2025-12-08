@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DC-Intel Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+:root{ --grid:#E5E7EB; --ink:#0b1220; --accent:#111827;}
+.btn{ @apply px-3 py-2 rounded-lg border text-sm font-medium hover:bg-gray-50 active:opacity-80;}
+.btn-primary{ @apply text-white; background:var(--accent); border-color:var(--accent);}
+.chip{ @apply inline-block rounded-full px-2.5 py-0.5 text-xs border bg-gray-100 border-gray-200;}
+.card{ @apply border rounded-xl bg-white p-3; border-color:var(--grid);}
+.table-head{ @apply bg-gray-100 text-gray-700;}
+.kbd{ @apply font-mono text-xs border rounded px-1 bg-gray-50;}
+pre.code{white-space:pre-wrap;word-break:break-word;max-height:32rem;overflow:auto;}
+</style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+<header class="sticky top-0 z-30 bg-white" style="box-shadow:0 1px 0 var(--grid);">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center gap-3">
+    <div class="font-mono text-xs px-2 py-1 rounded bg-black text-white">DC-Intel</div>
+    <h1 class="text-base font-semibold">Dashboard</h1>
+    <span id="health-badges" class="flex flex-wrap items-center gap-2 text-xs ml-2"></span>
+    <div class="ml-auto flex items-center gap-2">
+      <input id="apiKey" type="password" placeholder="x-api-key" class="px-2 py-1 text-sm border rounded w-56" />
+      <button id="saveKeyBtn" class="btn">Save</button>
+      <button id="reloadBtn" class="btn">Reload</button>
+    </div>
+  </div>
+</header>
+
+<!-- Filters -->
+<section class="bg-white border-b">
+  <div class="max-w-7xl mx-auto px-4 py-3 grid grid-cols-1 md:grid-cols-5 gap-3">
+    <div>
+      <div class="text-xs text-gray-500 mb-1">Market</div>
+      <select id="marketSelect" class="w-full border rounded px-2 py-2 text-sm"></select>
+    </div>
+    <div>
+      <div class="text-xs text-gray-500 mb-1">Operator (Ops Feed)</div>
+      <select id="operatorSelect" class="w-full border rounded px-2 py-2 text-sm"></select>
+    </div>
+    <div>
+      <div class="text-xs text-gray-500 mb-1">From</div>
+      <input id="fromDate" type="date" class="w-full border rounded px-2 py-2 text-sm" />
+    </div>
+    <div>
+      <div class="text-xs text-gray-500 mb-1">To</div>
+      <input id="toDate" type="date" class="w-full border rounded px-2 py-2 text-sm" />
+    </div>
+    <div>
+      <div class="text-xs text-gray-500 mb-1">Search (Rollups/News)</div>
+      <input id="queryBox" type="text" placeholder="q…" class="w-full border rounded px-2 py-2 text-sm" />
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-4 pb-3">
+    <button id="applyFilters" class="btn-primary btn">Apply Filters</button>
+    <button id="clearFilters" class="btn ml-2">Clear</button>
+  </div>
+</section>
+
+<!-- Page-wide Ask + Latest Updates -->
+<section class="max-w-7xl mx-auto px-4 pt-4 pb-4">
+  <div class="card">
+    <div class="text-sm font-medium mb-2">Ask a question (smart search across rollups/news/operators)</div>
+    <div class="flex gap-2">
+      <input id="askInput" type="text" placeholder="e.g., new DC activity in PHX last 90 days; Digital Realty in DFW; etc."
+             class="flex-1 border rounded px-3 py-2 text-sm"/>
+      <button id="askBtn" class="btn-primary btn">Ask</button>
+    </div>
+    <div class="text-xs text-gray-500 mt-2">
+      Combines Explicit/Likely/Infra rollups + News + Operator posts and returns a unified list with links.
+    </div>
+    <div id="askResults" class="mt-3 space-y-2 text-sm"></div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
+    <div class="card">
+      <div class="text-sm font-medium mb-2 flex items-center justify-between">
+        <span>News (10 newest)</span>
+        <a href="#" id="moreNews" class="underline text-sm">Open News tab</a>
+      </div>
+      <div id="topNews" class="space-y-2 text-sm"></div>
+    </div>
+    <div class="card">
+      <div class="text-sm font-medium mb-2 flex items-center justify-between">
+        <span>Operator Feed (10 newest)</span>
+        <a href="#" id="moreOps" class="underline text-sm">Open Operator tab</a>
+      </div>
+      <div id="topOps" class="space-y-2 text-sm"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Tabs -->
+<section class="max-w-7xl mx-auto px-4 pt-2">
+  <div class="flex gap-2 text-sm mb-4">
+    <button data-tab="rollups" class="tab btn btn-primary">Rollups</button>
+    <button data-tab="news" class="tab btn">News</button>
+    <button data-tab="ops" class="tab btn">Operator Feed</button>
+    <button data-tab="sites" class="tab btn">Sites (Known DCs)</button>
+    <button data-tab="knowledge" class="tab btn">Knowledge</button>
+  </div>
+</section>
+
+<!-- ROLLUPS -->
+<section id="panel-rollups" class="max-w-7xl mx-auto px-4 pb-6">
+  <div class="mb-2 flex flex-wrap gap-2">
+    <button class="btn rollchip btn-primary" data-kind="explicit">Explicit</button>
+    <button class="btn rollchip" data-kind="likely">Likely</button>
+    <button class="btn rollchip" data-kind="infra">Infra</button>
+  </div>
+  <div class="overflow-auto border rounded-xl bg-white">
+    <table class="min-w-full text-sm">
+      <thead class="table-head">
+        <tr>
+          <th class="px-3 py-2 text-left">State</th>
+          <th class="px-3 py-2 text-left">City</th>
+          <th class="px-3 py-2 text-left">Address</th>
+          <th class="px-3 py-2 text-left">Permits</th>
+          <th class="px-3 py-2 text-left">Last Seen</th>
+          <th class="px-3 py-2 text-left">Latest Desc</th>
+        </tr>
+      </thead>
+      <tbody id="rollupRows" class="divide-y"></tbody>
+    </table>
+  </div>
+  <div class="flex items-start justify-between mt-3">
+    <div>
+      <div id="rollupMeta" class="text-xs text-gray-600"></div>
+      <div id="rollupInfo" class="text-xs text-gray-500 mt-1"></div>
+    </div>
+    <div class="flex gap-2">
+      <button id="rollupPrev" class="btn" disabled>Prev</button>
+      <button id="rollupNext" class="btn">Next</button>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section id="panel-news" class="max-w-7xl mx-auto px-4 pb-6 hidden">
+  <div id="newsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+  <div class="flex items-center justify-between mt-3">
+    <div id="newsMeta" class="text-xs text-gray-600"></div>
+    <div class="flex gap-2">
+      <button id="newsPrev" class="btn" disabled>Prev</button>
+      <button id="newsNext" class="btn">Next</button>
+    </div>
+  </div>
+</section>
+
+<!-- OPERATOR FEED -->
+<section id="panel-ops" class="max-w-7xl mx-auto px-4 pb-6 hidden">
+  <div id="opsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+  <div class="flex items-center justify-between mt-3">
+    <div id="opsMeta" class="text-xs text-gray-600"></div>
+    <div class="flex gap-2">
+      <button id="opsPrev" class="btn" disabled>Prev</button>
+      <button id="opsNext" class="btn">Next</button>
+    </div>
+  </div>
+</section>
+
+<!-- SITES -->
+<section id="panel-sites" class="max-w-7xl mx-auto px-4 pb-8 hidden">
+  <div id="sitesGrid" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+  <div class="flex items-center justify-between mt-3">
+    <div id="sitesMeta" class="text-xs text-gray-600"></div>
+    <div class="flex gap-2">
+      <button id="sitesPrev" class="btn" disabled>Prev</button>
+      <button id="sitesNext" class="btn">Next</button>
+    </div>
+  </div>
+</section>
+
+<!-- KNOWLEDGE -->
+<section id="panel-knowledge" class="max-w-7xl mx-auto px-4 pb-8 hidden">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+    <!-- Glossary -->
+    <div class="card">
+      <div class="text-sm font-medium mb-2">Glossary</div>
+      <div class="flex gap-2 mb-2">
+        <input id="glossaryQ" type="text" placeholder="Search terms (e.g., UPS, Tier III, MMR)…" class="flex-1 border rounded px-3 py-2 text-sm"/>
+        <button id="glossaryBtn" class="btn">Search</button>
+      </div>
+      <div class="overflow-auto border rounded">
+        <table class="min-w-full text-sm">
+          <thead class="table-head">
+            <tr>
+              <th class="px-3 py-2 text-left w-48">Term</th>
+              <th class="px-3 py-2 text-left">Definition</th>
+              <th class="px-3 py-2 text-left w-48">Aliases</th>
+            </tr>
+          </thead>
+          <tbody id="glossaryRows" class="divide-y"></tbody>
+        </table>
+      </div>
+      <div class="flex items-center justify-between mt-2">
+        <div id="glossaryMeta" class="text-xs text-gray-600"></div>
+        <div class="flex gap-2">
+          <button id="glossaryPrev" class="btn" disabled>Prev</button>
+          <button id="glossaryNext" class="btn">Next</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Handbook Preview + Quick Define -->
+    <div class="card">
+      <div class="text-sm font-medium mb-2">Handbook (preview) & Quick Define</div>
+      <div class="flex gap-2 mb-2">
+        <input id="defineTerm" type="text" placeholder='Try: "data center", "UPS"' class="flex-1 border rounded px-3 py-2 text-sm"/>
+        <button id="defineBtn" class="btn">Define</button>
+      </div>
+      <div id="defineResult" class="text-sm mb-3 text-gray-800"></div>
+      <pre id="handbookPreview" class="code text-xs border rounded p-2 bg-gray-50">Loading…</pre>
+      <div class="text-xs text-gray-500 mt-2">First 120k chars shown. Full text lives in <code>knowledge/dc_handbook.md</code>.</div>
+      <div class="mt-3">
+        <div class="flex gap-2 mb-2">
+          <input id="kbSearchQ" type="text" placeholder='Search handbook+glossary (e.g., "cooling")' class="flex-1 border rounded px-3 py-2 text-sm"/>
+          <button id="kbSearchBtn" class="btn">Search</button>
+        </div>
+        <div id="kbSearchResults" class="space-y-2 text-sm"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Taxonomy browser -->
+  <div class="card mt-3">
+    <div class="flex items-center justify-between mb-2">
+      <div class="text-sm font-medium">Taxonomy</div>
+      <div class="flex items-center gap-2">
+        <label class="text-xs text-gray-500">Sheet</label>
+        <select id="taxSheet" class="border rounded px-2 py-1 text-sm"></select>
+      </div>
+    </div>
+    <div class="overflow-auto border rounded">
+      <table class="min-w-full text-sm">
+        <thead id="taxHead" class="table-head"></thead>
+        <tbody id="taxRows" class="divide-y"></tbody>
+      </table>
+    </div>
+    <div class="flex items-center justify-between mt-2">
+      <div id="taxMeta" class="text-xs text-gray-600"></div>
+      <div class="flex gap-2">
+        <button id="taxPrev" class="btn" disabled>Prev</button>
+        <button id="taxNext" class="btn">Next</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="max-w-7xl mx-auto px-4 pb-8 text-xs text-gray-500">
+  <div class="flex flex-wrap gap-3">
+    <span>API: <code class="font-mono">http://127.0.0.1:8010</code></span>
+    <span>Tip: Press <span class="kbd">/</span> to focus search</span>
+  </div>
+</footer>
+
+<script>
+const API_BASE = "http://127.0.0.1:8010";
+const state = {
+  limit: 10,
+  rollups: { offset: 0, kind: "explicit" },
+  news: { offset: 0 },
+  ops: { offset: 0 },
+  sites: { offset: 0 },
+  markets: {},
+  operators: [],
+  glossary: { offset: 0, limit: 20, lastTotal: 0 },
+  tax: { sheet: "", offset: 0, limit: 20, sheets: [] },
+};
+
+function getKey(){ return localStorage.getItem('DCI_API_KEY') || ''; }
+function setKey(v){ if(v) localStorage.setItem('DCI_API_KEY', v); else localStorage.removeItem('DCI_API_KEY'); }
+async function api(path, opts = {}){
+  const headers = Object.assign({}, opts.headers || {});
+  const k = getKey(); if (k) headers['x-api-key'] = k;
+  const res = await fetch(`${API_BASE}${path}`, { ...opts, headers });
+  if (!res.ok) { const t = await res.text(); throw new Error(`${res.status} ${res.statusText} :: ${t}`); }
+  return res.json();
+}
+const esc = s => (s==null ? '' : String(s).replace(/[&<>"']/g, ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])));
+
+// tiny client de-dupe by URL to be extra safe
+function uniqueByUrl(items){
+  const seen = new Set(); const out=[];
+  for(const x of (items||[])){
+    const u = (x.url||'').replace(/([?&])(utm_|fbclid|gclid|mc_cid|mc_eid|igshid)=[^&]*/gi,'').replace(/[/?]$/,'');
+    if(!u){ out.push(x); continue; }
+    if(seen.has(u)) continue; seen.add(u); out.push(x);
+  }
+  return out;
+}
+
+const qs = (o)=>{ const s=Object.entries(o).filter(([,v])=>v!==undefined&&v!==null&&v!=='').map(([k,v])=>`${encodeURIComponent(k)}=${encodeURIComponent(String(v))}`).join('&'); return s?`?${s}`:''; };
+const el = id => document.getElementById(id);
+const qsObj = (obj)=>Object.fromEntries(Object.entries(obj).filter(([,v])=>v!==''&&v!=null));
+
+async function loadConfig(){
+  const cfg = await api('/config');
+  state.markets   = cfg.markets || {};
+  state.operators = cfg.operators || [];
+
+  const uniqueMarkets = Array.from(new Set(Object.values(state.markets))).sort();
+  el('marketSelect').innerHTML = '<option value="">All</option>' +
+    uniqueMarkets.map(v=>`<option>${v}</option>`).join('');
+
+  el('operatorSelect').innerHTML =
+    '<option value="">All</option>' +
+    state.operators.map(op=>`<option>${op}</option>`).join('');
+}
+
+async function loadHealthBadges(){
+  const h = await api('/health'); const b=[];
+  b.push(`<span class="chip">Sites: ${h.sites_loaded}</span>`);
+  b.push(`<span class="chip">News: ${h.news_loaded}</span>`);
+  b.push(`<span class="chip">OpsFeed: ${h.operators_feed_loaded}</span>`);
+  b.push(`<span class="chip">Rollup Rows: ${h.rollup_rows}</span>`);
+  if (h.freshness?.news_latest) b.push(`<span class="chip">News ⏱ ${h.freshness.news_latest}</span>`);
+  if (h.freshness?.operators_feed_latest) b.push(`<span class="chip">Ops ⏱ ${h.freshness.operators_feed_latest}</span>`);
+  if (h.freshness?.rollup_latest) b.push(`<span class="chip">Rollup ⏱ ${h.freshness.rollup_latest}</span>`);
+  el('health-badges').innerHTML = b.join('');
+}
+
+// Landing: newest 10 from both feeds
+async function fetchTop(){
+  const news = await api('/news?limit=20');
+  const ops  = await api('/operators_feed?limit=20');
+
+  const newsItems = uniqueByUrl(news.items);
+  el('topNews').innerHTML = (newsItems||[]).slice(0,10).map(n=>`
+    <div class="border rounded-lg p-2">
+      <div class="text-xs text-gray-500 mb-1 flex gap-2 flex-wrap">
+        ${n.source?`<span class="chip">${esc(n.source)}</span>`:''}
+        ${n.published_at?`<span class="chip">${esc(n.published_at)}</span>`:''}
+        ${n.market?`<span class="chip">${esc(n.market)}</span>`:''}
+        ${n.city?`<span class="chip">${esc(n.city)}</span>`:''}
+      </div>
+      <a class="underline font-medium" href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.title || '(no title)')}</a>
+    </div>`).join('') || '<div class="text-xs text-gray-500">No news.</div>';
+
+  const opsItems = uniqueByUrl(ops.items);
+  el('topOps').innerHTML = (opsItems||[]).slice(0,10).map(n=>`
+    <div class="border rounded-lg p-2">
+      <div class="text-xs text-gray-500 mb-1 flex gap-2 flex-wrap">
+        ${n.provider?`<span class="chip">${esc(n.provider)}</span>`:''}
+        ${n.published_at?`<span class="chip">${esc(n.published_at)}</span>`:''}
+      </div>
+      <a class="underline font-medium" href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.title || '(no title)')}</a>
+    </div>`).join('') || '<div class="text-xs text-gray-500">No operator items.</div>';
+
+  el('moreNews').onclick = e=>{e.preventDefault(); showTab('news'); fetchNews();};
+  el('moreOps').onclick  = e=>{e.preventDefault(); showTab('ops');  fetchOps(); };
+}
+
+// Ask (aggregate)
+async function doAsk(){
+  const q = el('askInput').value.trim(); if(!q){ el('askResults').innerHTML=''; return; }
+  const from = el('fromDate').value, to = el('toDate').value;
+  const [r1, r2, r3] = await Promise.allSettled([
+    api('/rollups/addresses' + qs({ q, from, to, limit: 10, kind: state.rollups.kind })),
+    api('/news' + qs({ q, from, to, limit: 10 })),
+    api('/operators_feed' + qs({ limit: 10 }))
+  ]);
+  const blocks = [];
+  if (r1.status==='fulfilled' && (r1.value.items||[]).length){
+    blocks.push(`<div class="text-xs text-gray-500 mb-1">Addresses</div>` +
+      r1.value.items.map(x=>`<div class="border rounded p-2 mb-2"><div class="text-xs text-gray-500">${esc(x.state)} · ${esc(x.city)} · ${esc(x.last_seen_applied_date||'')}</div><div class="font-medium">${esc(x.address_raw)}</div><div class="text-xs mt-1">${esc(x.latest_description||'')}</div></div>`).join(''));
+  }
+  if (r2.status==='fulfilled' && (r2.value.items||[]).length){
+    const dedup = uniqueByUrl(r2.value.items);
+    blocks.push(`<div class="text-xs text-gray-500 mb-1">News</div>` +
+      dedup.map(n=>`<div class="border rounded p-2 mb-2"><div class="text-xs text-gray-500">${esc(n.source)} · ${esc(n.published_at||'')}</div><a class="underline font-medium" href="${esc(n.url)}" target="_blank">${esc(n.title||'(no title)')}</a></div>`).join(''));
+  }
+  if (r3.status==='fulfilled' && (r3.value.items||[]).length){
+    const dedup = uniqueByUrl(r3.value.items);
+    blocks.push(`<div class="text-xs text-gray-500 mb-1">Operator Feed (latest)</div>` +
+      dedup.map(n=>`<div class="border rounded p-2 mb-2"><div class="text-xs text-gray-500">${esc(n.provider)} · ${esc(n.published_at||'')}</div><a class="underline font-medium" href="${esc(n.url)}" target="_blank">${esc(n.title||'(no title)')}</a></div>`).join(''));
+  }
+  el('askResults').innerHTML = blocks.join('') || '<div class="text-xs text-gray-500">No matches yet.</div>';
+}
+
+// Rollups
+async function fetchRollups(){
+  const q = el('queryBox').value.trim();
+  const from = el('fromDate').value, to = el('toDate').value;
+  const params = qsObj({ kind: state.rollups.kind, q, from, to, limit: state.limit, offset: state.rollups.offset });
+  const [data, schema] = await Promise.all([
+    api('/rollups/addresses' + qs(params)),
+    api('/rollups/schema')
+  ]);
+  const tbody = el('rollupRows'); tbody.innerHTML = '';
+  (data.items||[]).forEach(r=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="px-3 py-2">${esc(r.state)}</td>
+      <td class="px-3 py-2">${esc(r.city)}</td>
+      <td class="px-3 py-2">${esc(r.address_raw)}</td>
+      <td class="px-3 py-2">${esc(r.permits_count)}</td>
+      <td class="px-3 py-2">${esc(r.last_seen_applied_date)}</td>
+      <td class="px-3 py-2">${esc(r.latest_description)}</td>`;
+    tbody.appendChild(tr);
+  });
+  el('rollupMeta').textContent = `${data.total||0} total — showing ${data.items?.length||0} from offset ${data.offset||0}`;
+  el('rollupInfo').textContent = schema.file ? `File: ${schema.file} — ${schema.rows} rows` : '';
+  el('rollupPrev').disabled = (data.offset||0) <= 0;
+  el('rollupNext').disabled = !(data.next_offset >= 0);
+  el('rollupPrev').onclick = ()=>{ state.rollups.offset = Math.max(0, (data.offset||0)-state.limit); fetchRollups(); };
+  el('rollupNext').onclick = ()=>{ if(data.next_offset!=null){ state.rollups.offset = data.next_offset; fetchRollups(); } };
+}
+document.querySelectorAll('.rollchip').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    state.rollups.kind = btn.getAttribute('data-kind') || 'explicit';
+    state.rollups.offset = 0;
+    document.querySelectorAll('.rollchip').forEach(b=>b.classList.remove('btn-primary'));
+    btn.classList.add('btn-primary');
+    fetchRollups();
+  });
+});
+
+async function fetchNews(){
+  const q = el('queryBox').value.trim();
+  const from = el('fromDate').value, to = el('toDate').value;
+  const data = await api('/news' + qs(qsObj({ q, from, to, limit: state.limit, offset: state.news.offset })));
+  const items = uniqueByUrl(data.items);
+  const grid = el('newsGrid'); grid.innerHTML = '';
+  (items||[]).forEach(n=>{
+    const card = document.createElement('article');
+    card.className='card';
+    card.innerHTML = `
+      <div class="text-xs text-gray-500 mb-1 flex gap-2 flex-wrap">
+        ${n.source?`<span class="chip">${esc(n.source)}</span>`:''}
+        ${n.published_at?`<span class="chip">${esc(n.published_at)}</span>`:''}
+        ${n.market?`<span class="chip">${esc(n.market)}</span>`:''}
+        ${n.city?`<span class="chip">${esc(n.city)}</span>`:''}
+      </div>
+      <a class="font-medium underline" href="${esc(n.url)}" target="_blank">${esc(n.title||'(no title)')}</a>
+      ${n.summary?`<p class="mt-2 text-sm text-gray-700">${esc(n.summary)}</p>`:''}
+    `;
+    grid.appendChild(card);
+  });
+  el('newsMeta').textContent = `${data.total||0} total — showing ${items?.length||0} from offset ${data.offset||0}`;
+  el('newsPrev').disabled = (data.offset||0) <= 0;
+  el('newsNext').disabled = !(data.next_offset >= 0);
+  el('newsPrev').onclick = ()=>{ state.news.offset = Math.max(0,(data.offset||0)-state.limit); fetchNews(); };
+  el('newsNext').onclick = ()=>{ if(data.next_offset!=null){ state.news.offset = data.next_offset; fetchNews(); } };
+}
+
+async function fetchOps(){
+  const provider = el('operatorSelect').value.trim();
+  const data = await api('/operators_feed' + qs(qsObj({ provider, limit: state.limit, offset: state.ops.offset })));
+  const items = uniqueByUrl(data.items);
+  const grid = el('opsGrid'); grid.innerHTML = '';
+  (items||[]).forEach(n=>{
+    const card = document.createElement('article');
+    card.className='card';
+    card.innerHTML = `
+      <div class="text-xs text-gray-500 mb-1 flex gap-2 flex-wrap">
+        ${n.provider?`<span class="chip">${esc(n.provider)}</span>`:''}
+        ${n.published_at?`<span class="chip">${esc(n.published_at)}</span>`:''}
+      </div>
+      <a class="font-medium underline" href="${esc(n.url)}" target="_blank">${esc(n.title||'(no title)')}</a>
+      ${n.summary?`<p class="mt-2 text-sm text-gray-700">${esc(n.summary)}</p>`:''}
+    `;
+    grid.appendChild(card);
+  });
+  el('opsMeta').textContent = `${data.total||0} total — showing ${items?.length||0} from offset ${data.offset||0}`;
+  el('opsPrev').disabled = (data.offset||0) <= 0;
+  el('opsNext').disabled = !(data.next_offset >= 0);
+  el('opsPrev').onclick = ()=>{ state.ops.offset = Math.max(0,(data.offset||0)-state.limit); fetchOps(); };
+  el('opsNext').onclick = ()=>{ if(data.next_offset!=null){ state.ops.offset = data.next_offset; fetchOps(); } };
+}
+
+async function fetchSites(){
+  const provider = el('operatorSelect').value.trim();
+  const data = await api('/sites' + qs(qsObj({ provider, limit: state.limit, offset: state.sites.offset })));
+  const grid = el('sitesGrid'); grid.innerHTML = '';
+  (data.items||[]).forEach(s=>{
+    const card = document.createElement('article');
+    card.className='card';
+    card.innerHTML = `
+      <div class="text-xs text-gray-500 mb-1 flex gap-2 flex-wrap">
+        ${s.provider?`<span class="chip">${esc(s.provider)}</span>`:''}
+        ${s.city_guess?`<span class="chip">${esc(s.city_guess)}</span>`:''}
+        ${s.state_guess?`<span class="chip">${esc(s.state_guess)}</span>`:''}
+        ${s.__source_file?`<span class="chip">src:${esc(s.__source_file)}</span>`:''}
+      </div>
+      ${s.url?`<a class="font-medium underline" href="${esc(s.url)}" target="_blank">${esc(s.title||'(site)')}</a>`:`<div class="font-medium">${esc(s.title||'(site)')}</div>`}
+      ${s.address_line_raw?`<p class="mt-2 text-sm text-gray-700">${esc(s.address_line_raw)}</p>`:''}
+    `;
+    grid.appendChild(card);
+  });
+  el('sitesMeta').textContent = `${data.total||0} total — showing ${data.items?.length||0} from offset ${data.offset||0}`;
+  el('sitesPrev').disabled = (data.offset||0) <= 0;
+  el('sitesNext').disabled = !(data.next_offset >= 0);
+  el('sitesPrev').onclick = ()=>{ state.sites.offset = Math.max(0,(data.offset||0)-state.limit); fetchSites(); };
+  el('sitesNext').onclick = ()=>{ if(data.next_offset!=null){ state.sites.offset = data.next_offset; fetchSites(); } };
+}
+
+// ---- Knowledge ----
+async function loadHandbookPreview(){
+  try{
+    const hb = await api('/knowledge/handbook');
+    el('handbookPreview').textContent = hb.preview || '(empty)';
+  }catch(e){
+    el('handbookPreview').textContent = 'Failed to load handbook preview: ' + e.message;
+  }
+}
+
+async function loadTaxSheets(){
+  try{
+    const res = await api('/knowledge/taxonomy');
+    state.tax.sheets = res.sheets || [];
+    const sel = el('taxSheet');
+    sel.innerHTML = state.tax.sheets.map(s=>`<option>${esc(s)}</option>`).join('');
+    state.tax.sheet = state.tax.sheets[0] || '';
+  }catch(e){
+    state.tax.sheets = []; state.tax.sheet = '';
+    el('taxSheet').innerHTML = '';
+  }
+}
+
+async function fetchTaxonomy(){
+  if (!state.tax.sheet){ el('taxHead').innerHTML=''; el('taxRows').innerHTML=''; el('taxMeta').textContent=''; return; }
+  const res = await api('/knowledge/taxonomy' + qs({ sheet: state.tax.sheet, limit: state.tax.limit, offset: state.tax.offset }));
+  const items = res.items || [];
+  const cols = items.length ? Object.keys(items[0]) : [];
+  el('taxHead').innerHTML = cols.length ? `<tr>${cols.map(c=>`<th class="px-3 py-2 text-left">${esc(c)}</th>`).join('')}</tr>` : '';
+  const tbody = el('taxRows'); tbody.innerHTML = '';
+  items.forEach(row=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = cols.map(c=>`<td class="px-3 py-2">${esc(row[c])}</td>`).join('');
+    tbody.appendChild(tr);
+  });
+  el('taxMeta').textContent = `${res.total||0} total — showing ${items.length} from offset ${res.offset||0} (sheet=${esc(state.tax.sheet)})`;
+  el('taxPrev').disabled = (res.offset||0) <= 0;
+  el('taxNext').disabled = !(res.next_offset >= 0);
+  el('taxPrev').onclick = ()=>{ state.tax.offset = Math.max(0, (res.offset||0)-state.tax.limit); fetchTaxonomy(); };
+  el('taxNext').onclick = ()=>{ if(res.next_offset!=null){ state.tax.offset = res.next_offset; fetchTaxonomy(); } };
+}
+
+async function fetchGlossary(){
+  const q = el('glossaryQ').value.trim();
+  const res = await api('/knowledge/glossary' + qs({ q, limit: state.glossary.limit, offset: state.glossary.offset }));
+  const tbody = el('glossaryRows'); tbody.innerHTML = '';
+  (res.items||[]).forEach(r=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="px-3 py-2 align-top w-48">${esc(r.term)}</td>
+      <td class="px-3 py-2 align-top">${esc(r.definition)}</td>
+      <td class="px-3 py-2 align-top w-48">${esc(r.aliases)}</td>`;
+    tbody.appendChild(tr);
+  });
+  el('glossaryMeta').textContent = `${res.total||0} total — showing ${res.items?.length||0} from offset ${res.offset||0}`;
+  el('glossaryPrev').disabled = (res.offset||0) <= 0;
+  el('glossaryNext').disabled = !(res.next_offset >= 0);
+  el('glossaryPrev').onclick = ()=>{ state.glossary.offset = Math.max(0, (res.offset||0)-state.glossary.limit); fetchGlossary(); };
+  el('glossaryNext').onclick = ()=>{ if(res.next_offset!=null){ state.glossary.offset = res.next_offset; fetchGlossary(); } };
+}
+
+async function doDefine(){
+  const term = el('defineTerm').value.trim();
+  if(!term){ el('defineResult').textContent = ''; return; }
+  try{
+    const res = await api('/knowledge/define' + qs({ term }));
+    if(res.ok){
+      const it = res.item;
+      el('defineResult').innerHTML = `<div><span class="chip">${esc(res.match)}</span> <span class="font-medium">${esc(it.term)}</span></div><div class="mt-1">${esc(it.definition||'')}</div><div class="text-xs text-gray-500 mt-1">${it.aliases?`aliases: ${esc(it.aliases)}`:''}</div>`;
+    }else{
+      el('defineResult').textContent = 'No match.';
+    }
+  }catch(e){
+    el('defineResult').textContent = 'Define failed: ' + e.message;
+  }
+}
+
+async function doKbSearch(){
+  const q = el('kbSearchQ').value.trim();
+  if(!q){ el('kbSearchResults').innerHTML=''; return; }
+  try{
+    const res = await api('/knowledge/search' + qs({ q, limit: 5 }));
+    const out = [];
+    if(res.results?.glossary?.length){
+      out.push(`<div class="text-xs text-gray-500 mb-1">Glossary</div>` +
+        res.results.glossary.map(g=>`<div class="border rounded p-2 mb-2"><div class="font-medium">${esc(g.term)}</div><div>${esc(g.definition)}</div></div>`).join(''));
+    }
+    if(res.results?.handbook?.length){
+      out.push(`<div class="text-xs text-gray-500 mb-1">Handbook</div>` +
+        res.results.handbook.map(h=>`<div class="border rounded p-2 mb-2 text-xs">${esc(h.snippet)}</div>`).join(''));
+    }
+    el('kbSearchResults').innerHTML = out.join('') || '<div class="text-xs text-gray-500">No hits.</div>';
+  }catch(e){
+    el('kbSearchResults').textContent = 'Search failed: ' + e.message;
+  }
+}
+
+// Tabs & events
+function showTab(name){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('btn-primary'));
+  document.querySelector(`.tab[data-tab="${name}"]`).classList.add('btn-primary');
+  ['rollups','news','ops','sites','knowledge'].forEach(p=>document.getElementById(`panel-${p}`).classList.add('hidden'));
+  document.getElementById(`panel-${name}`).classList.remove('hidden');
+}
+document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click', ()=>{ showTab(btn.getAttribute('data-tab')); refreshActive(); }));
+document.getElementById('applyFilters').onclick = ()=>{ state.rollups.offset=state.news.offset=state.ops.offset=state.sites.offset=0; refreshActive(); };
+document.getElementById('clearFilters').onclick = ()=>{
+  el('marketSelect').value = '';
+  el('operatorSelect').value = '';
+  el('fromDate').value = '';
+  el('toDate').value = '';
+  el('queryBox').value = '';
+  state.rollups.offset=state.news.offset=state.ops.offset=state.sites.offset=0;
+  refreshActive();
+};
+document.getElementById('askBtn').onclick = doAsk;
+document.addEventListener('keydown', e=>{ if(e.key==='/'){ e.preventDefault(); el('queryBox').focus(); }});
+document.getElementById('saveKeyBtn').onclick = ()=>{ const v = el('apiKey').value; setKey(v); loadHealthBadges(); };
+document.getElementById('reloadBtn').onclick = async ()=>{ try{ await api('/reload', {method:'POST'}); await loadHealthBadges(); await fetchTop(); await refreshActive(); }catch(e){ alert('Reload failed: ' + e.message); }};
+
+// Knowledge events
+document.getElementById('glossaryBtn').onclick = ()=>{ state.glossary.offset = 0; fetchGlossary(); };
+document.getElementById('taxSheet').addEventListener('change', ()=>{
+  state.tax.sheet = el('taxSheet').value;
+  state.tax.offset = 0;
+  fetchTaxonomy();
+});
+document.getElementById('defineBtn').onclick = doDefine;
+document.getElementById('kbSearchBtn').onclick = doKbSearch;
+
+async function refreshActive(){
+  const active = document.querySelector('.tab.btn-primary').getAttribute('data-tab');
+  if (active==='rollups') await fetchRollups();
+  if (active==='news') await fetchNews();
+  if (active==='ops') await fetchOps();
+  if (active==='sites') await fetchSites();
+  if (active==='knowledge') {
+    await loadHandbookPreview();
+    if (!state.tax.sheets.length){ await loadTaxSheets(); }
+    if (state.tax.sheets.length && !state.tax.sheet){
+      state.tax.sheet = state.tax.sheets[0];
+    }
+    await fetchTaxonomy();
+    await fetchGlossary();
+  }
+}
+
+(async function boot(){
+  const k = getKey(); if (k) el('apiKey').value = k;
+  await loadConfig();
+  await loadHealthBadges();
+  await fetchTop();
+  showTab('rollups');            // default tab
+  state.rollups.kind = 'explicit';
+  await refreshActive();
+})();
+</script>
+</body>
+</html>

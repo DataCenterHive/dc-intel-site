@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Due Diligence: Asset Assessment -DataCenter Hive</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f5f5dc;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: #000;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 50px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 4px double #000;
+            padding-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .tagline {
+            font-size: 18px;
+            font-style: italic;
+            color: #666;
+        }
+
+        .enterprise-badge {
+            display: inline-block;
+            background: #d97706;
+            color: #fff;
+            padding: 8px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 15px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 20px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style: disc;
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        ul li {
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+
+        .highlight-box {
+            background: #fffef0;
+            border: 2px solid #000;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .highlight-box h3 {
+            margin-top: 0;
+        }
+
+        .enterprise-tier-box {
+            background: #fffbeb;
+            border: 3px solid #d97706;
+            padding: 40px;
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .enterprise-tier-box h2 {
+            color: #d97706;
+            border-bottom-color: #d97706;
+        }
+
+        .tier-price {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #d97706;
+        }
+
+        .tier-price small {
+            font-size: 18px;
+            color: #666;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            border: 2px solid #d97706;
+            padding: 20px;
+            background: #fff;
+        }
+
+        .feature-card h4 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #d97706;
+        }
+
+        .success-fee-box {
+            background: #e6f7ff;
+            border-left: 5px solid #1890ff;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .cta-section {
+            background: #000;
+            color: #fff;
+            padding: 40px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .cta-section h2 {
+            color: #fff;
+            border-bottom: 2px solid #fff;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+        }
+
+        .cta-section p {
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+
+        .cta-btn {
+            background: #fff;
+            color: #000;
+            padding: 15px 40px;
+            border: 2px solid #fff;
+            font-family: Georgia, serif;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            margin: 10px;
+        }
+
+        .cta-btn:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #000;
+            text-decoration: underline;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            color: #666;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .stat {
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Due Diligence: Asset Assessment</h1>
+            <p class="tagline">Data-Driven Advisory for Data Center Investment Decisions</p>
+            <div class="enterprise-badge">Enterprise Tier Exclusive</div>
+        </div>
+
+        <div class="section">
+            <h2>Overview</h2>
+            <p>
+                Our Due Diligence advisory service provides comprehensive market positioning analysis and competitive intelligence for data center asset evaluation. Available exclusively to Enterprise tier subscribers, this service combines proprietary permit data with strategic consultation to support acquisition decisions, portfolio assessments, and market entry strategies.
+            </p>
+            <p>
+                Unlike traditional due diligence providers who focus primarily on technical infrastructure inspection, we leverage our real-time construction activity database to reveal competitive dynamics, market saturation risks, and growth potential that standard assessments miss.
+            </p>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number">$12B+</div>
+                <div class="stat-label">Assets Assessed</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">150+</div>
+                <div class="stat-label">Facilities Reviewed</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">Client Satisfaction</div>
+            </div>
+        </div>
+
+        <div class="enterprise-tier-box">
+            <h2>Enterprise Tier: $2,499/month</h2>
+            <p style="font-size: 16px; margin-bottom: 30px;">
+                Due Diligence services are available exclusively to Enterprise tier subscribers, providing unlimited access to advisory support for asset evaluation and strategic decision-making.
+            </p>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Unlimited Consultation</h4>
+                    <p>2 calls per month (24 hours/year) of strategic advisory time, plus ad-hoc support for urgent deal evaluation</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Market Positioning Analysis</h4>
+                    <p>Detailed assessment of competitive landscape, operator presence, and supply/demand dynamics in target market</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Competitive Intelligence</h4>
+                    <p>Real-time tracking of nearby projects, expansion plans, and capacity additions based on permit activity</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Strategic Recommendations</h4>
+                    <p>Data-driven insights on acquisition pricing, growth potential, and competitive positioning</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Negotiation Support</h4>
+                    <p>Direct advisor involvement in deal discussions, providing data-backed leverage points</p>
+                </div>
+                <div class="feature-card">
+                    <h4>API Data Access</h4>
+                    <p>Real-time programmatic access to 2.5M+ permits, 2,436 facilities, and 654 active projects</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="success-fee-box">
+            <h3>Success Fee Alignment</h3>
+            <p>
+                For completed transactions, we charge a success fee of <strong>5-10% of first-year contract value</strong> (or acquisition purchase price). This aligns our incentives with yours—we succeed when you succeed. Monthly subscription fees are credited against success fees.
+            </p>
+            <p>
+                <strong>Example:</strong> $10M acquisition → $500K-1M success fee. Your $2,499/month subscription ($29,988/year) is fully credited, reducing the success fee to $470K-970K.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>Our Advisory Process</h2>
+
+            <h3>1. Market Positioning Assessment</h3>
+            <ul>
+                <li><strong>Competitive Landscape Mapping:</strong> Identify all existing facilities and active projects within 10-mile radius of target asset</li>
+                <li><strong>Operator Presence Analysis:</strong> Track major operators' expansion strategies and market share in the region</li>
+                <li><strong>Supply/Demand Modeling:</strong> Estimate current capacity, utilization rates, and absorption forecasts based on permit data</li>
+                <li><strong>Market Saturation Risk:</strong> Quantify competitive intensity and identify potential oversupply concerns</li>
+            </ul>
+
+            <h3>2. Growth Potential Evaluation</h3>
+            <ul>
+                <li><strong>Historical Permit Trends:</strong> 5+ years of construction activity data revealing market maturity and growth cycles</li>
+                <li><strong>Infrastructure Capacity:</strong> Utility upgrade patterns, substation additions, and fiber deployments indicating expansion runway</li>
+                <li><strong>Expansion Feasibility:</strong> Land availability, zoning constraints, and utility capacity for on-site growth</li>
+                <li><strong>Market Entry Timing:</strong> Optimal windows for capacity additions based on competitive dynamics</li>
+            </ul>
+
+            <h3>3. Competitive Intelligence</h3>
+            <ul>
+                <li><strong>Pipeline Projects:</strong> Real-time tracking of competitor expansion plans before public announcements</li>
+                <li><strong>Permitting Velocity:</strong> Speed from permit filing to certificate of occupancy indicates market momentum</li>
+                <li><strong>Valuation Benchmarking:</strong> Average project values and investment intensity compared to market norms</li>
+                <li><strong>Operator Strategies:</strong> Identify which operators are entering/exiting markets and why</li>
+            </ul>
+
+            <h3>4. Strategic Recommendations</h3>
+            <ul>
+                <li><strong>Acquisition Pricing Guidance:</strong> Data-driven valuation ranges based on market comparables and competitive positioning</li>
+                <li><strong>Risk Assessment:</strong> Market-specific risks (oversupply, competitive pressure, regulatory changes) with mitigation strategies</li>
+                <li><strong>Post-Acquisition Strategy:</strong> Recommended capacity additions, market positioning, and competitive responses</li>
+                <li><strong>Negotiation Leverage Points:</strong> Data-backed insights to support pricing discussions and deal terms</li>
+            </ul>
+        </div>
+
+        <div class="highlight-box">
+            <h3>What You Receive (Enterprise Tier)</h3>
+            <ul>
+                <li><strong>Market Positioning Report:</strong> Comprehensive analysis of competitive landscape within target market (30-50 pages)</li>
+                <li><strong>Competitive Intelligence Dashboard:</strong> Real-time tracking of nearby projects, operator movements, and permit activity</li>
+                <li><strong>Supply/Demand Analysis:</strong> Current capacity estimates, utilization rates, and absorption forecasts</li>
+                <li><strong>Growth Potential Assessment:</strong> Expansion feasibility, infrastructure capacity, and market entry timing recommendations</li>
+                <li><strong>Strategic Advisory Calls:</strong> 2 monthly calls (24/year) to discuss findings, answer questions, and support decision-making</li>
+                <li><strong>Negotiation Support:</strong> Direct involvement in deal discussions with data-backed recommendations</li>
+                <li><strong>Ongoing Market Updates:</strong> Real-time alerts on competitive activity and market changes throughout due diligence process</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Who We Serve</h2>
+            <ul>
+                <li><strong>Private Equity Firms:</strong> Pre-acquisition due diligence for platform and add-on investments, leveraging our proprietary permit data to assess competitive positioning and growth potential</li>
+                <li><strong>REITs & Institutional Investors:</strong> Portfolio assessments and market opportunity analysis to identify optimal expansion markets</li>
+                <li><strong>Strategic Acquirers:</strong> Competitive intelligence and market positioning analysis to support acquisition pricing and integration planning</li>
+                <li><strong>Hyperscale Operators:</strong> Market entry strategy and site selection advisory backed by real-time construction activity tracking</li>
+                <li><strong>Developers & Sponsors:</strong> Pre-sale preparation and buyer education using data-driven market validation</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Our Competitive Advantage</h2>
+            <p>
+                Standard due diligence focuses on infrastructure condition and financial performance. We add a critical layer that traditional providers miss: <strong>real-time competitive intelligence</strong>.
+            </p>
+            <ul>
+                <li><strong>Proprietary Data:</strong> 2.5M+ building permits across 34 U.S. markets, updated daily, revealing actual construction activity</li>
+                <li><strong>Early Warning System:</strong> See competitor projects 6-18 months before public announcements, based on permit filings</li>
+                <li><strong>True Capacity Tracking:</strong> Actual construction activity vs. press release claims—know real supply/demand dynamics</li>
+                <li><strong>Operator Intelligence:</strong> Track 90+ major operators' expansion strategies based on permit patterns, not marketing materials</li>
+                <li><strong>No Conflicts:</strong> We're advisors, not brokers or operators—our only interest is helping you make the best decision</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Typical Engagement Timeline</h2>
+            <p>
+                Due diligence advisory is available on-demand to Enterprise subscribers. Typical turnaround times:
+            </p>
+            <ul>
+                <li><strong>Initial Market Assessment:</strong> 2-3 business days for preliminary competitive landscape analysis</li>
+                <li><strong>Comprehensive Market Report:</strong> 7-10 business days for full market positioning and growth potential assessment</li>
+                <li><strong>Strategic Advisory Calls:</strong> Scheduled within 24-48 hours of request for urgent deal support</li>
+                <li><strong>Ongoing Updates:</strong> Real-time alerts on competitive activity throughout your due diligence period</li>
+            </ul>
+            <p>
+                As an Enterprise subscriber, you have unlimited access to these services—request as many market assessments and advisory calls as needed.
+            </p>
+        </div>
+
+        <div class="cta-section">
+            <h2>Ready to Get Started?</h2>
+            <p>
+                Due Diligence advisory is available exclusively to Enterprise tier subscribers.<br>
+                Enterprise starts at $2,499/month with success fees on completed transactions.
+            </p>
+            <a href="pricing.html" class="cta-btn">View Enterprise Tier Details</a>
+            <a href="#" class="cta-btn" onclick="alert('Contact form coming soon!\n\nFor now, email: duediligence@dc-intel.com\nPhone: (555) 123-4567'); return false;">Schedule Enterprise Consultation</a>
+        </div>
+
+        <a href="dashboard_v2.html" class="back-link">← Back to Dashboard</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard -DataCenter Hiveligence</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: #f8f9fa;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-name {
+            font-size: 14px;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .welcome-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .welcome-section h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .welcome-section p {
+            color: #7f8c8d;
+            font-size: 16px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .card h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .info-item {
+            padding: 10px 0;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #95a5a6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 16px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .account-type-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .account-type-individual {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .account-type-firm {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .quick-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #2c3e50;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .action-btn:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+            transform: translateX(5px);
+        }
+
+        .action-btn-icon {
+            font-size: 24px;
+            margin-right: 15px;
+        }
+
+        .action-btn-text {
+            flex: 1;
+        }
+
+        .action-btn-title {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+
+        .action-btn-desc {
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s;
+            display: block;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: #7f8c8d;
+            line-height: 1.5;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        .status-active {
+            background: #27ae60;
+        }
+
+        .status-inactive {
+            background: #e74c3c;
+        }
+
+        @media (max-width: 992px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .welcome-section h1 {
+                font-size: 24px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">DataCenter Hive</div>
+            <div class="user-menu">
+                <span class="user-name" id="userName">Loading...</span>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="welcome-section">
+            <h1 id="welcomeMessage">Welcome back!</h1>
+            <p>Access your data center intelligence dashboard and manage your account</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Account Information Card -->
+            <div class="card">
+                <h2>Account Information</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Full Name</div>
+                        <div class="info-value" id="fullName">-</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Email Address</div>
+                        <div class="info-value" id="email">-</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Company</div>
+                        <div class="info-value" id="company">-</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Job Title</div>
+                        <div class="info-value" id="jobTitle">-</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Account Type</div>
+                        <div class="info-value"><span id="accountType"></span></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Account Status</div>
+                        <div class="info-value">
+                            <span class="status-indicator status-active"></span>
+                            Active
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions Card -->
+            <div class="card">
+                <h2>Quick Actions</h2>
+                <div class="quick-actions">
+                    <a href="/dashboard_v2.html" class="action-btn">
+                        <div class="action-btn-icon">🗺️</div>
+                        <div class="action-btn-text">
+                            <div class="action-btn-title">View Map</div>
+                            <div class="action-btn-desc">Browse construction sites</div>
+                        </div>
+                    </a>
+                    <a href="/services/basic.html" class="action-btn">
+                        <div class="action-btn-icon">📊</div>
+                        <div class="action-btn-text">
+                            <div class="action-btn-title">Upgrade Plan</div>
+                            <div class="action-btn-desc">Explore premium features</div>
+                        </div>
+                    </a>
+                    <a href="#" onclick="alert('Profile settings coming soon!'); return false;" class="action-btn">
+                        <div class="action-btn-icon">⚙️</div>
+                        <div class="action-btn-text">
+                            <div class="action-btn-title">Account Settings</div>
+                            <div class="action-btn-desc">Update your preferences</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Platform Features -->
+        <h2 style="margin-bottom: 20px; color: #2c3e50;">Explore Features</h2>
+        <div class="features-grid">
+            <a href="/dashboard_v2.html" class="feature-card">
+                <div class="feature-icon">🏗️</div>
+                <h3>Interactive Map</h3>
+                <p>Explore 776+ data center construction sites across 16 U.S. cities with our interactive map viewer.</p>
+            </a>
+
+            <a href="/services/api-access.html" class="feature-card">
+                <div class="feature-icon">🔌</div>
+                <h3>API Access</h3>
+                <p>Integrate our data into your applications with RESTful API access and real-time updates.</p>
+            </a>
+
+            <a href="/services/reports.html" class="feature-card">
+                <div class="feature-icon">📈</div>
+                <h3>Market Reports</h3>
+                <p>Access comprehensive market intelligence reports and analysis for strategic decision making.</p>
+            </a>
+
+            <a href="/services/advisory.html" class="feature-card">
+                <div class="feature-icon">💼</div>
+                <h3>Advisory Services</h3>
+                <p>Get expert consulting on site selection, market entry strategy, and investment analysis.</p>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Check authentication on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            checkAuthentication();
+        });
+
+        function checkAuthentication() {
+            // Try to get user data from localStorage or sessionStorage
+            const userStr = localStorage.getItem('user') || sessionStorage.getItem('user');
+            const token = localStorage.getItem('access_token') || sessionStorage.getItem('access_token');
+
+            if (!userStr || !token) {
+                // No authentication found, redirect to login
+                window.location.href = '/auth/login.html';
+                return;
+            }
+
+            try {
+                const user = JSON.parse(userStr);
+                displayUserInfo(user);
+            } catch (error) {
+                console.error('Error parsing user data:', error);
+                window.location.href = '/auth/login.html';
+            }
+        }
+
+        function displayUserInfo(user) {
+            // Update welcome message
+            document.getElementById('welcomeMessage').textContent = `Welcome back, ${user.full_name}!`;
+            document.getElementById('userName').textContent = user.full_name;
+
+            // Update account information
+            document.getElementById('fullName').textContent = user.full_name || '-';
+            document.getElementById('email').textContent = user.email || '-';
+            document.getElementById('company').textContent = user.company || '-';
+            document.getElementById('jobTitle').textContent = user.job_title || 'Not specified';
+
+            // Update account type badge
+            const accountTypeEl = document.getElementById('accountType');
+            const accountType = user.account_type || 'individual';
+            const badgeClass = accountType === 'firm' ? 'account-type-firm' : 'account-type-individual';
+            accountTypeEl.innerHTML = `<span class="account-type-badge ${badgeClass}">${accountType}</span>`;
+        }
+
+        function logout() {
+            // Confirm logout
+            if (!confirm('Are you sure you want to log out?')) {
+                return;
+            }
+
+            // Clear all authentication data
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('token_type');
+            localStorage.removeItem('user');
+            sessionStorage.removeItem('access_token');
+            sessionStorage.removeItem('token_type');
+            sessionStorage.removeItem('user');
+
+            // Redirect to login page
+            window.location.href = '/auth/login.html';
+        }
+    </script>
+</body>
+</html>

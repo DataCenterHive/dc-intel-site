@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Coverage - DC Intelligence</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0e16;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0e16;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #111827;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: #0a0e16;
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background: #111827;
+            color: #06b6d4;
+            padding: 15px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: transform 0.2s;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Benefits Section */
+        .benefits {
+            padding: 60px 40px;
+            background: #0a0e16;
+        }
+
+        .benefits h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 50px;
+            color: #f9fafb;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .benefit-card {
+            background: #111827;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .benefit-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #06b6d4;
+        }
+
+        .benefit-card p {
+            color: #9ca3af;
+            line-height: 1.6;
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            padding: 60px 40px;
+            background: #111827;
+        }
+
+        .how-it-works h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 50px;
+            color: #f9fafb;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .step {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .step-number {
+            background: #0a0e16;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+
+        .step h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            color: #f9fafb;
+        }
+
+        .step p {
+            color: #9ca3af;
+            line-height: 1.6;
+        }
+
+        /* Service Tiers Table */
+        .tiers-section {
+            padding: 60px 40px;
+            background: #0a0e16;
+        }
+
+        .tiers-section h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #f9fafb;
+        }
+
+        .tiers-table {
+            max-width: 900px;
+            margin: 0 auto 20px;
+            background: #111827;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .tiers-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .tiers-table th {
+            background: #0a0e16;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .tiers-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .tiers-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .tiers-table .highlight {
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        .tiers-note {
+            text-align: center;
+            color: #718096;
+            font-size: 0.9em;
+            font-style: italic;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Form Section */
+        .form-section {
+            padding: 60px 40px;
+            background: #111827;
+        }
+
+        .form-section h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 50px;
+            color: #f9fafb;
+        }
+
+        .form-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            background: #0a0e16;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .form-group h3 {
+            color: #06b6d4;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            border-bottom: 2px solid #06b6d4;
+            padding-bottom: 10px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-field label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #f9fafb;
+        }
+
+        .form-field label .required {
+            color: #e53e3e;
+        }
+
+        .form-field input,
+        .form-field select,
+        .form-field textarea {
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.2s;
+        }
+
+        .form-field input:focus,
+        .form-field select:focus,
+        .form-field textarea:focus {
+            outline: none;
+            border-color: #06b6d4;
+        }
+
+        .form-field textarea {
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            cursor: pointer;
+            color: #f9fafb;
+        }
+
+        .agreement-section {
+            background: #fff5e6;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #f59e0b;
+            margin-top: 30px;
+        }
+
+        .agreement-checkbox {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .agreement-checkbox input[type="checkbox"] {
+            margin-right: 10px;
+            margin-top: 3px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .agreement-checkbox label {
+            cursor: pointer;
+            color: #f9fafb;
+            line-height: 1.6;
+        }
+
+        .submit-button {
+            background: #0a0e16;
+            color: white;
+            padding: 16px 50px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin: 30px auto 0;
+        }
+
+        .submit-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-link a {
+            color: #06b6d4;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 40px 20px;
+            }
+
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .benefits,
+            .how-it-works,
+            .tiers-section,
+            .form-section {
+                padding: 40px 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>Request Coverage</h1>
+            <p>Need data from cities we don't currently track? Request coverage and we'll add it to our platform. Help shape our expansion priorities.</p>
+            <a href="#form" class="hero-cta">Submit Request</a>
+        </div>
+
+        <!-- Benefits Section -->
+        <div class="benefits">
+            <h2>Why Request Coverage?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">🗺️</div>
+                    <h3>Expand Our Coverage</h3>
+                    <p>Request new cities or regions<br>
+                    Help prioritize our expansion<br>
+                    Shape the platform for your needs</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🏢</div>
+                    <h3>Add Specific Facilities</h3>
+                    <p>Missing a data center?<br>
+                    Free facility additions<br>
+                    Fast turnaround (1-2 weeks)</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">📊</div>
+                    <h3>Enhanced Data</h3>
+                    <p>Request additional data fields<br>
+                    Energy sources, connectivity<br>
+                    Rack counts and more</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- How It Works Section -->
+        <div class="how-it-works">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Submit Your Request</h3>
+                    <p>Tell us what coverage you need and why it matters to your business.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>We Evaluate</h3>
+                    <p>Our team assesses feasibility, timeline, and prioritizes based on demand.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Data Collection</h3>
+                    <p>We gather permit data, facility information, and build out the coverage.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Go Live</h3>
+                    <p>New coverage is added to the platform and you're notified when it's ready.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coverage Types Section -->
+        <div class="tiers-section">
+            <h2>Coverage Request Types</h2>
+            <div class="tiers-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Request Type</th>
+                            <th>Timeline</th>
+                            <th>Priority Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>New City Coverage</strong><br>Addition of entire new city/region</td>
+                            <td>4-8 weeks</td>
+                            <td class="highlight">Premium subscribers get priority</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Specific Facility</strong><br>Add specific data center not in database</td>
+                            <td>1-2 weeks</td>
+                            <td class="highlight">Free for all users</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Enhanced Data</strong><br>Additional data fields for existing coverage</td>
+                            <td>2-4 weeks</td>
+                            <td class="highlight">Based on feasibility</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="tiers-note">* Timelines are estimates and may vary based on data availability and complexity.</p>
+        </div>
+
+        <!-- Form Section -->
+        <div class="form-section" id="form">
+            <h2>Submit Coverage Request</h2>
+            <form id="coverageRequestForm">
+                <div class="message" id="message"></div>
+
+                <!-- Contact Information -->
+                <div class="form-group">
+                    <h3>Your Information</h3>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="name">Full Name <span class="required">*</span></label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="email">Email <span class="required">*</span></label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="company">Company <span class="required">*</span></label>
+                            <input type="text" id="company" name="company" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Request Details -->
+                <div class="form-group">
+                    <h3>Coverage Request Details</h3>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="requestType">Request Type <span class="required">*</span></label>
+                            <select id="requestType" name="requestType" required>
+                                <option value="">Select...</option>
+                                <option value="new_city">New City Coverage</option>
+                                <option value="specific_facility">Specific Facility Addition</option>
+                                <option value="enhanced_data">Enhanced Data Collection</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="priorityLevel">Priority Level <span class="required">*</span></label>
+                            <select id="priorityLevel" name="priorityLevel" required>
+                                <option value="">Select...</option>
+                                <option value="standard">Standard</option>
+                                <option value="urgent">Urgent (Premium subscribers only)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="locationName">City/Region/Facility Name <span class="required">*</span></label>
+                            <input type="text" id="locationName" name="locationName" required placeholder="e.g., Portland, OR or Equinix DA11">
+                        </div>
+                        <div class="form-field">
+                            <label for="premiumSubscriber">Are you a Premium subscriber? <span class="required">*</span></label>
+                            <select id="premiumSubscriber" name="premiumSubscriber" required>
+                                <option value="">Select...</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="reason">Reason for Request <span class="required">*</span></label>
+                        <textarea id="reason" name="reason" required placeholder="Why do you need this coverage?"></textarea>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="businessUseCase">Business Use Case <span class="required">*</span></label>
+                        <textarea id="businessUseCase" name="businessUseCase" required placeholder="How will you use this data? What business decisions does it support?"></textarea>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="contributeToCost">Willing to contribute to coverage cost?</label>
+                        <select id="contributeToCost" name="contributeToCost">
+                            <option value="">Prefer not to answer</option>
+                            <option value="yes">Yes, willing to discuss</option>
+                            <option value="no">No</option>
+                            <option value="depends">Depends on cost</option>
+                        </select>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="additionalNotes">Additional Notes</label>
+                        <textarea id="additionalNotes" name="additionalNotes" placeholder="Any other information we should know"></textarea>
+                    </div>
+                </div>
+
+                <!-- Agreement Section -->
+                <div class="agreement-section">
+                    <div class="agreement-checkbox">
+                        <input type="checkbox" id="agree1" name="agree1" required>
+                        <label for="agree1">I understand that coverage requests are evaluated based on feasibility and demand</label>
+                    </div>
+                    <div class="agreement-checkbox">
+                        <input type="checkbox" id="agree2" name="agree2" required>
+                        <label for="agree2">I agree to be contacted regarding this coverage request</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-button" id="submitBtn">Submit Coverage Request</button>
+            </form>
+
+            <div class="back-link">
+                <a href="/dashboard_v2.html">← Back to Dashboard</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8010/api';
+
+        document.getElementById('coverageRequestForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            const messageDiv = document.getElementById('message');
+
+            // Validate agreements
+            const agree1 = document.getElementById('agree1').checked;
+            const agree2 = document.getElementById('agree2').checked;
+
+            if (!agree1 || !agree2) {
+                showMessage('Please accept all agreement checkboxes', 'error');
+                return;
+            }
+
+            // Collect form data
+            const formData = {
+                service_type: 'request_coverage',
+
+                // Contact information
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                company: document.getElementById('company').value,
+                phone: document.getElementById('phone').value || '',
+
+                // Request details
+                request_type: document.getElementById('requestType').value,
+                priority_level: document.getElementById('priorityLevel').value,
+                location_name: document.getElementById('locationName').value,
+                premium_subscriber: document.getElementById('premiumSubscriber').value,
+                reason: document.getElementById('reason').value,
+                business_use_case: document.getElementById('businessUseCase').value,
+                contribute_to_cost: document.getElementById('contributeToCost').value || 'not_specified',
+                additional_notes: document.getElementById('additionalNotes').value || '',
+
+                // Agreement
+                terms_agreed: true
+            };
+
+            // Disable submit button
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+
+            try {
+                const response = await fetch(`${API_BASE}/inquiry/submit`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showMessage('Coverage request submitted successfully! We will evaluate your request and contact you within 2-3 business days.', 'success');
+                    document.getElementById('coverageRequestForm').reset();
+
+                    // Scroll to top to show success message
+                    document.getElementById('form').scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    showMessage(`Error: ${result.detail || 'Failed to submit request'}`, 'error');
+                }
+            } catch (error) {
+                showMessage(`Error: ${error.message}`, 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Coverage Request';
+            }
+        });
+
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+
+            if (type === 'success') {
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                }, 10000);
+            }
+        }
+    </script>
+</body>
+</html>

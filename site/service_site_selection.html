@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Selection: Expert Consulting -DataCenter Hive</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f5f5dc;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: #000;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 50px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 4px double #000;
+            padding-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .tagline {
+            font-size: 18px;
+            font-style: italic;
+            color: #666;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 20px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style: disc;
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        ul li {
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+
+        .highlight-box {
+            background: #fffef0;
+            border: 2px solid #000;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .highlight-box h3 {
+            margin-top: 0;
+        }
+
+        .tier-comparison {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .tier-card {
+            border: 3px solid #000;
+            padding: 30px;
+            background: #fff;
+            position: relative;
+        }
+
+        .tier-card.premium {
+            border-color: #6b46c1;
+            background: #fffbeb;
+        }
+
+        .tier-card.enterprise {
+            border-color: #d97706;
+            background: #fffbeb;
+        }
+
+        .tier-badge {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: #000;
+            color: #fff;
+            padding: 5px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tier-card.premium .tier-badge {
+            background: #6b46c1;
+        }
+
+        .tier-card.enterprise .tier-badge {
+            background: #d97706;
+        }
+
+        .tier-price {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .tier-price small {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .tier-features {
+            margin: 20px 0;
+        }
+
+        .tier-features li {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .cta-section {
+            background: #000;
+            color: #fff;
+            padding: 40px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .cta-section h2 {
+            color: #fff;
+            border-bottom: 2px solid #fff;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+        }
+
+        .cta-section p {
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+
+        .cta-btn {
+            background: #fff;
+            color: #000;
+            padding: 15px 40px;
+            border: 2px solid #fff;
+            font-family: Georgia, serif;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            margin: 10px;
+        }
+
+        .cta-btn:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #000;
+            text-decoration: underline;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            color: #666;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .stat {
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .data-advantage {
+            background: #e6f7ff;
+            border-left: 5px solid #1890ff;
+            padding: 20px;
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Site Selection: Expert Consulting</h1>
+            <p class="tagline">Data-Driven Advisory for Optimal Data Center Placement</p>
+        </div>
+
+        <div class="section">
+            <h2>Overview</h2>
+            <p>
+                Our Site Selection advisory service combines proprietary permit data with market expertise to help you identify optimal locations for data center development. Unlike traditional consultants who rely on public announcements, we analyze actual construction activity across 34 U.S. markets in real-time.
+            </p>
+            <p>
+                Available as part of our Premium and Enterprise subscription tiers, this service provides data-driven insights for location strategy, market entry decisions, and competitive positioning.
+            </p>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number">2.5M+</div>
+                <div class="stat-label">Building Permits Tracked</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">34</div>
+                <div class="stat-label">U.S. Markets Covered</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">654</div>
+                <div class="stat-label">Active DC Projects Monitored</div>
+            </div>
+        </div>
+
+        <div class="data-advantage">
+            <h3>Our Data Advantage</h3>
+            <p>
+                We track building permits, construction activity, and operator movements in real-time across major U.S. markets. This reveals projects under development before public announcements, true capacity absorption vs. marketing claims, and operator expansion strategies based on actual permit filings—giving you intelligence competitors don't have.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>Service Tiers</h2>
+
+            <div class="tier-comparison">
+                <div class="tier-card premium">
+                    <div class="tier-badge">Premium</div>
+                    <div class="tier-price">$999<small>/month</small></div>
+
+                    <h3>What's Included</h3>
+                    <ul class="tier-features">
+                        <li><strong>Quarterly Market Analysis Reports:</strong> Deep-dive analysis of 3-5 target markets with permit activity trends, operator presence, and growth trajectories</li>
+                        <li><strong>1 Consultation Call Per Quarter:</strong> 60-minute strategy session to discuss findings and recommendations</li>
+                        <li><strong>Access to Permit Heatmaps:</strong> Visual analysis of construction activity and competitive concentration</li>
+                        <li><strong>Operator Tracking Dashboard:</strong> Monitor which operators are expanding where and when</li>
+                        <li><strong>Daily Email Alerts:</strong> Get notified of new permit filings in your target markets</li>
+                        <li><strong>Custom Report Add-ons:</strong> Request additional market analyses for $500 each</li>
+                    </ul>
+
+                    <h3>Best For</h3>
+                    <p>Colocation providers, edge operators, and enterprises evaluating 2-3 target markets for expansion or deployment.</p>
+                </div>
+
+                <div class="tier-card enterprise">
+                    <div class="tier-badge">Enterprise</div>
+                    <div class="tier-price">$2,499<small>/month</small></div>
+
+                    <h3>What's Included</h3>
+                    <ul class="tier-features">
+                        <li><strong>Unlimited Custom Research:</strong> On-demand market analysis for any U.S. market, no limits on number of reports</li>
+                        <li><strong>2 Consultation Calls Per Month:</strong> 8 hours/month of strategic advisory time (24 calls/year)</li>
+                        <li><strong>Real-Time API Access:</strong> Programmatic access to permit data, operator profiles, and market metrics</li>
+                        <li><strong>Priority Support:</strong> Dedicated account manager with 4-hour response time</li>
+                        <li><strong>Site-Specific Analysis:</strong> Detailed evaluation of specific addresses, including utility capacity and zoning</li>
+                        <li><strong>Competitive Intelligence:</strong> Custom reports on competitor expansion plans based on permit activity</li>
+                        <li><strong>Success Fee Alignment:</strong> 5-10% of first-year contract value for sites selected using our recommendations</li>
+                    </ul>
+
+                    <h3>Best For</h3>
+                    <p>Hyperscale operators, institutional investors, private equity firms, and strategic acquirers requiring comprehensive multi-market analysis.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Our Methodology</h2>
+
+            <h3>1. Market Opportunity Assessment</h3>
+            <ul>
+                <li><strong>Permit Activity Trends:</strong> Historical construction volume, growth trajectories, and capacity absorption rates based on actual permit filings</li>
+                <li><strong>Operator Presence Analysis:</strong> Who's building where, expansion patterns, market entry timing, and facility counts by operator</li>
+                <li><strong>Competitive Density Mapping:</strong> Heatmaps showing geographic concentration of existing facilities and active projects</li>
+                <li><strong>Supply/Demand Indicators:</strong> Current capacity estimates, pipeline inventory, and absorption forecasts</li>
+            </ul>
+
+            <h3>2. Growth Trajectory Forecasting</h3>
+            <ul>
+                <li><strong>Historical Patterns:</strong> 5+ years of permit data revealing market maturity and growth cycles</li>
+                <li><strong>Valuation Trends:</strong> Average project values, investment intensity, and capital deployment patterns</li>
+                <li><strong>Permitting Velocity:</strong> Speed from permit filing to certificate of occupancy indicates market momentum</li>
+                <li><strong>Infrastructure Expansion:</strong> Utility upgrades, substation additions, and fiber deployments signal capacity for growth</li>
+            </ul>
+
+            <h3>3. Strategic Recommendations</h3>
+            <ul>
+                <li><strong>Ranked Market Priorities:</strong> Top 3-5 markets scored across multiple criteria with supporting rationale</li>
+                <li><strong>Competitive Positioning:</strong> Where to locate relative to existing operators and announced projects</li>
+                <li><strong>Timing Guidance:</strong> Optimal market entry windows based on competitive dynamics and infrastructure readiness</li>
+                <li><strong>Risk Mitigation:</strong> Market-specific risks (regulatory, environmental, competitive) and mitigation strategies</li>
+            </ul>
+        </div>
+
+        <div class="highlight-box">
+            <h3>What You Receive (Premium & Enterprise)</h3>
+            <ul>
+                <li><strong>Market Analysis Reports:</strong> Comprehensive assessments with data visualizations, operator tracking, and strategic recommendations</li>
+                <li><strong>Permit Heatmaps:</strong> Geographic visualizations of construction activity density and competitive clustering</li>
+                <li><strong>Operator Intelligence:</strong> Detailed profiles of major operators' expansion strategies and market positioning</li>
+                <li><strong>Growth Trajectory Charts:</strong> Historical trends and forward-looking projections based on permit data</li>
+                <li><strong>Strategic Consultation:</strong> Direct access to our advisory team for Q&A and implementation guidance</li>
+                <li><strong>Ongoing Updates:</strong> Premium (quarterly), Enterprise (on-demand) refreshes as markets evolve</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Market Coverage</h2>
+
+            <h3>Tier 1 Markets (Mature & Proven)</h3>
+            <p><strong>Northern Virginia, Dallas-Fort Worth, Phoenix, Atlanta, Chicago, Silicon Valley</strong><br>
+            Established ecosystems with deep carrier presence, proven power availability, and significant existing capacity. Competitive but liquid markets with robust infrastructure.</p>
+
+            <h3>Tier 2 Markets (Growing & Emerging)</h3>
+            <p><strong>San Antonio, Columbus, Portland, Seattle, Charlotte, Richmond, Austin, Denver</strong><br>
+            Rapidly developing markets with favorable economics, improving infrastructure, and increasing operator interest. Lower competition with strong growth trajectories.</p>
+
+            <h3>Edge & Specialized Markets</h3>
+            <p><strong>El Paso, Mesa, Chandler, Fort Worth, Lexington, Oklahoma City, Indianapolis</strong><br>
+            Niche opportunities with specific advantages (tax incentives, utility rates, proximity to borders/networks, emerging demand).</p>
+        </div>
+
+        <div class="section">
+            <h2>Why Work With Us?</h2>
+            <ul>
+                <li><strong>Proprietary Data Access:</strong> We maintain the most comprehensive database of U.S. data center construction activity, updated daily</li>
+                <li><strong>Real-Time Intelligence:</strong> See projects under development before public announcements, giving you first-mover advantage</li>
+                <li><strong>Quantitative Foundation:</strong> Recommendations backed by hard data (2.5M+ permits, 2,436 facilities, 654 active projects)</li>
+                <li><strong>Advisory Expertise:</strong> Combine data analysis with strategic consultation to translate insights into actionable decisions</li>
+                <li><strong>No Conflicts of Interest:</strong> We're advisors, not brokers—our only interest is helping you make the best decision</li>
+            </ul>
+        </div>
+
+        <div class="cta-section">
+            <h2>Ready to Identify Your Optimal Market?</h2>
+            <p>
+                Choose the tier that fits your needs and get started with data-driven site selection advisory.<br>
+                Premium starts at $999/month. Enterprise starts at $2,499/month.
+            </p>
+            <a href="pricing.html" class="cta-btn">View Full Pricing Details</a>
+            <a href="#" class="cta-btn" onclick="alert('Consultation request coming soon!\n\nFor now, email: siteselection@dc-intel.com\nPhone: (555) 123-4567'); return false;">Schedule Consultation</a>
+        </div>
+
+        <a href="dashboard_v2.html" class="back-link">← Back to Dashboard</a>
+    </div>
+</body>
+</html>

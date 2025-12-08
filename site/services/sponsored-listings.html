@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sponsored Listings - DC Intelligence</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0e16;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #f9fafb;
+            background: #0a0e16;
+        }
+
+        header {
+            background: #0a0e16;
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #f9fafb;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #9ca3af;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .packages-section {
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #f9fafb;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .package-card {
+            background: #111827;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 3px solid transparent;
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .package-card.selected {
+            border-color: #06b6d4;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        }
+
+        .package-tier {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #06b6d4;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .package-name {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #f9fafb;
+        }
+
+        .package-price {
+            font-size: 36px;
+            font-weight: bold;
+            color: #06b6d4;
+            margin-bottom: 20px;
+        }
+
+        .package-price span {
+            font-size: 16px;
+            color: #9ca3af;
+            font-weight: normal;
+        }
+
+        .package-features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .package-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #ecf0f1;
+            font-size: 14px;
+            color: #d1d5db;
+        }
+
+        .package-features li:last-child {
+            border-bottom: none;
+        }
+
+        .package-features li::before {
+            content: "✓ ";
+            color: #27ae60;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .form-section {
+            background: #111827;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #f9fafb;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #374151;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #06b6d4;
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .duration-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .duration-option {
+            position: relative;
+        }
+
+        .duration-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .duration-option label {
+            display: block;
+            padding: 15px;
+            background: #0a0e16;
+            border: 2px solid #374151;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .duration-option input[type="radio"]:checked + label {
+            background: #0a0e16;
+            color: white;
+            border-color: #06b6d4;
+        }
+
+        .duration-option label:hover {
+            border-color: #06b6d4;
+        }
+
+        .duration-label {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .duration-discount {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #0a0e16;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(6, 182, 212, 0.3);
+        }
+
+        .btn-secondary {
+            background: #111827;
+            color: #06b6d4;
+            border: 2px solid #06b6d4;
+        }
+
+        .btn-secondary:hover {
+            background: #06b6d4;
+            color: white;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        .preview-section {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .preview-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #f9fafb;
+        }
+
+        .preview-card {
+            background: #111827;
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 4px solid #06b6d4;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .preview-badge {
+            display: inline-block;
+            background: #0a0e16;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px 20px;
+            border-radius: 8px;
+            border: 1px solid #c3e6cb;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px 20px;
+            border-radius: 8px;
+            border: 1px solid #f5c6cb;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .help-text {
+            font-size: 13px;
+            color: #9ca3af;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .packages-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .duration-options {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">DC Intelligence</div>
+            <div class="nav-links">
+                <a href="/dashboard_v2.html">Dashboard</a>
+                <a href="/services/basic.html">Pricing</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>⭐ Sponsored Listings</h1>
+            <p>Feature your data center facilities prominently and gain visibility with potential customers. Premium placement in search results and recommendations.</p>
+        </div>
+
+        <div class="packages-section">
+            <h2 class="section-title">Choose Your Package</h2>
+            <div class="packages-grid">
+                <div class="package-card" onclick="selectPackage('bronze')" id="package-bronze">
+                    <div class="package-tier">Starter</div>
+                    <div class="package-name">Bronze</div>
+                    <div class="package-price">$1,000<span>/campaign</span></div>
+                    <ul class="package-features">
+                        <li>Featured badge on facility listing</li>
+                        <li>Priority in search results (top 10)</li>
+                        <li>Basic analytics dashboard</li>
+                        <li>1 facility listing</li>
+                        <li>Email support</li>
+                    </ul>
+                </div>
+
+                <div class="package-card" onclick="selectPackage('silver')" id="package-silver">
+                    <div class="package-tier">Professional</div>
+                    <div class="package-name">Silver</div>
+                    <div class="package-price">$2,500<span>/campaign</span></div>
+                    <ul class="package-features">
+                        <li>Prominent featured badge</li>
+                        <li>Top 5 placement in search</li>
+                        <li>Advanced analytics + lead tracking</li>
+                        <li>Up to 3 facility listings</li>
+                        <li>Priority email support</li>
+                        <li>Monthly performance reports</li>
+                        <li>Homepage rotation (10 days/month)</li>
+                    </ul>
+                </div>
+
+                <div class="package-card" onclick="selectPackage('gold')" id="package-gold">
+                    <div class="package-tier">Enterprise</div>
+                    <div class="package-name">Gold</div>
+                    <div class="package-price">$5,000+<span>/campaign</span></div>
+                    <ul class="package-features">
+                        <li>Premium featured badge</li>
+                        <li>Guaranteed top 3 placement</li>
+                        <li>Full analytics suite + CRM integration</li>
+                        <li>Unlimited facility listings</li>
+                        <li>Dedicated account manager</li>
+                        <li>Weekly performance reports</li>
+                        <li>Homepage hero placement (20 days/month)</li>
+                        <li>Custom landing page</li>
+                        <li>Press release distribution</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="preview-section">
+            <div class="preview-title">How Your Listing Will Appear:</div>
+            <div class="preview-card">
+                <span class="preview-badge">⭐ FEATURED</span>
+                <h3 id="preview-facility-name">Your Data Center Name</h3>
+                <p id="preview-location">Location will appear here</p>
+                <p style="color: #9ca3af; font-size: 14px; margin-top: 10px;">Your facility description and key features will be prominently displayed with priority placement.</p>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2 class="section-title">Sponsored Listing Application</h2>
+            <div id="successMessage" class="success-message">
+                Your sponsored listing application has been submitted successfully! Our team will contact you within 24 hours.
+            </div>
+            <div id="errorMessage" class="error-message">
+                There was an error submitting your application. Please try again or contact support.
+            </div>
+
+            <form id="sponsoredListingForm">
+                <input type="hidden" id="selectedPackage" name="package_tier" value="">
+
+                <div class="form-group">
+                    <label>Campaign Duration</label>
+                    <div class="duration-options">
+                        <div class="duration-option">
+                            <input type="radio" id="duration3" name="duration_months" value="3" checked>
+                            <label for="duration3">
+                                <div class="duration-label">3 Months</div>
+                                <div class="duration-discount">Standard</div>
+                            </label>
+                        </div>
+                        <div class="duration-option">
+                            <input type="radio" id="duration6" name="duration_months" value="6">
+                            <label for="duration6">
+                                <div class="duration-label">6 Months</div>
+                                <div class="duration-discount">Save 10%</div>
+                            </label>
+                        </div>
+                        <div class="duration-option">
+                            <input type="radio" id="duration12" name="duration_months" value="12">
+                            <label for="duration12">
+                                <div class="duration-label">12 Months</div>
+                                <div class="duration-discount">Save 20%</div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="margin-bottom: 20px; color: #f9fafb;">Facility Information</h3>
+
+                <div class="form-group">
+                    <label for="facilityName">Facility Name *</label>
+                    <input type="text" id="facilityName" name="facility_name" required placeholder="e.g., Phoenix Data Center">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="provider">Data Center Provider *</label>
+                        <input type="text" id="provider" name="provider" required placeholder="e.g., Digital Realty">
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location (City, State) *</label>
+                        <input type="text" id="location" name="location" required placeholder="e.g., Phoenix, AZ">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Facility Description *</label>
+                    <textarea id="description" name="description" required placeholder="Brief description of your data center facility, key features, and unique selling points..."></textarea>
+                    <div class="help-text">This will be displayed in your featured listing (max 500 characters)</div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="powerCapacity">Power Capacity (MW)</label>
+                        <input type="text" id="powerCapacity" name="power_capacity" placeholder="e.g., 50 MW">
+                    </div>
+                    <div class="form-group">
+                        <label for="sqFootage">Square Footage</label>
+                        <input type="text" id="sqFootage" name="sq_footage" placeholder="e.g., 500,000 sq ft">
+                    </div>
+                </div>
+
+                <h3 style="margin: 30px 0 20px; color: #f9fafb;">Contact Information</h3>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="contactName">Contact Name *</label>
+                        <input type="text" id="contactName" name="contact_name" required placeholder="Your full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="contactEmail">Contact Email *</label>
+                        <input type="email" id="contactEmail" name="contact_email" required placeholder="your.email@company.com">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567">
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company *</label>
+                        <input type="text" id="company" name="company" required placeholder="Company name">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="additionalInfo">Additional Information</label>
+                    <textarea id="additionalInfo" name="additional_info" placeholder="Any special requirements, preferred start date, or other details..."></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <a href="/dashboard_v2.html" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Submit Application</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let selectedPackageTier = '';
+
+        function selectPackage(tier) {
+            // Remove selected class from all packages
+            document.querySelectorAll('.package-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+
+            // Add selected class to clicked package
+            document.getElementById(`package-${tier}`).classList.add('selected');
+
+            // Update hidden input
+            selectedPackageTier = tier;
+            document.getElementById('selectedPackage').value = tier;
+        }
+
+        // Update preview when facility info changes
+        document.getElementById('facilityName').addEventListener('input', function(e) {
+            document.getElementById('preview-facility-name').textContent = e.target.value || 'Your Data Center Name';
+        });
+
+        document.getElementById('location').addEventListener('input', function(e) {
+            document.getElementById('preview-location').textContent = e.target.value || 'Location will appear here';
+        });
+
+        // Form submission
+        document.getElementById('sponsoredListingForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Validate package selection
+            if (!selectedPackageTier) {
+                alert('Please select a package tier (Bronze, Silver, or Gold)');
+                return;
+            }
+
+            // Gather form data
+            const formData = {
+                service_type: 'sponsored_listing',
+                name: document.getElementById('contactName').value,
+                email: document.getElementById('contactEmail').value,
+                company: document.getElementById('company').value,
+                phone: document.getElementById('phone').value,
+                package_tier: selectedPackageTier,
+                duration_months: parseInt(document.querySelector('input[name="duration_months"]:checked').value),
+                facility_name: document.getElementById('facilityName').value,
+                provider: document.getElementById('provider').value,
+                location: document.getElementById('location').value,
+                description: document.getElementById('description').value,
+                power_capacity: document.getElementById('powerCapacity').value,
+                sq_footage: document.getElementById('sqFootage').value,
+                additional_info: document.getElementById('additionalInfo').value
+            };
+
+            try {
+                const response = await fetch('http://localhost:8010/api/inquiry/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.getElementById('errorMessage').style.display = 'none';
+                    document.getElementById('sponsoredListingForm').reset();
+
+                    // Clear selected package
+                    document.querySelectorAll('.package-card').forEach(card => {
+                        card.classList.remove('selected');
+                    });
+                    selectedPackageTier = '';
+
+                    // Scroll to success message
+                    document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } else {
+                    throw new Error(result.detail || 'Submission failed');
+                }
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('successMessage').style.display = 'none';
+                document.getElementById('errorMessage').textContent = error.message || 'There was an error submitting your application. Please try again or contact support.';
+                document.getElementById('errorMessage').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        });
+    </script>
+</body>
+</html>

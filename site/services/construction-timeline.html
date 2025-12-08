@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction Timeline Predictions - DC Intelligence</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0e16;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0e16;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #111827;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: #0a0e16;
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background: #111827;
+            color: #06b6d4;
+            padding: 15px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: transform 0.2s;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Benefits Section */
+        .benefits {
+            padding: 60px 40px;
+            background: #0a0e16;
+        }
+
+        .benefits h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 50px;
+            color: #f9fafb;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .benefit-card {
+            background: #111827;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .benefit-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #06b6d4;
+        }
+
+        .benefit-card p {
+            color: #9ca3af;
+            line-height: 1.6;
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            padding: 60px 40px;
+            background: #111827;
+        }
+
+        .how-it-works h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 50px;
+            color: #f9fafb;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .step {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .step-number {
+            background: #0a0e16;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+
+        .step h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            color: #f9fafb;
+        }
+
+        .step p {
+            color: #9ca3af;
+            line-height: 1.6;
+        }
+
+        /* Pricing Table */
+        .pricing-section {
+            padding: 60px 40px;
+            background: #0a0e16;
+        }
+
+        .pricing-section h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #f9fafb;
+        }
+
+        .pricing-table {
+            max-width: 900px;
+            margin: 0 auto 20px;
+            background: #111827;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .pricing-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .pricing-table th {
+            background: #0a0e16;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .pricing-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .pricing-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .pricing-table .highlight {
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        .pricing-note {
+            text-align: center;
+            color: #718096;
+            font-size: 0.9em;
+            font-style: italic;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Form Section */
+        .form-section {
+            padding: 60px 40px;
+            background: #111827;
+        }
+
+        .form-section h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 50px;
+            color: #f9fafb;
+        }
+
+        .form-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            background: #0a0e16;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .form-group h3 {
+            color: #06b6d4;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            border-bottom: 2px solid #06b6d4;
+            padding-bottom: 10px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-field label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #f9fafb;
+        }
+
+        .form-field label .required {
+            color: #e53e3e;
+        }
+
+        .form-field input,
+        .form-field select,
+        .form-field textarea {
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.2s;
+        }
+
+        .form-field input:focus,
+        .form-field select:focus,
+        .form-field textarea:focus {
+            outline: none;
+            border-color: #06b6d4;
+        }
+
+        .form-field textarea {
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+
+        .agreement-section {
+            background: #fff5e6;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #f59e0b;
+            margin-top: 30px;
+        }
+
+        .agreement-checkbox {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .agreement-checkbox input[type="checkbox"] {
+            margin-right: 10px;
+            margin-top: 3px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .agreement-checkbox label {
+            cursor: pointer;
+            color: #f9fafb;
+            line-height: 1.6;
+        }
+
+        .submit-button {
+            background: #0a0e16;
+            color: white;
+            padding: 16px 50px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin: 30px auto 0;
+        }
+
+        .submit-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-link a {
+            color: #06b6d4;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 40px 20px;
+            }
+
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .benefits,
+            .how-it-works,
+            .pricing-section,
+            .form-section {
+                padding: 40px 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>Construction Timeline Predictions</h1>
+            <p>Know when facilities will come online. Our ML models analyze permit data and historical completion patterns to predict project timelines with 75-85% accuracy.</p>
+            <a href="#form" class="hero-cta">Request Analysis</a>
+        </div>
+
+        <!-- Benefits Section -->
+        <div class="benefits">
+            <h2>Why Use Timeline Predictions?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">📅</div>
+                    <h3>Accurate Forecasts</h3>
+                    <p>AI-powered predictions<br>
+                    75-85% accuracy rate<br>
+                    Based on historical patterns</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🎯</div>
+                    <h3>Market Intelligence</h3>
+                    <p>Know when capacity comes online<br>
+                    Supply/demand forecasts<br>
+                    Competitive timing insights</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">💼</div>
+                    <h3>Strategic Planning</h3>
+                    <p>Plan your investments<br>
+                    Optimize resource allocation<br>
+                    Reduce market timing risk</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- How It Works Section -->
+        <div class="how-it-works">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Select Service</h3>
+                    <p>Choose between single project analysis, market timing reports, or enterprise forecasting.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Provide Details</h3>
+                    <p>Share project information or specify the market you want to analyze.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>AI Analysis</h3>
+                    <p>Our models process permit data, historical patterns, and project characteristics.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Get Report</h3>
+                    <p>Receive detailed timeline predictions with confidence intervals and risk factors.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pricing Section -->
+        <div class="pricing-section">
+            <h2>Service Pricing</h2>
+            <div class="pricing-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Service</th>
+                            <th>What's Included</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Project Timeline Analysis</strong></td>
+                            <td>Estimated completion date, confidence interval, key milestones, risk factors</td>
+                            <td class="highlight">$99/project</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Market Timing Report</strong></td>
+                            <td>Pipeline analysis for one city, capacity forecasts, supply/demand analysis, market saturation timeline</td>
+                            <td class="highlight">$499</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Enterprise Forecasting</strong></td>
+                            <td>Continuous monitoring, monthly updates, completion alerts, historical accuracy reporting</td>
+                            <td class="highlight">$2,999/year</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="pricing-note">* Enterprise customers receive dedicated support and custom reporting options.</p>
+        </div>
+
+        <!-- Form Section -->
+        <div class="form-section" id="form">
+            <h2>Request Timeline Analysis</h2>
+            <form id="timelineForm">
+                <div class="message" id="message"></div>
+
+                <!-- Contact Information -->
+                <div class="form-group">
+                    <h3>Your Information</h3>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="name">Full Name <span class="required">*</span></label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="email">Email <span class="required">*</span></label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="company">Company <span class="required">*</span></label>
+                            <input type="text" id="company" name="company" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Selection -->
+                <div class="form-group">
+                    <h3>Service Selection</h3>
+                    <div class="form-field">
+                        <label for="serviceType">Service Type <span class="required">*</span></label>
+                        <select id="serviceType" name="serviceType" required>
+                            <option value="">Select...</option>
+                            <option value="project_analysis">Project Timeline Analysis ($99)</option>
+                            <option value="market_report">Market Timing Report ($499)</option>
+                            <option value="enterprise">Enterprise Forecasting ($2,999/year)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-field" id="projectAddressField">
+                        <label for="projectAddress">Project Address (if requesting single project analysis)</label>
+                        <input type="text" id="projectAddress" name="projectAddress" placeholder="e.g., 123 Main St, Dallas, TX">
+                    </div>
+
+                    <div class="form-field" id="cityOfInterestField">
+                        <label for="cityOfInterest">City of Interest (for market timing reports)</label>
+                        <input type="text" id="cityOfInterest" name="cityOfInterest" placeholder="e.g., Dallas, TX">
+                    </div>
+
+                    <div class="form-field">
+                        <label for="deliveryFormat">Preferred Delivery Format <span class="required">*</span></label>
+                        <select id="deliveryFormat" name="deliveryFormat" required>
+                            <option value="">Select...</option>
+                            <option value="pdf">PDF Report</option>
+                            <option value="excel">Excel/Spreadsheet</option>
+                            <option value="presentation">PowerPoint Presentation</option>
+                            <option value="dashboard">Online Dashboard</option>
+                        </select>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="useCase">Use Case Description <span class="required">*</span></label>
+                        <textarea id="useCase" name="useCase" required placeholder="How will you use this timeline analysis? What business decisions does it support?"></textarea>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="additionalNotes">Additional Notes</label>
+                        <textarea id="additionalNotes" name="additionalNotes" placeholder="Any other information we should know"></textarea>
+                    </div>
+                </div>
+
+                <!-- Agreement Section -->
+                <div class="agreement-section">
+                    <div class="agreement-checkbox">
+                        <input type="checkbox" id="agree1" name="agree1" required>
+                        <label for="agree1">I understand that timeline predictions are estimates based on historical data and may vary</label>
+                    </div>
+                    <div class="agreement-checkbox">
+                        <input type="checkbox" id="agree2" name="agree2" required>
+                        <label for="agree2">I agree to be contacted regarding this service request</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-button" id="submitBtn">Request Timeline Analysis</button>
+            </form>
+
+            <div class="back-link">
+                <a href="/dashboard_v2.html">← Back to Dashboard</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8010/api';
+
+        document.getElementById('timelineForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            const messageDiv = document.getElementById('message');
+
+            // Validate agreements
+            const agree1 = document.getElementById('agree1').checked;
+            const agree2 = document.getElementById('agree2').checked;
+
+            if (!agree1 || !agree2) {
+                showMessage('Please accept all agreement checkboxes', 'error');
+                return;
+            }
+
+            // Collect form data
+            const formData = {
+                service_type: 'construction_timeline',
+
+                // Contact information
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                company: document.getElementById('company').value,
+                phone: document.getElementById('phone').value || '',
+
+                // Service details
+                timeline_service_type: document.getElementById('serviceType').value,
+                project_address: document.getElementById('projectAddress').value || '',
+                city_of_interest: document.getElementById('cityOfInterest').value || '',
+                delivery_format: document.getElementById('deliveryFormat').value,
+                use_case: document.getElementById('useCase').value,
+                additional_notes: document.getElementById('additionalNotes').value || '',
+
+                // Agreement
+                terms_agreed: true
+            };
+
+            // Disable submit button
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+
+            try {
+                const response = await fetch(`${API_BASE}/inquiry/submit`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showMessage('Timeline analysis request submitted successfully! Our team will contact you within 1-2 business days with next steps and payment information.', 'success');
+                    document.getElementById('timelineForm').reset();
+
+                    // Scroll to top to show success message
+                    document.getElementById('form').scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    showMessage(`Error: ${result.detail || 'Failed to submit request'}`, 'error');
+                }
+            } catch (error) {
+                showMessage(`Error: ${error.message}`, 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Request Timeline Analysis';
+            }
+        });
+
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+
+            if (type === 'success') {
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                }, 10000);
+            }
+        }
+    </script>
+</body>
+</html>

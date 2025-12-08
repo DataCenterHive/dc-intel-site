@@ -1,0 +1,1783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DC-Intel Command Center</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+<style>
+:root {
+  --bg-primary: #f5f5dc;
+  --bg-secondary: #f9f9f9;
+  --bg-tertiary: #fff;
+  --border-color: #000;
+  --text-primary: #000;
+  --text-secondary: #333;
+  --text-muted: #666;
+  --accent-blue: #000;
+  --accent-cyan: #333;
+  --accent-green: #2d5016;
+  --accent-yellow: #8b7355;
+  --accent-red: #8b0000;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  background: var(--bg-secondary);
+  border-right: 2px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  height: 100vh;
+  z-index: 100;
+  box-shadow: 3px 0 6px rgba(0,0,0,0.1);
+}
+
+.sidebar-header {
+  padding: 20px;
+  border-bottom: 2px solid var(--border-color);
+  text-align: center;
+}
+
+.sidebar-logo {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  margin-bottom: 4px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.nav-item:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.nav-item.active {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+  font-weight: 700;
+}
+
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  opacity: 0.8;
+}
+
+/* Main Content */
+.main-content {
+  margin-left: 240px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.header {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.search-container {
+  flex: 1;
+  max-width: 800px;
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 48px 12px 16px;
+  background: var(--bg-tertiary);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+}
+
+.search-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--accent-cyan);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.search-btn:hover {
+  background: #0891b2;
+}
+
+.health-badge {
+  padding: 6px 12px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.api-key-input {
+  padding: 8px 12px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 12px;
+  width: 200px;
+}
+
+.btn {
+  padding: 10px 20px;
+  background: var(--border-color);
+  border: 2px solid var(--border-color);
+  border-radius: 0;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.btn-primary {
+  background: var(--border-color);
+  border-color: var(--border-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #0891b2;
+}
+
+/* Content Area */
+.content {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.panel {
+  display: none;
+}
+
+.panel.active {
+  display: block;
+}
+
+/* Cards */
+.card {
+  background: var(--bg-tertiary);
+  border: 2px solid var(--border-color);
+  border-radius: 0;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 3px 3px 6px rgba(0,0,0,0.1);
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.card-section {
+  margin-bottom: 24px;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Search Results Grid */
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.result-card {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  transition: all 0.2s;
+}
+
+.result-card:hover {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.1);
+}
+
+.result-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.result-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.chip {
+  display: inline-block;
+  padding: 4px 8px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.chip-explicit { border-color: var(--accent-green); color: var(--accent-green); }
+.chip-likely { border-color: var(--accent-yellow); color: var(--accent-yellow); }
+.chip-existing { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+.chip-infra { border-color: var(--accent-blue); color: var(--accent-blue); }
+
+.result-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Table */
+.table-container {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+thead {
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+}
+
+td {
+  padding: 12px;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+tr:hover td {
+  background: var(--bg-tertiary);
+}
+
+/* Map */
+#map {
+  height: 600px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.leaflet-popup-content {
+  color: var(--bg-primary);
+}
+
+/* Glossary Search */
+.glossary-search {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.glossary-input {
+  flex: 1;
+  padding: 10px 14px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.glossary-input:focus {
+  outline: none;
+  border-color: var(--accent-cyan);
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color);
+}
+
+.pagination-info {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.pagination-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.link {
+  color: var(--accent-cyan);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.link:hover {
+  color: #0891b2;
+  text-decoration: underline;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--text-muted);
+}
+
+.empty-state-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.3;
+}
+
+.empty-state-text {
+  font-size: 14px;
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 24px;
+  color: var(--text-muted);
+}
+
+/* Service Offerings Section */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.service-card {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.service-card:hover {
+  border-color: var(--accent-cyan);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.15);
+}
+
+.service-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.service-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 60px;
+  }
+  .sidebar-nav .nav-text {
+    display: none;
+  }
+  .main-content {
+    margin-left: 60px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">DC-INTEL</div>
+    <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Command Center</div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-item active" data-panel="search">
+      <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+      </svg>
+      <span class="nav-text">Search</span>
+    </div>
+
+    <div class="nav-item" data-panel="knowledge">
+      <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+      </svg>
+      <span class="nav-text">Knowledge</span>
+    </div>
+
+    <div class="nav-item" data-panel="news">
+      <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+      </svg>
+      <span class="nav-text">News Feed</span>
+    </div>
+
+    <div class="nav-item" data-panel="map">
+      <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
+      </svg>
+      <span class="nav-text">Map</span>
+    </div>
+
+    <div class="nav-item" data-panel="existing-dcs">
+      <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+      </svg>
+      <span class="nav-text">Existing DCs</span>
+    </div>
+
+    <div class="nav-item" data-panel="services">
+      <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+      </svg>
+      <span class="nav-text">Services</span>
+    </div>
+  </nav>
+
+  <div style="padding: 16px; border-top: 1px solid var(--border-color); font-size: 11px; color: var(--text-muted);">
+    <div id="sidebarStatus">Loading...</div>
+  </div>
+</aside>
+
+<!-- Main Content -->
+<div class="main-content">
+  <!-- Header -->
+  <header class="header">
+    <div style="flex: 1; font-size: 20px; font-weight: 600; color: var(--text-primary);">
+      DC Intelligence Platform
+    </div>
+
+    <div style="display: flex; gap: 8px; align-items: center;">
+      <!-- User Account Section -->
+      <div id="userAccountSection" style="display: none; margin-right: 8px;">
+        <span id="userNameDisplay" style="color: var(--text-secondary); font-size: 13px; margin-right: 8px;">Guest</span>
+        <button id="userDashboardBtn" class="btn" onclick="window.location.href='/dashboard/user.html'">My Account</button>
+        <button id="logoutBtn" class="btn" onclick="handleLogout()">Logout</button>
+      </div>
+      <!-- Login Button (shown when not logged in) -->
+      <div id="loginSection" style="display: flex; gap: 8px;">
+        <button id="loginBtn" class="btn btn-primary" onclick="window.location.href='/auth/login.html'">Sign In</button>
+        <button id="registerBtn" class="btn" onclick="window.location.href='/auth/register.html'">Register</button>
+      </div>
+
+      <input id="apiKey" type="password" placeholder="API Key" class="api-key-input" />
+      <button id="saveKeyBtn" class="btn">Save</button>
+      <button id="reloadBtn" class="btn">Reload</button>
+    </div>
+  </header>
+
+  <!-- Content Area -->
+  <div class="content">
+
+    <!-- SEARCH PANEL (Main Results) -->
+    <div id="panel-search" class="panel active">
+      <div id="searchResults">
+        <div class="empty-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%;">
+          <div class="empty-state-icon">🔍</div>
+          <div class="empty-state-text">Search DC-Intel for data centers, knowledge, news, and more</div>
+          <div style="margin-top: 32px; max-width: 1200px; width: 100%; padding: 0 20px;">
+            <div class="search-container" style="box-shadow: 0 4px 12px rgba(0,0,0,0.3); margin: 0 auto;">
+              <input
+                id="mainSearchInputCentered"
+                type="text"
+                class="search-input"
+                placeholder="Try: Dallas data centers, What is a UPS?, Digital Realty in Texas..."
+                style="font-size: 16px; padding: 16px 20px;"
+              />
+              <button id="mainSearchBtnCentered" class="search-btn" style="padding: 16px 28px;">Search</button>
+            </div>
+            <div style="margin-top: 12px; font-size: 13px; color: var(--text-muted); text-align: center;">
+              Search across: Knowledge Base • Upcoming DCs • Existing DCs • News • Operators
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KNOWLEDGE PANEL -->
+    <div id="panel-knowledge" class="panel">
+      <div class="card">
+        <div class="card-title">Data Center Knowledge Base</div>
+
+        <!-- Glossary Search -->
+        <div class="card-section">
+          <div class="section-title">Glossary Search</div>
+          <div class="glossary-search">
+            <input id="glossaryQ" type="text" placeholder="Search terms: UPS, Tier III, MMR, cooling..." class="glossary-input" />
+            <button id="glossaryBtn" class="btn btn-primary">Search</button>
+          </div>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Term</th>
+                  <th>Definition</th>
+                  <th>Aliases</th>
+                </tr>
+              </thead>
+              <tbody id="glossaryRows"></tbody>
+            </table>
+          </div>
+          <div class="pagination">
+            <div id="glossaryMeta" class="pagination-info"></div>
+            <div class="pagination-buttons">
+              <button id="glossaryPrev" class="btn" disabled>Previous</button>
+              <button id="glossaryNext" class="btn">Next</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Define -->
+        <div class="card-section">
+          <div class="section-title">Quick Define</div>
+          <div class="glossary-search">
+            <input id="defineTerm" type="text" placeholder='Try: "data center", "UPS", "colocation"' class="glossary-input" />
+            <button id="defineBtn" class="btn btn-primary">Define</button>
+          </div>
+          <div id="defineResult" style="padding: 12px; background: var(--bg-tertiary); border-radius: 8px; min-height: 60px;"></div>
+        </div>
+
+        <!-- Taxonomy Browser -->
+        <div class="card-section">
+          <div class="section-title">
+            Taxonomy Browser
+            <select id="taxSheet" class="btn" style="float: right; padding: 6px 12px;"></select>
+          </div>
+          <div class="table-container">
+            <table>
+              <thead id="taxHead"></thead>
+              <tbody id="taxRows"></tbody>
+            </table>
+          </div>
+          <div class="pagination">
+            <div id="taxMeta" class="pagination-info"></div>
+            <div class="pagination-buttons">
+              <button id="taxPrev" class="btn" disabled>Previous</button>
+              <button id="taxNext" class="btn">Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEWS PANEL -->
+    <div id="panel-news" class="panel">
+      <div class="card">
+        <div class="card-title">News & Operator Feed</div>
+        <div class="results-grid" id="newsGrid"></div>
+        <div class="pagination">
+          <div id="newsMeta" class="pagination-info"></div>
+          <div class="pagination-buttons">
+            <button id="newsPrev" class="btn" disabled>Previous</button>
+            <button id="newsNext" class="btn">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAP PANEL -->
+    <div id="panel-map" class="panel">
+      <div class="card">
+        <div class="card-title">Data Center Map (US)</div>
+        <div id="map"></div>
+        <div style="margin-top: 16px; padding: 12px; background: var(--bg-tertiary); border-radius: 8px;">
+          <div style="font-size: 13px; color: var(--text-secondary);">
+            <span style="color: var(--accent-green);">●</span> Explicit DC Construction Sites &nbsp;&nbsp;
+            <span style="color: var(--accent-blue);">●</span> Existing Operational DCs
+          </div>
+        </div>
+
+        <!-- EXPLICIT DC SITES TABLE -->
+        <div style="margin-top: 24px;">
+          <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">Explicit DC Construction Sites</h3>
+          <div class="table-container" style="max-height: 400px; overflow-y: auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Address</th>
+                  <th>City</th>
+                  <th>State</th>
+                  <th>Permits</th>
+                  <th>Last Seen</th>
+                </tr>
+              </thead>
+              <tbody id="explicitDCRows"></tbody>
+            </table>
+          </div>
+          <div id="explicitDCMeta" style="margin-top: 12px; font-size: 13px; color: var(--text-secondary);"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXISTING DCs PANEL -->
+    <div id="panel-existing-dcs" class="panel">
+      <div class="card">
+        <div class="card-title">Existing Operational Data Centers</div>
+
+        <div class="glossary-search" style="margin-bottom: 16px;">
+          <input id="dcFilterProvider" type="text" placeholder="Filter by provider..." class="glossary-input" />
+          <input id="dcFilterState" type="text" placeholder="Filter by state..." class="glossary-input" style="max-width: 150px;" />
+          <button id="dcFilterBtn" class="btn btn-primary">Filter</button>
+          <button id="dcClearBtn" class="btn">Clear</button>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Provider</th>
+                <th>Title</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Link</th>
+              </tr>
+            </thead>
+            <tbody id="dcRows"></tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <div id="dcMeta" class="pagination-info"></div>
+          <div class="pagination-buttons">
+            <button id="dcPrev" class="btn" disabled>Previous</button>
+            <button id="dcNext" class="btn">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICES PANEL -->
+    <div id="panel-services" class="panel">
+      <div class="card">
+        <div class="card-title">DC-Intel Services & Solutions</div>
+
+        <!-- SUBSCRIPTION PLANS SECTION -->
+        <div class="card-section">
+          <div class="section-title">Subscription Plans</div>
+          <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 16px;">Choose the plan that fits your data center intelligence needs</p>
+
+          <div class="services-grid" style="grid-template-columns: repeat(3, 1fr); gap: 20px;">
+            <!-- Basic Plan -->
+            <div class="service-card" onclick="window.location.href='/services/basic.html'" style="border: 2px solid var(--border-color);">
+              <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+                <div class="service-title" style="font-size: 18px;">Basic</div>
+                <div style="background: var(--accent-blue); color: white; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">STARTER</div>
+              </div>
+              <div style="font-size: 24px; font-weight: 700; color: var(--accent-cyan); margin-bottom: 12px;">$10K-$15K<span style="font-size: 14px; color: var(--text-muted);">/year</span></div>
+              <div class="service-desc" style="margin-bottom: 16px;">Essential permit database and news feed access. Perfect for small firms and consultants.</div>
+              <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.8;">
+                <div style="margin-bottom: 6px;">✓ 16-City Permit Database</div>
+                <div style="margin-bottom: 6px;">✓ News & Operator Feed</div>
+                <div style="margin-bottom: 6px;">✓ Basic Dashboards</div>
+                <div style="margin-bottom: 6px;">✓ Up to 3 seats</div>
+              </div>
+              <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border-color); text-align: center; color: var(--accent-cyan); font-weight: 600; font-size: 14px;">
+                View Details →
+              </div>
+            </div>
+
+            <!-- Premium Plan -->
+            <div class="service-card" onclick="window.location.href='/services/premium.html'" style="border: 3px solid var(--accent-cyan); position: relative; transform: scale(1.03);">
+              <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent-yellow); color: var(--bg-primary); padding: 4px 16px; border-radius: 12px; font-size: 11px; font-weight: 700;">MOST POPULAR</div>
+              <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px; margin-top: 8px;">
+                <div class="service-title" style="font-size: 18px;">Premium</div>
+                <div style="background: var(--accent-cyan); color: white; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">PRO</div>
+              </div>
+              <div style="font-size: 24px; font-weight: 700; color: var(--accent-cyan); margin-bottom: 12px;">$25K-$50K<span style="font-size: 14px; color: var(--text-muted);">/year</span></div>
+              <div class="service-desc" style="margin-bottom: 16px;">Advanced features with AI summaries and priority alerts. Best for mid-size operators.</div>
+              <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.8;">
+                <div style="margin-bottom: 6px;">✓ Everything in Basic</div>
+                <div style="margin-bottom: 6px;">✓ AI Research Summaries</div>
+                <div style="margin-bottom: 6px;">✓ Priority Real-Time Alerts</div>
+                <div style="margin-bottom: 6px;">✓ Up to 10 seats</div>
+              </div>
+              <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--accent-cyan); text-align: center; color: var(--accent-cyan); font-weight: 600; font-size: 14px;">
+                View Details →
+              </div>
+            </div>
+
+            <!-- Enterprise Plan -->
+            <div class="service-card" onclick="window.location.href='/services/enterprise.html'" style="border: 2px solid var(--border-color);">
+              <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+                <div class="service-title" style="font-size: 18px;">Enterprise</div>
+                <div style="background: var(--accent-yellow); color: var(--bg-primary); padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">CUSTOM</div>
+              </div>
+              <div style="font-size: 24px; font-weight: 700; color: var(--accent-cyan); margin-bottom: 12px;">$50K-$100K+<span style="font-size: 14px; color: var(--text-muted);">/year</span></div>
+              <div class="service-desc" style="margin-bottom: 16px;">White-glove service with full API access. Built for hyperscale and large operators.</div>
+              <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.8;">
+                <div style="margin-bottom: 6px;">✓ Everything in Premium</div>
+                <div style="margin-bottom: 6px;">✓ Full REST API Access</div>
+                <div style="margin-bottom: 6px;">✓ Dedicated Account Manager</div>
+                <div style="margin-bottom: 6px;">✓ Unlimited seats</div>
+              </div>
+              <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border-color); text-align: center; color: var(--accent-cyan); font-weight: 600; font-size: 14px;">
+                View Details →
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-section">
+          <div class="section-title">Core Services</div>
+          <div class="services-grid">
+            <div class="service-card" onclick="window.location.href='/services/dc-matchmaking.html'" style="cursor: pointer;">
+              <div class="service-title">🎯 DC Matchmaking Service</div>
+              <div class="service-desc">Connect with data centers that match your specific requirements (location, capacity, connectivity).</div>
+            </div>
+
+            <div class="service-card" onclick="window.location.href='/services/lead-referral.html'" style="cursor: pointer;">
+              <div class="service-title">💼 Lead Referral Program</div>
+              <div class="service-desc">Data center operators: receive qualified leads from businesses searching for facilities.</div>
+            </div>
+
+            <div class="service-card" onclick="window.location.href='/services/sponsored-listings.html'" style="cursor: pointer;">
+              <div class="service-title">⭐ Sponsored Listings</div>
+              <div class="service-desc">Feature your facilities prominently in search results and gain visibility with potential customers.</div>
+            </div>
+
+            <div class="service-card" onclick="window.location.href='/services/premium-data.html'" style="cursor: pointer;">
+              <div class="service-title">📊 Premium Data Access</div>
+              <div class="service-desc">Access advanced facility attributes: power capacity, connectivity, pricing estimates, tenant information.</div>
+            </div>
+
+            <div class="service-card" onclick="window.location.href='/services/api-access.html'" style="cursor: pointer;">
+              <div class="service-title">🔌 API Integration</div>
+              <div class="service-desc">Integrate DC-Intel data directly into your applications via our REST API.</div>
+            </div>
+
+            <div class="service-card" onclick="window.location.href='/services/reports.html'" style="cursor: pointer;">
+              <div class="service-title">📈 Market Intelligence Reports</div>
+              <div class="service-desc">Curated trend reports and analysis: top markets by growth, construction activity, demand forecasts.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-section" style="margin-top: 32px;">
+          <div class="section-title">Additional Tools</div>
+          <div class="services-grid">
+            <div class="service-card" onclick="window.location.href='/services/rfq-management.html'" style="cursor: pointer;">
+              <div class="service-title">📝 RFQ Management</div>
+              <div class="service-desc">Manage all your data center RFPs and responses in one centralized platform.</div>
+            </div>
+
+            <div class="service-card" onclick="window.location.href='/services/request-coverage.html'" style="cursor: pointer;">
+              <div class="service-title">🗺️ Request Coverage</div>
+              <div class="service-desc">Request permit tracking and construction intelligence for additional cities and markets.</div>
+            </div>
+
+            <div class="service-card" onclick="window.location.href='/services/construction-timeline.html'" style="cursor: pointer;">
+              <div class="service-title">⏱️ Construction Timeline Predictions</div>
+              <div class="service-desc">AI-powered estimates for when new data center facilities will come online.</div>
+            </div>
+
+            <div class="service-card" onclick="window.location.href='/services/email-alerts.html'" style="cursor: pointer;">
+              <div class="service-title">🔔 Email Alerts</div>
+              <div class="service-desc">Get notified about new construction activity, news, and developments in your target markets.</div>
+            </div>
+
+            <div class="service-card" onclick="window.location.href='/services/dc-comparison.html'" style="cursor: pointer;">
+              <div class="service-title">⚖️ DC Comparison Tool</div>
+              <div class="service-desc">Side-by-side comparison of data center facilities, specifications, and capabilities.</div>
+            </div>
+
+            <div class="service-card" onclick="window.location.href='/services/demand-heatmap.html'" style="cursor: pointer;">
+              <div class="service-title">🔥 Demand Heatmap</div>
+              <div class="service-desc">Interactive visualization of data center demand and construction activity by region.</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 32px; padding: 20px; background: var(--bg-tertiary); border-radius: 8px; border: 1px solid var(--accent-cyan);">
+          <div style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">Interested in our services?</div>
+          <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Contact us to learn more about how DC-Intel can help your business.</div>
+          <button class="btn btn-primary">Contact Us</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const API_BASE = "http://localhost:8010";
+
+const state = {
+  currentPanel: 'search',
+  limit: 20,
+  news: { offset: 0 },
+  glossary: { offset: 0, limit: 20 },
+  tax: { sheet: "", offset: 0, limit: 20, sheets: [] },
+  existingDCs: { offset: 0, limit: 50, provider: '', state: '' },
+  map: null,
+  markers: []
+};
+
+// Utility Functions
+function getKey() { return localStorage.getItem('DCI_API_KEY') || ''; }
+function setKey(v) { if(v) localStorage.setItem('DCI_API_KEY', v); else localStorage.removeItem('DCI_API_KEY'); }
+
+async function api(path, opts = {}) {
+  const headers = Object.assign({}, opts.headers || {});
+  const k = getKey();
+  if (k) headers['x-api-key'] = k;
+  const res = await fetch(`${API_BASE}${path}`, { ...opts, headers });
+  if (!res.ok) {
+    const t = await res.text();
+    throw new Error(`${res.status} ${res.statusText} :: ${t}`);
+  }
+  return res.json();
+}
+
+const esc = s => (s == null ? '' : String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])));
+
+// Format date to show only YYYY-MM-DD, removing time
+function formatDateOnly(dateStr) {
+  if (!dateStr) return '';
+  // Extract just the date part (YYYY-MM-DD) from ISO format or other formats
+  const match = dateStr.match(/(\d{4})-(\d{2})-(\d{2})/);
+  return match ? match[0] : dateStr.split('T')[0];
+}
+
+function qs(obj) {
+  const s = Object.entries(obj)
+    .filter(([,v]) => v !== undefined && v !== null && v !== '')
+    .map(([k,v]) => `${encodeURIComponent(k)}=${encodeURIComponent(String(v))}`)
+    .join('&');
+  return s ? `?${s}` : '';
+}
+
+function uniqueByUrl(items) {
+  const seen = new Set();
+  const out = [];
+  for (const x of (items || [])) {
+    const u = (x.url || '').replace(/([?&])(utm_|fbclid|gclid|mc_cid|mc_eid|igshid)=[^&]*/gi, '').replace(/[/?]$/, '');
+    if (!u) { out.push(x); continue; }
+    if (seen.has(u)) continue;
+    seen.add(u);
+    out.push(x);
+  }
+  return out;
+}
+
+// Table sorting functionality
+const tableSortState = {}; // Track sort direction for each table+column
+
+function makeSortable(tableElement) {
+  const headers = tableElement.querySelectorAll('thead th');
+  const tbody = tableElement.querySelector('tbody');
+  const tableId = tbody?.id || 'table_' + Math.random();
+
+  if (!tableSortState[tableId]) {
+    tableSortState[tableId] = {};
+  }
+
+  headers.forEach((header, columnIndex) => {
+    header.style.cursor = 'pointer';
+    header.style.userSelect = 'none';
+    header.title = 'Click to sort';
+
+    const headerText = header.textContent.trim();
+
+    header.addEventListener('click', () => {
+      const columnKey = headerText;
+      const currentSort = tableSortState[tableId][columnKey] || 'none';
+      const newSort = currentSort === 'asc' ? 'desc' : 'asc';
+      tableSortState[tableId][columnKey] = newSort;
+
+      // Get all rows
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+
+      // Sort rows
+      rows.sort((a, b) => {
+        const aCell = a.cells[columnIndex]?.textContent.trim() || '';
+        const bCell = b.cells[columnIndex]?.textContent.trim() || '';
+
+        // Try to parse as number first
+        const aNum = parseFloat(aCell.replace(/,/g, ''));
+        const bNum = parseFloat(bCell.replace(/,/g, ''));
+
+        let comparison = 0;
+        if (!isNaN(aNum) && !isNaN(bNum)) {
+          // Numeric sort
+          comparison = aNum - bNum;
+        } else {
+          // Alphabetic sort
+          comparison = aCell.localeCompare(bCell, undefined, { numeric: true, sensitivity: 'base' });
+        }
+
+        return newSort === 'asc' ? comparison : -comparison;
+      });
+
+      // Clear and re-append sorted rows
+      rows.forEach(row => tbody.appendChild(row));
+    });
+  });
+}
+
+// Navigation
+function switchPanel(panelName) {
+  // Update nav items
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.classList.remove('active');
+    if (item.getAttribute('data-panel') === panelName) {
+      item.classList.add('active');
+    }
+  });
+
+  // Update panels
+  document.querySelectorAll('.panel').forEach(panel => {
+    panel.classList.remove('active');
+  });
+  document.getElementById(`panel-${panelName}`).classList.add('active');
+
+  state.currentPanel = panelName;
+
+  // Load data for panel if needed
+  if (panelName === 'news') fetchNews();
+  if (panelName === 'knowledge') loadKnowledgePanel();
+  if (panelName === 'map') initMap();
+  if (panelName === 'existing-dcs') fetchExistingDCs();
+}
+
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const panel = item.getAttribute('data-panel');
+    switchPanel(panel);
+  });
+});
+
+// Search Intent Detection
+function detectSearchIntent(query) {
+  const q = query.toLowerCase();
+
+  // Question detection
+  if (q.startsWith('what') || q.startsWith('how') || q.startsWith('why') ||
+      q.startsWith('when') || q.startsWith('where') || q.includes('?')) {
+    return 'question';
+  }
+
+  // Address/location detection (city names, states, or address patterns)
+  const locationPatterns = /\b(dallas|dfw|atlanta|seattle|texas|virginia|ca|tx|va|wa|avenue|street|road|blvd)\b/i;
+  if (locationPatterns.test(q)) {
+    return 'location';
+  }
+
+  // Operator/provider detection
+  const operatorPatterns = /\b(equinix|digital realty|cyrusone|coresite|aws|amazon|google|microsoft|azure|qts)\b/i;
+  if (operatorPatterns.test(q)) {
+    return 'operator';
+  }
+
+  return 'keyword';
+}
+
+// Main Search Handler
+async function performMainSearch(sourceInputId = 'mainSearchInput') {
+  let query = document.getElementById(sourceInputId)?.value?.trim() || '';
+
+  // Try centered input if main input is empty
+  if (!query && sourceInputId === 'mainSearchInput') {
+    query = document.getElementById('mainSearchInputCentered')?.value?.trim() || '';
+  }
+
+  if (!query) return;
+
+  const resultsDiv = document.getElementById('searchResults');
+  resultsDiv.innerHTML = '<div class="loading">Searching...</div>';
+
+  try {
+    const intent = detectSearchIntent(query);
+
+    // Perform parallel searches including existing DCs
+    const [rollupRes, newsRes, opsRes, existingRes] = await Promise.all([
+      api('/ask_v2', {
+        method: 'POST',
+        body: JSON.stringify({ q: query, kind: 'any', limit: 20 }),
+        headers: { 'content-type': 'application/json' }
+      }),
+      api('/news' + qs({ q: query, limit: 10 })),
+      api('/operators_feed' + qs({ q: query, limit: 10 })),
+      api('/datacenters/existing' + qs({ q: query, limit: 10 }))
+    ]);
+
+    // Try to get knowledge answer for all queries (not just questions)
+    let knowledgeAnswer = '';
+    try {
+      const defineRes = await api('/knowledge/define' + qs({ term: query }));
+      if (defineRes.ok) {
+        knowledgeAnswer = defineRes.item;
+      }
+    } catch (e) {
+      // No knowledge match
+    }
+
+    const rollupItems = rollupRes.rollups?.items || [];
+    const newsItems = uniqueByUrl(newsRes.items || []);
+    const opsItems = uniqueByUrl(opsRes.items || []);
+    const allNews = [...newsItems, ...opsItems].slice(0, 10);
+
+    // Build results HTML with proper ordering
+    let html = '';
+
+    // 1. Knowledge Section (if question)
+    if (knowledgeAnswer) {
+      html += `
+        <div class="card-section">
+          <div class="section-title">📚 Knowledge Answer</div>
+          <div class="card">
+            <div style="font-weight: 600; margin-bottom: 8px; color: var(--accent-cyan);">${esc(knowledgeAnswer.term)}</div>
+            <div style="color: var(--text-secondary); line-height: 1.6;">${esc(knowledgeAnswer.definition)}</div>
+            ${knowledgeAnswer.aliases ? `<div style="margin-top: 8px; font-size: 12px; color: var(--text-muted);">Aliases: ${esc(knowledgeAnswer.aliases)}</div>` : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    // 2. Explicit Rollups
+    const explicitItems = rollupItems.filter(r => r.dc_classification === 'explicit');
+    if (explicitItems.length > 0) {
+      html += `
+        <div class="card-section">
+          <div class="section-title">🎯 Explicit Data Center Sites (${explicitItems.length})</div>
+          <div class="results-grid">
+            ${explicitItems.map(r => `
+              <div class="result-card">
+                <div class="result-meta">
+                  <span class="chip chip-explicit">EXPLICIT</span>
+                  <span class="chip">${esc(r.state)}</span>
+                  <span class="chip">${esc(r.city)}</span>
+                </div>
+                <div class="result-title">${esc(r.address_raw)}</div>
+                <div class="result-text">${esc(r.latest_description || '')}</div>
+                <div style="margin-top: 8px; font-size: 11px; color: var(--text-muted);">
+                  ${r.permits_count} permits • Last: ${esc(r.last_seen_applied_date || '')}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // 3. Likely Rollups
+    const likelyItems = rollupItems.filter(r => r.dc_classification === 'likely');
+    if (likelyItems.length > 0) {
+      html += `
+        <div class="card-section">
+          <div class="section-title">⚡ Likely Data Center Sites (${likelyItems.length})</div>
+          <div class="results-grid">
+            ${likelyItems.map(r => `
+              <div class="result-card">
+                <div class="result-meta">
+                  <span class="chip chip-likely">LIKELY</span>
+                  <span class="chip">${esc(r.state)}</span>
+                  <span class="chip">${esc(r.city)}</span>
+                </div>
+                <div class="result-title">${esc(r.address_raw)}</div>
+                <div class="result-text">${esc(r.latest_description || '')}</div>
+                <div style="margin-top: 8px; font-size: 11px; color: var(--text-muted);">
+                  ${r.permits_count} permits • Last: ${esc(r.last_seen_applied_date || '')}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // 4. Existing Operational DCs
+    const existingItems = existingRes.items || [];
+    if (existingItems.length > 0) {
+      html += `
+        <div class="card-section">
+          <div class="section-title">🏢 Existing Operational Data Centers (${existingItems.length})</div>
+          <div class="results-grid">
+            ${existingItems.map(dc => `
+              <div class="result-card">
+                <div class="result-meta">
+                  <span class="chip chip-existing">OPERATIONAL</span>
+                  ${dc.state_guess ? `<span class="chip">${esc(dc.state_guess)}</span>` : ''}
+                  ${dc.city_guess ? `<span class="chip">${esc(dc.city_guess)}</span>` : ''}
+                </div>
+                <div class="result-title">${esc(dc.title || dc.provider || 'Unnamed DC')}</div>
+                ${dc.provider ? `<div style="font-weight: 600; color: var(--accent-cyan); margin-top: 4px;">${esc(dc.provider)}</div>` : ''}
+                ${dc.address_line_raw ? `<div class="result-text">${esc(dc.address_line_raw)}</div>` : ''}
+                ${dc.url ? `<a href="${esc(dc.url)}" target="_blank" class="link" style="font-size: 12px; margin-top: 8px; display: inline-block;">View Details →</a>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // 5. News Section
+    if (allNews.length > 0) {
+      html += `
+        <div class="card-section">
+          <div class="section-title">📰 News & Updates (${allNews.length})</div>
+          <div class="results-grid">
+            ${allNews.map(n => `
+              <div class="result-card">
+                <div class="result-meta">
+                  ${n.source ? `<span class="chip">${esc(n.source)}</span>` : ''}
+                  ${n.provider ? `<span class="chip">${esc(n.provider)}</span>` : ''}
+                  ${n.published_at ? `<span class="chip">${esc(formatDateOnly(n.published_at))}</span>` : ''}
+                </div>
+                <a href="${esc(n.url)}" target="_blank" class="link">
+                  <div class="result-title">${esc(n.title || '(no title)')}</div>
+                </a>
+                ${n.summary ? `<div class="result-text">${esc(n.summary)}</div>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // Empty state
+    if (!knowledgeAnswer && rollupItems.length === 0 && existingItems.length === 0 && allNews.length === 0) {
+      html = `
+        <div class="empty-state">
+          <div class="empty-state-icon">🔍</div>
+          <div class="empty-state-text">No results found for "${esc(query)}"</div>
+        </div>
+      `;
+    }
+
+    resultsDiv.innerHTML = html;
+
+  } catch (e) {
+    resultsDiv.innerHTML = `<div class="card" style="color: var(--accent-red);">Search failed: ${esc(e.message)}</div>`;
+  }
+}
+
+// Event Listeners for both search bars
+// Attach search event listeners only if elements exist
+const mainSearchBtn = document.getElementById('mainSearchBtn');
+if (mainSearchBtn) {
+  mainSearchBtn.addEventListener('click', () => performMainSearch('mainSearchInput'));
+}
+
+const mainSearchBtnCentered = document.getElementById('mainSearchBtnCentered');
+if (mainSearchBtnCentered) {
+  mainSearchBtnCentered.addEventListener('click', () => performMainSearch('mainSearchInputCentered'));
+}
+
+const mainSearchInput = document.getElementById('mainSearchInput');
+if (mainSearchInput) {
+  mainSearchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      performMainSearch('mainSearchInput');
+    }
+  });
+}
+
+const mainSearchInputCentered = document.getElementById('mainSearchInputCentered');
+if (mainSearchInputCentered) {
+  mainSearchInputCentered.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      performMainSearch('mainSearchInputCentered');
+    }
+  });
+}
+
+// Knowledge Panel Functions
+async function loadKnowledgePanel() {
+  if (!state.tax.sheets.length) {
+    await loadTaxSheets();
+  }
+  if (state.tax.sheets.length && !state.tax.sheet) {
+    state.tax.sheet = state.tax.sheets[0];
+  }
+  await Promise.all([fetchTaxonomy(), fetchGlossary()]);
+}
+
+async function loadTaxSheets() {
+  try {
+    const res = await api('/knowledge/taxonomy');
+    state.tax.sheets = res.sheets || [];
+    const sel = document.getElementById('taxSheet');
+    sel.innerHTML = state.tax.sheets.map(s => `<option>${esc(s)}</option>`).join('');
+    state.tax.sheet = state.tax.sheets[0] || '';
+  } catch (e) {
+    state.tax.sheets = [];
+    state.tax.sheet = '';
+  }
+}
+
+async function fetchTaxonomy() {
+  if (!state.tax.sheet) {
+    document.getElementById('taxHead').innerHTML = '';
+    document.getElementById('taxRows').innerHTML = '';
+    document.getElementById('taxMeta').textContent = '';
+    return;
+  }
+
+  try {
+    const res = await api('/knowledge/taxonomy' + qs({ sheet: state.tax.sheet, limit: state.tax.limit, offset: state.tax.offset }));
+    const items = res.items || [];
+    const cols = items.length ? Object.keys(items[0]) : [];
+
+    document.getElementById('taxHead').innerHTML = cols.length ?
+      `<tr>${cols.map(c => `<th>${esc(c)}</th>`).join('')}</tr>` : '';
+
+    const tbody = document.getElementById('taxRows');
+    tbody.innerHTML = '';
+    items.forEach(row => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = cols.map(c => `<td>${esc(row[c])}</td>`).join('');
+      tbody.appendChild(tr);
+    });
+
+    document.getElementById('taxMeta').textContent = `${res.total || 0} total — showing ${items.length} from offset ${res.offset || 0}`;
+    document.getElementById('taxPrev').disabled = (res.offset || 0) <= 0;
+    document.getElementById('taxNext').disabled = !(res.next_offset >= 0);
+
+    document.getElementById('taxPrev').onclick = () => {
+      state.tax.offset = Math.max(0, (res.offset || 0) - state.tax.limit);
+      fetchTaxonomy();
+    };
+    document.getElementById('taxNext').onclick = () => {
+      if (res.next_offset != null) {
+        state.tax.offset = res.next_offset;
+        fetchTaxonomy();
+      }
+    };
+
+    // Make table sortable
+    const taxTable = document.querySelector('#taxRows').closest('table');
+    if (taxTable && items.length > 0) makeSortable(taxTable);
+  } catch (e) {
+    console.error('[taxonomy] Failed to load:', e);
+    document.getElementById('taxHead').innerHTML = '';
+    const tbody = document.getElementById('taxRows');
+    tbody.innerHTML = '<tr><td colspan="10" style="color: #ff6b6b; text-align: center; padding: 20px;">Failed to load taxonomy data. Please try again later.</td></tr>';
+    document.getElementById('taxMeta').textContent = 'Error loading data';
+    document.getElementById('taxPrev').disabled = true;
+    document.getElementById('taxNext').disabled = true;
+  }
+}
+
+async function fetchGlossary() {
+  const q = document.getElementById('glossaryQ').value.trim();
+
+  try {
+    const res = await api('/knowledge/glossary' + qs({ q, limit: state.glossary.limit, offset: state.glossary.offset }));
+
+    const tbody = document.getElementById('glossaryRows');
+    tbody.innerHTML = '';
+    (res.items || []).forEach(r => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${esc(r.term)}</td>
+        <td>${esc(r.definition)}</td>
+        <td>${esc(r.aliases)}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    document.getElementById('glossaryMeta').textContent = `${res.total || 0} total — showing ${res.items?.length || 0} from offset ${res.offset || 0}`;
+    document.getElementById('glossaryPrev').disabled = (res.offset || 0) <= 0;
+    document.getElementById('glossaryNext').disabled = !(res.next_offset >= 0);
+
+    document.getElementById('glossaryPrev').onclick = () => {
+      state.glossary.offset = Math.max(0, (res.offset || 0) - state.glossary.limit);
+      fetchGlossary();
+    };
+    document.getElementById('glossaryNext').onclick = () => {
+      if (res.next_offset != null) {
+        state.glossary.offset = res.next_offset;
+        fetchGlossary();
+      }
+    };
+
+    // Make table sortable
+    const glossaryTable = document.querySelector('#glossaryRows').closest('table');
+    if (glossaryTable && res.items && res.items.length > 0) makeSortable(glossaryTable);
+  } catch (e) {
+    console.error('[glossary] Failed to load:', e);
+    const tbody = document.getElementById('glossaryRows');
+    tbody.innerHTML = '<tr><td colspan="3" style="color: #ff6b6b; text-align: center; padding: 20px;">Failed to load glossary. Please try again later.</td></tr>';
+    document.getElementById('glossaryMeta').textContent = 'Error loading data';
+    document.getElementById('glossaryPrev').disabled = true;
+    document.getElementById('glossaryNext').disabled = true;
+  }
+}
+
+async function doDefine() {
+  const term = document.getElementById('defineTerm').value.trim();
+  if (!term) {
+    document.getElementById('defineResult').innerHTML = '';
+    return;
+  }
+
+  try {
+    const res = await api('/knowledge/define' + qs({ term }));
+    if (res.ok) {
+      const it = res.item;
+      document.getElementById('defineResult').innerHTML = `
+        <div style="font-weight: 600; margin-bottom: 8px; color: var(--accent-cyan);">${esc(it.term)}</div>
+        <div style="color: var(--text-secondary); line-height: 1.6;">${esc(it.definition || '')}</div>
+        ${it.aliases ? `<div style="margin-top: 8px; font-size: 12px; color: var(--text-muted);">Aliases: ${esc(it.aliases)}</div>` : ''}
+      `;
+    } else {
+      document.getElementById('defineResult').textContent = 'No match found.';
+    }
+  } catch (e) {
+    document.getElementById('defineResult').textContent = 'Define failed: ' + e.message;
+  }
+}
+
+document.getElementById('glossaryBtn').onclick = () => {
+  state.glossary.offset = 0;
+  fetchGlossary();
+};
+document.getElementById('taxSheet').addEventListener('change', () => {
+  state.tax.sheet = document.getElementById('taxSheet').value;
+  state.tax.offset = 0;
+  fetchTaxonomy();
+});
+document.getElementById('defineBtn').onclick = doDefine;
+
+// News Feed
+async function fetchNews() {
+  try {
+    const data = await api('/news' + qs({ limit: state.limit, offset: state.news.offset }));
+    const opsData = await api('/operators_feed' + qs({ limit: state.limit, offset: state.news.offset }));
+
+    const newsItems = uniqueByUrl(data.items || []);
+    const opsItems = uniqueByUrl(opsData.items || []);
+    const allItems = [...newsItems, ...opsItems].slice(0, state.limit);
+
+    const grid = document.getElementById('newsGrid');
+    grid.innerHTML = '';
+
+    allItems.forEach(n => {
+      const card = document.createElement('div');
+      card.className = 'result-card';
+      card.innerHTML = `
+        <div class="result-meta">
+          ${n.source ? `<span class="chip">${esc(n.source)}</span>` : ''}
+          ${n.provider ? `<span class="chip">${esc(n.provider)}</span>` : ''}
+          ${n.published_at ? `<span class="chip">${esc(formatDateOnly(n.published_at))}</span>` : ''}
+          ${n.market ? `<span class="chip">${esc(n.market)}</span>` : ''}
+        </div>
+        <a href="${esc(n.url)}" target="_blank" class="link">
+          <div class="result-title">${esc(n.title || '(no title)')}</div>
+        </a>
+        ${n.summary ? `<div class="result-text">${esc(n.summary)}</div>` : ''}
+      `;
+      grid.appendChild(card);
+    });
+
+    document.getElementById('newsMeta').textContent = `Showing ${allItems.length} items from offset ${state.news.offset}`;
+    document.getElementById('newsPrev').disabled = state.news.offset <= 0;
+    document.getElementById('newsNext').disabled = allItems.length < state.limit;
+
+    document.getElementById('newsPrev').onclick = () => {
+      state.news.offset = Math.max(0, state.news.offset - state.limit);
+      fetchNews();
+    };
+    document.getElementById('newsNext').onclick = () => {
+      state.news.offset += state.limit;
+      fetchNews();
+    };
+  } catch (e) {
+    console.error('[news] Failed to load:', e);
+    const grid = document.getElementById('newsGrid');
+    grid.innerHTML = '<div style="color: #ff6b6b; text-align: center; padding: 40px;">Failed to load news feed. Please try again later.</div>';
+    document.getElementById('newsMeta').textContent = 'Error loading news';
+    document.getElementById('newsPrev').disabled = true;
+    document.getElementById('newsNext').disabled = true;
+  }
+}
+
+// Map Initialization
+function initMap() {
+  if (state.map) return; // Already initialized
+
+  state.map = L.map('map').setView([39.8283, -98.5795], 4); // Center of US
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors',
+    maxZoom: 18
+  }).addTo(state.map);
+
+  // Load and display markers
+  loadMapMarkers();
+  loadExplicitDCsTable();
+}
+
+async function loadMapMarkers() {
+  try {
+    // Clear existing markers
+    state.markers.forEach(marker => marker.remove());
+    state.markers = [];
+
+    // Fetch markers from API
+    const data = await api('/map/markers?limit=1000');
+
+    if (!data.markers || data.markers.length === 0) {
+      console.log('[map] No markers returned from API');
+      return;
+    }
+
+    console.log(`[map] Loaded ${data.markers.length} markers (${data.cached} cached)`);
+
+    // Add markers to map
+    data.markers.forEach(m => {
+      const isExplicit = m.type === 'explicit';
+
+      // Create custom icon based on type
+      const icon = L.divIcon({
+        className: 'custom-div-icon',
+        html: `<div style="background-color: ${isExplicit ? 'var(--accent-green)' : 'var(--accent-blue)'}; width: 14px; height: 14px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>`,
+        iconSize: [14, 14],
+        iconAnchor: [7, 7]
+      });
+
+      // Create marker
+      const marker = L.marker([m.lat, m.lon], { icon }).addTo(state.map);
+
+      // Create popup content
+      let popupContent = '';
+      if (isExplicit) {
+        popupContent = `
+          <div style="color: #000; min-width: 200px;">
+            <div style="font-weight: 600; margin-bottom: 4px; color: var(--accent-green);">🎯 EXPLICIT DC Site</div>
+            <div style="font-size: 13px;"><strong>${esc(m.title)}</strong></div>
+            <div style="font-size: 12px; margin-top: 4px;">${esc(m.city)}, ${esc(m.state)}</div>
+            ${m.description ? `<div style="font-size: 11px; margin-top: 4px; color: #666;">${esc(m.description).substring(0, 100)}...</div>` : ''}
+            <div style="font-size: 11px; margin-top: 4px; color: #666;">
+              ${m.permits_count} permits • Last: ${esc(m.last_seen)}
+            </div>
+          </div>
+        `;
+      } else {
+        popupContent = `
+          <div style="color: #000; min-width: 200px;">
+            <div style="font-weight: 600; margin-bottom: 4px; color: var(--accent-blue);">🏢 Existing DC</div>
+            <div style="font-size: 13px;"><strong>${esc(m.title)}</strong></div>
+            ${m.provider ? `<div style="font-size: 12px; margin-top: 2px;">${esc(m.provider)}</div>` : ''}
+            <div style="font-size: 12px; margin-top: 4px;">${esc(m.address)}</div>
+            <div style="font-size: 12px;">${esc(m.city)}, ${esc(m.state)}</div>
+            ${m.url && m.url !== 'nan' ? `<div style="margin-top: 6px;"><a href="${esc(m.url)}" target="_blank" style="color: var(--accent-cyan); font-size: 11px;">View Details →</a></div>` : ''}
+          </div>
+        `;
+      }
+
+      marker.bindPopup(popupContent);
+      state.markers.push(marker);
+    });
+
+  } catch (e) {
+    console.error('[map] Failed to load markers:', e);
+  }
+}
+
+// Load Explicit DCs Table
+async function loadExplicitDCsTable() {
+  try {
+    const data = await api('/sites_from_permits?kind=explicit&limit=1000');
+
+    const tbody = document.getElementById('explicitDCRows');
+    tbody.innerHTML = '';
+
+    (data.items || []).forEach(site => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${esc(site.address_raw || '')}</td>
+        <td>${esc(site.city || '')}</td>
+        <td>${esc(site.state || '')}</td>
+        <td>${site.permits_count || 1}</td>
+        <td>${esc(site.last_seen_applied_date || 'N/A')}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    document.getElementById('explicitDCMeta').textContent = `Showing ${(data.items || []).length} of ${data.total || 0} explicit DC sites`;
+
+    // Make table sortable
+    const explicitDCTable = document.querySelector('#explicitDCRows').closest('table');
+    if (explicitDCTable && data.items && data.items.length > 0) makeSortable(explicitDCTable);
+  } catch (e) {
+    console.error('[explicit-dcs] Failed to load:', e);
+  }
+}
+
+// Existing DCs
+async function fetchExistingDCs() {
+  const provider = state.existingDCs.provider;
+  const stateFilter = state.existingDCs.state;
+
+  try {
+    const data = await api('/datacenters/existing' + qs({
+      limit: state.existingDCs.limit,
+      offset: state.existingDCs.offset,
+      provider: provider || undefined,
+      state: stateFilter || undefined
+    }));
+
+    const tbody = document.getElementById('dcRows');
+    tbody.innerHTML = '';
+
+    (data.items || []).forEach(dc => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${esc(dc.provider)}</td>
+        <td>${esc(dc.title)}</td>
+        <td>${esc(dc.address_line_raw)}</td>
+        <td>${esc(dc.city_guess)}</td>
+        <td>${esc(dc.state_guess)}</td>
+        <td>${dc.url ? `<a href="${esc(dc.url)}" target="_blank" class="link">View</a>` : ''}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    document.getElementById('dcMeta').textContent = `${data.total || 0} total — showing ${data.items?.length || 0} from offset ${data.offset || 0}`;
+    document.getElementById('dcPrev').disabled = (data.offset || 0) <= 0;
+    document.getElementById('dcNext').disabled = !(data.next_offset >= 0);
+
+    document.getElementById('dcPrev').onclick = () => {
+      state.existingDCs.offset = Math.max(0, (data.offset || 0) - state.existingDCs.limit);
+      fetchExistingDCs();
+    };
+    document.getElementById('dcNext').onclick = () => {
+      if (data.next_offset != null) {
+        state.existingDCs.offset = data.next_offset;
+        fetchExistingDCs();
+      }
+    };
+
+    // Make table sortable
+    const dcTable = document.querySelector('#dcRows').closest('table');
+    if (dcTable && data.items && data.items.length > 0) makeSortable(dcTable);
+  } catch (e) {
+    console.error('[existing-dcs] Failed to load:', e);
+    const tbody = document.getElementById('dcRows');
+    tbody.innerHTML = '<tr><td colspan="6" style="color: #ff6b6b; text-align: center; padding: 20px;">Failed to load existing data centers. Please try again later.</td></tr>';
+    document.getElementById('dcMeta').textContent = 'Error loading data';
+    document.getElementById('dcPrev').disabled = true;
+    document.getElementById('dcNext').disabled = true;
+  }
+}
+
+document.getElementById('dcFilterBtn').onclick = () => {
+  state.existingDCs.provider = document.getElementById('dcFilterProvider').value.trim();
+  state.existingDCs.state = document.getElementById('dcFilterState').value.trim();
+  state.existingDCs.offset = 0;
+  fetchExistingDCs();
+};
+
+document.getElementById('dcClearBtn').onclick = () => {
+  document.getElementById('dcFilterProvider').value = '';
+  document.getElementById('dcFilterState').value = '';
+  state.existingDCs.provider = '';
+  state.existingDCs.state = '';
+  state.existingDCs.offset = 0;
+  fetchExistingDCs();
+};
+
+// API Key Management
+document.getElementById('saveKeyBtn').onclick = () => {
+  const v = document.getElementById('apiKey').value;
+  setKey(v);
+  loadHealthStatus();
+};
+
+document.getElementById('reloadBtn').onclick = async () => {
+  try {
+    await api('/reload');
+    await loadHealthStatus();
+    alert('Data reloaded successfully!');
+  } catch (e) {
+    alert('Reload failed: ' + e.message);
+  }
+};
+
+// Health Status
+async function loadHealthStatus() {
+  try {
+    const h = await api('/health');
+    const totalNews = (h.news_loaded || 0) + (h.operators_feed_loaded || 0);
+    document.getElementById('sidebarStatus').innerHTML = `
+      Sites: ${h.sites_loaded || 0}<br>
+      News: ${totalNews}<br>
+      Rollups: ${h.rollup_rows || 0}
+    `;
+  } catch (e) {
+    document.getElementById('sidebarStatus').textContent = 'Error loading status';
+  }
+}
+
+// Authentication Check
+function checkAuthenticationStatus() {
+  const userStr = localStorage.getItem('user') || sessionStorage.getItem('user');
+  const token = localStorage.getItem('access_token') || sessionStorage.getItem('access_token');
+
+  if (userStr && token) {
+    try {
+      const user = JSON.parse(userStr);
+      // User is logged in
+      document.getElementById('userAccountSection').style.display = 'flex';
+      document.getElementById('loginSection').style.display = 'none';
+      document.getElementById('userNameDisplay').textContent = user.full_name || user.email;
+      return true;
+    } catch (e) {
+      // Invalid user data
+      return false;
+    }
+  } else {
+    // User is not logged in
+    document.getElementById('userAccountSection').style.display = 'none';
+    document.getElementById('loginSection').style.display = 'flex';
+    return false;
+  }
+}
+
+function handleLogout() {
+  if (!confirm('Are you sure you want to log out?')) {
+    return;
+  }
+
+  // Clear all authentication data
+  localStorage.removeItem('access_token');
+  localStorage.removeItem('token_type');
+  localStorage.removeItem('user');
+  sessionStorage.removeItem('access_token');
+  sessionStorage.removeItem('token_type');
+  sessionStorage.removeItem('user');
+
+  // Refresh the page to show logged out state
+  window.location.reload();
+}
+
+// Boot
+(async function boot() {
+  const k = getKey();
+  if (k) document.getElementById('apiKey').value = k;
+
+  // Check authentication status
+  checkAuthenticationStatus();
+
+  await loadHealthStatus();
+
+  // Load initial panel data
+  // Search panel shows empty state by default
+})();
+</script>
+
+</body>
+</html>

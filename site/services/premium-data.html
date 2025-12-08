@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Data Access - DC Intelligence</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0e16;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0e16;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #111827;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: #0a0e16;
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background: #111827;
+            color: #06b6d4;
+            padding: 15px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: transform 0.2s;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Benefits Section */
+        .benefits {
+            padding: 60px 40px;
+            background: #0a0e16;
+        }
+
+        .benefits h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 50px;
+            color: #f9fafb;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .benefit-card {
+            background: #111827;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .benefit-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #06b6d4;
+        }
+
+        .benefit-card p {
+            color: #9ca3af;
+            line-height: 1.6;
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            padding: 60px 40px;
+            background: #111827;
+        }
+
+        .how-it-works h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 50px;
+            color: #f9fafb;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .step {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .step-number {
+            background: #0a0e16;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+
+        .step h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            color: #f9fafb;
+        }
+
+        .step p {
+            color: #9ca3af;
+            line-height: 1.6;
+        }
+
+        /* Pricing Table */
+        .commission-section {
+            padding: 60px 40px;
+            background: #0a0e16;
+        }
+
+        .commission-section h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #f9fafb;
+        }
+
+        .commission-table {
+            max-width: 800px;
+            margin: 0 auto 20px;
+            background: #111827;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .commission-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .commission-table th {
+            background: #0a0e16;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .commission-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .commission-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .commission-table .highlight {
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        .commission-note {
+            text-align: center;
+            color: #718096;
+            font-size: 0.9em;
+            font-style: italic;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Form Section */
+        .form-section {
+            padding: 60px 40px;
+            background: #111827;
+        }
+
+        .form-section h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 50px;
+            color: #f9fafb;
+        }
+
+        .form-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            background: #0a0e16;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .form-group h3 {
+            color: #06b6d4;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            border-bottom: 2px solid #06b6d4;
+            padding-bottom: 10px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-field label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #f9fafb;
+        }
+
+        .form-field label .required {
+            color: #e53e3e;
+        }
+
+        .form-field input,
+        .form-field select,
+        .form-field textarea {
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.2s;
+        }
+
+        .form-field input:focus,
+        .form-field select:focus,
+        .form-field textarea:focus {
+            outline: none;
+            border-color: #06b6d4;
+        }
+
+        .form-field textarea {
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            cursor: pointer;
+            color: #f9fafb;
+        }
+
+        .agreement-section {
+            background: #fff5e6;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #f59e0b;
+            margin-top: 30px;
+        }
+
+        .agreement-checkbox {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .agreement-checkbox input[type="checkbox"] {
+            margin-right: 10px;
+            margin-top: 3px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .agreement-checkbox label {
+            cursor: pointer;
+            color: #f9fafb;
+            line-height: 1.6;
+        }
+
+        .submit-button {
+            background: #0a0e16;
+            color: white;
+            padding: 16px 50px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin: 30px auto 0;
+        }
+
+        .submit-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-link a {
+            color: #06b6d4;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 40px 20px;
+            }
+
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .benefits,
+            .how-it-works,
+            .commission-section,
+            .form-section {
+                padding: 40px 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>Premium Data Access</h1>
+            <p>Get direct access to our comprehensive data center database. Export raw data, advanced datasets, and custom reports for your analysis.</p>
+            <a href="#form" class="hero-cta">Request Access</a>
+        </div>
+
+        <!-- Benefits Section -->
+        <div class="benefits">
+            <h2>Data Included</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">🏢</div>
+                    <h3>Facility Data</h3>
+                    <p>2,436+ facilities across 16 cities<br>
+                    Names, addresses, providers, capacity<br>
+                    Certifications and compliance info</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🏗️</div>
+                    <h3>Permit Data</h3>
+                    <p>Construction activity tracking<br>
+                    Project timelines and valuations<br>
+                    Regional development trends</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">📈</div>
+                    <h3>Market Data</h3>
+                    <p>Regional trends and growth patterns<br>
+                    Historical time-series analysis<br>
+                    Market hotspots and forecasts</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pricing Tiers Section -->
+        <div class="commission-section">
+            <h2>Access Tiers</h2>
+            <div class="commission-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tier</th>
+                            <th>Features</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Basic Data Export</strong></td>
+                            <td>Full facility database, Monthly Excel/CSV exports, Basic metadata</td>
+                            <td class="highlight">$499/month</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Advanced Analytics</strong></td>
+                            <td>Basic + Permit data, Historical trends (12mo), Weekly updates, API access (1,000 calls/day)</td>
+                            <td class="highlight">$1,499/month</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Enterprise</strong></td>
+                            <td>Advanced + Real-time access, Unlimited API, Custom integrations, Dedicated support</td>
+                            <td class="highlight">$4,999/month</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="commission-note">* Annual subscriptions receive 15% discount. Custom enterprise pricing available.</p>
+        </div>
+
+        <!-- How It Works Section -->
+        <div class="how-it-works">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Submit Request</h3>
+                    <p>Fill out the form below with your data requirements and use case.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Review & Setup</h3>
+                    <p>Our team reviews your request and sets up your data access within 24-48 hours.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Access Data</h3>
+                    <p>Receive credentials and documentation to start accessing your data exports or API.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Ongoing Support</h3>
+                    <p>Get regular updates and dedicated support for your data needs.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Section -->
+        <div class="form-section" id="form">
+            <h2>Request Premium Data Access</h2>
+            <form id="premiumDataForm">
+                <div class="message" id="message"></div>
+
+                <!-- Contact Information -->
+                <div class="form-group">
+                    <h3>Contact Information</h3>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="name">Full Name <span class="required">*</span></label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="email">Email <span class="required">*</span></label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="company">Company <span class="required">*</span></label>
+                            <input type="text" id="company" name="company" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="phone">Phone <span class="required">*</span></label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="jobTitle">Job Title</label>
+                            <input type="text" id="jobTitle" name="jobTitle" placeholder="e.g., Data Analyst, Research Director">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Access Requirements -->
+                <div class="form-group">
+                    <h3>Access Requirements</h3>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="tierSelected">Tier Selection <span class="required">*</span></label>
+                            <select id="tierSelected" name="tierSelected" required>
+                                <option value="">Select...</option>
+                                <option value="basic">Basic Data Export ($499/month)</option>
+                                <option value="advanced">Advanced Analytics ($1,499/month)</option>
+                                <option value="enterprise">Enterprise ($4,999/month)</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="useCase">Use Case <span class="required">*</span></label>
+                            <select id="useCase" name="useCase" required>
+                                <option value="">Select...</option>
+                                <option value="market_research">Market research</option>
+                                <option value="investment_analysis">Investment analysis</option>
+                                <option value="competitive_intelligence">Competitive intelligence</option>
+                                <option value="academic_research">Academic research</option>
+                                <option value="internal_reporting">Internal reporting</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label>Data Interests (select all that apply)</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="data_facility" name="dataInterests" value="facility_database">
+                                <label for="data_facility">Facility database</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="data_permits" name="dataInterests" value="construction_permits">
+                                <label for="data_permits">Construction permits</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="data_trends" name="dataInterests" value="market_trends">
+                                <label for="data_trends">Market trends</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="data_historical" name="dataInterests" value="historical_data">
+                                <label for="data_historical">Historical data</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="data_api" name="dataInterests" value="api_access">
+                                <label for="data_api">API access</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="data_custom" name="dataInterests" value="custom_reports">
+                                <label for="data_custom">Custom reports</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-field" style="margin-top: 20px;">
+                        <label>Preferred Data Format (select all that apply)</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="format_excel" name="preferredFormats" value="excel">
+                                <label for="format_excel">Excel (.xlsx)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="format_csv" name="preferredFormats" value="csv">
+                                <label for="format_csv">CSV</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="format_json" name="preferredFormats" value="json">
+                                <label for="format_json">JSON</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="format_xml" name="preferredFormats" value="xml">
+                                <label for="format_xml">XML</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="format_api" name="preferredFormats" value="api_rest">
+                                <label for="format_api">API (REST)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Requirements -->
+                <div class="form-group">
+                    <h3>Additional Requirements</h3>
+                    <div class="form-field">
+                        <label for="additionalRequirements">Additional Requirements</label>
+                        <textarea id="additionalRequirements" name="additionalRequirements" placeholder="Specific data fields needed, integration requirements, reporting frequency, any special requests..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Agreement Section -->
+                <div class="agreement-section">
+                    <div class="agreement-checkbox">
+                        <input type="checkbox" id="agree1" name="agree1" required>
+                        <label for="agree1">I understand this is a paid service with monthly subscription fees</label>
+                    </div>
+                    <div class="agreement-checkbox">
+                        <input type="checkbox" id="agree2" name="agree2" required>
+                        <label for="agree2">I agree to use the data in accordance with DC Intelligence Terms of Service</label>
+                    </div>
+                    <div class="agreement-checkbox">
+                        <input type="checkbox" id="agree3" name="agree3" required>
+                        <label for="agree3">I acknowledge that data is for internal use only and may not be resold</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-button" id="submitBtn">Submit Request</button>
+            </form>
+
+            <div class="back-link">
+                <a href="/dashboard_v2.html">← Back to Dashboard</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8010/api';
+
+        document.getElementById('premiumDataForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            const messageDiv = document.getElementById('message');
+
+            // Validate agreements
+            const agree1 = document.getElementById('agree1').checked;
+            const agree2 = document.getElementById('agree2').checked;
+            const agree3 = document.getElementById('agree3').checked;
+
+            if (!agree1 || !agree2 || !agree3) {
+                showMessage('Please accept all agreement checkboxes', 'error');
+                return;
+            }
+
+            // Collect form data
+            const formData = {
+                service_type: 'premium_data',
+
+                // Contact information
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                company: document.getElementById('company').value,
+                phone: document.getElementById('phone').value,
+                job_title: document.getElementById('jobTitle').value || '',
+
+                // Requirements
+                tier_selected: document.getElementById('tierSelected').value,
+                use_case: document.getElementById('useCase').value,
+                data_interests: Array.from(document.querySelectorAll('input[name="dataInterests"]:checked')).map(cb => cb.value),
+                preferred_formats: Array.from(document.querySelectorAll('input[name="preferredFormats"]:checked')).map(cb => cb.value),
+                additional_requirements: document.getElementById('additionalRequirements').value || '',
+
+                // Agreement
+                terms_agreed: true
+            };
+
+            // Disable submit button
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+
+            try {
+                const response = await fetch(`${API_BASE}/inquiry/submit`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showMessage(`Premium data access request submitted successfully! Thank you. We'll contact you within 24-48 hours to set up your account.`, 'success');
+                    document.getElementById('premiumDataForm').reset();
+
+                    // Scroll to top to show success message
+                    document.getElementById('form').scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    showMessage(`Error: ${result.detail || 'Failed to submit request'}`, 'error');
+                }
+            } catch (error) {
+                showMessage(`Error: ${error.message}`, 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Request';
+            }
+        });
+
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+
+            if (type === 'success') {
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                }, 10000);
+            }
+        }
+    </script>
+</body>
+</html>

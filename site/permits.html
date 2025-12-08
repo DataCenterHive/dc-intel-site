@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>DC Intel — Permits Explorer</title>
+<link rel="icon" href="data:,">
+<style>
+  :root { --fg:#0f172a; --mut:#6b7280; --link:#2563eb; --chip:#eef2ff; --bg:#f8fafc; }
+  *{box-sizing:border-box} body{margin:0;font:16px/1.45 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--fg);background:#fff}
+  header{padding:24px 20px;border-bottom:1px solid #e5e7eb;background:#fff;position:sticky;top:0;z-index:1}
+  h1{margin:0 0 6px;font-size:24px}
+  .sub{color:var(--mut);font-size:14px}
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  select,input{height:38px;padding:0 10px;border:1px solid #e5e7eb;border-radius:10px;background:#fff}
+  input[type="date"]{padding:0 8px}
+  .btn{height:38px;padding:0 14px;border-radius:10px;border:1px solid #e5e7eb;background:#f3f4f6;cursor:pointer}
+  .btn.primary{background:#111827;color:#fff;border-color:#111827}
+  main{padding:18px 20px}
+  .note{color:var(--mut);font-size:14px;margin:8px 0 16px}
+  .result{padding:14px 0;border-bottom:1px solid #f1f5f9}
+  .row>a{color:var(--link);text-decoration:none}
+  .meta{color:var(--mut);font-size:13px;margin-top:4px;display:flex;gap:12px;flex-wrap:wrap}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+  .chip{background:var(--chip);padding:2px 8px;border-radius:999px;font-size:12px}
+  .counts{font-size:14px;color:var(--mut)}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:10px 0}
+  .right{display:flex;align-items:center;gap:10px}
+  .small{font-size:12px;color:var(--mut)}
+  .linklike{color:var(--link);cursor:pointer}
+</style>
+</head>
+<body>
+<header>
+  <h1>Permits Explorer</h1>
+  <div class="sub">Search normalized permit masters served by your local API.</div>
+  <div class="toolbar">
+    <select id="market">
+      <option value="">All markets</option>
+      <option>IAD-Loudoun</option><option>PWC</option><option>NoVA</option>
+      <option>DFW</option><option>PHX</option><option>ATL</option>
+      <option>PDX</option><option>SJE</option><option>SEA</option><option>SAT</option>
+    </select>
+    <select id="module">
+      <option value="">All modules</option>
+      <option>Building</option><option>Electrical</option><option>Mechanical</option><option>Permit</option>
+    </select>
+    <select id="tier">
+      <option value="">All tiers</option>
+      <option value="explicit">Explicit DC</option>
+      <option value="likely">Likely DC</option>
+      <option value="infra">Large Infra</option>
+    </select>
+    <input id="q" type="text" placeholder="Search text…">
+    <input id="from" type="date">
+    <input id="to" type="date">
+    <button class="btn primary" id="run">Search</button>
+    <button class="btn" id="clear">Clear</button>
+  </div>
+</header>
+
+<main>
+  <div class="topbar">
+    <div class="counts" id="counts">—</div>
+    <div class="right">
+      <span class="small">API: <span id="apiBase">http://127.0.0.1:8010</span></span>
+      <span class="small"><a class="linklike" href="index.html">News</a> · <span class="linklike" onclick="gotoSites()">Known Sites</span></span>
+    </div>
+  </div>
+  <div class="note">Tip: click “View permits” on any row to open a prefiltered search back to the source data.</div>
+  <div id="list"></div>
+</main>
+
+<script>
+const API_BASE = localStorage.getItem("dcintel_api") || "http://127.0.0.1:8010";
+document.getElementById("apiBase").textContent = API_BASE;
+
+const el = (q) => document.querySelector(q);
+const list = el("#list"), countsEl = el("#counts");
+
+function fmtDate(s){ if(!s) return ""; const d=new Date(s); return isNaN(d)? s : d.toLocaleString(); }
+
+async function getJSON(url){
+  const r = await fetch(url);
+  if(!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+
+async function refreshCounts(params){
+  const u = new URL(API_BASE + "/counts");
+  Object.entries(params).forEach(([k,v])=>{ if(v) u.searchParams.set(k,v); });
+  const j = await getJSON(u);
+  countsEl.textContent = `Matches: ${j.all} • explicit ${j.explicit}, likely ${j.likely}, infra ${j.infra}`;
+}
+
+function tierParams(tier){
+  return tier==="explicit" ? {explicit: true}
+       : tier==="likely"   ? {likely: true}
+       : tier==="infra"    ? {infra: true} : {};
+}
+
+async function runSearch(){
+  const market = el("#market").value.trim();
+  const module = el("#module").value.trim();
+  const tier   = el("#tier").value.trim();
+  const q      = el("#q").value.trim();
+  const from   = el("#from").value;
+  const to     = el("#to").value;
+
+  const params = { market, module, from, to, q, limit: 200, ...tierParams(tier) };
+  await refreshCounts(params);
+
+  const u = new URL(API_BASE + "/search");
+  Object.entries(params).forEach(([k,v])=>{ if(v) u.searchParams.set(k,v); });
+  const j = await getJSON(u);
+
+  list.innerHTML = "";
+  if(!j.items || !j.items.length){
+    list.innerHTML = `<div class="note">No results.</div>`;
+    return;
+  }
+
+  for(const it of j.items){
+    const addr = it.address || "(address n/a)";
+    const linkSearch = new URL(API_BASE + "/search");
+    linkSearch.searchParams.set("city", (it.city||"").toString());
+    linkSearch.searchParams.set("q", (it.address||"").toString());
+    linkSearch.searchParams.set("limit","100");
+
+    const chips = [];
+    if(it.market) chips.push(`<span class="chip">${it.market}</span>`);
+    if(it.operator_hits) chips.push(`<span class="chip">${it.operator_hits}</span>`);
+    if(it.module_name) chips.push(`<span class="chip">${it.module_name}</span>`);
+    if(it.source_portal) chips.push(`<span class="chip">${it.source_portal}</span>`);
+
+    const html = `
+      <div class="result">
+        <div class="row">
+          <a href="${linkSearch}" target="_blank">${addr}</a>
+        </div>
+        <div class="meta">
+          <span>${fmtDate(it.applied_date_parsed || it.applied_date)}</span>
+          <span>${(it.record_type||"").replaceAll("|","·")}</span>
+          <span>${(it.city||"")}</span>
+          <span>${(it.status||"")}</span>
+        </div>
+        <div class="chips">${chips.join("")}</div>
+        <div class="meta">${(it.work_description||"").slice(0,300)}</div>
+      </div>
+    `;
+    const div = document.createElement("div");
+    div.innerHTML = html.trim();
+    list.appendChild(div.firstChild);
+  }
+}
+
+function clearForm(){
+  ["market","module","tier","q","from","to"].forEach(id => el("#"+id).value = "");
+  list.innerHTML = ""; countsEl.textContent = "—";
+}
+
+function gotoSites(){
+  // if you later add sites.html
+  window.location.href = "sites.html";
+}
+
+el("#run").addEventListener("click", runSearch);
+el("#clear").addEventListener("click", clearForm);
+
+// auto-run on load
+runSearch().catch(err=>{
+  list.innerHTML = `<div class="note" style="color:#b91c1c">Failed to reach API at ${API_BASE}. Make sure server.py is running.</div>`;
+});
+</script>
+</body>
+</html>
