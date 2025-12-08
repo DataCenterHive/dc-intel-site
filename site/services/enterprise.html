@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Subscription - DC Intelligence</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0e16;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #f9fafb;
+            background: #0a0e16;
+        }
+
+        header {
+            background: #0a0e16;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 30px;
+            transition: opacity 0.2s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            font-size: 14px;
+            color: #9ca3af;
+        }
+
+        .breadcrumb a {
+            color: #06b6d4;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        .hero {
+            background: #0a0e16;
+            color: white;
+            border-radius: 12px;
+            padding: 60px 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(6, 182, 212, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(6, 182, 212, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .enterprise-badge {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+
+        .tier-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        h1 {
+            font-size: 52px;
+            color: white;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        .tagline {
+            font-size: 22px;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .price {
+            font-size: 40px;
+            color: #f59e0b;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .price-note {
+            font-size: 15px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 30px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 16px 36px;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(245, 158, 11, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .content-section {
+            background: #111827;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            border: 1px solid #374151;
+        }
+
+        h2 {
+            font-size: 30px;
+            color: #f9fafb;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #f59e0b;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .feature-card {
+            padding: 25px;
+            border: 2px solid #374151;
+            border-radius: 10px;
+            transition: all 0.3s;
+            position: relative;
+            background: #1f2937;
+        }
+
+        .feature-card:hover {
+            border-color: #f59e0b;
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+
+        .feature-title {
+            font-size: 19px;
+            font-weight: bold;
+            color: #f9fafb;
+            margin-bottom: 10px;
+        }
+
+        .feature-desc {
+            font-size: 15px;
+            color: #d1d5db;
+            line-height: 1.6;
+        }
+
+        .enterprise-icon {
+            color: #f59e0b;
+            margin-right: 10px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 12px 0;
+            border-bottom: 1px solid #374151;
+            font-size: 16px;
+            color: #d1d5db;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        .best-for {
+            background: #1f2937;
+            border-left: 4px solid #f59e0b;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 25px 0;
+            border: 1px solid #374151;
+        }
+
+        .best-for h3 {
+            color: #f59e0b;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .white-glove {
+            background: #1f2937;
+            padding: 35px;
+            border-radius: 12px;
+            margin: 30px 0;
+            border: 2px solid #374151;
+        }
+
+        .white-glove h3 {
+            color: #f9fafb;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        .white-glove ul {
+            margin-top: 15px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid #374151;
+        }
+
+        .comparison-table th {
+            background: #1f2937;
+            color: white;
+            font-weight: bold;
+        }
+
+        .comparison-table tr:hover {
+            background: #1f2937;
+        }
+
+        .comparison-table .enterprise-col {
+            background: #1f2937;
+            font-weight: bold;
+            border-left: 3px solid #f59e0b;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            padding: 25px;
+            background: #1f2937;
+            border-radius: 8px;
+            border-left: 4px solid #f59e0b;
+            border: 1px solid #374151;
+        }
+
+        .faq-question {
+            font-weight: bold;
+            color: #f9fafb;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .faq-answer {
+            color: #d1d5db;
+            line-height: 1.7;
+        }
+
+        .testimonial {
+            background: #1f2937;
+            padding: 30px;
+            border-radius: 10px;
+            border-left: 5px solid #f59e0b;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            border: 1px solid #374151;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: #d1d5db;
+            margin-bottom: 15px;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: #f9fafb;
+            font-size: 15px;
+        }
+
+        .testimonial-company {
+            color: #9ca3af;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .api-section {
+            background: #1f2937;
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin: 30px 0;
+            border: 1px solid #374151;
+        }
+
+        .api-section h3 {
+            color: #f59e0b;
+            margin-bottom: 15px;
+        }
+
+        .api-section code {
+            background: #0a0e16;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+            border-top: 1px solid #374151;
+        }
+
+        footer a {
+            color: #f59e0b;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+
+            .price {
+                font-size: 32px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .enterprise-badge {
+                position: static;
+                display: inline-block;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">DC Intelligence</div>
+            <div class="nav-links">
+                <a href="/dashboard_v2.html">Dashboard</a>
+                <a href="/services">Services</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="breadcrumb">
+        <a href="/dashboard_v2.html">Home</a> &gt;
+        <a href="/services">Services</a> &gt;
+        <span>Enterprise Subscription</span>
+    </div>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <span class="enterprise-badge">ENTERPRISE</span>
+            <div class="hero-content">
+                <span class="tier-badge">ENTERPRISE TIER</span>
+                <h1>Enterprise Subscription</h1>
+                <p class="tagline">White-glove intelligence for hyperscale operators and large colocation firms</p>
+                <div class="price">$50,000 - $100,000+<span style="font-size: 22px;">/year</span></div>
+                <p class="price-note">Unlimited user seats | Everything in Premium PLUS dedicated support & full API access</p>
+
+                <div class="cta-buttons">
+                    <a href="#contact-form" class="btn btn-primary">Schedule Consultation</a>
+                    <a href="#features" class="btn btn-secondary">Explore Features</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Best For Section -->
+        <div class="content-section">
+            <div class="best-for">
+                <h3>Built For:</h3>
+                <ul style="margin-top: 15px;">
+                    <li><span class="enterprise-icon">◆</span> Hyperscale cloud providers (AWS, Microsoft, Google, Meta)</li>
+                    <li><span class="enterprise-icon">◆</span> Large colocation operators (Equinix, Digital Realty, CyrusOne, QTS)</li>
+                    <li><span class="enterprise-icon">◆</span> Major REITs with multi-billion dollar DC portfolios</li>
+                    <li><span class="enterprise-icon">◆</span> National telecom operators expanding DC footprints</li>
+                    <li><span class="enterprise-icon">◆</span> Global infrastructure investment firms</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- White Glove Service -->
+        <div class="content-section">
+            <div class="white-glove">
+                <h3>White-Glove Service Included</h3>
+                <p style="color: #d1d5db; margin-bottom: 15px;">Enterprise customers receive dedicated support and custom solutions tailored to your organization's unique needs.</p>
+                <ul>
+                    <li><span class="enterprise-icon">◆</span> Dedicated Account Manager (your single point of contact)</li>
+                    <li><span class="enterprise-icon">◆</span> Direct Analyst Access (phone, video, email - respond within 4 hours)</li>
+                    <li><span class="enterprise-icon">◆</span> On-site Workshops & Training (1-2 days at your office)</li>
+                    <li><span class="enterprise-icon">◆</span> Custom Dashboard Development (built to your specifications)</li>
+                    <li><span class="enterprise-icon">◆</span> White-Label Reports (PDF reports with your branding)</li>
+                    <li><span class="enterprise-icon">◆</span> Priority Feature Requests (influence our product roadmap)</li>
+                    <li><span class="enterprise-icon">◆</span> SLA Guarantees (99.9% uptime, 4-hour response time)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Enterprise-Only Features -->
+        <div class="content-section">
+            <h2>Enterprise-Exclusive Features</h2>
+            <p style="margin-bottom: 25px; color: #d1d5db;">Get everything in Premium, plus these enterprise-grade capabilities designed for scale and integration.</p>
+
+            <div class="features-grid">
+                <div class="feature-card" style="border-color: #f59e0b;">
+                    <div class="feature-icon">🔌</div>
+                    <div class="feature-title">Full REST API Access</div>
+                    <div class="feature-desc">Integrate our permit database directly into your systems. 100,000 API calls/month included. Webhook support for real-time permit notifications. OpenAPI documentation provided.</div>
+                </div>
+
+                <div class="feature-card" style="border-color: #f59e0b;">
+                    <div class="feature-icon">👤</div>
+                    <div class="feature-title">Dedicated Account Manager</div>
+                    <div class="feature-desc">Your personal account manager understands your business needs, coordinates with our analysts, and ensures you're getting maximum value from the platform.</div>
+                </div>
+
+                <div class="feature-card" style="border-color: #f59e0b;">
+                    <div class="feature-icon">📞</div>
+                    <div class="feature-title">Direct Analyst Access</div>
+                    <div class="feature-desc">Phone and video call access to our industry analysts. Get expert interpretation of permit data, market trends, and competitive dynamics. 4-hour response time guaranteed.</div>
+                </div>
+
+                <div class="feature-card" style="border-color: #f59e0b;">
+                    <div class="feature-icon">📄</div>
+                    <div class="feature-title">Unlimited Custom Briefings</div>
+                    <div class="feature-desc">No limits on custom research reports. Need a deep-dive on Phoenix market? Competitive analysis on a specific operator? We'll create it. Typical turnaround: 1-2 weeks.</div>
+                </div>
+
+                <div class="feature-card" style="border-color: #f59e0b;">
+                    <div class="feature-icon">🎓</div>
+                    <div class="feature-title">On-Site Training</div>
+                    <div class="feature-desc">1-2 day on-site workshop at your office. Train your team on best practices, advanced features, and custom workflows. Includes post-training support.</div>
+                </div>
+
+                <div class="feature-card" style="border-color: #f59e0b;">
+                    <div class="feature-icon">🎨</div>
+                    <div class="feature-title">Custom Dashboard Development</div>
+                    <div class="feature-desc">Work with our engineering team to build custom dashboards, reports, and visualizations tailored to your specific use cases and workflows.</div>
+                </div>
+
+                <div class="feature-card" style="border-color: #f59e0b;">
+                    <div class="feature-icon">🏷️</div>
+                    <div class="feature-title">White-Label Reports</div>
+                    <div class="feature-desc">Export reports with your company branding, logo, and color scheme. Perfect for sharing insights with executives, board members, or clients.</div>
+                </div>
+
+                <div class="feature-card" style="border-color: #f59e0b;">
+                    <div class="feature-icon">⚙️</div>
+                    <div class="feature-title">Priority Feature Requests</div>
+                    <div class="feature-desc">Influence our product roadmap. Need a specific feature or integration? Enterprise customers get priority consideration for custom development.</div>
+                </div>
+
+                <div class="feature-card" style="border-color: #f59e0b;">
+                    <div class="feature-icon">✅</div>
+                    <div class="feature-title">SLA Guarantees</div>
+                    <div class="feature-desc">99.9% uptime guarantee. 4-hour response time for critical issues. Dedicated Slack/Teams channel for urgent requests. Regular account reviews.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- API Access Section -->
+        <div class="api-section">
+            <h3>Full API Access Included</h3>
+            <p style="margin-bottom: 20px;">Integrate DC Intelligence directly into your internal systems, dashboards, and workflows.</p>
+
+            <div style="margin-bottom: 15px;">
+                <strong style="color: #f39c12;">Available Endpoints:</strong>
+                <ul style="margin-top: 10px;">
+                    <li>✓ <code>GET /permits</code> - Query permit database with filters</li>
+                    <li>✓ <code>GET /sites</code> - Access construction site data</li>
+                    <li>✓ <code>GET /datacenters</code> - Existing DC directory</li>
+                    <li>✓ <code>GET /news</code> - Industry news feed</li>
+                    <li>✓ <code>GET /operators</code> - Operator profiles</li>
+                    <li>✓ <code>POST /webhooks</code> - Register webhooks for real-time alerts</li>
+                </ul>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <strong style="color: #f39c12;">Included:</strong>
+                <ul style="margin-top: 10px;">
+                    <li>✓ 100,000 API calls/month (additional calls: $0.01 each)</li>
+                    <li>✓ OpenAPI/Swagger documentation</li>
+                    <li>✓ SDK libraries (Python, JavaScript)</li>
+                    <li>✓ Webhook support for real-time notifications</li>
+                    <li>✓ Technical support from our engineering team</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Complete Feature List -->
+        <div class="content-section" id="features">
+            <h2>Complete Feature List</h2>
+
+            <h3 style="color: #27ae60; margin-top: 20px; margin-bottom: 15px;">✓ Everything in Basic & Premium</h3>
+            <ul>
+                <li>✓ 16-City Permit Database (348,000+ permits)</li>
+                <li>✓ AI-Powered Research Summaries</li>
+                <li>✓ Real-Time Email Alerts</li>
+                <li>✓ Advanced Dashboards & Benchmarking Tools</li>
+                <li>✓ Extended Site Directory (2,436 data centers)</li>
+                <li>✓ News Feed (299 articles, 34 operators)</li>
+                <li>✓ Monthly Data Updates</li>
+            </ul>
+
+            <h3 style="color: #f39c12; margin-top: 30px; margin-bottom: 15px;">◆ Enterprise-Only Features</h3>
+            <ul>
+                <li><span class="enterprise-icon">◆</span> Full REST API Access (100K calls/month)</li>
+                <li><span class="enterprise-icon">◆</span> Dedicated Account Manager (single point of contact)</li>
+                <li><span class="enterprise-icon">◆</span> Direct Analyst Access (phone/video, 4-hour response)</li>
+                <li><span class="enterprise-icon">◆</span> Unlimited Custom Briefings (20-30 page reports)</li>
+                <li><span class="enterprise-icon">◆</span> On-Site Workshops & Training (1-2 days)</li>
+                <li><span class="enterprise-icon">◆</span> Custom Dashboard Development (tailored to your needs)</li>
+                <li><span class="enterprise-icon">◆</span> White-Label Reports (your branding, logo, colors)</li>
+                <li><span class="enterprise-icon">◆</span> Priority Feature Requests (influence roadmap)</li>
+                <li><span class="enterprise-icon">◆</span> SLA Guarantees (99.9% uptime, 4-hour response)</li>
+                <li><span class="enterprise-icon">◆</span> Unlimited User Seats (vs. 3 Basic, 10 Premium)</li>
+                <li><span class="enterprise-icon">◆</span> Dedicated Slack/Teams Channel (urgent support)</li>
+                <li><span class="enterprise-icon">◆</span> Quarterly Executive Business Reviews</li>
+                <li><span class="enterprise-icon">◆</span> Custom Data Integrations (Salesforce, Tableau, etc.)</li>
+                <li><span class="enterprise-icon">◆</span> Webhook Support (real-time permit notifications)</li>
+                <li><span class="enterprise-icon">◆</span> SDK Libraries (Python, JavaScript)</li>
+            </ul>
+        </div>
+
+        <!-- ROI for Enterprise -->
+        <div class="content-section">
+            <h2>Enterprise ROI</h2>
+            <p style="margin-bottom: 20px; color: #d1d5db;">How Enterprise tier pays for itself at scale:</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-title">API Integration Savings</div>
+                    <div class="feature-desc">Eliminate manual data entry. Our API feeds permit data directly into your internal systems. Save <strong>50+ analyst hours/month</strong> on data collection and entry alone.</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Competitive Advantage</div>
+                    <div class="feature-desc">React to competitor moves <strong>weeks before public announcements</strong>. Adjust site selection, pricing, and market entry strategies ahead of the competition.</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Analyst Efficiency</div>
+                    <div class="feature-desc">Your internal analysts spend less time gathering data, more time on high-value analysis. <strong>3-5x productivity improvement</strong> reported by existing customers.</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Custom Research Value</div>
+                    <div class="feature-desc">Unlimited custom briefings worth <strong>$50K-$100K+/year</strong> if purchased from traditional research firms like 451 Research or Gartner.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparison Table -->
+        <div class="content-section">
+            <h2>Compare Plans</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Basic</th>
+                        <th>Premium</th>
+                        <th class="enterprise-col">Enterprise</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Permit Database</td>
+                        <td>✓</td>
+                        <td>✓</td>
+                        <td class="enterprise-col">✓</td>
+                    </tr>
+                    <tr>
+                        <td>AI Summaries</td>
+                        <td>✗</td>
+                        <td>✓</td>
+                        <td class="enterprise-col">✓</td>
+                    </tr>
+                    <tr>
+                        <td>Email Alerts</td>
+                        <td>Weekly</td>
+                        <td>Real-time</td>
+                        <td class="enterprise-col">Real-time + Webhooks</td>
+                    </tr>
+                    <tr>
+                        <td>Dashboards</td>
+                        <td>Pre-set</td>
+                        <td>Custom Filters</td>
+                        <td class="enterprise-col">Fully Custom + Dev Support</td>
+                    </tr>
+                    <tr>
+                        <td>Custom Briefings</td>
+                        <td>✗</td>
+                        <td>1/year</td>
+                        <td class="enterprise-col">Unlimited</td>
+                    </tr>
+                    <tr>
+                        <td>Analyst Access</td>
+                        <td>Email only</td>
+                        <td>Email/Chat</td>
+                        <td class="enterprise-col">Phone/Video (Direct)</td>
+                    </tr>
+                    <tr>
+                        <td>API Access</td>
+                        <td>✗</td>
+                        <td>✗</td>
+                        <td class="enterprise-col">Full REST API</td>
+                    </tr>
+                    <tr>
+                        <td>Account Manager</td>
+                        <td>✗</td>
+                        <td>✗</td>
+                        <td class="enterprise-col">Dedicated</td>
+                    </tr>
+                    <tr>
+                        <td>On-Site Training</td>
+                        <td>✗</td>
+                        <td>✗</td>
+                        <td class="enterprise-col">✓</td>
+                    </tr>
+                    <tr>
+                        <td>White-Label Reports</td>
+                        <td>✗</td>
+                        <td>✗</td>
+                        <td class="enterprise-col">✓</td>
+                    </tr>
+                    <tr>
+                        <td>SLA Guarantee</td>
+                        <td>Best effort</td>
+                        <td>99%</td>
+                        <td class="enterprise-col">99.9%</td>
+                    </tr>
+                    <tr>
+                        <td>User Seats</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td class="enterprise-col">Unlimited</td>
+                    </tr>
+                    <tr>
+                        <td>Pricing</td>
+                        <td>$10-15K/yr</td>
+                        <td>$25-50K/yr</td>
+                        <td class="enterprise-col">$50-100K+/yr</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Use Cases -->
+        <div class="content-section">
+            <h2>How Enterprise Customers Use the Platform</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">Hyperscale Cloud Provider: Competitive Intelligence at Scale</div>
+                <div class="faq-answer">Integrate our API with internal CRM and site selection tools. Automatically flag when competitors file permits in target markets. Set up webhooks to alert your real estate team within hours. Track 20+ markets simultaneously without manual monitoring.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Large Colocation Operator: Market Expansion Planning</div>
+                <div class="faq-answer">Work with dedicated analyst to research new market entries. Quarterly custom briefings on top 5 expansion markets. White-label reports for board presentations. Custom dashboards showing competitive density by market.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Data Center REIT: Pipeline Forecasting & Investor Relations</div>
+                <div class="faq-answer">API integration feeds permit data into proprietary forecasting models. Track supply pipeline across all major U.S. markets. Generate white-label reports for quarterly earnings presentations. Analyst access for ad-hoc investor questions.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Infrastructure Investment Firm: Due Diligence Support</div>
+                <div class="faq-answer">Unlimited custom briefings support M&A due diligence. Verify operator claims about project pipelines. Assess competitive dynamics in target markets. On-demand analyst calls during deal evaluation periods.</div>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="content-section">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">What does "unlimited custom briefings" really mean?</div>
+                <div class="faq-answer">No hard limits. Most Enterprise customers request 4-10 custom reports per year. Each briefing is 20-30 pages, analyst-written, tailored to your specific question. Typical topics: market deep-dives, operator competitive analysis, site selection research, M&A due diligence. Turnaround time: 1-2 weeks for standard briefings, faster for urgent requests.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">How does the dedicated account manager work?</div>
+                <div class="faq-answer">You'll have a single point of contact who understands your business, coordinates with our analysts and engineers, and ensures you're maximizing platform value. Typical cadence: weekly check-ins (first 3 months), then monthly. Available via phone, email, Slack, or Teams.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Can you integrate with our existing tools (Salesforce, Tableau, etc.)?</div>
+                <div class="faq-answer">Yes. Our API is REST-based and works with any system that can consume JSON. We provide SDK libraries for Python and JavaScript. For complex integrations (Salesforce, Tableau, custom internal tools), we offer implementation support as part of your onboarding.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What's included in on-site training?</div>
+                <div class="faq-answer">1-2 day workshop at your office (travel expenses included within contiguous U.S.). Day 1: Platform overview, best practices, advanced features. Day 2: Hands-on training with your actual use cases, custom dashboard setup, API integration guidance. Includes post-training support for 30 days.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">How do SLA guarantees work?</div>
+                <div class="faq-answer">99.9% uptime guarantee (less than 9 hours downtime/year). 4-hour response time for critical issues. Dedicated Slack/Teams channel for urgent requests. Monthly uptime reports. If we fail SLA targets, you receive service credits (pro-rated refund for downtime).</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Is pricing negotiable for multi-year contracts?</div>
+                <div class="faq-answer">Yes. We offer discounts for 2-year (10%) and 3-year (15%) commitments. Enterprise contracts are customized based on scope: number of users, API call volume, custom feature development, analyst hours needed. Contact us for a custom quote.</div>
+            </div>
+        </div>
+
+        <!-- Testimonials -->
+        <div class="content-section">
+            <h2>What Enterprise Customers Say</h2>
+
+            <div class="testimonial">
+                <div class="testimonial-text">"The API integration saved our team 60+ hours per month. We now feed permit data directly into our internal CRM and site selection tools. The dedicated analyst support is invaluable - they understand our competitive landscape better than anyone outside our company."</div>
+                <div class="testimonial-author">— VP Real Estate Strategy</div>
+                <div class="testimonial-company">Fortune 50 Cloud Provider</div>
+            </div>
+
+            <div class="testimonial">
+                <div class="testimonial-text">"We've commissioned 8 custom briefings in our first year - market deep-dives for expansion planning and competitive analyses for board presentations. If we'd purchased these from a traditional research firm, it would have cost $80K+. The white-label reports feature is perfect for investor relations."</div>
+                <div class="testimonial-author">— Chief Strategy Officer</div>
+                <div class="testimonial-company">Data Center REIT (20+ facilities)</div>
+            </div>
+
+            <div class="testimonial">
+                <div class="testimonial-text">"The on-site training was exceptional. Our account manager spent 2 days at our headquarters, trained our entire market intelligence team, and set up custom dashboards for each region. We've seen a 4x improvement in analyst productivity within 3 months."</div>
+                <div class="testimonial-author">— Head of Market Intelligence</div>
+                <div class="testimonial-company">Global Colocation Provider (100+ data centers)</div>
+            </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="content-section" id="contact-form">
+            <h2>Schedule Enterprise Consultation</h2>
+            <p style="margin-bottom: 25px; color: #d1d5db;">Enterprise solutions are customized to your needs. Fill out the form below and we'll schedule a 60-minute consultation to discuss your requirements, review pricing, and develop a custom proposal.</p>
+
+            <form id="inquiry-form" style="max-width: 700px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 5px; color: #f9fafb;">First Name *</label>
+                        <input type="text" name="first_name" required style="width: 100%; padding: 12px; border: 2px solid #374151; border-radius: 6px; font-size: 16px; background: #1f2937; color: #f9fafb;">
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 5px; color: #f9fafb;">Last Name *</label>
+                        <input type="text" name="last_name" required style="width: 100%; padding: 12px; border: 2px solid #374151; border-radius: 6px; font-size: 16px; background: #1f2937; color: #f9fafb;">
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px; color: #f9fafb;">Email Address *</label>
+                    <input type="email" name="email" required style="width: 100%; padding: 12px; border: 2px solid #374151; border-radius: 6px; font-size: 16px; background: #1f2937; color: #f9fafb;">
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px; color: #f9fafb;">Company Name *</label>
+                    <input type="text" name="company" required style="width: 100%; padding: 12px; border: 2px solid #374151; border-radius: 6px; font-size: 16px; background: #1f2937; color: #f9fafb;">
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 5px; color: #f9fafb;">Job Title *</label>
+                        <input type="text" name="job_title" required style="width: 100%; padding: 12px; border: 2px solid #374151; border-radius: 6px; font-size: 16px; background: #1f2937; color: #f9fafb;">
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 5px; color: #f9fafb;">Phone Number</label>
+                        <input type="tel" name="phone" style="width: 100%; padding: 12px; border: 2px solid #374151; border-radius: 6px; font-size: 16px; background: #1f2937; color: #f9fafb;">
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px; color: #f9fafb;">Company Size</label>
+                    <select name="company_size" style="width: 100%; padding: 12px; border: 2px solid #374151; border-radius: 6px; font-size: 16px; background: #1f2937; color: #f9fafb;">
+                        <option value="">Select...</option>
+                        <option value="201-1000">201-1,000 employees</option>
+                        <option value="1000-5000">1,000-5,000 employees</option>
+                        <option value="5000+">5,000+ employees</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px; color: #f9fafb;">Number of Expected Users</label>
+                    <input type="number" name="num_users" placeholder="e.g., 25" style="width: 100%; padding: 12px; border: 2px solid #374151; border-radius: 6px; font-size: 16px; background: #1f2937; color: #f9fafb;">
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px; color: #f9fafb;">Primary Use Case</label>
+                    <textarea name="use_case" rows="4" placeholder="Tell us about your competitive intelligence needs, API integration requirements, analyst support expectations, etc." style="width: 100%; padding: 12px; border: 2px solid #374151; border-radius: 6px; font-size: 16px; resize: vertical; background: #1f2937; color: #f9fafb;"></textarea>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px; color: #f9fafb;">What features are most important to you?</label>
+                    <div style="margin-top: 10px;">
+                        <label style="display: block; margin-bottom: 8px; color: #d1d5db;">
+                            <input type="checkbox" name="feature_api" style="margin-right: 8px; accent-color: #f59e0b;">
+                            <span>Full API Access</span>
+                        </label>
+                        <label style="display: block; margin-bottom: 8px; color: #d1d5db;">
+                            <input type="checkbox" name="feature_analyst" style="margin-right: 8px; accent-color: #f59e0b;">
+                            <span>Direct Analyst Access</span>
+                        </label>
+                        <label style="display: block; margin-bottom: 8px; color: #d1d5db;">
+                            <input type="checkbox" name="feature_briefings" style="margin-right: 8px; accent-color: #f59e0b;">
+                            <span>Unlimited Custom Briefings</span>
+                        </label>
+                        <label style="display: block; margin-bottom: 8px; color: #d1d5db;">
+                            <input type="checkbox" name="feature_training" style="margin-right: 8px; accent-color: #f59e0b;">
+                            <span>On-Site Training</span>
+                        </label>
+                        <label style="display: block; margin-bottom: 8px; color: #d1d5db;">
+                            <input type="checkbox" name="feature_white_label" style="margin-right: 8px; accent-color: #f59e0b;">
+                            <span>White-Label Reports</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: flex; align-items: center; color: #d1d5db;">
+                        <input type="checkbox" name="consent_emails" required style="margin-right: 10px; width: 18px; height: 18px; accent-color: #f59e0b;">
+                        <span>I agree to receive emails about product updates *</span>
+                    </label>
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <label style="display: flex; align-items: center; color: #d1d5db;">
+                        <input type="checkbox" name="consent_terms" required style="margin-right: 10px; width: 18px; height: 18px; accent-color: #f59e0b;">
+                        <span>I agree to the Terms of Service and Privacy Policy *</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Consultation Request</button>
+            </form>
+
+            <div id="form-message" style="margin-top: 20px; padding: 15px; border-radius: 6px; display: none;"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>DC Intelligence Platform &copy; 2025</p>
+        <p style="margin-top: 10px;">
+            <a href="mailto:enterprise@dc-intelligence.com">enterprise@dc-intelligence.com</a> |
+            <a href="tel:+15551234567">(555) 123-4567</a>
+        </p>
+    </footer>
+
+    <script>
+        // Handle form submission
+        document.getElementById('inquiry-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const data = {
+                service_tier: 'enterprise',
+                name: formData.get('first_name') + ' ' + formData.get('last_name'),
+                email: formData.get('email'),
+                company: formData.get('company'),
+                job_title: formData.get('job_title'),
+                phone: formData.get('phone'),
+                company_size: formData.get('company_size'),
+                num_users: formData.get('num_users'),
+                use_case: formData.get('use_case'),
+                features_of_interest: {
+                    api: formData.get('feature_api') === 'on',
+                    analyst: formData.get('feature_analyst') === 'on',
+                    briefings: formData.get('feature_briefings') === 'on',
+                    training: formData.get('feature_training') === 'on',
+                    white_label: formData.get('feature_white_label') === 'on'
+                },
+                consent_emails: formData.get('consent_emails') === 'on',
+                consent_terms: formData.get('consent_terms') === 'on'
+            };
+
+            const messageDiv = document.getElementById('form-message');
+
+            try {
+                const response = await fetch('http://127.0.0.1:8010/api/inquiry/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    messageDiv.style.display = 'block';
+                    messageDiv.style.background = '#d4edda';
+                    messageDiv.style.color = '#155724';
+                    messageDiv.style.border = '1px solid #c3e6cb';
+                    messageDiv.textContent = 'Thank you! Our Enterprise team will contact you within 24 hours to schedule your consultation.';
+                    this.reset();
+                } else {
+                    throw new Error('Submission failed');
+                }
+            } catch (error) {
+                messageDiv.style.display = 'block';
+                messageDiv.style.background = '#f8d7da';
+                messageDiv.style.color = '#721c24';
+                messageDiv.style.border = '1px solid #f5c6cb';
+                messageDiv.textContent = 'Error submitting form. Please email enterprise@dc-intelligence.com directly.';
+            }
+        });
+    </script>
+</body>
+</html>

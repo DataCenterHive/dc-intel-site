@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>DC Intel — Latest Data Center Headlines</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="referrer" content="no-referrer" />
+  <style>
+    :root { --fg:#0f172a; --muted:#64748b; --link:#1d4ed8; --bg:#ffffff; --chip:#f1f5f9; }
+    @media (prefers-color-scheme: dark) {
+      :root { --fg:#e5e7eb; --muted:#9ca3af; --link:#93c5fd; --bg:#0b1220; --chip:#111827; }
+    }
+    html,body { height:100%; }
+    body {
+      margin: 32px;
+      font: 16px/1.55 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--fg); background: var(--bg);
+    }
+    h1 { font-size: 22px; margin: 0 0 16px; }
+    .sub { color: var(--muted); margin-bottom: 20px; }
+    .toolbar {
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      padding: 12px; border-radius: 12px; background: var(--chip);
+      margin: 0 0 20px;
+    }
+    .toolbar label { font-size: 12px; color: var(--muted); }
+    .toolbar select, .toolbar input {
+      padding: 6px 8px; font-size: 14px; border-radius: 8px; border: 1px solid #cbd5e1; background: #fff;
+    }
+    @media (prefers-color-scheme: dark) {
+      .toolbar select, .toolbar input { border-color:#1f2937; background:#0f172a; color: var(--fg); }
+    }
+    .count { margin-left:auto; font-size: 12px; color: var(--muted); }
+    .item { margin: 10px 0; }
+    .item a {
+      color: var(--link); text-decoration: underline; text-underline-offset: 2px;
+    }
+    .item a:hover { text-decoration: none; }
+    .meta { color: var(--muted); font-size: 13px; margin-left: 6px; }
+    .footer { margin-top: 28px; color: var(--muted); font-size: 12px; }
+    .hidden { display:none; }
+  </style>
+</head>
+<body>
+  <h1>Latest Data Center Headlines</h1>
+  <div class="sub">Titles only • deep links to original sources • updated daily</div>
+
+  <div class="toolbar">
+    <div>
+      <label for="category">Category&nbsp;</label>
+      <select id="category">
+        <option value="">All</option>
+        <option value="project">Project</option>
+        <option value="power">Power</option>
+        <option value="policy">Policy</option>
+        <option value="corp">Corp</option>
+        <option value="finance">Finance</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="tier">Tier&nbsp;</label>
+      <select id="tier">
+        <option value="">All</option>
+        <option value="master">Master</option>
+        <option value="large">Large</option>
+        <option value="likely">Likely</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="q">Search&nbsp;</label>
+      <input id="q" placeholder="Filter by text…" />
+    </div>
+
+    <div class="count" id="count">0 items</div>
+  </div>
+
+  <div id="errors" class="hidden" role="alert" style="color:#b91c1c; margin-bottom:12px;"></div>
+  <div id="list" aria-live="polite">Loading…</div>
+
+  <div class="footer">
+    Showing titles only, linking directly to publishers. No excerpts or copied article text are stored or displayed.
+  </div>
+
+  <script>
+    // JSON must live next to this HTML file:
+    const FEED_URL = "./articles_google_latest.min.json";
+
+    const els = {
+      list: document.getElementById("list"),
+      errors: document.getElementById("errors"),
+      category: document.getElementById("category"),
+      tier: document.getElementById("tier"),
+      q: document.getElementById("q"),
+      count: document.getElementById("count"),
+    };
+
+    let items = [];
+
+    function esc(s){ return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
+
+    function render() {
+      const cat = els.category.value.trim().toLowerCase();
+      const tier = els.tier.value.trim().toLowerCase();
+      const q = els.q.value.trim().toLowerCase();
+
+      const filtered = items.filter(it => {
+        if (cat && (it.category||"").toLowerCase() !== cat) return false;
+        if (tier && (it.tier||"").toLowerCase() !== tier) return false;
+        if (q && !(`${it.title} ${it.source}`.toLowerCase().includes(q))) return false;
+        return true;
+      });
+
+      els.count.textContent = `${filtered.length} item${filtered.length !== 1 ? "s" : ""}`;
+
+      if (!filtered.length) {
+        els.list.innerHTML = '<div class="sub">No results match your filters.</div>';
+        return;
+      }
+
+      els.list.innerHTML = filtered.map(it => {
+        const when = it.published_utc ? new Date(it.published_utc).toLocaleString() : "";
+        const metaParts = [];
+        if (it.source) metaParts.push(`(${esc(it.source)})`);
+        if (it.category) metaParts.push(esc(it.category));
+        if (it.tier) metaParts.push(esc(it.tier));
+        if (when) metaParts.push(when);
+
+        return `
+          <div class="item">
+            <a href="${it.url}" target="_blank" rel="noopener">${esc(it.title)}</a>
+            <span class="meta">${metaParts.join(" • ")}</span>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function showError(msg) {
+      els.errors.textContent = msg;
+      els.errors.classList.remove("hidden");
+    }
+
+    // Load feed
+    fetch(FEED_URL, { cache: "no-store" })
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
+      })
+      .then(data => { items = Array.isArray(data) ? data : []; render(); })
+      .catch(err => {
+        showError("Failed to load feed. Make sure the JSON file is next to this page and has valid JSON.");
+        els.list.textContent = "";
+        console.error(err);
+      });
+
+    // Wire up controls
+    els.category.addEventListener("change", render);
+    els.tier.addEventListener("change", render);
+    els.q.addEventListener("input", render);
+  </script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+{
+  "categories": [
+    {
+      "id": "dc_basics",
+      "name": "Data Center Basics",
+      "description": "Fundamental data center concepts and terminology",
+      "cards": [
+        {
+          "term": "Colocation",
+          "definition": "A data center facility where multiple companies rent space for their servers and equipment. Provides shared infrastructure including power, cooling, and connectivity.",
+          "example": "Equinix operates colocation facilities where companies can rent rack space instead of building their own data centers."
+        },
+        {
+          "term": "White Space",
+          "definition": "The raised-floor area in a data center where IT equipment (servers, storage, networking) is installed. Excludes support infrastructure like HVAC and electrical rooms.",
+          "example": "A 100,000 sq ft data center might have 60,000 sq ft of white space available for customer equipment."
+        },
+        {
+          "term": "Power Density",
+          "definition": "The amount of power (measured in kilowatts or megawatts) that can be delivered per unit of space, typically measured in kW per rack or kW per square foot.",
+          "example": "Modern hyperscale data centers can support 15-20 kW per rack, while older facilities may only support 5-8 kW per rack."
+        },
+        {
+          "term": "PUE (Power Usage Effectiveness)",
+          "definition": "A metric that measures data center efficiency by dividing total facility power by IT equipment power. A PUE of 1.0 is perfect efficiency; typical data centers have PUE of 1.2-1.8.",
+          "example": "If a data center uses 10 MW total and 7 MW goes to IT equipment, the PUE is 10÷7 = 1.43"
+        },
+        {
+          "term": "Uptime Tier",
+          "definition": "Classification system (Tier I-IV) developed by Uptime Institute to rate data center availability and redundancy. Higher tiers indicate better uptime guarantees.",
+          "example": "Tier IV data centers guarantee 99.995% uptime (26 minutes downtime/year) vs Tier I at 99.671% (29 hours/year)."
+        },
+        {
+          "term": "N+1 Redundancy",
+          "definition": "A system design where there is one extra component beyond the minimum required (N) to handle the load. Provides fault tolerance if one component fails.",
+          "example": "If 4 cooling units are needed to cool the facility, N+1 means installing 5 units so operations continue if one fails."
+        },
+        {
+          "term": "2N Redundancy",
+          "definition": "A system design with two fully independent systems, each capable of supporting 100% of the load. Provides higher availability than N+1.",
+          "example": "2N power means two complete power paths from utility to IT equipment, each able to handle full load independently."
+        },
+        {
+          "term": "Hot Aisle / Cold Aisle",
+          "definition": "Data center layout where server racks face each other in alternating rows. Cold aisles face equipment air intakes, hot aisles face equipment exhaust.",
+          "example": "Cold aisles typically maintain 65-75°F while hot aisles can reach 90-110°F, improving cooling efficiency."
+        },
+        {
+          "term": "Raised Floor",
+          "definition": "Elevated flooring system in data centers that creates a plenum (empty space) underneath for cooling air distribution and cable management.",
+          "example": "Typical raised floors are 18-36 inches high, allowing cool air to be pushed up through perforated floor tiles."
+        },
+        {
+          "term": "CRAC/CRAH",
+          "definition": "Computer Room Air Conditioner (CRAC) or Computer Room Air Handler (CRAH) - specialized cooling units designed for data center environments.",
+          "example": "CRAC units use refrigerant for cooling while CRAH units use chilled water, both specifically designed for 24/7/365 operation."
+        }
+      ]
+    },
+    {
+      "id": "market_intelligence",
+      "name": "Market Intelligence",
+      "description": "Data center market analysis and competitive intelligence terms",
+      "cards": [
+        {
+          "term": "Hyperscale Data Center",
+          "definition": "Massive data centers (typically 100+ MW, 250,000+ sq ft) built by cloud providers like AWS, Microsoft, Google for their own operations at unprecedented scale.",
+          "example": "AWS operates hyperscale data centers exceeding 1 million sq ft with 100+ MW of power capacity."
+        },
+        {
+          "term": "Absorption",
+          "definition": "The amount of data center space leased or sold in a market during a specific period, indicating market demand.",
+          "example": "Northern Virginia absorbed 450 MW of data center capacity in 2024, the highest in the U.S."
+        },
+        {
+          "term": "Inventory / Pipeline",
+          "definition": "Total data center capacity under construction or planned in a market. Critical indicator of future supply.",
+          "example": "Phoenix has 800 MW in pipeline (under construction) vs 600 MW of existing operational capacity."
+        },
+        {
+          "term": "Vacancy Rate",
+          "definition": "Percentage of available data center space that is currently unleased. Lower vacancy indicates tighter market.",
+          "example": "Northern Virginia has <5% vacancy rate due to high demand from cloud providers."
+        },
+        {
+          "term": "Wholesale Colocation",
+          "definition": "Large-scale data center leases (typically full buildings or floors) to single tenants, as opposed to retail colocation (individual racks/cages).",
+          "example": "Digital Realty leases entire buildings (10-50 MW) to hyperscale customers as wholesale colocation."
+        },
+        {
+          "term": "Retail Colocation",
+          "definition": "Smaller data center leases to multiple tenants, selling space by the rack, cage, or suite. Higher revenue per MW than wholesale.",
+          "example": "Equinix provides retail colocation, selling individual racks or cages to hundreds of customers per facility."
+        },
+        {
+          "term": "Interconnection",
+          "definition": "Direct private network connections between customers within the same data center or between data centers, enabling low-latency data transfer.",
+          "example": "Equinix generates 40%+ of revenue from interconnection fees between customers in their facilities."
+        },
+        {
+          "term": "Edge Data Center",
+          "definition": "Smaller data centers (1-10 MW) located close to end users in secondary markets to reduce latency for applications.",
+          "example": "Edge data centers in cities like Omaha or Des Moines support low-latency gaming and streaming services."
+        },
+        {
+          "term": "Build-to-Suit",
+          "definition": "Data center development where a facility is custom-designed and built specifically for a single tenant customer's requirements.",
+          "example": "CyrusOne built a 50 MW build-to-suit facility in Phoenix for an unnamed hyperscale customer."
+        },
+        {
+          "term": "Stabilized Occupancy",
+          "definition": "The point at which a data center reaches its target occupancy level (typically 80-90%), indicating successful lease-up.",
+          "example": "A new 40 MW facility reaches stabilized occupancy when it leases 32-36 MW to customers."
+        }
+      ]
+    },
+    {
+      "id": "infrastructure",
+      "name": "Infrastructure & Engineering",
+      "description": "Technical infrastructure components and engineering concepts",
+      "cards": [
+        {
+          "term": "UPS (Uninterruptible Power Supply)",
+          "definition": "Battery-based system that provides immediate backup power during utility outages, bridging the gap until generators start (typically 10-15 seconds).",
+          "example": "A 10 MW data center might have 2 MW of UPS capacity providing 5-10 minutes of runtime."
+        },
+        {
+          "term": "Diesel Generator",
+          "definition": "Backup power generation equipment that starts automatically during extended utility outages. Typically 2N redundant in Tier III/IV facilities.",
+          "example": "Tier IV data centers maintain 96+ hours of diesel fuel on-site for continuous generator operation."
+        },
+        {
+          "term": "PDU (Power Distribution Unit)",
+          "definition": "Equipment that distributes electrical power from UPS/generators to server racks. Can be rack-mounted or floor-standing units.",
+          "example": "A rack PDU might distribute 208V three-phase power to 42U of server equipment."
+        },
+        {
+          "term": "Chiller",
+          "definition": "Large-scale cooling equipment that removes heat from data center cooling water loops. Can be air-cooled or water-cooled.",
+          "example": "A 10 MW data center might use 4-6 chillers, each with 1,000+ ton cooling capacity."
+        },
+        {
+          "term": "Cooling Tower",
+          "definition": "Equipment that uses evaporation to reject heat from chiller condensers to the atmosphere. Common in water-cooled chiller systems.",
+          "example": "Hyperscale data centers use massive cooling towers processing thousands of gallons per minute."
+        },
+        {
+          "term": "Free Cooling / Economizer",
+          "definition": "Cooling technique that uses outside air or water temperature to cool the facility when ambient conditions allow, reducing energy costs.",
+          "example": "Data centers in cold climates can achieve 8+ months of free cooling, significantly reducing PUE."
+        },
+        {
+          "term": "Liquid Cooling",
+          "definition": "Direct cooling of servers using liquid (water or dielectric fluid) instead of air. Required for high-density AI/GPU workloads (30+ kW/rack).",
+          "example": "NVIDIA DGX systems with 8 H100 GPUs require liquid cooling to handle 10+ kW per server."
+        },
+        {
+          "term": "Dark Fiber",
+          "definition": "Unused fiber optic cable infrastructure available for lease. Tenants light their own equipment on the fiber for private networks.",
+          "example": "Data centers on dark fiber routes can offer customers private 100G+ connections between facilities."
+        },
+        {
+          "term": "Meet-Me Room (MMR)",
+          "definition": "Centralized location in a data center where telecom carriers and network providers interconnect, enabling customer carrier choice.",
+          "example": "Major carrier hotels have MMRs with 50+ carriers, providing diverse connectivity options."
+        },
+        {
+          "term": "Electrical Substation",
+          "definition": "On-site or nearby utility facility that transforms high-voltage power (69kV-230kV) to medium voltage (12-35kV) for data center use.",
+          "example": "Hyperscale campuses require dedicated utility substations delivering 100+ MW from the grid."
+        }
+      ]
+    },
+    {
+      "id": "business_finance",
+      "name": "Business & Finance",
+      "description": "Commercial real estate and financial terminology for data centers",
+      "cards": [
+        {
+          "term": "Triple Net Lease (NNN)",
+          "definition": "Lease structure where tenant pays base rent plus property taxes, insurance, and maintenance (CAM). Common in wholesale data center leases.",
+          "example": "A 10 MW wholesale lease might be $110/kW/month base rent + $15/kW/month NNN charges."
+        },
+        {
+          "term": "CAM (Common Area Maintenance)",
+          "definition": "Shared facility operating expenses (security, landscaping, common utilities) paid by tenants in addition to base rent.",
+          "example": "CAM charges might include 24/7 security, parking lot maintenance, and lobby operations."
+        },
+        {
+          "term": "MRR (Monthly Recurring Revenue)",
+          "definition": "Predictable monthly revenue from colocation customers. Key metric for data center REIT valuations.",
+          "example": "A retail colo facility with 500 racks at $2,000/month generates $1M MRR."
+        },
+        {
+          "term": "AFFO (Adjusted Funds From Operations)",
+          "definition": "REIT financial metric measuring cash flow after capital expenditures. Used to value data center REITs and determine dividend capacity.",
+          "example": "Digital Realty's AFFO per share determines its quarterly dividend to shareholders."
+        },
+        {
+          "term": "Cap Rate (Capitalization Rate)",
+          "definition": "Property valuation metric = Net Operating Income ÷ Property Value. Lower cap rates indicate more valuable assets.",
+          "example": "Stabilized data centers trade at 5-7% cap rates vs 7-9% for speculative developments."
+        },
+        {
+          "term": "TIA (Tenant Improvement Allowance)",
+          "definition": "Landlord contribution toward customer build-out costs (cages, racks, cable trays). Typically $50-150 per usable sq ft.",
+          "example": "A 10,000 sq ft lease might include $100/sq ft TIA ($1M) for customer infrastructure."
+        },
+        {
+          "term": "Cross-Connect Fee",
+          "definition": "One-time and recurring charges for network connections between customers or to carriers. High-margin revenue for colo providers.",
+          "example": "A fiber cross-connect might cost $500 installation + $100/month recurring."
+        },
+        {
+          "term": "Remote Hands",
+          "definition": "On-site technical support service where data center staff perform tasks on behalf of customers. Billed hourly or as monthly retainer.",
+          "example": "Remote hands services charge $150-250/hour for tasks like rebooting servers or swapping drives."
+        },
+        {
+          "term": "SLA (Service Level Agreement)",
+          "definition": "Contractual guarantee of uptime percentage and performance. Violations typically result in service credits.",
+          "example": "A 99.999% SLA allows only 5.26 minutes of downtime per year; violations might credit 10-25% of monthly fees."
+        },
+        {
+          "term": "Pre-Leasing",
+          "definition": "Securing tenant commitments before data center construction begins. Reduces development risk and improves financing terms.",
+          "example": "Developers typically require 40-60% pre-leasing before breaking ground on speculative builds."
+        }
+      ]
+    },
+    {
+      "id": "compliance_security",
+      "name": "Compliance & Security",
+      "description": "Security certifications and regulatory compliance requirements",
+      "cards": [
+        {
+          "term": "SOC 2 Type II",
+          "definition": "Auditing standard verifying a service organization's security, availability, and confidentiality controls over a 6-12 month period.",
+          "example": "Enterprise customers require SOC 2 Type II reports before placing sensitive workloads in colocation."
+        },
+        {
+          "term": "PCI DSS",
+          "definition": "Payment Card Industry Data Security Standard - security requirements for handling credit card data. Requires specific physical and network controls.",
+          "example": "Financial services companies require PCI DSS compliant cages/suites for payment processing systems."
+        },
+        {
+          "term": "HIPAA",
+          "definition": "Health Insurance Portability and Accountability Act - regulations protecting healthcare data privacy and security.",
+          "example": "Healthcare providers require HIPAA-compliant data centers with access controls and audit logging."
+        },
+        {
+          "term": "FISMA",
+          "definition": "Federal Information Security Management Act - security framework for U.S. government systems and contractors.",
+          "example": "Government cloud providers need FISMA High data centers for classified/sensitive government workloads."
+        },
+        {
+          "term": "ISO 27001",
+          "definition": "International standard for information security management systems (ISMS). Demonstrates systematic approach to security.",
+          "example": "Global enterprises often require ISO 27001 certification for data centers housing international operations."
+        },
+        {
+          "term": "Mantrap",
+          "definition": "Two-door security vestibule where only one door can open at a time, preventing tailgating and ensuring one-person-at-a-time access.",
+          "example": "Tier III+ data centers use mantraps with biometric + card access controlling entry to white space."
+        },
+        {
+          "term": "SSAE 18",
+          "definition": "Statement on Standards for Attestation Engagements - framework for SOC reports. Replaced older SSAE 16 standard.",
+          "example": "Annual SSAE 18 SOC 2 audits verify data center controls meet customer security requirements."
+        },
+        {
+          "term": "TVSS (Transient Voltage Surge Suppression)",
+          "definition": "Protection against voltage spikes and surges that could damage sensitive IT equipment. Required for high-availability facilities.",
+          "example": "TVSS systems protect against lightning strikes and utility switching transients."
+        },
+        {
+          "term": "Biometric Access",
+          "definition": "Security systems using physical characteristics (fingerprint, iris, palm vein) for authentication. Common in high-security data centers.",
+          "example": "Financial services data centers often require fingerprint + card + PIN for cage access."
+        },
+        {
+          "term": "FM-200 / Inergen",
+          "definition": "Clean agent fire suppression gases that extinguish fires without damaging electronics or leaving residue. Preferred over water sprinklers in white space.",
+          "example": "FM-200 systems deploy within 10 seconds of smoke detection, suppressing fire before water sprinklers activate."
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "version": "1.0",
+    "last_updated": "2025-11-15",
+    "total_cards": 50,
+    "difficulty_levels": ["beginner", "intermediate", "advanced"]
+  }
+}

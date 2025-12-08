@@ -1,0 +1,5636 @@
+[
+  {
+    "id":"microsoft-azure-des-moines",
+    "provider":"Microsoft Azure",
+    "name":"Des Moines Data Center",
+    "city":"West Des Moines",
+    "state":"IA",
+    "latitude":41.516051,
+    "longitude":-93.708847
+  },
+  {
+    "id":"amazon-aws-pdx4-boardman-or",
+    "provider":"Amazon AWS",
+    "name":"PDX4 Boardman, OR",
+    "city":"Boardman",
+    "state":"OR",
+    "latitude":45.840997,
+    "longitude":-119.652722
+  },
+  {
+    "id":"google-mayes-county-ok",
+    "provider":"Google",
+    "name":"Mayes County Ok",
+    "city":"Mayes County",
+    "state":"OK",
+    "latitude":36.307279,
+    "longitude":-95.271696
+  },
+  {
+    "id":"microsoft-azure-west-us-2-washington",
+    "provider":"Microsoft Azure",
+    "name":"West US 2-Washington",
+    "city":"Quincy",
+    "state":"WA",
+    "latitude":47.239079,
+    "longitude":-119.880307
+  },
+  {
+    "id":"microsoft-azure-east-us-virginia",
+    "provider":"Microsoft Azure",
+    "name":"East US-Virginia",
+    "city":"Boydton",
+    "state":"VA",
+    "latitude":36.677055,
+    "longitude":-78.376831
+  },
+  {
+    "id":"microsoft-azure-east-us-2-virginia",
+    "provider":"Microsoft Azure",
+    "name":"East US 2 - Virginia",
+    "city":"Boydton",
+    "state":"VA",
+    "latitude":36.667641,
+    "longitude":-78.387498
+  },
+  {
+    "id":"facebook-newton-atlanta",
+    "provider":"Meta, Inc.",
+    "name":"Newton (Atlanta) Data Center",
+    "city":"Social Circle",
+    "state":"GA",
+    "latitude":33.605681,
+    "longitude":-83.702718
+  },
+  {
+    "id":"microsoft-azure-south-central-us-texas",
+    "provider":"Microsoft Azure",
+    "name":"South Central US-Texas",
+    "city":"San Antonio",
+    "state":"TX",
+    "latitude":29.479531,
+    "longitude":-98.692725
+  },
+  {
+    "id":"amazon-aws-iad23-ashburn",
+    "provider":"Amazon AWS",
+    "name":"IAD23 Ashburn",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.004149,
+    "longitude":-77.48437
+  },
+  {
+    "id":"oracle-us-east-us-ashburn-1",
+    "provider":"Oracle",
+    "name":"US East us-ashburn-1",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.043757,
+    "longitude":-77.487442
+  },
+  {
+    "id":"microsoft-azure-north-central-us-illinois",
+    "provider":"Microsoft Azure",
+    "name":"North Central US-Illinois",
+    "city":"Northlake",
+    "state":"IL",
+    "latitude":41.921369,
+    "longitude":-87.919286
+  },
+  {
+    "id":"google-montgomery-county-tn",
+    "provider":"Google",
+    "name":"Montgomery County, TN Data Center",
+    "city":"Clarksville",
+    "state":"TN",
+    "latitude":36.620502,
+    "longitude":-87.261995
+  },
+  {
+    "id":"switch-switch-citadel-campus",
+    "provider":"Switch Data Centers",
+    "name":"Switch Data Centers: CITADEL Campus",
+    "city":"Sparks",
+    "state":"NV",
+    "latitude":39.514255,
+    "longitude":-119.474243
+  },
+  {
+    "id":"amazon-aws-13600-eds-drive",
+    "provider":"Amazon AWS",
+    "name":"13600 Eds Drive",
+    "city":"Herndon",
+    "state":"VA",
+    "latitude":38.922476,
+    "longitude":-77.427496
+  },
+  {
+    "id":"equinix-dc2-ashburn",
+    "provider":"Equinix",
+    "name":"DC2 Ashburn Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.016363,
+    "longitude":-77.459023
+  },
+  {
+    "id":"google-the-dalles-or",
+    "provider":"Google",
+    "name":"The Dalles, OR Data Center",
+    "city":"The Dalles",
+    "state":"OR",
+    "latitude":45.63179,
+    "longitude":-121.200943
+  },
+  {
+    "id":"apple-inc-maiden",
+    "provider":"Apple Inc.",
+    "name":"Maiden Data Center",
+    "city":"Newton",
+    "state":"NC",
+    "latitude":35.587757,
+    "longitude":-81.256917
+  },
+  {
+    "id":"apple-inc-mesa",
+    "provider":"Apple Inc.",
+    "name":"Mesa Data Center",
+    "city":"Mesa",
+    "state":"AZ",
+    "latitude":33.346835,
+    "longitude":-111.604215
+  },
+  {
+    "id":"equinix-ny4-secaucus",
+    "provider":"Equinix",
+    "name":"NY4 Secaucus Data Center",
+    "city":"Secaucus",
+    "state":"NJ",
+    "latitude":40.777261,
+    "longitude":-74.069559
+  },
+  {
+    "id":"apple-inc-prineville",
+    "provider":"Apple Inc.",
+    "name":"Prineville Data Center",
+    "city":"Prineville",
+    "state":"OR",
+    "latitude":44.287714,
+    "longitude":-120.870153
+  },
+  {
+    "id":"switch-switch-keep",
+    "provider":"Switch Data Centers",
+    "name":"Switch Data Centers: Keep Data Center",
+    "city":"Lithia Springs",
+    "state":"GA",
+    "latitude":33.753557,
+    "longitude":-84.587645
+  },
+  {
+    "id":"digital-realty-silicon-valley-sc1",
+    "provider":"Digital Realty",
+    "name":"Silicon Valley SC1 Data Center",
+    "city":"Santa Clara",
+    "state":"CA",
+    "latitude":37.361752,
+    "longitude":-121.942934
+  },
+  {
+    "id":"facebook-new-albany-ohio",
+    "provider":"Meta, Inc.",
+    "name":"New Albany Ohio Data Center",
+    "city":"New Albany",
+    "state":"OH",
+    "latitude":40.069637,
+    "longitude":-82.750626
+  },
+  {
+    "id":"amazon-aws-iad73-manassas",
+    "provider":"Amazon AWS",
+    "name":"IAD73 Manassas",
+    "city":"Manassas",
+    "state":"VA",
+    "latitude":38.779784,
+    "longitude":-77.55709
+  },
+  {
+    "id":"switch-switch-core-campus",
+    "provider":"Switch Data Centers",
+    "name":"Switch Data Centers: CORE Campus",
+    "city":"Las Vegas",
+    "state":"NV",
+    "latitude":36.059931,
+    "longitude":-115.211793
+  },
+  {
+    "id":"apple-inc-waukee-ia",
+    "provider":"Apple Inc.",
+    "name":"Waukee IA Data Center",
+    "city":"Waukee",
+    "state":"IA",
+    "latitude":41.62028,
+    "longitude":-93.927008
+  },
+  {
+    "id":"equinix-mi1-miami",
+    "provider":"Equinix",
+    "name":"MI1 Miami Data Center",
+    "city":"Miami",
+    "state":"FL",
+    "latitude":25.782648,
+    "longitude":-80.193157
+  },
+  {
+    "id":"equinix-ch3-elk-grove",
+    "provider":"Equinix",
+    "name":"CH3 Elk Grove Data Center",
+    "city":"Elk Grove Village",
+    "state":"IL",
+    "latitude":42.001098,
+    "longitude":-87.954863
+  },
+  {
+    "id":"facebook-los-lunas",
+    "provider":"Meta, Inc.",
+    "name":"Los Lunas Data Center",
+    "city":"Los Lunas",
+    "state":"NM",
+    "latitude":34.826133,
+    "longitude":-106.775231
+  },
+  {
+    "id":"google-new-albany-oh",
+    "provider":"Google",
+    "name":"New Albany, OH Data Center",
+    "city":"New Albany",
+    "state":"OH",
+    "latitude":40.061335,
+    "longitude":-82.758628
+  },
+  {
+    "id":"cyrusone-nym1-somerset",
+    "provider":"CyrusOne",
+    "name":"NYM1 Somerset Data Center",
+    "city":"Somerset",
+    "state":"NJ",
+    "latitude":40.538224,
+    "longitude":-74.546019
+  },
+  {
+    "id":"facebook-huntsville",
+    "provider":"Meta, Inc.",
+    "name":"Huntsville Data Center",
+    "city":"Toney",
+    "state":"AL",
+    "latitude":34.842635,
+    "longitude":-86.632436
+  },
+  {
+    "id":"google-midlothian-tx",
+    "provider":"Google",
+    "name":"Midlothian, TX Data Center",
+    "city":"Midlothian",
+    "state":"TX",
+    "latitude":32.442994,
+    "longitude":-97.048836
+  },
+  {
+    "id":"facebook-forest-city",
+    "provider":"Meta, Inc.",
+    "name":"Forest City Data Center",
+    "city":"Forest City",
+    "state":"NC",
+    "latitude":35.316574,
+    "longitude":-81.828809
+  },
+  {
+    "id":"amazon-aws-dublin-oh",
+    "provider":"Amazon AWS",
+    "name":"Dublin OH",
+    "city":"Dublin",
+    "state":"OH",
+    "latitude":40.090153,
+    "longitude":-83.199967
+  },
+  {
+    "id":"equinix-sv1-san-jose",
+    "provider":"Equinix",
+    "name":"SV1 San Jose Data Center",
+    "city":"San Jose",
+    "state":"CA",
+    "latitude":37.241538,
+    "longitude":-121.783474
+  },
+  {
+    "id":"oracle-us-west-us-phoenix-1",
+    "provider":"Oracle",
+    "name":"US West us-phoenix-1",
+    "city":"Phoenix",
+    "state":"AZ",
+    "latitude":33.448377,
+    "longitude":-112.074037
+  },
+  {
+    "id":"equinix-da1-dallas",
+    "provider":"Equinix",
+    "name":"DA1 Dallas Data Center",
+    "city":"Dallas",
+    "state":"TX",
+    "latitude":32.896144,
+    "longitude":-96.898529
+  },
+  {
+    "id":"equinix-ny5-secaucus",
+    "provider":"Equinix",
+    "name":"NY5 Secaucus Data Center",
+    "city":"Secaucus",
+    "state":"NJ",
+    "latitude":40.778534,
+    "longitude":-74.072237
+  },
+  {
+    "id":"amazon-aws-5113-hayden-run",
+    "provider":"Amazon AWS",
+    "name":"5113 Hayden Run",
+    "city":"Hilliard",
+    "state":"OH",
+    "latitude":40.062384,
+    "longitude":-83.134144
+  },
+  {
+    "id":"equinix-sv5-san-jose",
+    "provider":"Equinix",
+    "name":"SV5 San Jose Data Center",
+    "city":"San Jose",
+    "state":"CA",
+    "latitude":37.242004,
+    "longitude":-121.781706
+  },
+  {
+    "id":"amazon-aws-new-albany-oh",
+    "provider":"Amazon AWS",
+    "name":"New Albany OH",
+    "city":"Johnstown",
+    "state":"OH",
+    "latitude":40.09341,
+    "longitude":-82.75018
+  },
+  {
+    "id":"flexential-dallas-richardson",
+    "provider":"Flexential",
+    "name":"Dallas - Richardson Data Center",
+    "city":"Richardson",
+    "state":"TX",
+    "latitude":32.994828,
+    "longitude":-96.752517
+  },
+  {
+    "id":"google-papillion-ne",
+    "provider":"Google",
+    "name":"Papillion, NE Data Center",
+    "city":"Papillion",
+    "state":"NE",
+    "latitude":41.133291,
+    "longitude":-96.144178
+  },
+  {
+    "id":"apple-inc-reno",
+    "provider":"Apple Inc.",
+    "name":"Reno Data Center",
+    "city":"Reno",
+    "state":"NV",
+    "latitude":39.45424,
+    "longitude":-119.757176
+  },
+  {
+    "id":"google-douglas-county-ga",
+    "provider":"Google",
+    "name":"Douglas County, GA Data Center",
+    "city":"Lithia Springs",
+    "state":"GA",
+    "latitude":33.776116,
+    "longitude":-84.562901
+  },
+  {
+    "id":"flexential-dallas-plano",
+    "provider":"Flexential",
+    "name":"Dallas - Plano Data Center",
+    "city":"Plano",
+    "state":"TX",
+    "latitude":33.007418,
+    "longitude":-96.666318
+  },
+  {
+    "id":"google-loudoun-county-va",
+    "provider":"Google",
+    "name":"Loudoun County, VA Data Center",
+    "city":"Leesburg",
+    "state":"VA",
+    "latitude":39.052231,
+    "longitude":-77.541583
+  },
+  {
+    "id":"equinix-da11-dallas-ibx",
+    "provider":"Equinix",
+    "name":"DA11 Dallas IBX Data Center",
+    "city":"Dallas",
+    "state":"TX",
+    "latitude":32.801347,
+    "longitude":-96.821074
+  },
+  {
+    "id":"t5-charlotte-campus",
+    "provider":null,
+    "name":"@Charlotte Data Center Campus",
+    "city":"Kings Mountain",
+    "state":"NC",
+    "latitude":35.2499,
+    "longitude":-81.394664
+  },
+  {
+    "id":"facebook-henrico",
+    "provider":"Meta, Inc.",
+    "name":"Henrico Data Center",
+    "city":"Sandston",
+    "state":"VA",
+    "latitude":37.495142,
+    "longitude":-77.253848
+  },
+  {
+    "id":"iron-mountain-azp-1-phoenix",
+    "provider":"Iron Mountain Data Centers",
+    "name":"AZP - 1 - Phoenix Data Center",
+    "city":"Phoenix",
+    "state":"AZ",
+    "latitude":33.454411,
+    "longitude":-111.976435
+  },
+  {
+    "id":"microsoft-azure-west-us-3-arizona",
+    "provider":"Microsoft Azure",
+    "name":"West US 3-Arizona",
+    "city":"El Mirage",
+    "state":"AZ",
+    "latitude":33.565295,
+    "longitude":-112.337784
+  },
+  {
+    "id":"microsoft-azure-west-central-us-wyoming",
+    "provider":"Microsoft Azure",
+    "name":"West Central US-Wyoming",
+    "city":"Cheyenne",
+    "state":"WY",
+    "latitude":41.123796,
+    "longitude":-104.896036
+  },
+  {
+    "id":"qts-phoenix",
+    "provider":"QTS Data Centers",
+    "name":"Phoenix Data Center",
+    "city":"Phoenix",
+    "state":"AZ",
+    "latitude":33.462368,
+    "longitude":-111.995794
+  },
+  {
+    "id":"facebook-sarpy-nebraska",
+    "provider":"Meta, Inc.",
+    "name":"Sarpy Nebraska Data Center",
+    "city":"Springfield",
+    "state":"NE",
+    "latitude":41.083265,
+    "longitude":-96.138375
+  },
+  {
+    "id":"qts-atlanta-1-dc1",
+    "provider":"QTS Data Centers",
+    "name":"Atlanta 1 DC1 Data Center",
+    "city":"Atlanta",
+    "state":"GA",
+    "latitude":33.777718,
+    "longitude":-84.420877
+  },
+  {
+    "id":"equinix-ny2-secaucus",
+    "provider":"Equinix",
+    "name":"NY2 Secaucus Data Center",
+    "city":"Secaucus",
+    "state":"NJ",
+    "latitude":40.777818,
+    "longitude":-74.075909
+  },
+  {
+    "id":"amazon-aws-pdx80-hermiston-or",
+    "provider":"Amazon AWS",
+    "name":"PDX80 Hermiston OR",
+    "city":"Hermiston",
+    "state":"OR",
+    "latitude":45.854831,
+    "longitude":-119.292568
+  },
+  {
+    "id":"phoenixnap-phoenix",
+    "provider":"PhoenixNAP",
+    "name":"Phoenix Data Center",
+    "city":"Phoenix",
+    "state":"AZ",
+    "latitude":33.41601,
+    "longitude":-112.009445
+  },
+  {
+    "id":"equinix-dc6-ashburn",
+    "provider":"Equinix",
+    "name":"DC6 Ashburn Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.015023,
+    "longitude":-77.45861
+  },
+  {
+    "id":"databank-dfw3-plano",
+    "provider":"DataBank",
+    "name":"DFW3 - Plano Data Center",
+    "city":"Plano",
+    "state":"TX",
+    "latitude":33.087141,
+    "longitude":-96.815596
+  },
+  {
+    "id":"whitelabel-it-solutions-150-atlantic-street",
+    "provider":"Whitelabel IT Solutions",
+    "name":"150 Atlantic Street",
+    "city":"Hackensack",
+    "state":"NJ",
+    "latitude":40.882844,
+    "longitude":-74.050288
+  },
+  {
+    "id":"qts-richmond-1",
+    "provider":"QTS Data Centers",
+    "name":"Richmond 1 Data Center",
+    "city":"Sandston",
+    "state":"VA",
+    "latitude":37.488073,
+    "longitude":-77.244177
+  },
+  {
+    "id":"google-jackson-county-al",
+    "provider":"Google",
+    "name":"Jackson County, AL Data Center",
+    "city":"Bridgeport",
+    "state":"AL",
+    "latitude":34.920403,
+    "longitude":-85.744926
+  },
+  {
+    "id":"amazon-aws-7400-potranco-rd",
+    "provider":"Amazon AWS",
+    "name":"7400 Potranco Rd",
+    "city":"San Antonio",
+    "state":"TX",
+    "latitude":29.450861,
+    "longitude":-98.638548
+  },
+  {
+    "id":"amazon-aws-iad12-sterling",
+    "provider":"Amazon AWS",
+    "name":"IAD12 Sterling",
+    "city":"Sterling",
+    "state":"VA",
+    "latitude":38.988843,
+    "longitude":-77.447698
+  },
+  {
+    "id":"amazon-aws-iad22-chantilly",
+    "provider":"Amazon AWS",
+    "name":"IAD22 Chantilly",
+    "city":"Chantilly",
+    "state":"VA",
+    "latitude":38.897952,
+    "longitude":-77.455051
+  },
+  {
+    "id":"equinix-dc3-ashburn",
+    "provider":"Equinix",
+    "name":"DC3 Ashburn Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.021993,
+    "longitude":-77.460898
+  },
+  {
+    "id":"qts-ashburn-broderick",
+    "provider":"QTS Data Centers",
+    "name":"Ashburn-Broderick Data Center",
+    "city":"Sterling",
+    "state":"VA",
+    "latitude":38.999773,
+    "longitude":-77.449662
+  },
+  {
+    "id":"amazon-aws-2305-mission-college-blvd",
+    "provider":"Amazon AWS",
+    "name":"2305 Mission College Blvd",
+    "city":"Santa Clara",
+    "state":"CA",
+    "latitude":37.390175,
+    "longitude":-121.965992
+  },
+  {
+    "id":"cyrusone-dfw1-dallas-carrollton",
+    "provider":"CyrusOne",
+    "name":"DFW1 Dallas Carrollton Data Center",
+    "city":"Carrollton",
+    "state":"TX",
+    "latitude":32.991847,
+    "longitude":-96.930003
+  },
+  {
+    "id":"google-lenoir-nc",
+    "provider":"Google",
+    "name":"Lenoir Nc",
+    "city":"Lenoir",
+    "state":"NC",
+    "latitude":35.898352,
+    "longitude":-81.547544
+  },
+  {
+    "id":"qts-irving-dallas-dc1-dc2",
+    "provider":"QTS Data Centers",
+    "name":"Irving - Dallas DC1 & DC2 Data Center",
+    "city":"Irving",
+    "state":"TX",
+    "latitude":32.89709,
+    "longitude":-96.982993
+  },
+  {
+    "id":"centersquare-ord2-chicago-elk-grove-village-campus",
+    "provider":"Centersquare",
+    "name":"ORD2 (Chicago) Elk Grove Village Data Center Campus",
+    "city":"Elk Grove Village",
+    "state":"IL",
+    "latitude":41.992204,
+    "longitude":-87.958168
+  },
+  {
+    "id":"qts-suwanee-1",
+    "provider":"QTS Data Centers",
+    "name":"Suwanee Data Center 1",
+    "city":"Suwanee",
+    "state":"GA",
+    "latitude":34.035259,
+    "longitude":-84.061197
+  },
+  {
+    "id":"facebook-altoona-iowa",
+    "provider":"Meta, Inc.",
+    "name":"Altoona Iowa Data Center",
+    "city":"Altoona",
+    "state":"IA",
+    "latitude":41.663264,
+    "longitude":-93.510077
+  },
+  {
+    "id":"cyrusone-cin5-cincinnati-north-cincinnati",
+    "provider":"CyrusOne",
+    "name":"CIN5 Cincinnati North Cincinnati Data Center",
+    "city":"Lebanon",
+    "state":"OH",
+    "latitude":39.390521,
+    "longitude":-84.218641
+  },
+  {
+    "id":"amazon-aws-pdx2-umatilla",
+    "provider":"Amazon AWS",
+    "name":"PDX2 Umatilla",
+    "city":"Umatilla",
+    "state":"OR",
+    "latitude":45.916464,
+    "longitude":-119.268246
+  },
+  {
+    "id":"facebook-prineville",
+    "provider":"Meta, Inc.",
+    "name":"Prineville Data Center",
+    "city":"Prineville",
+    "state":"OR",
+    "latitude":44.29578,
+    "longitude":-120.887069
+  },
+  {
+    "id":"telefonica-global-solutions-miami-keycenter",
+    "provider":"Telefonica Global Solutions",
+    "name":"Miami KeyCenter",
+    "city":null,
+    "state":null,
+    "latitude":25.796394,
+    "longitude":-80.379839
+  },
+  {
+    "id":"equinix-dc12-ashburn",
+    "provider":"Equinix",
+    "name":"DC12 Ashburn Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.023556,
+    "longitude":-77.4509
+  },
+  {
+    "id":"amazon-aws-new-albany-innovation-campus-way",
+    "provider":"Amazon AWS",
+    "name":"New Albany Innovation Campus Way",
+    "city":"New Albany",
+    "state":"OH",
+    "latitude":40.089315,
+    "longitude":-82.736901
+  },
+  {
+    "id":"vantage-az1-phoenix",
+    "provider":"Vantage Data Centers",
+    "name":"AZ1 Phoenix Data Center",
+    "city":"Goodyear",
+    "state":"AZ",
+    "latitude":33.446385,
+    "longitude":-112.374484
+  },
+  {
+    "id":"centersquare-atl1-atlanta-campus",
+    "provider":"Centersquare",
+    "name":"ATL1 Atlanta Data Center Campus",
+    "city":"Lithia Springs",
+    "state":"GA",
+    "latitude":33.744177,
+    "longitude":-84.58119
+  },
+  {
+    "id":"facebook-fort-worth",
+    "provider":"Meta, Inc.",
+    "name":"Fort Worth Data Center",
+    "city":"Fort Worth",
+    "state":"TX",
+    "latitude":32.984776,
+    "longitude":-97.261972
+  },
+  {
+    "id":"amazon-aws-port-of-morrow-3",
+    "provider":"Amazon AWS",
+    "name":"Port of Morrow 3",
+    "city":"Boardman",
+    "state":"OR",
+    "latitude":45.847669,
+    "longitude":-119.631534
+  },
+  {
+    "id":"equinix-ch1-chicago",
+    "provider":"Equinix",
+    "name":"CH1 Chicago Data Center",
+    "city":"Chicago",
+    "state":"IL",
+    "latitude":41.853701,
+    "longitude":-87.618252
+  },
+  {
+    "id":"centersquare-ewr2-weehawken-campus",
+    "provider":"Centersquare",
+    "name":"EWR2 Weehawken Data Center Campus",
+    "city":"Weehawken",
+    "state":"NJ",
+    "latitude":40.761484,
+    "longitude":-74.02533
+  },
+  {
+    "id":"google-henderson-nv",
+    "provider":"Google",
+    "name":"Henderson, NV Data Center",
+    "city":"Henderson",
+    "state":"NV",
+    "latitude":36.05616,
+    "longitude":-115.009056
+  },
+  {
+    "id":"qts-chicago",
+    "provider":"QTS Data Centers",
+    "name":"Chicago Data Center",
+    "city":"Chicago",
+    "state":"IL",
+    "latitude":41.841895,
+    "longitude":-87.667923
+  },
+  {
+    "id":"qts-east-windsor-nj",
+    "provider":"QTS Data Centers",
+    "name":"East Windsor, NJ Data Center",
+    "city":"East Windsor",
+    "state":"NJ",
+    "latitude":40.276295,
+    "longitude":-74.547948
+  },
+  {
+    "id":"amazon-aws-iad60-ashburn",
+    "provider":"Amazon AWS",
+    "name":"IAD60 Ashburn",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.028606,
+    "longitude":-77.458545
+  },
+  {
+    "id":"google-council-bluffs-ia",
+    "provider":"Google",
+    "name":"Council Bluffs, IA Data Center",
+    "city":"Council Bluffs",
+    "state":"IA",
+    "latitude":41.220354,
+    "longitude":-95.864237
+  },
+  {
+    "id":"google-berkeley-county-sc",
+    "provider":"Google",
+    "name":"Berkeley County Sc",
+    "city":"Berkeley County",
+    "state":"SC",
+    "latitude":33.105486,
+    "longitude":-80.088472
+  },
+  {
+    "id":"equinix-dc4-ashburn",
+    "provider":"Equinix",
+    "name":"DC4 Ashburn Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.016741,
+    "longitude":-77.461292
+  },
+  {
+    "id":"equinix-at1-atlanta-ibx",
+    "provider":"Equinix",
+    "name":"AT1 Atlanta IBX Data Center",
+    "city":"Atlanta",
+    "state":"GA",
+    "latitude":33.758563,
+    "longitude":-84.387775
+  },
+  {
+    "id":"microsoft-azure-west-us-california",
+    "provider":"Microsoft Azure",
+    "name":"West US-California",
+    "city":"Fresno",
+    "state":"CA",
+    "latitude":36.737798,
+    "longitude":-119.787125
+  },
+  {
+    "id":"switch-texas-1",
+    "provider":"Switch Data Centers",
+    "name":"Texas 1 Data Center",
+    "city":"Austin",
+    "state":"TX",
+    "latitude":30.200765,
+    "longitude":-97.711045
+  },
+  {
+    "id":"facebook-eagle-mountain-utah",
+    "provider":"Meta, Inc.",
+    "name":"Eagle Mountain Utah Data Center",
+    "city":"Eagle Mountain",
+    "state":"UT",
+    "latitude":40.265694,
+    "longitude":-112.015034
+  },
+  {
+    "id":"flexential-portland-hillsboro-2",
+    "provider":"Flexential",
+    "name":"Portland - Hillsboro 2 Data Center",
+    "city":"Hillsboro",
+    "state":"OR",
+    "latitude":45.557854,
+    "longitude":-122.917023
+  },
+  {
+    "id":"tierpoint-valley-forge",
+    "provider":"TierPoint",
+    "name":"Valley Forge Data Center",
+    "city":"Norristown",
+    "state":"PA",
+    "latitude":40.146958,
+    "longitude":-75.311258
+  },
+  {
+    "id":"equinix-la4-el-segundo",
+    "provider":"Equinix",
+    "name":"LA4 El Segundo Data Center",
+    "city":"El Segundo",
+    "state":"CA",
+    "latitude":33.921239,
+    "longitude":-118.383778
+  },
+  {
+    "id":"stack-infrastructure-dfw01-dallas",
+    "provider":"Stack Infrastructure",
+    "name":"DFW01 Dallas Data Center",
+    "city":"Plano",
+    "state":"TX",
+    "latitude":33.064936,
+    "longitude":-96.81065
+  },
+  {
+    "id":"centersquare-chicago-ch1-lisle",
+    "provider":"Centersquare",
+    "name":"Chicago (CH1-Lisle) Data Center",
+    "city":"Lisle",
+    "state":"IL",
+    "latitude":41.802407,
+    "longitude":-88.094656
+  },
+  {
+    "id":"cyrusone-chi2-chicago-aurora",
+    "provider":"CyrusOne",
+    "name":"CHI2 Chicago Aurora Data Center",
+    "city":"Aurora",
+    "state":"IL",
+    "latitude":41.796912,
+    "longitude":-88.245166
+  },
+  {
+    "id":"equinix-sv10-san-jose",
+    "provider":"Equinix",
+    "name":"SV10 San Jose Data Center",
+    "city":"San Jose",
+    "state":"CA",
+    "latitude":37.241239,
+    "longitude":-121.784826
+  },
+  {
+    "id":"qts-piscataway",
+    "provider":"QTS Data Centers",
+    "name":"Piscataway Data Center",
+    "city":"Piscataway Township",
+    "state":"NJ",
+    "latitude":40.556905,
+    "longitude":-74.484735
+  },
+  {
+    "id":"digital-realty-dallas-dfw10",
+    "provider":"Digital Realty",
+    "name":"Dallas DFW10 Data Center",
+    "city":"Dallas",
+    "state":"TX",
+    "latitude":32.787233,
+    "longitude":-96.79416
+  },
+  {
+    "id":"cyrusone-phx1-phx8-phoenix",
+    "provider":"CyrusOne",
+    "name":"PHX1-PHX8 Phoenix Data Center",
+    "city":"Chandler",
+    "state":"AZ",
+    "latitude":33.270744,
+    "longitude":-111.882056
+  },
+  {
+    "id":"switch-houston-2",
+    "provider":"Switch Data Centers",
+    "name":"Houston 2 Data Center",
+    "city":"Houston",
+    "state":"TX",
+    "latitude":29.945246,
+    "longitude":-95.42423
+  },
+  {
+    "id":"prime-prime-dallas-1515-round-table",
+    "provider":"Prime Data Centers",
+    "name":"Prime Dallas - 1515 Round Table",
+    "city":"Dallas",
+    "state":"TX",
+    "latitude":32.837903,
+    "longitude":-96.87841
+  },
+  {
+    "id":"centersquare-dfw1-fort-worth-campus",
+    "provider":"Centersquare",
+    "name":"DFW1 Fort Worth Data Center Campus",
+    "city":"Fort Worth",
+    "state":"TX",
+    "latitude":32.832607,
+    "longitude":-97.040725
+  },
+  {
+    "id":"amazon-aws-iad55-haymarket",
+    "provider":"Amazon AWS",
+    "name":"IAD55 Haymarket",
+    "city":"Haymarket",
+    "state":"VA",
+    "latitude":38.815458,
+    "longitude":-77.648422
+  },
+  {
+    "id":"aligned-energy-iad01-ashburn",
+    "provider":"Aligned Data Centers",
+    "name":"IAD01 Ashburn Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.013328,
+    "longitude":-77.471452
+  },
+  {
+    "id":"element-critical-houston-one",
+    "provider":"Element Critical",
+    "name":"Houston One Data Center",
+    "city":"Katy",
+    "state":"TX",
+    "latitude":29.802215,
+    "longitude":-95.756349
+  },
+  {
+    "id":"novva-utah",
+    "provider":"NOVVA",
+    "name":"Utah Data Center",
+    "city":"West Jordan",
+    "state":"UT",
+    "latitude":40.576789,
+    "longitude":-112.045486
+  },
+  {
+    "id":"equinix-dc5-ashburn",
+    "provider":"Equinix",
+    "name":"DC5 Ashburn Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.015958,
+    "longitude":-77.461263
+  },
+  {
+    "id":"iron-mountain-azp-3-phoenix",
+    "provider":"Iron Mountain Data Centers",
+    "name":"AZP - 3 - Phoenix Data Center",
+    "city":"Phoenix",
+    "state":"AZ",
+    "latitude":33.452439,
+    "longitude":-111.977552
+  },
+  {
+    "id":"databank-databank-iad1",
+    "provider":"DataBank",
+    "name":"DataBank IAD1 Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.015966,
+    "longitude":-77.48158
+  },
+  {
+    "id":"equinix-dc11-ashburn",
+    "provider":"Equinix",
+    "name":"DC11 Ashburn Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.015023,
+    "longitude":-77.45861
+  },
+  {
+    "id":"telehouse-new-york-teleport",
+    "provider":"Telehouse",
+    "name":"New York Teleport Data Center",
+    "city":"Staten Island",
+    "state":"NY",
+    "latitude":40.606872,
+    "longitude":-74.174759
+  },
+  {
+    "id":"apple-inc-newark",
+    "provider":"Apple Inc.",
+    "name":"Newark Data Center",
+    "city":"Newark",
+    "state":"CA",
+    "latitude":37.510152,
+    "longitude":-122.001883
+  },
+  {
+    "id":"flexential-denver-aurora",
+    "provider":"Flexential",
+    "name":"Denver - Aurora Data Center",
+    "city":"Aurora",
+    "state":"CO",
+    "latitude":39.661485,
+    "longitude":-104.849519
+  },
+  {
+    "id":"digital-realty-chicago-ord10",
+    "provider":"Digital Realty",
+    "name":"Chicago ORD10 Data Center",
+    "city":"Chicago",
+    "state":"IL",
+    "latitude":41.853701,
+    "longitude":-87.618252
+  },
+  {
+    "id":"prime-prime-los-angeles-4701-s-santa-fe",
+    "provider":"Prime Data Centers",
+    "name":"Prime Los Angeles - 4701 S. Santa Fe",
+    "city":"Vernon",
+    "state":"CA",
+    "latitude":34.001146,
+    "longitude":-118.230915
+  },
+  {
+    "id":"amazon-aws-iad59-manassas",
+    "provider":"Amazon AWS",
+    "name":"IAD59 Manassas",
+    "city":"Manassas",
+    "state":"VA",
+    "latitude":38.79221,
+    "longitude":-77.548866
+  },
+  {
+    "id":"amazon-aws-hilliard-5109-hayden-run",
+    "provider":"Amazon AWS",
+    "name":"Hilliard 5109 Hayden Run",
+    "city":"Hilliard",
+    "state":"OH",
+    "latitude":40.061162,
+    "longitude":-83.135228
+  },
+  {
+    "id":"cyrusone-nva5-northern-virginia-sterling",
+    "provider":"CyrusOne",
+    "name":"NVA5 Northern Virginia Sterling Data Center",
+    "city":"Sterling",
+    "state":"VA",
+    "latitude":39.025136,
+    "longitude":-77.433919
+  },
+  {
+    "id":"cologix-nnj3-new-jersey",
+    "provider":"Cologix",
+    "name":"NNJ3 New Jersey Data Center",
+    "city":"Parsippany",
+    "state":"NJ",
+    "latitude":40.857084,
+    "longitude":-74.418907
+  },
+  {
+    "id":"equinix-la3-el-segundo",
+    "provider":"Equinix",
+    "name":"LA3 El Segundo Data Center",
+    "city":"El Segundo",
+    "state":"CA",
+    "latitude":33.926304,
+    "longitude":-118.394067
+  },
+  {
+    "id":"meta-inc-temple",
+    "provider":"Meta, Inc.",
+    "name":"Temple Data Center",
+    "city":"Temple",
+    "state":"TX",
+    "latitude":31.135256,
+    "longitude":-97.372864
+  },
+  {
+    "id":"digital-realty-silicon-valley-sfo10",
+    "provider":"Digital Realty",
+    "name":"Silicon Valley SFO10 Data Center",
+    "city":"San Francisco",
+    "state":"CA",
+    "latitude":37.723343,
+    "longitude":-122.397823
+  },
+  {
+    "id":"ntt-global-va1-ashburn",
+    "provider":"NTT Global Data Centers",
+    "name":"VA1 Ashburn Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.022562,
+    "longitude":-77.455012
+  },
+  {
+    "id":"hivelocity-nyc1-new-york-city",
+    "provider":"Hivelocity",
+    "name":"NYC1 New York City Data Center",
+    "city":"Staten Island",
+    "state":"NY",
+    "latitude":40.606872,
+    "longitude":-74.174759
+  },
+  {
+    "id":"lightedge-des-moines-ii-2",
+    "provider":"LightEdge",
+    "name":"Des Moines II Data Center",
+    "city":"Altoona",
+    "state":"IA",
+    "latitude":41.666762,
+    "longitude":-93.455725
+  },
+  {
+    "id":"fibertown-bryan",
+    "provider":"FIBERTOWN",
+    "name":"Bryan Data Center",
+    "city":"Bryan",
+    "state":"TX",
+    "latitude":30.67419,
+    "longitude":-96.373675
+  },
+  {
+    "id":"equinix-ny11-carteret",
+    "provider":"Equinix",
+    "name":"NY11 Carteret Data Center",
+    "city":"Carteret",
+    "state":"NJ",
+    "latitude":40.584328,
+    "longitude":-74.243421
+  },
+  {
+    "id":"us-signal-5515-nobel-dr",
+    "provider":"US Signal",
+    "name":"5515 Nobel Dr",
+    "city":"Fitchburg",
+    "state":"WI",
+    "latitude":42.994855,
+    "longitude":-89.424591
+  },
+  {
+    "id":"flexential-salt-lake-city-downtown",
+    "provider":"Flexential",
+    "name":"Salt Lake City - Downtown Data Center",
+    "city":"Salt Lake City",
+    "state":"UT",
+    "latitude":40.756313,
+    "longitude":-111.954777
+  },
+  {
+    "id":"us-signal-10290-w-70th-st",
+    "provider":"US Signal",
+    "name":"10290 W 70th St",
+    "city":"Eden Prairie",
+    "state":"MN",
+    "latitude":44.877094,
+    "longitude":-93.407685
+  },
+  {
+    "id":"centersquare-lax3-los-angeles-irvine-campus",
+    "provider":"Centersquare",
+    "name":"LAX3 (Los Angeles) Irvine Data Center Campus",
+    "city":"Irvine",
+    "state":"CA",
+    "latitude":33.687339,
+    "longitude":-117.848727
+  },
+  {
+    "id":"cyrusone-nym5-norwalk",
+    "provider":"CyrusOne",
+    "name":"NYM5 Norwalk Data Center",
+    "city":"Norwalk",
+    "state":"CT",
+    "latitude":41.111571,
+    "longitude":-73.391548
+  },
+  {
+    "id":"amazon-aws-1125-electron-ave",
+    "provider":"Amazon AWS",
+    "name":"1125 Electron Ave",
+    "city":"Berwick",
+    "state":"PA",
+    "latitude":41.083826,
+    "longitude":-76.143479
+  },
+  {
+    "id":"digital-realty-northern-virginia-iad44",
+    "provider":"Digital Realty",
+    "name":"Northern Virginia IAD44 Data Center",
+    "city":"Dulles",
+    "state":"VA",
+    "latitude":38.960853,
+    "longitude":-77.491486
+  },
+  {
+    "id":"stack-infrastructure-atl01-atlanta",
+    "provider":"Stack Infrastructure",
+    "name":"ATL01 Atlanta Data Center",
+    "city":"Alpharetta",
+    "state":"GA",
+    "latitude":34.075741,
+    "longitude":-84.26427
+  },
+  {
+    "id":"expedient-indianapolis-carmel",
+    "provider":"Expedient",
+    "name":"Indianapolis Carmel Data Center",
+    "city":"Carmel",
+    "state":"IN",
+    "latitude":39.963183,
+    "longitude":-86.145575
+  },
+  {
+    "id":"switch-switch-pyramid",
+    "provider":"Switch Data Centers",
+    "name":"Switch Data Centers: Pyramid Data Center",
+    "city":"Caledonia",
+    "state":"MI",
+    "latitude":42.851822,
+    "longitude":-85.560489
+  },
+  {
+    "id":"meta-inc-gallatin",
+    "provider":"Meta, Inc.",
+    "name":"Gallatin Data Centers",
+    "city":"Gallatin",
+    "state":"TN",
+    "latitude":36.408954,
+    "longitude":-86.374046
+  },
+  {
+    "id":"equinix-ny7-north-bergen",
+    "provider":"Equinix",
+    "name":"NY7 North Bergen Data Center",
+    "city":"North Bergen",
+    "state":"NJ",
+    "latitude":40.796857,
+    "longitude":-74.031129
+  },
+  {
+    "id":"stack-infrastructure-nva01-northern-virginia",
+    "provider":"Stack Infrastructure",
+    "name":"NVA01 - Northern Virginia Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.004922,
+    "longitude":-77.441875
+  },
+  {
+    "id":"cyrusone-chi1-chicago-aurora",
+    "provider":"CyrusOne",
+    "name":"CHI1 Chicago Aurora Data Center",
+    "city":"Aurora",
+    "state":"IL",
+    "latitude":41.796682,
+    "longitude":-88.242772
+  },
+  {
+    "id":"flexential-denver-englewood",
+    "provider":"Flexential",
+    "name":"Denver - Englewood Data Center",
+    "city":"Englewood",
+    "state":"CO",
+    "latitude":39.560488,
+    "longitude":-104.838206
+  },
+  {
+    "id":"amazon-aws-fadeley-ii",
+    "provider":"Amazon AWS",
+    "name":"Fadeley II",
+    "city":"Sterling",
+    "state":"VA",
+    "latitude":38.948949,
+    "longitude":-77.521471
+  },
+  {
+    "id":"cyrusone-dur1-raleigh-durham",
+    "provider":"CyrusOne",
+    "name":"DUR1 Raleigh-Durham Data Center",
+    "city":"Durham",
+    "state":"NC",
+    "latitude":35.936277,
+    "longitude":-78.879916
+  },
+  {
+    "id":"centersquare-dallas-da1-allen",
+    "provider":"Centersquare",
+    "name":"Dallas (DA1-Allen) Data Center",
+    "city":"Allen",
+    "state":"TX",
+    "latitude":33.094894,
+    "longitude":-96.68326
+  },
+  {
+    "id":"keystone-nap-keystone-nap",
+    "provider":"Keystone Nap",
+    "name":"Keystone NAP",
+    "city":"Fairless Hills",
+    "state":"PA",
+    "latitude":40.15348,
+    "longitude":-74.742627
+  },
+  {
+    "id":"amazon-aws-iad71-ashburn",
+    "provider":"Amazon AWS",
+    "name":"IAD71 Ashburn",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.028123,
+    "longitude":-77.457107
+  },
+  {
+    "id":"amazon-aws-ale061",
+    "provider":"Amazon AWS",
+    "name":"ALE061",
+    "city":"San Antonio",
+    "state":"TX",
+    "latitude":29.301442,
+    "longitude":-98.391259
+  },
+  {
+    "id":"tierpoint-allentown-tekpark",
+    "provider":"TierPoint",
+    "name":"Allentown - TekPark Data Center",
+    "city":"Breinigsville",
+    "state":"PA",
+    "latitude":40.544235,
+    "longitude":-75.655718
+  },
+  {
+    "id":"flexential-philadelphia-collegeville",
+    "provider":"Flexential",
+    "name":"Philadelphia - Collegeville Data Center",
+    "city":"Collegeville",
+    "state":"PA",
+    "latitude":40.151919,
+    "longitude":-75.476908
+  },
+  {
+    "id":"us-signal-grand-rapids-east",
+    "provider":"US Signal",
+    "name":"Grand Rapids East Data Center",
+    "city":"Kentwood",
+    "state":"MI",
+    "latitude":42.876547,
+    "longitude":-85.560025
+  },
+  {
+    "id":"unitedlayer-200-paul",
+    "provider":null,
+    "name":"UnitedLayer",
+    "city":"San Francisco",
+    "state":"CA",
+    "latitude":37.723698,
+    "longitude":-122.398056
+  },
+  {
+    "id":"cologix-col1-columbus",
+    "provider":"Cologix",
+    "name":"COL1 Columbus Data Center",
+    "city":"Columbus",
+    "state":"OH",
+    "latitude":40.115757,
+    "longitude":-83.002414
+  },
+  {
+    "id":"qts-fort-worth-dallas",
+    "provider":"QTS Data Centers",
+    "name":"Fort Worth - Dallas Data Center",
+    "city":"Fort Worth",
+    "state":"TX",
+    "latitude":32.98893,
+    "longitude":-97.259041
+  },
+  {
+    "id":"equinix-cu3-culpeper",
+    "provider":"Equinix",
+    "name":"CU3 Culpeper Data Center",
+    "city":"Culpeper",
+    "state":"VA",
+    "latitude":38.454881,
+    "longitude":-77.978325
+  },
+  {
+    "id":"aligned-energy-slc-01-salt-lake-city",
+    "provider":"Aligned Data Centers",
+    "name":"SLC-01 Salt Lake City",
+    "city":"West Jordan",
+    "state":"UT",
+    "latitude":40.586855,
+    "longitude":-111.97014
+  },
+  {
+    "id":"amazon-aws-22370-kipper",
+    "provider":"Amazon AWS",
+    "name":"22370 Kipper",
+    "city":"Dulles",
+    "state":"VA",
+    "latitude":38.9966,
+    "longitude":-77.435788
+  },
+  {
+    "id":"centersquare-sfo2-santa-clara-campus",
+    "provider":"Centersquare",
+    "name":"SFO2 Santa Clara Data Center Campus",
+    "city":"Santa Clara",
+    "state":"CA",
+    "latitude":37.39758,
+    "longitude":-121.980833
+  },
+  {
+    "id":"equinix-de2-englewood",
+    "provider":"Equinix",
+    "name":"DE2 Englewood Data Center",
+    "city":"Englewood",
+    "state":"CO",
+    "latitude":39.560317,
+    "longitude":-104.857528
+  },
+  {
+    "id":"qts-atlanta-4-dc1",
+    "provider":"QTS Data Centers",
+    "name":"Atlanta 4 DC1 Data Center",
+    "city":"Atlanta",
+    "state":"GA",
+    "latitude":33.784381,
+    "longitude":-84.422488
+  },
+  {
+    "id":"amazon-aws-pdx111",
+    "provider":"Amazon AWS",
+    "name":"PDX111",
+    "city":"Boardman",
+    "state":"OR",
+    "latitude":45.856427,
+    "longitude":-119.6224
+  },
+  {
+    "id":"tierpoint-nashville",
+    "provider":"TierPoint",
+    "name":"Nashville Data Center",
+    "city":"Franklin",
+    "state":"TN",
+    "latitude":35.924479,
+    "longitude":-86.855833
+  },
+  {
+    "id":"stream-minneapolis-ii-chaska",
+    "provider":"Stream Data Centers",
+    "name":"Minneapolis II - Chaska Data Center",
+    "city":"Chaska",
+    "state":"MN",
+    "latitude":44.807153,
+    "longitude":-93.636892
+  },
+  {
+    "id":"firstlight-boston",
+    "provider":"FirstLight",
+    "name":"Boston Data Center",
+    "city":"Somerville",
+    "state":"MA",
+    "latitude":42.376503,
+    "longitude":-71.079862
+  },
+  {
+    "id":"flexential-minneapolis-chaska",
+    "provider":"Flexential",
+    "name":"Minneapolis - Chaska Data Center",
+    "city":"Chaska",
+    "state":"MN",
+    "latitude":44.851578,
+    "longitude":-93.598688
+  },
+  {
+    "id":"expedient-columbus-dublin",
+    "provider":"Expedient",
+    "name":"Columbus - Dublin Data Center",
+    "city":"Dublin",
+    "state":"OH",
+    "latitude":40.091865,
+    "longitude":-83.143709
+  },
+  {
+    "id":"ntt-global-tx1-dallas-2",
+    "provider":"NTT Global Data Centers",
+    "name":"TX1 Dallas Data Center",
+    "city":"Garland",
+    "state":"TX",
+    "latitude":32.982148,
+    "longitude":-96.657465
+  },
+  {
+    "id":"1547-critical-systems-realty-orny1-orangeburg",
+    "provider":null,
+    "name":"ORNY1 Orangeburg Data Center",
+    "city":"Orangeburg",
+    "state":"NY",
+    "latitude":41.033411,
+    "longitude":-73.9708
+  },
+  {
+    "id":"equinix-dc15-washington-dc-ibx",
+    "provider":"Equinix",
+    "name":"DC15 Washington DC IBX Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.022503,
+    "longitude":-77.450228
+  },
+  {
+    "id":"digital-realty-austin-aus11",
+    "provider":"Digital Realty",
+    "name":"Austin AUS11 Data Center",
+    "city":"Austin",
+    "state":"TX",
+    "latitude":30.212266,
+    "longitude":-97.695767
+  },
+  {
+    "id":"stack-infrastructure-svy01-silicon-valley",
+    "provider":"Stack Infrastructure",
+    "name":"SVY01 - Silicon Valley Data Center",
+    "city":"San Jose",
+    "state":"CA",
+    "latitude":37.402211,
+    "longitude":-121.892822
+  },
+  {
+    "id":"equinix-sv2-santa-clara",
+    "provider":"Equinix",
+    "name":"SV2 Santa Clara Data Center",
+    "city":"Santa Clara",
+    "state":"CA",
+    "latitude":37.378164,
+    "longitude":-121.954954
+  },
+  {
+    "id":"databank-san1-san-diego-world-trade",
+    "provider":"DataBank",
+    "name":"SAN1 San Diego World Trade Data Center",
+    "city":"San Diego",
+    "state":"CA",
+    "latitude":32.988781,
+    "longitude":-117.073181
+  },
+  {
+    "id":"amazon-aws-iad1-vdc",
+    "provider":"Amazon AWS",
+    "name":"IAD1 (VDC)",
+    "city":"Chantilly",
+    "state":"VA",
+    "latitude":38.897912,
+    "longitude":-77.454143
+  },
+  {
+    "id":"lightedge-kansas-city",
+    "provider":"LightEdge",
+    "name":"Kansas City Data Center",
+    "city":"Kansas City",
+    "state":"MO",
+    "latitude":39.15912,
+    "longitude":-94.471348
+  },
+  {
+    "id":"amazon-aws-pdx51",
+    "provider":"Amazon AWS",
+    "name":"PDX51",
+    "city":"Umatilla",
+    "state":"OR",
+    "latitude":45.921497,
+    "longitude":-119.265746
+  },
+  {
+    "id":"skybox-austin",
+    "provider":"Skybox Datacenters",
+    "name":"Austin Data Center",
+    "city":"Pflugerville",
+    "state":"TX",
+    "latitude":30.481827,
+    "longitude":-97.624184
+  },
+  {
+    "id":"qts-new-albany-1",
+    "provider":"QTS Data Centers",
+    "name":"New Albany 1 Data Center",
+    "city":"New Albany",
+    "state":"OH",
+    "latitude":40.06344,
+    "longitude":-82.754676
+  },
+  {
+    "id":"digital-realty-dallas-dfw11",
+    "provider":"Digital Realty",
+    "name":"Dallas DFW11 Data Center",
+    "city":"Carrollton",
+    "state":"TX",
+    "latitude":33.02151,
+    "longitude":-96.845322
+  },
+  {
+    "id":"cyrusone-aus3-austin",
+    "provider":"CyrusOne",
+    "name":"AUS3 Austin Data Center",
+    "city":"Austin",
+    "state":"TX",
+    "latitude":30.207107,
+    "longitude":-97.700668
+  },
+  {
+    "id":"amazon-aws-pdx1-boardman-or",
+    "provider":"Amazon AWS",
+    "name":"PDX1 Boardman, OR",
+    "city":"Boardman",
+    "state":"OR",
+    "latitude":45.850731,
+    "longitude":-119.630543
+  },
+  {
+    "id":"qts-ashburn-shellhorn-ash3-1",
+    "provider":"QTS Data Centers",
+    "name":"Ashburn-Shellhorn ASH3 Data Center 1",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.000915,
+    "longitude":-77.475168
+  },
+  {
+    "id":"cyrusone-nva9-northern-virginia",
+    "provider":"CyrusOne",
+    "name":"NVA9 Northern Virginia Data Center",
+    "city":"Sterling",
+    "state":"VA",
+    "latitude":38.958671,
+    "longitude":-77.505215
+  },
+  {
+    "id":"amazon-aws-iad10-sterling",
+    "provider":"Amazon AWS",
+    "name":"IAD10 Sterling",
+    "city":"Sterling",
+    "state":"VA",
+    "latitude":39.021623,
+    "longitude":-77.432726
+  },
+  {
+    "id":"provision-data-services-2020-live-oak-st",
+    "provider":null,
+    "name":"Provision Data Services",
+    "city":"Dallas",
+    "state":"TX",
+    "latitude":32.783696,
+    "longitude":-96.794663
+  },
+  {
+    "id":"cologix-col3-columbus",
+    "provider":"Cologix",
+    "name":"COL3 Columbus Data Center",
+    "city":"Columbus",
+    "state":"OH",
+    "latitude":40.115837,
+    "longitude":-83.002122
+  },
+  {
+    "id":"flexential-atlanta-norcross",
+    "provider":"Flexential",
+    "name":"Atlanta - Norcross Data Center",
+    "city":"Norcross",
+    "state":"GA",
+    "latitude":33.954763,
+    "longitude":-84.198645
+  },
+  {
+    "id":"centersquare-dallas-da2-webb-chapel",
+    "provider":"Centersquare",
+    "name":"Dallas (DA2-Webb Chapel) Data Center",
+    "city":"Dallas",
+    "state":"TX",
+    "latitude":32.911915,
+    "longitude":-96.870643
+  },
+  {
+    "id":"centersquare-secaucus-nyc3",
+    "provider":"Centersquare",
+    "name":"Secaucus (NYC3) Data Center",
+    "city":"Secaucus",
+    "state":"NJ",
+    "latitude":40.78616,
+    "longitude":-74.06912
+  },
+  {
+    "id":"valorc3-st-george-1",
+    "provider":null,
+    "name":"ValorC3",
+    "city":"St. George",
+    "state":"UT",
+    "latitude":37.080649,
+    "longitude":-113.607133
+  },
+  {
+    "id":"flexential-atlanta-alpharetta",
+    "provider":"Flexential",
+    "name":"Atlanta - Alpharetta Data Center",
+    "city":"Alpharetta",
+    "state":"GA",
+    "latitude":34.08716,
+    "longitude":-84.252346
+  },
+  {
+    "id":"365-tx1-richardson",
+    "provider":null,
+    "name":"TX1 Richardson Data Center",
+    "city":"Richardson",
+    "state":"TX",
+    "latitude":32.976135,
+    "longitude":-96.707427
+  },
+  {
+    "id":"amazon-aws-pdx58-boardman-or",
+    "provider":"Amazon AWS",
+    "name":"PDX58 Boardman, OR",
+    "city":"Boardman",
+    "state":"OR",
+    "latitude":45.85085,
+    "longitude":-119.630542
+  },
+  {
+    "id":"centersquare-phoenix-phx1-mesa",
+    "provider":"Centersquare",
+    "name":"Phoenix ( PHX1 - Mesa) Data Center",
+    "city":"Mesa",
+    "state":"AZ",
+    "latitude":33.421225,
+    "longitude":-111.858984
+  },
+  {
+    "id":"digital-realty-new-york-ewr21",
+    "provider":"Digital Realty",
+    "name":"New York EWR21 Data Center",
+    "city":"Clifton",
+    "state":"NJ",
+    "latitude":40.830566,
+    "longitude":-74.124526
+  },
+  {
+    "id":"equinix-se4-kent",
+    "provider":"Equinix",
+    "name":"SE4 Kent Data Center",
+    "city":"Kent",
+    "state":"WA",
+    "latitude":47.420627,
+    "longitude":-122.247527
+  },
+  {
+    "id":"t5-minneapolis",
+    "provider":null,
+    "name":"@Minneapolis Data Center",
+    "city":"Minneapolis",
+    "state":"MN",
+    "latitude":44.971526,
+    "longitude":-93.270339
+  },
+  {
+    "id":"sba-edge-chicago",
+    "provider":"SBA Edge",
+    "name":"Chicago Data Center",
+    "city":"West Chicago",
+    "state":"IL",
+    "latitude":41.875794,
+    "longitude":-88.249008
+  },
+  {
+    "id":"cyrusone-nym2-totowa",
+    "provider":"CyrusOne",
+    "name":"NYM2 Totowa Data Center",
+    "city":"Totowa",
+    "state":"NJ",
+    "latitude":40.907223,
+    "longitude":-74.242418
+  },
+  {
+    "id":"amazon-aws-iad15-sterling",
+    "provider":"Amazon AWS",
+    "name":"IAD15 Sterling",
+    "city":"Sterling",
+    "state":"VA",
+    "latitude":38.991546,
+    "longitude":-77.448173
+  },
+  {
+    "id":"equinix-at4-atlanta",
+    "provider":"Equinix",
+    "name":"AT4 Atlanta Data Center",
+    "city":"Atlanta",
+    "state":"GA",
+    "latitude":33.895445,
+    "longitude":-84.453611
+  },
+  {
+    "id":"stack-infrastructure-chi01-chicago",
+    "provider":"Stack Infrastructure",
+    "name":"CHI01 Chicago Data Center",
+    "city":"Elk Grove Village",
+    "state":"IL",
+    "latitude":42.006683,
+    "longitude":-87.964418
+  },
+  {
+    "id":"cyrusone-cin2-cincinnati-7th-street",
+    "provider":"CyrusOne",
+    "name":"CIN2 Cincinnati 7th Street",
+    "city":"Cincinnati",
+    "state":"OH",
+    "latitude":39.102771,
+    "longitude":-84.517263
+  },
+  {
+    "id":"lumen-tulsa-1",
+    "provider":"Lumen",
+    "name":"Tulsa 1 Data Center",
+    "city":"Tulsa",
+    "state":"OK",
+    "latitude":36.156864,
+    "longitude":-95.993142
+  },
+  {
+    "id":"aligned-energy-ord-01-chicago",
+    "provider":"Aligned Data Centers",
+    "name":"ORD-01 Chicago",
+    "city":"Northlake",
+    "state":"IL",
+    "latitude":41.914017,
+    "longitude":-87.91767
+  },
+  {
+    "id":"equinix-sv4-sunnyvale",
+    "provider":"Equinix",
+    "name":"SV4 Sunnyvale Data Center",
+    "city":"Sunnyvale",
+    "state":"CA",
+    "latitude":37.414518,
+    "longitude":-122.014661
+  },
+  {
+    "id":"equinix-dc13-ashburn",
+    "provider":"Equinix",
+    "name":"DC13 Ashburn Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.013556,
+    "longitude":-77.466439
+  },
+  {
+    "id":"amazon-aws-iad9-chantilly",
+    "provider":"Amazon AWS",
+    "name":"IAD9 Chantilly",
+    "city":"Chantilly",
+    "state":"VA",
+    "latitude":38.899642,
+    "longitude":-77.453525
+  },
+  {
+    "id":"sentinel-ny-1",
+    "provider":"Sentinel Data Centers",
+    "name":"NY-1 Data Center",
+    "city":"Orangeburg",
+    "state":"NY",
+    "latitude":41.036379,
+    "longitude":-73.987701
+  },
+  {
+    "id":"flexential-nashville-cool-springs",
+    "provider":"Flexential",
+    "name":"Nashville - Cool Springs Data Center",
+    "city":"Franklin",
+    "state":"TN",
+    "latitude":35.951091,
+    "longitude":-86.833251
+  },
+  {
+    "id":"flexential-las-vegas-north",
+    "provider":"Flexential",
+    "name":"Las Vegas - North Data Center",
+    "city":"North Las Vegas",
+    "state":"NV",
+    "latitude":36.248009,
+    "longitude":-115.101272
+  },
+  {
+    "id":"aligned-energy-ord-02-chicago",
+    "provider":"Aligned Data Centers",
+    "name":"ORD-02 Chicago",
+    "city":"Northlake",
+    "state":"IL",
+    "latitude":41.912685,
+    "longitude":-87.917228
+  },
+  {
+    "id":"amazon-aws-20945-loudoun-county-pkwy",
+    "provider":"Amazon AWS",
+    "name":"20945 Loudoun County Pkwy",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.035537,
+    "longitude":-77.450712
+  },
+  {
+    "id":"lightedge-omaha",
+    "provider":"LightEdge",
+    "name":"Omaha Data Center",
+    "city":"Papillion",
+    "state":"NE",
+    "latitude":41.159807,
+    "longitude":-96.025656
+  },
+  {
+    "id":"equinix-se3-seattle",
+    "provider":"Equinix",
+    "name":"SE3 Seattle Data Center",
+    "city":"Seattle",
+    "state":"WA",
+    "latitude":47.614425,
+    "longitude":-122.339737
+  },
+  {
+    "id":"databank-sna1-irvine",
+    "provider":"DataBank",
+    "name":"SNA1 Irvine Data Center",
+    "city":"Irvine",
+    "state":"CA",
+    "latitude":33.690524,
+    "longitude":-117.840715
+  },
+  {
+    "id":"us-signal-20845-sockeye-pl",
+    "provider":"US Signal",
+    "name":"20845 Sockeye Pl",
+    "city":"Bend",
+    "state":"OR",
+    "latitude":44.086244,
+    "longitude":-121.282055
+  },
+  {
+    "id":"meta-inc-dekalb",
+    "provider":"Meta, Inc.",
+    "name":"DeKalb Data Center",
+    "city":"DeKalb",
+    "state":"IL",
+    "latitude":41.891206,
+    "longitude":-88.733546
+  },
+  {
+    "id":"element-critical-austin-one-2",
+    "provider":"Element Critical",
+    "name":"Austin One Data Center",
+    "city":"Austin",
+    "state":"TX",
+    "latitude":30.342818,
+    "longitude":-97.696574
+  },
+  {
+    "id":"edgeconnex-chi02-chicago",
+    "provider":"EdgeConnex",
+    "name":"CHI02 Chicago Data Center",
+    "city":"Elk Grove Village",
+    "state":"IL",
+    "latitude":42.001364,
+    "longitude":-87.952626
+  },
+  {
+    "id":"equinix-bo2-billerica",
+    "provider":"Equinix",
+    "name":"BO2 Billerica Data Center",
+    "city":"Billerica",
+    "state":"MA",
+    "latitude":42.562485,
+    "longitude":-71.294674
+  },
+  {
+    "id":"ark-tucson",
+    "provider":"ark data centers",
+    "name":"Tucson Data Center",
+    "city":"Tucson",
+    "state":"AZ",
+    "latitude":32.1723,
+    "longitude":-110.95415
+  },
+  {
+    "id":"digital-realty-los-angeles-lax10",
+    "provider":"Digital Realty",
+    "name":"Los Angeles LAX10 Data Center",
+    "city":"Los Angeles",
+    "state":"CA",
+    "latitude":34.047414,
+    "longitude":-118.25738
+  },
+  {
+    "id":"equinix-ny9-new-york",
+    "provider":"Equinix",
+    "name":"NY9 New York Data Center",
+    "city":"New York",
+    "state":"NY",
+    "latitude":40.741469,
+    "longitude":-74.003387
+  },
+  {
+    "id":"amazon-aws-iad50-ashburn",
+    "provider":"Amazon AWS",
+    "name":"IAD50 Ashburn",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.029646,
+    "longitude":-77.459262
+  },
+  {
+    "id":"databank-sna2-irvine",
+    "provider":"DataBank",
+    "name":"SNA2 Irvine Data Center",
+    "city":"Irvine",
+    "state":"CA",
+    "latitude":33.687905,
+    "longitude":-117.842407
+  },
+  {
+    "id":"flexential-raleigh",
+    "provider":"Flexential",
+    "name":"Raleigh Data Center",
+    "city":"Morrisville",
+    "state":"NC",
+    "latitude":35.850328,
+    "longitude":-78.82887
+  },
+  {
+    "id":"databank-dfw2-north-dallas",
+    "provider":"DataBank",
+    "name":"DFW2 - North Dallas Data Center",
+    "city":"Richardson",
+    "state":"TX",
+    "latitude":32.966683,
+    "longitude":-96.711345
+  },
+  {
+    "id":"centersquare-bos1-waltham-campus",
+    "provider":"Centersquare",
+    "name":"BOS1 Waltham Data Center Campus",
+    "city":"Waltham",
+    "state":"MA",
+    "latitude":42.396794,
+    "longitude":-71.267467
+  },
+  {
+    "id":"lightedge-austin-i",
+    "provider":"LightEdge",
+    "name":"Austin I Data Center",
+    "city":"Austin",
+    "state":"TX",
+    "latitude":30.214315,
+    "longitude":-97.712733
+  },
+  {
+    "id":"flexential-atlanta-douglasville-1",
+    "provider":"Flexential",
+    "name":"Atlanta - Douglasville 1 Data Center",
+    "city":"Douglasville",
+    "state":"GA",
+    "latitude":33.721528,
+    "longitude":-84.611505
+  },
+  {
+    "id":"rackspace-nyc1-new-york-metro",
+    "provider":"Rackspace",
+    "name":"NYC1 New York Metro Data Center",
+    "city":"Somerset",
+    "state":"NJ",
+    "latitude":40.540766,
+    "longitude":-74.536945
+  },
+  {
+    "id":"inap-new-jersey-1",
+    "provider":"INAP",
+    "name":"New Jersey 1 Data Center",
+    "city":"Secaucus",
+    "state":"NJ",
+    "latitude":40.787497,
+    "longitude":-74.068135
+  },
+  {
+    "id":"equinix-dc10-ashburn",
+    "provider":"Equinix",
+    "name":"DC10 Ashburn Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.020864,
+    "longitude":-77.451294
+  },
+  {
+    "id":"iron-mountain-mia-1-miami",
+    "provider":"Iron Mountain Data Centers",
+    "name":"MIA-1 - Miami Data Center",
+    "city":"Miami",
+    "state":"FL",
+    "latitude":25.884587,
+    "longitude":-80.247207
+  },
+  {
+    "id":"flexential-phoenix-deer-valley",
+    "provider":"Flexential",
+    "name":"Phoenix - Deer Valley Data Center",
+    "city":"Phoenix",
+    "state":"AZ",
+    "latitude":33.684646,
+    "longitude":-112.098124
+  },
+  {
+    "id":"amazon-aws-iad100-manassas",
+    "provider":"Amazon AWS",
+    "name":"IAD100 Manassas",
+    "city":"Manassas",
+    "state":"VA",
+    "latitude":38.735889,
+    "longitude":-77.507501
+  },
+  {
+    "id":"cologix-col4-columbus",
+    "provider":"Cologix",
+    "name":"COL4 Columbus Data Center",
+    "city":"Columbus",
+    "state":"OH",
+    "latitude":40.11821,
+    "longitude":-83.000633
+  },
+  {
+    "id":"cyrusone-aus2-austin",
+    "provider":"CyrusOne",
+    "name":"AUS2 Austin Data Center",
+    "city":"Austin",
+    "state":"TX",
+    "latitude":30.205925,
+    "longitude":-97.69791
+  },
+  {
+    "id":"cyrusone-cin6-florence",
+    "provider":"CyrusOne",
+    "name":"CIN6 Florence Data Center",
+    "city":"Florence",
+    "state":"KY",
+    "latitude":38.981472,
+    "longitude":-84.619145
+  },
+  {
+    "id":"stream-phoenix-i-vi-goodyear-campus",
+    "provider":"Stream Data Centers",
+    "name":"Phoenix I-VI Goodyear Campus",
+    "city":"Goodyear",
+    "state":"AZ",
+    "latitude":33.419655,
+    "longitude":-112.360011
+  },
+  {
+    "id":"centersquare-los-angeles-la2-irvine",
+    "provider":"Centersquare",
+    "name":"Los Angeles (LA2-Irvine) Data Center",
+    "city":"Irvine",
+    "state":"CA",
+    "latitude":33.684675,
+    "longitude":-117.836821
+  },
+  {
+    "id":"qts-overland-park-kansas-city",
+    "provider":null,
+    "name":"QTS Data Centers",
+    "city":"Overland Park",
+    "state":"KS",
+    "latitude":38.89627,
+    "longitude":-94.673374
+  },
+  {
+    "id":"copt-dc-6-manassas",
+    "provider":"COPT Data Center",
+    "name":"DC-6 Manassas Data Center",
+    "city":"Manassas",
+    "state":"VA",
+    "latitude":38.747494,
+    "longitude":-77.531749
+  },
+  {
+    "id":"equinix-ch4-chicago",
+    "provider":"Equinix",
+    "name":"CH4 Chicago Data Center",
+    "city":"Chicago",
+    "state":"IL",
+    "latitude":41.853701,
+    "longitude":-87.618252
+  },
+  {
+    "id":"t5-chicago",
+    "provider":null,
+    "name":"@Chicago Data Center",
+    "city":"Elk Grove Village",
+    "state":"IL",
+    "latitude":42.022744,
+    "longitude":-87.974234
+  },
+  {
+    "id":"digital-fortress-north-seattle-lyn",
+    "provider":"Digital Fortress",
+    "name":"North Seattle Data Center - (LYN)",
+    "city":"Lynnwood",
+    "state":"WA",
+    "latitude":47.822503,
+    "longitude":-122.289478
+  },
+  {
+    "id":"equinix-sv3-san-jose",
+    "provider":"Equinix",
+    "name":"SV3 San Jose Data Center",
+    "city":"San Jose",
+    "state":"CA",
+    "latitude":37.388235,
+    "longitude":-121.888457
+  },
+  {
+    "id":"centersquare-seattle-se1-lynnwood",
+    "provider":"Centersquare",
+    "name":"Seattle (SE1-Lynnwood) Data Center",
+    "city":"Lynnwood",
+    "state":"WA",
+    "latitude":47.842011,
+    "longitude":-122.301668
+  },
+  {
+    "id":"ntt-global-va2-ashburn",
+    "provider":"NTT Global Data Centers",
+    "name":"VA2 Ashburn Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.022562,
+    "longitude":-77.455012
+  },
+  {
+    "id":"tierpoint-new-york-11-skyline-hawthorne",
+    "provider":"TierPoint",
+    "name":"New York - 11 Skyline - Hawthorne Data Center",
+    "city":"Hawthorne",
+    "state":"NY",
+    "latitude":41.088241,
+    "longitude":-73.815348
+  },
+  {
+    "id":"databank-databank-aus1",
+    "provider":"DataBank",
+    "name":"DataBank AUS1 Data Center",
+    "city":"Austin",
+    "state":"TX",
+    "latitude":30.436071,
+    "longitude":-97.766066
+  },
+  {
+    "id":"vantage-ca1-santa-clara-campus",
+    "provider":"Vantage Data Centers",
+    "name":"CA1 Santa Clara Data Center Campus",
+    "city":"Santa Clara",
+    "state":"CA",
+    "latitude":37.372428,
+    "longitude":-121.973617
+  },
+  {
+    "id":"databank-databank-atl1",
+    "provider":"DataBank",
+    "name":"DataBank ATL1 Data Center",
+    "city":"Atlanta",
+    "state":"GA",
+    "latitude":33.775499,
+    "longitude":-84.387735
+  },
+  {
+    "id":"centersquare-cmh1-columbus-lewis-center-campus",
+    "provider":"Centersquare",
+    "name":"CMH1 (Columbus) Lewis Center Data Center Campus",
+    "city":"Lewis Center",
+    "state":"OH",
+    "latitude":40.168866,
+    "longitude":-83.010798
+  },
+  {
+    "id":"lumen-mclean-1",
+    "provider":"Lumen",
+    "name":"McLean 1 Data Center",
+    "city":"McLean",
+    "state":"VA",
+    "latitude":38.919959,
+    "longitude":-77.211618
+  },
+  {
+    "id":"lumen-dallas-1",
+    "provider":"Lumen",
+    "name":"Dallas 1 Data Center",
+    "city":"Dallas",
+    "state":"TX",
+    "latitude":32.807584,
+    "longitude":-96.86816
+  },
+  {
+    "id":"rackspace-dfw3-dallas",
+    "provider":"Rackspace",
+    "name":"DFW3 Dallas Data Center",
+    "city":"Richardson",
+    "state":"TX",
+    "latitude":32.964882,
+    "longitude":-96.715713
+  },
+  {
+    "id":"rackspace-iad3-ashburn-i",
+    "provider":"Rackspace",
+    "name":"IAD3 Ashburn I Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.021133,
+    "longitude":-77.463564
+  },
+  {
+    "id":"cyrusone-dfw3-dallas",
+    "provider":"CyrusOne",
+    "name":"DFW3 Dallas Data Center",
+    "city":"Allen",
+    "state":"TX",
+    "latitude":33.13877,
+    "longitude":-96.662553
+  },
+  {
+    "id":"h5-cleveland",
+    "provider":null,
+    "name":"Cleveland Data Center",
+    "city":"Cleveland",
+    "state":"OH",
+    "latitude":41.5067,
+    "longitude":-81.683049
+  },
+  {
+    "id":"123net-grand-rapids-dc4",
+    "provider":null,
+    "name":"Grand Rapids Data Center (DC4)",
+    "city":"Byron Center",
+    "state":"MI",
+    "latitude":42.825389,
+    "longitude":-85.672784
+  },
+  {
+    "id":"flexential-dallas-downtown",
+    "provider":"Flexential",
+    "name":"Dallas - Downtown Data Center",
+    "city":"Dallas",
+    "state":"TX",
+    "latitude":32.800748,
+    "longitude":-96.819412
+  },
+  {
+    "id":"amazon-aws-iad11-manassas",
+    "provider":"Amazon AWS",
+    "name":"IAD11 Manassas",
+    "city":"Manassas",
+    "state":"VA",
+    "latitude":38.790394,
+    "longitude":-77.540983
+  },
+  {
+    "id":"ibm-wdc07-ashburn-va",
+    "provider":"IBM Cloud",
+    "name":"WDC07 Ashburn, VA",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.043757,
+    "longitude":-77.487442
+  },
+  {
+    "id":"stack-infrastructure-por02-portland",
+    "provider":"Stack Infrastructure",
+    "name":"POR02 - Portland Data Center",
+    "city":"Hillsboro",
+    "state":"OR",
+    "latitude":45.546379,
+    "longitude":-122.897841
+  },
+  {
+    "id":"flexential-louisville-downtown",
+    "provider":"Flexential",
+    "name":"Louisville - Downtown Data Center",
+    "city":"Louisville",
+    "state":"KY",
+    "latitude":38.242458,
+    "longitude":-85.733412
+  },
+  {
+    "id":"meta-inc-kansas-city",
+    "provider":"Meta, Inc.",
+    "name":"Kansas City Data Center",
+    "city":"Kansas City",
+    "state":"MO",
+    "latitude":39.321994,
+    "longitude":-94.592441
+  },
+  {
+    "id":"centersquare-den1-denver-highlands-ranch-campus",
+    "provider":"Centersquare",
+    "name":"DEN1 (Denver) Highlands Ranch Data Center Campus",
+    "city":"Highlands Ranch",
+    "state":"CO",
+    "latitude":39.549911,
+    "longitude":-105.033383
+  },
+  {
+    "id":"edgeconnex-atl02-atlanta",
+    "provider":"EdgeConnex",
+    "name":"ATL02 Atlanta Data Center",
+    "city":"Atlanta",
+    "state":"GA",
+    "latitude":33.731803,
+    "longitude":-84.423585
+  },
+  {
+    "id":"meta-inc-cheyenne",
+    "provider":"Meta, Inc.",
+    "name":"Cheyenne",
+    "city":"Cheyenne",
+    "state":"WY",
+    "latitude":41.127922,
+    "longitude":-104.811619
+  },
+  {
+    "id":"qts-sacramento",
+    "provider":"QTS Data Centers",
+    "name":"Sacramento Data Center",
+    "city":"Sacramento",
+    "state":"CA",
+    "latitude":38.646407,
+    "longitude":-121.486335
+  },
+  {
+    "id":"flexential-portland-hillsboro-1",
+    "provider":"Flexential",
+    "name":"Portland - Hillsboro 1 Data Center",
+    "city":"Hillsboro",
+    "state":"OR",
+    "latitude":45.54845,
+    "longitude":-122.891445
+  },
+  {
+    "id":"cologix-col2-columbus",
+    "provider":"Cologix",
+    "name":"COL2 Columbus Data Center",
+    "city":"Columbus",
+    "state":"OH",
+    "latitude":40.115757,
+    "longitude":-83.002401
+  },
+  {
+    "id":"databridge-sites-silver-spring-washington-d-c",
+    "provider":"DataBridge Sites",
+    "name":"Silver Spring\/Washington, D.C. Data Center",
+    "city":"Silver Spring",
+    "state":"MD",
+    "latitude":39.058289,
+    "longitude":-76.964548
+  },
+  {
+    "id":"equinix-la1-los-angeles",
+    "provider":"Equinix",
+    "name":"LA1 Los Angeles Data Center",
+    "city":"Los Angeles",
+    "state":"CA",
+    "latitude":34.047415,
+    "longitude":-118.257382
+  },
+  {
+    "id":"flexential-charlotte-south",
+    "provider":"Flexential",
+    "name":"Charlotte - South Data Center",
+    "city":"Charlotte",
+    "state":"NC",
+    "latitude":35.135375,
+    "longitude":-80.936954
+  },
+  {
+    "id":"digital-realty-dallas-dfw18",
+    "provider":"Digital Realty",
+    "name":"Dallas DFW18 Data Center",
+    "city":"Richardson",
+    "state":"TX",
+    "latitude":32.96511,
+    "longitude":-96.711947
+  },
+  {
+    "id":"ntt-global-sv1-silicon-valley",
+    "provider":"NTT Global Data Centers",
+    "name":"SV1 Silicon Valley Data Center",
+    "city":"Santa Clara",
+    "state":"CA",
+    "latitude":37.369512,
+    "longitude":-121.955024
+  },
+  {
+    "id":"365-nj1-bridgewater-new-jersey",
+    "provider":null,
+    "name":"NJ1 Bridgewater New Jersey Data Center",
+    "city":"Bridgewater",
+    "state":"NJ",
+    "latitude":40.58144,
+    "longitude":-74.573881
+  },
+  {
+    "id":"amazon-aws-iad63-chantilly",
+    "provider":"Amazon AWS",
+    "name":"IAD63 Chantilly",
+    "city":"Chantilly",
+    "state":"VA",
+    "latitude":38.916818,
+    "longitude":-77.493275
+  },
+  {
+    "id":"equinix-da2-dallas",
+    "provider":"Equinix",
+    "name":"DA2 Dallas Data Center",
+    "city":"Dallas",
+    "state":"TX",
+    "latitude":32.896144,
+    "longitude":-96.898529
+  },
+  {
+    "id":"meta-inc-mesa",
+    "provider":"Meta, Inc.",
+    "name":"Mesa Data Center",
+    "city":"Mesa",
+    "state":"AZ",
+    "latitude":33.34125,
+    "longitude":-111.631173
+  },
+  {
+    "id":"equinix-ny6-secaucus",
+    "provider":"Equinix",
+    "name":"NY6 Secaucus Data Center",
+    "city":"Secaucus",
+    "state":"NJ",
+    "latitude":40.777532,
+    "longitude":-74.072788
+  },
+  {
+    "id":"equinix-dc1-ashburn",
+    "provider":"Equinix",
+    "name":"DC1 Ashburn Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.015833,
+    "longitude":-77.459868
+  },
+  {
+    "id":"equinix-ho1-houston",
+    "provider":"Equinix",
+    "name":"HO1 Houston Data Center",
+    "city":"Houston",
+    "state":"TX",
+    "latitude":29.9358,
+    "longitude":-95.36435
+  },
+  {
+    "id":"aligned-energy-iad02-ashburn-va",
+    "provider":"Aligned Data Centers",
+    "name":"IAD02 Ashburn VA Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.010247,
+    "longitude":-77.474972
+  },
+  {
+    "id":"ntt-global-ch1-chicago",
+    "provider":"NTT Global Data Centers",
+    "name":"CH1 Chicago Data Center",
+    "city":"Itasca",
+    "state":"IL",
+    "latitude":41.98772,
+    "longitude":-88.008208
+  },
+  {
+    "id":"databank-den2-centennial",
+    "provider":"DataBank",
+    "name":"DEN2 Centennial Data Center",
+    "city":"Centennial",
+    "state":"CO",
+    "latitude":39.591303,
+    "longitude":-104.846748
+  },
+  {
+    "id":"databank-sea2-seatac",
+    "provider":"DataBank",
+    "name":"SEA2 SeaTAC Data Center",
+    "city":"Tukwila",
+    "state":"WA",
+    "latitude":47.495063,
+    "longitude":-122.290932
+  },
+  {
+    "id":"ibm-dal10-dallas-tx",
+    "provider":"IBM Cloud",
+    "name":"DAL10 Dallas, TX",
+    "city":"Dallas",
+    "state":"TX",
+    "latitude":32.800748,
+    "longitude":-96.819412
+  },
+  {
+    "id":"coresite-mi1-miami",
+    "provider":"CoreSite",
+    "name":"MI1 Miami Data Center",
+    "city":"Miami",
+    "state":"FL",
+    "latitude":25.797537,
+    "longitude":-80.230127
+  },
+  {
+    "id":"flexential-cincinnati",
+    "provider":"Flexential",
+    "name":"Cincinnati Data Center",
+    "city":"West Chester Township",
+    "state":"OH",
+    "latitude":39.315774,
+    "longitude":-84.448854
+  },
+  {
+    "id":"firstlight-brunswick",
+    "provider":"FirstLight",
+    "name":"Brunswick Data Center",
+    "city":"Brunswick",
+    "state":"ME",
+    "latitude":43.89497,
+    "longitude":-69.92315
+  },
+  {
+    "id":"us-signal-8675-concord-center-dr",
+    "provider":"US Signal",
+    "name":"8675 Concord Center Dr",
+    "city":"Englewood",
+    "state":"CO",
+    "latitude":39.559053,
+    "longitude":-104.834392
+  },
+  {
+    "id":"lumen-raleigh-1",
+    "provider":"Lumen",
+    "name":"Raleigh 1 Data Center",
+    "city":"Raleigh",
+    "state":"NC",
+    "latitude":35.854477,
+    "longitude":-78.597044
+  },
+  {
+    "id":"cologix-min4-minneapolis",
+    "provider":"Cologix",
+    "name":"MIN4 Minneapolis Data Center",
+    "city":"Minneapolis",
+    "state":"MN",
+    "latitude":44.971408,
+    "longitude":-93.25458
+  },
+  {
+    "id":"microsoft-azure-41700-inclusion-ln",
+    "provider":"Microsoft Azure",
+    "name":"41700 Inclusion Ln",
+    "city":"Leesburg",
+    "state":"VA",
+    "latitude":39.066916,
+    "longitude":-77.558554
+  },
+  {
+    "id":"first-national-technology-solutions-fnts-omaha",
+    "provider":"First National Technology Solutions (FNTS)",
+    "name":"Omaha Data Center",
+    "city":"Omaha",
+    "state":"NE",
+    "latitude":41.261394,
+    "longitude":-95.936513
+  },
+  {
+    "id":"evocative-redondo-beach-lax14",
+    "provider":"Evocative",
+    "name":"Redondo Beach Data Center (LAX14)",
+    "city":"Redondo Beach",
+    "state":"CA",
+    "latitude":33.889248,
+    "longitude":-118.368733
+  },
+  {
+    "id":"prime-prime-chicago-1701-midway-ct",
+    "provider":"Prime Data Centers",
+    "name":"Prime Chicago 1701 Midway Ct",
+    "city":"Elk Grove Village",
+    "state":"IL",
+    "latitude":42.024961,
+    "longitude":-87.963395
+  },
+  {
+    "id":"lightedge-raleigh",
+    "provider":"LightEdge",
+    "name":"Raleigh Data Center",
+    "city":"Raleigh",
+    "state":"NC",
+    "latitude":35.907401,
+    "longitude":-78.778523
+  },
+  {
+    "id":"dataverge-brooklyn",
+    "provider":"DataVerge",
+    "name":"Brooklyn Data Center",
+    "city":"Brooklyn",
+    "state":"NY",
+    "latitude":40.657808,
+    "longitude":-74.004881
+  },
+  {
+    "id":"centersquare-msp1-shakopee-campus",
+    "provider":"Centersquare",
+    "name":"MSP1 Shakopee Data Center Campus",
+    "city":"Shakopee",
+    "state":"MN",
+    "latitude":44.779581,
+    "longitude":-93.461811
+  },
+  {
+    "id":"netrality-210-north-tucker-st-louis",
+    "provider":null,
+    "name":"Netrality Data Centers",
+    "city":"St. Louis",
+    "state":"MO",
+    "latitude":38.629262,
+    "longitude":-90.197179
+  },
+  {
+    "id":"ark-akron",
+    "provider":"ark data centers",
+    "name":"Akron Data Center",
+    "city":"Akron",
+    "state":"OH",
+    "latitude":41.057108,
+    "longitude":-81.522183
+  },
+  {
+    "id":"centersquare-phx3-a-mesa",
+    "provider":"Centersquare",
+    "name":"PHX3-A Mesa Data Center",
+    "city":"Mesa",
+    "state":"AZ",
+    "latitude":33.421307,
+    "longitude":-111.858977
+  },
+  {
+    "id":"centersquare-boston-bo1-watertown",
+    "provider":"Centersquare",
+    "name":"Boston (BO1-Watertown) Data Center",
+    "city":"Watertown",
+    "state":"MA",
+    "latitude":42.3652,
+    "longitude":-71.159988
+  },
+  {
+    "id":"evocative-emeryville-oak1",
+    "provider":"Evocative",
+    "name":"Emeryville Data Center (OAK1)",
+    "city":"Emeryville",
+    "state":"CA",
+    "latitude":37.846323,
+    "longitude":-122.29435
+  },
+  {
+    "id":"google-storey-county-nv",
+    "provider":"Google",
+    "name":"Storey County, NV Data Center",
+    "city":"Sparks",
+    "state":"NV",
+    "latitude":39.5404679,
+    "longitude":-119.7487235
+  },
+  {
+    "id":"amazon-aws-22945-international-dr",
+    "provider":"Amazon AWS",
+    "name":"22945 International Dr",
+    "city":"Sterling",
+    "state":"VA",
+    "latitude":38.9815821,
+    "longitude":-77.4273694
+  },
+  {
+    "id":"telesystem-dc-1-ohio",
+    "provider":"Telesystem",
+    "name":"DC-1 Ohio Data Center",
+    "city":"Toledo",
+    "state":"OH",
+    "latitude":41.6256164,
+    "longitude":-83.6555492
+  },
+  {
+    "id":"digital-realty-new-york-ewr20",
+    "provider":"Digital Realty",
+    "name":"New York EWR20 Data Center",
+    "city":"Clifton",
+    "state":"NJ",
+    "latitude":40.8299306,
+    "longitude":-74.12675
+  },
+  {
+    "id":"prime-prime-bay-area-26415-corporate-ave",
+    "provider":"Prime Data Centers",
+    "name":"Prime Bay Area 26415 Corporate Ave",
+    "city":"Hayward",
+    "state":"CA",
+    "latitude":37.626012,
+    "longitude":-122.1133978
+  },
+  {
+    "id":"t5-portland",
+    "provider":null,
+    "name":"@Portland Data Center",
+    "city":"Hillsboro",
+    "state":"OR",
+    "latitude":45.5553096,
+    "longitude":-122.9391488
+  },
+  {
+    "id":"centersquare-tpa1-tampa-campus",
+    "provider":"Centersquare",
+    "name":"TPA1 Tampa Data Center Campus",
+    "city":"Tampa",
+    "state":"FL",
+    "latitude":27.945531,
+    "longitude":-82.3511008
+  },
+  {
+    "id":"equinix-da7-plano",
+    "provider":"Equinix",
+    "name":"DA7 Plano Data Center",
+    "city":"Plano",
+    "state":"TX",
+    "latitude":33.0628258,
+    "longitude":-96.8095184
+  },
+  {
+    "id":"digital-realty-northern-virginia-acc4",
+    "provider":"Digital Realty",
+    "name":"Northern Virginia ACC4 Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.0178959,
+    "longitude":-77.4625307
+  },
+  {
+    "id":"cologix-dal1-dallas",
+    "provider":"Cologix",
+    "name":"DAL1 Dallas Data Center",
+    "city":"Dallas",
+    "state":"TX",
+    "latitude":32.800966,
+    "longitude":-96.819523
+  },
+  {
+    "id":"cologix-dal2-dallas",
+    "provider":"Cologix",
+    "name":"DAL2 Dallas Data Center",
+    "city":"Dallas",
+    "state":"TX",
+    "latitude":32.800966,
+    "longitude":-96.819523
+  },
+  {
+    "id":"11-11-systems-carlstadt",
+    "provider":null,
+    "name":"Carlstadt Data Center",
+    "city":"Carlstadt",
+    "state":"NJ",
+    "latitude":40.8284599,
+    "longitude":-74.0452454
+  },
+  {
+    "id":"edged-edged-chicago",
+    "provider":"Edged",
+    "name":"Edged Chicago Data Center",
+    "city":"Aurora",
+    "state":"IL",
+    "latitude":41.8066666,
+    "longitude":-88.2658507
+  },
+  {
+    "id":"h5-ashburn",
+    "provider":null,
+    "name":"Ashburn Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.0136777,
+    "longitude":-77.4517194
+  },
+  {
+    "id":"centersquare-sfo1-santa-clara-campus",
+    "provider":"Centersquare",
+    "name":"SFO1 Santa Clara Data Center Campus",
+    "city":"Santa Clara",
+    "state":"CA",
+    "latitude":37.3714574,
+    "longitude":-121.9696843
+  },
+  {
+    "id":"databank-las1-las-vegas",
+    "provider":"DataBank",
+    "name":"LAS1 Las Vegas Data Center",
+    "city":"Las Vegas",
+    "state":"NV",
+    "latitude":36.0597501,
+    "longitude":-115.1470938
+  },
+  {
+    "id":"amazon-aws-5117-hayden-run",
+    "provider":"Amazon AWS",
+    "name":"5117 Hayden Run",
+    "city":"Hilliard",
+    "state":"OH",
+    "latitude":40.061804,
+    "longitude":-83.1387201
+  },
+  {
+    "id":"hivelocity-725-s-wells-st",
+    "provider":"Hivelocity",
+    "name":"725 S Wells St",
+    "city":"Chicago",
+    "state":"IL",
+    "latitude":41.8730545,
+    "longitude":-87.6334853
+  },
+  {
+    "id":"coresite-va1-reston",
+    "provider":"CoreSite",
+    "name":"VA1 Reston Data Center",
+    "city":"Reston",
+    "state":"VA",
+    "latitude":38.9506069,
+    "longitude":-77.3645346
+  },
+  {
+    "id":"ntt-global-ca3-sacramento",
+    "provider":"NTT Global Data Centers",
+    "name":"CA3 Sacramento Data Center",
+    "city":"Sacramento",
+    "state":"CA",
+    "latitude":38.6529779,
+    "longitude":-121.487717
+  },
+  {
+    "id":"qts-denver",
+    "provider":"QTS Data Centers",
+    "name":"Denver Data Center",
+    "city":"Aurora",
+    "state":"CO",
+    "latitude":39.7348082,
+    "longitude":-104.7138142
+  },
+  {
+    "id":"amazon-aws-iad58-sterling",
+    "provider":"Amazon AWS",
+    "name":"IAD58 Sterling",
+    "city":"Sterling",
+    "state":"VA",
+    "latitude":38.9939741,
+    "longitude":-77.4348094
+  },
+  {
+    "id":"centersquare-sea2-tukwila-campus",
+    "provider":"Centersquare",
+    "name":"SEA2 Tukwila Data Center Campus",
+    "city":"Tukwila",
+    "state":"WA",
+    "latitude":47.4409177,
+    "longitude":-122.2564593
+  },
+  {
+    "id":"iron-mountain-nje-1-new-jersey",
+    "provider":"Iron Mountain Data Centers",
+    "name":"NJE - 1 - New Jersey Data Center",
+    "city":"Edison",
+    "state":"NJ",
+    "latitude":40.5208249,
+    "longitude":-74.3474166
+  },
+  {
+    "id":"equinix-mi6-doral",
+    "provider":"Equinix",
+    "name":"MI6 Doral Data Center",
+    "city":"Doral",
+    "state":"FL",
+    "latitude":25.7876775,
+    "longitude":-80.3546818
+  },
+  {
+    "id":"oracle-us-dod-north-us-gov-chicago-1",
+    "provider":"Oracle",
+    "name":"US DoD North us-gov-chicago-1",
+    "city":"Chicago",
+    "state":"IL",
+    "latitude":41.8755616,
+    "longitude":-87.6244212
+  },
+  {
+    "id":"rackspace-ord1-chicago",
+    "provider":"Rackspace",
+    "name":"ORD1 Chicago Data Center",
+    "city":"Elk Grove Village",
+    "state":"IL",
+    "latitude":41.9942301,
+    "longitude":-87.9622316
+  },
+  {
+    "id":"evocative-santa-clara-sjc11",
+    "provider":"Evocative",
+    "name":"Santa Clara Data Center (SJC11)",
+    "city":"Santa Clara",
+    "state":"CA",
+    "latitude":37.3885828,
+    "longitude":-121.9626957
+  },
+  {
+    "id":"stream-chicago-ii",
+    "provider":"Stream Data Centers",
+    "name":"Chicago II Data Center",
+    "city":"Elk Grove Village",
+    "state":"IL",
+    "latitude":41.9991243,
+    "longitude":-87.9577646
+  },
+  {
+    "id":"giga-clt-1",
+    "provider":"GIGA Data Centers",
+    "name":"CLT-1 Data Center",
+    "city":"Mooresville",
+    "state":"NC",
+    "latitude":35.5641466,
+    "longitude":-80.8282022
+  },
+  {
+    "id":"centersquare-iad3-sterling-campus",
+    "provider":"Centersquare",
+    "name":"IAD3 Sterling Data Center Campus",
+    "city":"Sterling",
+    "state":"VA",
+    "latitude":38.9835026,
+    "longitude":-77.4239243
+  },
+  {
+    "id":"microsoft-azure-creek-campus-virginia",
+    "provider":"Microsoft Azure",
+    "name":"Creek Campus - Virginia",
+    "city":"Leesburg",
+    "state":"VA",
+    "latitude":39.0747869,
+    "longitude":-77.564129
+  },
+  {
+    "id":"cologix-dal3-dallas",
+    "provider":"Cologix",
+    "name":"DAL3 Dallas Data Center",
+    "city":"Dallas",
+    "state":"TX",
+    "latitude":32.800966,
+    "longitude":-96.819523
+  },
+  {
+    "id":"flexential-tampa-north",
+    "provider":"Flexential",
+    "name":"Tampa - North Data Center",
+    "city":"Tampa",
+    "state":"FL",
+    "latitude":28.0738377,
+    "longitude":-82.3683619
+  },
+  {
+    "id":"data-holdings-milwaukee",
+    "provider":"Data Holdings Data Center",
+    "name":"Milwaukee Data Center",
+    "city":"Milwaukee",
+    "state":"WI",
+    "latitude":43.0437366,
+    "longitude":-87.9540068
+  },
+  {
+    "id":"cyrusone-nym7-wappingers-falls",
+    "provider":"CyrusOne",
+    "name":"NYM7 Wappingers Falls Data Center",
+    "city":"Wappingers Falls",
+    "state":"NY",
+    "latitude":41.5990434,
+    "longitude":-73.8822205
+  },
+  {
+    "id":"inap-phoenix-3",
+    "provider":"INAP",
+    "name":"Phoenix 3 Data Center",
+    "city":"Chandler",
+    "state":"AZ",
+    "latitude":33.3009449,
+    "longitude":-111.8861206
+  },
+  {
+    "id":"tierpoint-raleigh",
+    "provider":"TierPoint",
+    "name":"Raleigh Data Center",
+    "city":"Raleigh",
+    "state":"NC",
+    "latitude":35.8543896,
+    "longitude":-78.595815
+  },
+  {
+    "id":"amazon-aws-iad78-44862-interconnection-plaza",
+    "provider":"Amazon AWS",
+    "name":"IAD78 44862 Interconnection Plaza",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.0271087,
+    "longitude":-77.4528289
+  },
+  {
+    "id":"digital-realty-phoenix-phx10",
+    "provider":"Digital Realty",
+    "name":"Phoenix PHX10 Data Center",
+    "city":"Phoenix",
+    "state":"AZ",
+    "latitude":33.4519107,
+    "longitude":-112.0719077
+  },
+  {
+    "id":"cyrusone-ocb1-omaha-council-bluffs-ia",
+    "provider":"CyrusOne",
+    "name":"OCB1 Omaha-Council Bluffs IA",
+    "city":"Council Bluffs",
+    "state":"IA",
+    "latitude":41.2121526,
+    "longitude":-95.8779924
+  },
+  {
+    "id":"365-nj3-carlstadt",
+    "provider":null,
+    "name":"NJ3 Carlstadt Data Center",
+    "city":"Carlstadt",
+    "state":"NJ",
+    "latitude":40.8276515,
+    "longitude":-74.0493717
+  },
+  {
+    "id":"365-ca1-rancho-cordova",
+    "provider":null,
+    "name":"CA1 Rancho Cordova Data Center",
+    "city":"Rancho Cordova",
+    "state":"CA",
+    "latitude":38.5955042,
+    "longitude":-121.2728389
+  },
+  {
+    "id":"microsoft-azure-east-wenatchee",
+    "provider":"Microsoft Azure",
+    "name":"East Wenatchee",
+    "city":"East Wenatchee",
+    "state":"WA",
+    "latitude":47.4176757,
+    "longitude":-120.2102717
+  },
+  {
+    "id":"us-signal-1655-w-sunrise-blvd",
+    "provider":"US Signal",
+    "name":"1655 W Sunrise Blvd",
+    "city":"Gilbert",
+    "state":"AZ",
+    "latitude":33.3551689,
+    "longitude":-111.8268401
+  },
+  {
+    "id":"serverfarm-lax1-los-angeles",
+    "provider":"Serverfarm",
+    "name":"LAX1 Los Angeles Data Center",
+    "city":"El Segundo",
+    "state":"CA",
+    "latitude":33.9217807,
+    "longitude":-118.3864589
+  },
+  {
+    "id":"bluebird-bluebird-quad-cities",
+    "provider":"Bluebird Data Centers",
+    "name":"Bluebird Quad Cities Data Center",
+    "city":"Bettendorf",
+    "state":"IA",
+    "latitude":41.5508188,
+    "longitude":-90.483647
+  },
+  {
+    "id":"qts-ashburn-moran",
+    "provider":"QTS Data Centers",
+    "name":"Ashburn-Moran Data Center",
+    "city":"Sterling",
+    "state":"VA",
+    "latitude":38.9993362,
+    "longitude":-77.4372508
+  },
+  {
+    "id":"us-signal-detroit-north",
+    "provider":"US Signal",
+    "name":"Detroit North Data Center",
+    "city":"Auburn Hills",
+    "state":"MI",
+    "latitude":42.6527694,
+    "longitude":-83.2154953
+  },
+  {
+    "id":"edgeconnex-bos01-boston",
+    "provider":"EdgeConnex",
+    "name":"BOS01 Boston Data Center",
+    "city":"Billerica",
+    "state":"MA",
+    "latitude":42.5285937,
+    "longitude":-71.2494723
+  },
+  {
+    "id":"ovhcloud-hil1",
+    "provider":"OVHCloud",
+    "name":"HIL1 Data Center",
+    "city":"Hillsboro",
+    "state":"OR",
+    "latitude":45.5340491,
+    "longitude":-122.9564968
+  },
+  {
+    "id":"equinix-cu2-culpeper",
+    "provider":"Equinix",
+    "name":"CU2 Culpeper Data Center",
+    "city":"Culpeper",
+    "state":"VA",
+    "latitude":38.4551359,
+    "longitude":-77.9780171
+  },
+  {
+    "id":"cologix-ash1-ashburn",
+    "provider":"Cologix",
+    "name":"ASH1 Ashburn Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.0171941,
+    "longitude":-77.4577227
+  },
+  {
+    "id":"lumen-tustin-1",
+    "provider":"Lumen",
+    "name":"Tustin 1 Data Center",
+    "city":"Tustin",
+    "state":"CA",
+    "latitude":33.7167573,
+    "longitude":-117.8057759
+  },
+  {
+    "id":"netrality-1301-fannin-houston",
+    "provider":null,
+    "name":"Netrality Data Centers",
+    "city":"Houston",
+    "state":"TX",
+    "latitude":29.7534328,
+    "longitude":-95.365798
+  },
+  {
+    "id":"databank-databank-atl4",
+    "provider":"DataBank",
+    "name":"DataBank ATL4 Data Center",
+    "city":"Atlanta",
+    "state":"GA",
+    "latitude":33.7498163,
+    "longitude":-84.5475997
+  },
+  {
+    "id":"databank-hou2-westway-park-ii",
+    "provider":"DataBank",
+    "name":"HOU2 Westway Park Ii",
+    "city":"Houston",
+    "state":"TX",
+    "latitude":29.8444379,
+    "longitude":-95.5572723
+  },
+  {
+    "id":"databank-ind2-downtown-indianapolis",
+    "provider":"DataBank",
+    "name":"IND2 Downtown Indianapolis Data Center",
+    "city":"Indianapolis",
+    "state":"IN",
+    "latitude":39.7601052,
+    "longitude":-86.1704582
+  },
+  {
+    "id":"lumen-chicago-2",
+    "provider":"Lumen",
+    "name":"Chicago 2 Data Center",
+    "city":"Chicago",
+    "state":"IL",
+    "latitude":41.897947,
+    "longitude":-87.643443
+  },
+  {
+    "id":"equinix-da3-dallas",
+    "provider":"Equinix",
+    "name":"DA3 Dallas Data Center",
+    "city":"Dallas",
+    "state":"TX",
+    "latitude":32.800966,
+    "longitude":-96.819523
+  },
+  {
+    "id":"equinix-se2-seattle",
+    "provider":"Equinix",
+    "name":"SE2 Seattle Data Center",
+    "city":"Seattle",
+    "state":"WA",
+    "latitude":47.6143548,
+    "longitude":-122.3388637
+  },
+  {
+    "id":"lumen-santa-barbara-1",
+    "provider":"Lumen",
+    "name":"Santa Barbara 1 Data Center",
+    "city":"Santa Barbara",
+    "state":"CA",
+    "latitude":34.4144364,
+    "longitude":-119.6901121
+  },
+  {
+    "id":"lumen-birmingham-1-364f5389-ea50-4369-8fac-31408f894ca9",
+    "provider":"Lumen",
+    "name":"Birmingham 1 Data Center",
+    "city":"Birmingham",
+    "state":"AL",
+    "latitude":33.508175,
+    "longitude":-86.826547
+  },
+  {
+    "id":"oracle-us-west-us-sanjose-1",
+    "provider":"Oracle",
+    "name":"US West us-sanjose-1",
+    "city":"San Jose",
+    "state":"CA",
+    "latitude":37.3361663,
+    "longitude":-121.890591
+  },
+  {
+    "id":"equinix-ch2-chicago",
+    "provider":"Equinix",
+    "name":"CH2 Chicago Data Center",
+    "city":"Chicago",
+    "state":"IL",
+    "latitude":41.8537537,
+    "longitude":-87.6183798
+  },
+  {
+    "id":"inap-boston-2",
+    "provider":"INAP",
+    "name":"Boston 2 Data Center",
+    "city":"Somerville",
+    "state":"MA",
+    "latitude":42.3779573,
+    "longitude":-71.0803189
+  },
+  {
+    "id":"lumen-corpus-christi-1",
+    "provider":"Lumen",
+    "name":"Corpus Christi 1 Data Center",
+    "city":"Corpus Christi",
+    "state":"TX",
+    "latitude":27.793621,
+    "longitude":-97.4522855
+  },
+  {
+    "id":"tierpoint-baltimore",
+    "provider":"TierPoint",
+    "name":"Baltimore Data Center",
+    "city":"Baltimore",
+    "state":"MD",
+    "latitude":39.2754558,
+    "longitude":-76.6255099
+  },
+  {
+    "id":"amazon-aws-iad61-south-riding",
+    "provider":"Amazon AWS",
+    "name":"IAD61 South Riding",
+    "city":"South Riding",
+    "state":"VA",
+    "latitude":38.9165646,
+    "longitude":-77.4926062
+  },
+  {
+    "id":"h5-colo-h5-colo-facility",
+    "provider":null,
+    "name":"H5 Colo Facility",
+    "city":"Dallas",
+    "state":"TX",
+    "latitude":32.9203927,
+    "longitude":-96.776887
+  },
+  {
+    "id":"prime-prime-santa-clara-1111-comstock",
+    "provider":"Prime Data Centers",
+    "name":"Prime Santa Clara - 1111 Comstock",
+    "city":"Santa Clara",
+    "state":"CA",
+    "latitude":37.3750052,
+    "longitude":-121.9532252
+  },
+  {
+    "id":"hivelocity-350-east-cermak",
+    "provider":"Hivelocity",
+    "name":"350 East Cermak",
+    "city":"Chicago",
+    "state":"IL",
+    "latitude":41.8537537,
+    "longitude":-87.6183798
+  },
+  {
+    "id":"weconnect-westerville",
+    "provider":"WeConnect Data Center",
+    "name":"Westerville Data Center",
+    "city":"Westerville",
+    "state":"OH",
+    "latitude":40.1236583,
+    "longitude":-82.944009
+  },
+  {
+    "id":"coresite-va3-reston",
+    "provider":"CoreSite",
+    "name":"VA3 Reston Data Center",
+    "city":"Reston",
+    "state":"VA",
+    "latitude":38.9483459,
+    "longitude":-77.372492
+  },
+  {
+    "id":"centersquare-abq1-albuquerque-campus",
+    "provider":"Centersquare",
+    "name":"ABQ1 Albuquerque Data Center Campus",
+    "city":"Albuquerque",
+    "state":"NM",
+    "latitude":35.0861888,
+    "longitude":-106.6517143
+  },
+  {
+    "id":"edgeconnex-chi01-chicago",
+    "provider":"EdgeConnex",
+    "name":"CHI01 Chicago Data Center",
+    "city":"Elk Grove Village",
+    "state":"IL",
+    "latitude":42.0007753,
+    "longitude":-87.9507686
+  },
+  {
+    "id":"pointone-richmond-campus",
+    "provider":"PointOne",
+    "name":"Richmond Data Center Campus",
+    "city":"Charles City",
+    "state":"VA",
+    "latitude":37.4515662,
+    "longitude":-77.1578725
+  },
+  {
+    "id":"lumen-houston-1",
+    "provider":"Lumen",
+    "name":"Houston 1 Data Center",
+    "city":"Houston",
+    "state":"TX",
+    "latitude":29.7785356,
+    "longitude":-95.3681701
+  },
+  {
+    "id":"databank-databank-atl3",
+    "provider":"DataBank",
+    "name":"DataBank ATL3 Data Center",
+    "city":"Atlanta",
+    "state":"GA",
+    "latitude":33.7343565,
+    "longitude":-84.426634
+  },
+  {
+    "id":"amazon-aws-45900-pathfinder-plz",
+    "provider":"Amazon AWS",
+    "name":"45900 Pathfinder Plz",
+    "city":"Sterling",
+    "state":"VA",
+    "latitude":38.9886029,
+    "longitude":-77.4116519
+  },
+  {
+    "id":"cologix-dsm1-des-moines",
+    "provider":"Cologix",
+    "name":"DSM1 Des Moines Data Center",
+    "city":"Des Moines",
+    "state":"IA",
+    "latitude":41.585665,
+    "longitude":-93.6253615
+  },
+  {
+    "id":"performive-atl05",
+    "provider":"Performive",
+    "name":"ATL05 Data Center",
+    "city":"Marietta",
+    "state":"GA",
+    "latitude":33.9240063,
+    "longitude":-84.4824091
+  },
+  {
+    "id":"tierpoint-dallas-allen",
+    "provider":"TierPoint",
+    "name":"Dallas - Allen Data Center",
+    "city":"Allen",
+    "state":"TX",
+    "latitude":33.1371492,
+    "longitude":-96.6594581
+  },
+  {
+    "id":"equinix-da6-dallas",
+    "provider":"Equinix",
+    "name":"DA6 Dallas Data Center",
+    "city":"Dallas",
+    "state":"TX",
+    "latitude":32.800966,
+    "longitude":-96.819523
+  },
+  {
+    "id":"centersquare-washington-dc-wdc1-ashburn",
+    "provider":"Centersquare",
+    "name":"Washington DC (WDC1-Ashburn) Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.0221022,
+    "longitude":-77.453663
+  },
+  {
+    "id":"aligned-energy-frederick-county-maryland-hyperscale-campus",
+    "provider":"Aligned Data Centers",
+    "name":"Frederick County, Maryland Hyperscale Campus",
+    "city":"Frederick",
+    "state":"MD",
+    "latitude":39.415779,
+    "longitude":-77.4127562
+  },
+  {
+    "id":"lumen-riverside-1",
+    "provider":"Lumen",
+    "name":"Riverside 1 Data Center",
+    "city":"Riverside",
+    "state":"CA",
+    "latitude":33.9974991,
+    "longitude":-117.3453015
+  },
+  {
+    "id":"cyrusone-nva1-nva2-nva3-northern-virginia-sterling",
+    "provider":"CyrusOne",
+    "name":"NVA1, NVA2 & NVA3 Northern Virginia Sterling Data Center",
+    "city":"Sterling",
+    "state":"VA",
+    "latitude":39.0259287,
+    "longitude":-77.4145789
+  },
+  {
+    "id":"qts-san-antonio",
+    "provider":"QTS Data Centers",
+    "name":"San Antonio Data Center",
+    "city":"San Antonio",
+    "state":"TX",
+    "latitude":29.4459502,
+    "longitude":-98.6559305
+  },
+  {
+    "id":"oracle-us-dod-east-us-gov-ashburn-1",
+    "provider":"Oracle",
+    "name":"US DoD East us-gov-ashburn-1",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.029784,
+    "longitude":-77.4744148
+  },
+  {
+    "id":"quadranet-los-angeles-century",
+    "provider":"QuadraNet",
+    "name":"Los Angeles - Century Data Center",
+    "city":"Los Angeles",
+    "state":"CA",
+    "latitude":33.9459201,
+    "longitude":-118.3935876
+  },
+  {
+    "id":"lumen-kansas-city-2-2",
+    "provider":"Lumen",
+    "name":"Kansas City 2 Data Center",
+    "city":"Kansas City",
+    "state":"MO",
+    "latitude":39.0906796,
+    "longitude":-94.5683929
+  },
+  {
+    "id":"centersquare-iad1-sterling-campus",
+    "provider":"Centersquare",
+    "name":"IAD1 Sterling Data Center Campus",
+    "city":"Sterling",
+    "state":"VA",
+    "latitude":39.0232986,
+    "longitude":-77.4132159
+  },
+  {
+    "id":"iron-mountain-den-1-denver",
+    "provider":"Iron Mountain Data Centers",
+    "name":"DEN - 1 - Denver Data Center",
+    "city":"Denver",
+    "state":"CO",
+    "latitude":39.7773827,
+    "longitude":-104.9695542
+  },
+  {
+    "id":"tierpoint-baltimore-bwi",
+    "provider":"TierPoint",
+    "name":"Baltimore - BWI Data Center",
+    "city":"Linthicum Heights",
+    "state":"MD",
+    "latitude":39.2134499,
+    "longitude":-76.6828647
+  },
+  {
+    "id":"lumen-sunnyvale-1",
+    "provider":"Lumen",
+    "name":"Sunnyvale 1 Data Center",
+    "city":"Sunnyvale",
+    "state":"CA",
+    "latitude":37.3734088,
+    "longitude":-121.9877996
+  },
+  {
+    "id":"inap-atlanta-1",
+    "provider":"INAP",
+    "name":"Atlanta 1 Data Center",
+    "city":"Atlanta",
+    "state":"GA",
+    "latitude":33.7616391,
+    "longitude":-84.3906499
+  },
+  {
+    "id":"evocative-new-jersey-ewr1",
+    "provider":"Evocative",
+    "name":"New Jersey Data Center (EWR1)",
+    "city":"Secaucus",
+    "state":"NJ",
+    "latitude":40.78878,
+    "longitude":-74.066502
+  },
+  {
+    "id":"nfinit-san-diego",
+    "provider":"NFINIT",
+    "name":"San Diego Data Center",
+    "city":"San Diego",
+    "state":"CA",
+    "latitude":32.8969713,
+    "longitude":-117.2026933
+  },
+  {
+    "id":"edgeconnex-atl01-atlanta",
+    "provider":"EdgeConnex",
+    "name":"ATL01 Atlanta Data Center",
+    "city":"Atlanta",
+    "state":"GA",
+    "latitude":33.7292773,
+    "longitude":-84.4204474
+  },
+  {
+    "id":"amazon-aws-iad16-sterling",
+    "provider":"Amazon AWS",
+    "name":"IAD16 Sterling",
+    "city":"Sterling",
+    "state":"VA",
+    "latitude":38.9907299,
+    "longitude":-77.4488816
+  },
+  {
+    "id":"1547-critical-systems-realty-ptor1-portland",
+    "provider":null,
+    "name":"PTOR1 Portland Data Center",
+    "city":"Portland",
+    "state":"OR",
+    "latitude":45.5215436,
+    "longitude":-122.680704
+  },
+  {
+    "id":"flexential-tampa-west",
+    "provider":"Flexential",
+    "name":"Tampa - West Data Center",
+    "city":"Tampa",
+    "state":"FL",
+    "latitude":28.0372991,
+    "longitude":-82.5399781
+  },
+  {
+    "id":"centersquare-iad2-sterling-campus",
+    "provider":"Centersquare",
+    "name":"IAD2 Sterling Data Center Campus",
+    "city":"Sterling",
+    "state":"VA",
+    "latitude":38.9843956,
+    "longitude":-77.4238278
+  },
+  {
+    "id":"h5-denver",
+    "provider":null,
+    "name":"Denver Data Center",
+    "city":"Greenwood Village",
+    "state":"CO",
+    "latitude":39.6167549,
+    "longitude":-104.8916814
+  },
+  {
+    "id":"netrality-900-walnut-st-louis",
+    "provider":null,
+    "name":"Netrality Data Centers",
+    "city":"St. Louis",
+    "state":"MO",
+    "latitude":38.6254795,
+    "longitude":-90.1952177
+  },
+  {
+    "id":"ntt-docomo-bussiness-sterling",
+    "provider":"NTT DOCOMO BUSSINESS",
+    "name":"Sterling Data Center",
+    "city":"Sterling",
+    "state":"VA",
+    "latitude":38.9946995,
+    "longitude":-77.4306635
+  },
+  {
+    "id":"centersquare-abq1-a-albuquerque",
+    "provider":"Centersquare",
+    "name":"ABQ1-A Albuquerque Data Center",
+    "city":"Albuquerque",
+    "state":"NM",
+    "latitude":35.0861888,
+    "longitude":-106.6517143
+  },
+  {
+    "id":"equinix-da4-dallas",
+    "provider":"Equinix",
+    "name":"DA4 Dallas Data Center",
+    "city":"Dallas",
+    "state":"TX",
+    "latitude":32.7869761,
+    "longitude":-96.7940053
+  },
+  {
+    "id":"tierpoint-boston-marlborough",
+    "provider":"TierPoint",
+    "name":"Boston - Marlborough Data Center",
+    "city":"Marlborough",
+    "state":"MA",
+    "latitude":42.3135391,
+    "longitude":-71.5803148
+  },
+  {
+    "id":"tierpoint-little-rock",
+    "provider":"TierPoint",
+    "name":"Little Rock Data Center",
+    "city":"Little Rock",
+    "state":"AR",
+    "latitude":34.7485508,
+    "longitude":-92.4047967
+  },
+  {
+    "id":"data-canopy-cincinnati",
+    "provider":"Data Canopy",
+    "name":"Cincinnati",
+    "city":"Cincinnati",
+    "state":"OH",
+    "latitude":39.1027886,
+    "longitude":-84.5179229
+  },
+  {
+    "id":"databank-ord4-chicago-tri-state",
+    "provider":"DataBank",
+    "name":"ORD4 Chicago Tri-State Data Center",
+    "city":"Oak Brook",
+    "state":"IL",
+    "latitude":41.8542957,
+    "longitude":-87.9221419
+  },
+  {
+    "id":"digital-realty-dallas-dfw16",
+    "provider":"Digital Realty",
+    "name":"Dallas DFW16 Data Center",
+    "city":"Richardson",
+    "state":"TX",
+    "latitude":32.9660061,
+    "longitude":-96.7155959
+  },
+  {
+    "id":"dastor-llc-wilmington",
+    "provider":"DaSTOR, LLC",
+    "name":"Wilmington Data Center",
+    "city":"Wilmington",
+    "state":"DE",
+    "latitude":39.747482,
+    "longitude":-75.546639
+  },
+  {
+    "id":"digital-realty-phoenix-phx15",
+    "provider":"Digital Realty",
+    "name":"Phoenix PHX15 Data Center",
+    "city":"Chandler",
+    "state":"AZ",
+    "latitude":33.2748973,
+    "longitude":-111.8866379
+  },
+  {
+    "id":"aureon-downtown",
+    "provider":"Aureon",
+    "name":"Downtown Data Center",
+    "city":"Des Moines",
+    "state":"IA",
+    "latitude":41.5880037,
+    "longitude":-93.6310193
+  },
+  {
+    "id":"aligned-energy-phoenix-az",
+    "provider":"Aligned Data Centers",
+    "name":"Phoenix, AZ Data Center",
+    "city":"Phoenix",
+    "state":"AZ",
+    "latitude":33.6590548,
+    "longitude":-112.1111595
+  },
+  {
+    "id":"firstlight-portsmouth",
+    "provider":"FirstLight",
+    "name":"Portsmouth Data Center",
+    "city":"Portsmouth",
+    "state":"NH",
+    "latitude":43.0727426,
+    "longitude":-70.8027625
+  },
+  {
+    "id":"amazon-aws-beach-access",
+    "provider":"Amazon AWS",
+    "name":"Beach Access",
+    "city":"Umatilla",
+    "state":"OR",
+    "latitude":45.9289142,
+    "longitude":-119.2704787
+  },
+  {
+    "id":"databridge-sites-aurora-chicago",
+    "provider":"DataBridge Sites",
+    "name":"Aurora\/Chicago Data Center",
+    "city":"Aurora",
+    "state":"IL",
+    "latitude":41.7730107,
+    "longitude":-88.2173246
+  },
+  {
+    "id":"hivelocity-atl2-atlanta",
+    "provider":"Hivelocity",
+    "name":"ATL2 Atlanta Data Center",
+    "city":"Atlanta",
+    "state":"GA",
+    "latitude":33.7616391,
+    "longitude":-84.3906499
+  },
+  {
+    "id":"amazon-aws-iad13-ashburn",
+    "provider":"Amazon AWS",
+    "name":"IAD13 Ashburn",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.0050186,
+    "longitude":-77.4856628
+  },
+  {
+    "id":"coresite-va2-reston",
+    "provider":"CoreSite",
+    "name":"VA2 Reston Data Center",
+    "city":"Reston",
+    "state":"VA",
+    "latitude":38.948936,
+    "longitude":-77.364404
+  },
+  {
+    "id":"digital-realty-northern-virginia-acc5",
+    "provider":"Digital Realty",
+    "name":"Northern Virginia ACC5 Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.0200887,
+    "longitude":-77.4632384
+  },
+  {
+    "id":"lumen-los-angeles",
+    "provider":"Lumen",
+    "name":"Los Angeles Data Center",
+    "city":"Los Angeles",
+    "state":"CA",
+    "latitude":34.0490803,
+    "longitude":-118.259534
+  },
+  {
+    "id":"vantage-ca2-santa-clara",
+    "provider":"Vantage Data Centers",
+    "name":"CA2 Santa Clara Data Center",
+    "city":"Santa Clara",
+    "state":"CA",
+    "latitude":37.36409,
+    "longitude":-121.9469487
+  },
+  {
+    "id":"h5-albuquerque",
+    "provider":null,
+    "name":"Albuquerque Data Center",
+    "city":"Albuquerque",
+    "state":"NM",
+    "latitude":35.0890821,
+    "longitude":-106.6526007
+  },
+  {
+    "id":"databank-databank-atl2",
+    "provider":"DataBank",
+    "name":"DataBank ATL2 Data Center",
+    "city":"Atlanta",
+    "state":"GA",
+    "latitude":33.7339084,
+    "longitude":-84.4257293
+  },
+  {
+    "id":"tpx-communications-sacramento",
+    "provider":"TPx Communications",
+    "name":"Sacramento Data Center",
+    "city":"Sacramento",
+    "state":"CA",
+    "latitude":38.578011,
+    "longitude":-121.486633
+  },
+  {
+    "id":"databank-ord3-mount-prospect",
+    "provider":"DataBank",
+    "name":"ORD3 Mount Prospect Data Center",
+    "city":"Mount Prospect",
+    "state":"IL",
+    "latitude":42.07581,
+    "longitude":-87.925736
+  },
+  {
+    "id":"amazon-aws-tanner-way",
+    "provider":"Amazon AWS",
+    "name":"Tanner Way",
+    "city":"Manassas",
+    "state":"VA",
+    "latitude":38.7383856,
+    "longitude":-77.5029031
+  },
+  {
+    "id":"databank-msp2-east-twin-cities",
+    "provider":"DataBank",
+    "name":"MSP2 East Twin Cities Data Center",
+    "city":"Eagan",
+    "state":"MN",
+    "latitude":44.8375194,
+    "longitude":-93.1454144
+  },
+  {
+    "id":"coresite-la3-los-angeles",
+    "provider":"CoreSite",
+    "name":"LA3 Los Angeles Data Center",
+    "city":"Los Angeles",
+    "state":"CA",
+    "latitude":34.0584954,
+    "longitude":-118.2294323
+  },
+  {
+    "id":"otava-mid-michigan",
+    "provider":"Otava",
+    "name":"Mid Michigan Data Center",
+    "city":"Flint",
+    "state":"MI",
+    "latitude":42.9687373,
+    "longitude":-83.7796697
+  },
+  {
+    "id":"aligned-energy-slc-02-salt-lake-city",
+    "provider":"Aligned Data Centers",
+    "name":"SLC-02 Salt Lake City",
+    "city":"West Jordan",
+    "state":"UT",
+    "latitude":40.5879613,
+    "longitude":-112.02495
+  },
+  {
+    "id":"qts-hillsboro-1",
+    "provider":"QTS Data Centers",
+    "name":"Hillsboro 1 Data Center",
+    "city":"Hillsboro",
+    "state":"OR",
+    "latitude":45.5569976,
+    "longitude":-122.9213984
+  },
+  {
+    "id":"data-holdings-minneapolis",
+    "provider":"Data Holdings Data Center",
+    "name":"Minneapolis Data Center",
+    "city":"Minneapolis",
+    "state":"MN",
+    "latitude":44.972071,
+    "longitude":-93.270567
+  },
+  {
+    "id":"aubix-auburn",
+    "provider":"AUBix",
+    "name":"Auburn Data Center",
+    "city":"Auburn",
+    "state":"AL",
+    "latitude":32.600885,
+    "longitude":-85.5075951
+  },
+  {
+    "id":"hivelocity-chicago-cermak",
+    "provider":"Hivelocity",
+    "name":"Chicago Cermak Data Center",
+    "city":"Chicago",
+    "state":"IL",
+    "latitude":41.8537537,
+    "longitude":-87.6183798
+  },
+  {
+    "id":"digital-realty-atlanta-atl13",
+    "provider":"Digital Realty",
+    "name":"Atlanta ATL13 Data Center",
+    "city":"Atlanta",
+    "state":"GA",
+    "latitude":33.7755704,
+    "longitude":-84.4068285
+  },
+  {
+    "id":"nfinit-lightwave",
+    "provider":"NFINIT",
+    "name":"Lightwave Data Center",
+    "city":"San Diego",
+    "state":"CA",
+    "latitude":32.8278586,
+    "longitude":-117.1299266
+  },
+  {
+    "id":"lumen-birmingham-2-2",
+    "provider":"Lumen",
+    "name":"Birmingham 2 Data Center",
+    "city":"Birmingham",
+    "state":"AL",
+    "latitude":33.519641,
+    "longitude":-86.8097004
+  },
+  {
+    "id":"us-signal-indianapolis",
+    "provider":"US Signal",
+    "name":"Indianapolis Data Center",
+    "city":"Indianapolis",
+    "state":"IN",
+    "latitude":39.7595371,
+    "longitude":-86.1709558
+  },
+  {
+    "id":"digital-realty-new-york-jfk10",
+    "provider":"Digital Realty",
+    "name":"New York JFK10 Data Center",
+    "city":"New York",
+    "state":"NY",
+    "latitude":40.7417176,
+    "longitude":-74.0041592
+  },
+  {
+    "id":"365-bca-boca-raton",
+    "provider":null,
+    "name":"BCA Boca Raton Data Center",
+    "city":"Boca Raton",
+    "state":"FL",
+    "latitude":26.3814312,
+    "longitude":-80.0836087
+  },
+  {
+    "id":"ntt-global-va4-ashburn",
+    "provider":"NTT Global Data Centers",
+    "name":"VA4 Ashburn Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.0199845,
+    "longitude":-77.4725591
+  },
+  {
+    "id":"databank-lga3-orangeburg",
+    "provider":"DataBank",
+    "name":"LGA3 - Orangeburg Data Center",
+    "city":"Orangeburg",
+    "state":"NY",
+    "latitude":41.0399918,
+    "longitude":-73.989651
+  },
+  {
+    "id":"scalematrix-san-diego-us-west-01",
+    "provider":"ScaleMatrix",
+    "name":"San Diego Data Center US-West 01",
+    "city":"San Diego",
+    "state":"CA",
+    "latitude":32.8377287,
+    "longitude":-117.132639
+  },
+  {
+    "id":"lumen-minneapolis-1-dcacec31-01cd-427a-9067-016fe8a42786",
+    "provider":"Lumen",
+    "name":"Minneapolis 1 Data Center",
+    "city":"Minneapolis",
+    "state":"MN",
+    "latitude":44.971127,
+    "longitude":-93.2546167
+  },
+  {
+    "id":"apotech-group-mt-prospect",
+    "provider":"Apotech Group",
+    "name":"Mt. Prospect",
+    "city":"Mount Prospect",
+    "state":"IL",
+    "latitude":42.0786106,
+    "longitude":-87.9166896
+  },
+  {
+    "id":"ibm-dal05-dallas-tx",
+    "provider":"IBM Cloud",
+    "name":"DAL05 Dallas, TX",
+    "city":"Dallas",
+    "state":"TX",
+    "latitude":32.9338692,
+    "longitude":-96.8280212
+  },
+  {
+    "id":"rackspace-mci1-kansas-city",
+    "provider":"Rackspace",
+    "name":"MCI1 Kansas City Data Center",
+    "city":"Kansas City",
+    "state":"MO",
+    "latitude":39.2964154,
+    "longitude":-94.6760833
+  },
+  {
+    "id":"bluebird-bluebird-underground",
+    "provider":"Bluebird Data Centers",
+    "name":"Bluebird Underground Data Center",
+    "city":"Springfield",
+    "state":"MO",
+    "latitude":37.2333156,
+    "longitude":-93.2155568
+  },
+  {
+    "id":"deft-a-summit-company-elk-grove-village-il",
+    "provider":"Summit",
+    "name":"Elk Grove Village, IL Data Center",
+    "city":"Elk Grove Village",
+    "state":"IL",
+    "latitude":41.9942301,
+    "longitude":-87.9622316
+  },
+  {
+    "id":"flexential-charlotte-north",
+    "provider":"Flexential",
+    "name":"Charlotte - North Data Center",
+    "city":"Charlotte",
+    "state":"NC",
+    "latitude":35.329863,
+    "longitude":-80.7657906
+  },
+  {
+    "id":"flexential-nashville-franklin",
+    "provider":"Flexential",
+    "name":"Nashville - Franklin Data Center",
+    "city":"Franklin",
+    "state":"TN",
+    "latitude":35.9204562,
+    "longitude":-86.8155739
+  },
+  {
+    "id":"digital-realty-silicon-valley-sjc37",
+    "provider":"Digital Realty",
+    "name":"Silicon Valley SJC37 Data Center",
+    "city":"Santa Clara",
+    "state":"CA",
+    "latitude":37.3709829,
+    "longitude":-121.9472112
+  },
+  {
+    "id":"databank-sfo1-silicon-valley",
+    "provider":"DataBank",
+    "name":"SFO1 Silicon Valley Data Center",
+    "city":"Santa Clara",
+    "state":"CA",
+    "latitude":37.4065821,
+    "longitude":-121.9667422
+  },
+  {
+    "id":"evocative-boston-bos1",
+    "provider":"Evocative",
+    "name":"Boston Data Center (BOS1)",
+    "city":"Somerville",
+    "state":"MA",
+    "latitude":42.3779573,
+    "longitude":-71.0803189
+  },
+  {
+    "id":"365-li1-commack",
+    "provider":null,
+    "name":"LI1 Commack Data Center",
+    "city":"Commack",
+    "state":"NY",
+    "latitude":40.8242092,
+    "longitude":-73.2929267
+  },
+  {
+    "id":"ark-marion",
+    "provider":"ark data centers",
+    "name":"Marion Data Center",
+    "city":"Marion",
+    "state":"IA",
+    "latitude":42.0538293,
+    "longitude":-91.5519153
+  },
+  {
+    "id":"equinix-mi2-miami",
+    "provider":"Equinix",
+    "name":"MI2 Miami Data Center",
+    "city":"Miami",
+    "state":"FL",
+    "latitude":25.7758419,
+    "longitude":-80.1929625
+  },
+  {
+    "id":"coresite-dc1-washington-dc",
+    "provider":"CoreSite",
+    "name":"DC1 Washington DC Data Center",
+    "city":"Washington",
+    "state":"DC",
+    "latitude":38.9028875,
+    "longitude":-77.0291507
+  },
+  {
+    "id":"centersquare-ord1-chicago-campus",
+    "provider":"Centersquare",
+    "name":"ORD1 Chicago Data Center Campus",
+    "city":"Chicago",
+    "state":"IL",
+    "latitude":41.8537537,
+    "longitude":-87.6183798
+  },
+  {
+    "id":"zenlayer-atl2-atlanta",
+    "provider":"Zenlayer",
+    "name":"ATL2 Atlanta Data Center",
+    "city":"Atlanta",
+    "state":"GA",
+    "latitude":33.7616391,
+    "longitude":-84.3906499
+  },
+  {
+    "id":"equinix-ny1-newark",
+    "provider":"Equinix",
+    "name":"NY1 Newark Data Center",
+    "city":"Newark",
+    "state":"NJ",
+    "latitude":40.7366527,
+    "longitude":-74.1739458
+  },
+  {
+    "id":"digital-realty-dallas-dfw12",
+    "provider":"Digital Realty",
+    "name":"Dallas DFW12 Data Center",
+    "city":"Carrollton",
+    "state":"TX",
+    "latitude":32.9795232,
+    "longitude":-96.8558331
+  },
+  {
+    "id":"digital-realty-atlanta-atl11",
+    "provider":"Digital Realty",
+    "name":"Atlanta ATL11 Data Center",
+    "city":"Austell",
+    "state":"GA",
+    "latitude":33.7465626,
+    "longitude":-84.5797393
+  },
+  {
+    "id":"microsoft-azure-goodyear-usa-phx70",
+    "provider":"Microsoft Azure",
+    "name":"Goodyear - USA (PHX70)",
+    "city":"Goodyear",
+    "state":"AZ",
+    "latitude":33.4119943,
+    "longitude":-112.4442493
+  },
+  {
+    "id":"evocative-phoenix-phx1",
+    "provider":"Evocative",
+    "name":"Phoenix Data Center (PHX1)",
+    "city":"Phoenix",
+    "state":"AZ",
+    "latitude":33.6590548,
+    "longitude":-112.1111595
+  },
+  {
+    "id":"fibertown-houston",
+    "provider":"FIBERTOWN",
+    "name":"Houston Data Center",
+    "city":"Houston",
+    "state":"TX",
+    "latitude":29.7785356,
+    "longitude":-95.3681701
+  },
+  {
+    "id":"lumen-pittsburgh-1",
+    "provider":"Lumen",
+    "name":"Pittsburgh 1 Data Center",
+    "city":"Pittsburgh",
+    "state":"PA",
+    "latitude":40.425571,
+    "longitude":-79.970761
+  },
+  {
+    "id":"365-ta1-tampa",
+    "provider":null,
+    "name":"TA1 Tampa Data Center",
+    "city":"Tampa",
+    "state":"FL",
+    "latitude":27.949597,
+    "longitude":-82.4586818
+  },
+  {
+    "id":"lumen-memphis-1",
+    "provider":"Lumen",
+    "name":"Memphis 1 Data Center",
+    "city":"Memphis",
+    "state":"TN",
+    "latitude":35.0288396,
+    "longitude":-89.9307392
+  },
+  {
+    "id":"telesystem-dc-2-michigan",
+    "provider":"Telesystem",
+    "name":"DC-2 Michigan Data Center",
+    "city":"Monroe",
+    "state":"MI",
+    "latitude":41.9363672,
+    "longitude":-83.4049082
+  },
+  {
+    "id":"hurricane-electric-fremont-2",
+    "provider":"Hurricane Electric",
+    "name":"Fremont 2 Data Center",
+    "city":"Fremont",
+    "state":"CA",
+    "latitude":37.4718381,
+    "longitude":-121.9203315
+  },
+  {
+    "id":"prime-prime-phoenix-lower-buckeye-1",
+    "provider":"Prime Data Centers",
+    "name":"Prime Phoenix - Lower Buckeye #1",
+    "city":"Avondale",
+    "state":"AZ",
+    "latitude":33.4205654,
+    "longitude":-112.3117985
+  },
+  {
+    "id":"flexential-atlanta-douglasville-2",
+    "provider":"Flexential",
+    "name":"Atlanta - Douglasville 2 Data Center",
+    "city":"Douglasville",
+    "state":"GA",
+    "latitude":33.7307026,
+    "longitude":-84.6112399
+  },
+  {
+    "id":"digital-realty-northern-virginia-acc6",
+    "provider":"Digital Realty",
+    "name":"Northern Virginia ACC6 Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.0210265,
+    "longitude":-77.4635733
+  },
+  {
+    "id":"dsm-lakeland",
+    "provider":"DSM",
+    "name":"Lakeland Data Center",
+    "city":"Lakeland",
+    "state":"FL",
+    "latitude":28.0300045,
+    "longitude":-82.0453854
+  },
+  {
+    "id":"centersquare-phx1-phoenix-campus",
+    "provider":"Centersquare",
+    "name":"PHX1 Phoenix Data Center Campus",
+    "city":"Phoenix",
+    "state":"AZ",
+    "latitude":33.4547001,
+    "longitude":-111.97624
+  },
+  {
+    "id":"24shells-inc-ewr",
+    "provider":null,
+    "name":"EWR Data Center",
+    "city":"Piscataway",
+    "state":"NJ",
+    "latitude":40.5574623,
+    "longitude":-74.484455
+  },
+  {
+    "id":"expedient-baltimore-owings-mills",
+    "provider":"Expedient",
+    "name":"Baltimore Owings Mills Data Center",
+    "city":"Owings Mills",
+    "state":"MD",
+    "latitude":39.4270902,
+    "longitude":-76.8117478
+  },
+  {
+    "id":"trg-houston",
+    "provider":"TRG Datacenters",
+    "name":"Houston Data Center",
+    "city":"Houston",
+    "state":"TX",
+    "latitude":30.0749421,
+    "longitude":-95.4354049
+  },
+  {
+    "id":"lumen-weehawken-1",
+    "provider":"Lumen",
+    "name":"Weehawken 1 Data Center",
+    "city":"Weehawken",
+    "state":"NJ",
+    "latitude":40.7615218,
+    "longitude":-74.0260271
+  },
+  {
+    "id":"sba-edge-jacksonville",
+    "provider":"SBA Edge",
+    "name":"Jacksonville Data Center",
+    "city":"Jacksonville",
+    "state":"FL",
+    "latitude":30.3312978,
+    "longitude":-81.6625626
+  },
+  {
+    "id":"lumen-pittsurgh-2",
+    "provider":"Lumen",
+    "name":"Pittsurgh 2 Data Center",
+    "city":"Pittsburgh",
+    "state":"PA",
+    "latitude":40.432472,
+    "longitude":-79.9633954
+  },
+  {
+    "id":"oracle-us-gov-west-us-luke-1",
+    "provider":"Oracle",
+    "name":"US Gov West us-luke-1",
+    "city":"Phoenix",
+    "state":"AZ",
+    "latitude":33.4484367,
+    "longitude":-112.074141
+  },
+  {
+    "id":"element-critical-chicago-two",
+    "provider":"Element Critical",
+    "name":"Chicago Two Data Center",
+    "city":"Wood Dale",
+    "state":"IL",
+    "latitude":41.9742277,
+    "longitude":-87.9671756
+  },
+  {
+    "id":"hostdime-orlando-coming-2024",
+    "provider":"HostDime",
+    "name":"Orlando Data Center (Coming 2024)",
+    "city":"Eatonville",
+    "state":"FL",
+    "latitude":28.6197722,
+    "longitude":-81.3859332
+  },
+  {
+    "id":"vultr-atlanta",
+    "provider":"Vultr",
+    "name":"Atlanta",
+    "city":"Atlanta",
+    "state":"GA",
+    "latitude":33.7544657,
+    "longitude":-84.3898151
+  },
+  {
+    "id":"flexential-portland-hillsboro-3",
+    "provider":"Flexential",
+    "name":"Portland - Hillsboro 3 Data Center",
+    "city":"Hillsboro",
+    "state":"OR",
+    "latitude":45.5596117,
+    "longitude":-122.9383009
+  },
+  {
+    "id":"flexential-fort-lauderdale",
+    "provider":"Flexential",
+    "name":"Fort Lauderdale Data Center",
+    "city":"Fort Lauderdale",
+    "state":"FL",
+    "latitude":26.1900857,
+    "longitude":-80.1932967
+  },
+  {
+    "id":"equinix-ph1-philadelphia",
+    "provider":"Equinix",
+    "name":"PH1 Philadelphia Data Center",
+    "city":"Philadelphia",
+    "state":"PA",
+    "latitude":39.9598694,
+    "longitude":-75.1608144
+  },
+  {
+    "id":"hivelocity-albany",
+    "provider":"Hivelocity",
+    "name":"Albany Data Center",
+    "city":"Latham",
+    "state":"NY",
+    "latitude":42.7454364,
+    "longitude":-73.7592017
+  },
+  {
+    "id":"centersquare-ewr3-piscataway-campus",
+    "provider":"Centersquare",
+    "name":"EWR3 Piscataway Data Center Campus",
+    "city":"Piscataway",
+    "state":"NJ",
+    "latitude":40.5537911,
+    "longitude":-74.4570679
+  },
+  {
+    "id":"ibm-sjc01-san-jose-ca",
+    "provider":"IBM Cloud",
+    "name":"SJC01 San Jose, CA",
+    "city":"Santa Clara",
+    "state":"CA",
+    "latitude":37.3782785,
+    "longitude":-121.9580895
+  },
+  {
+    "id":"cyrusone-scv1-silicon-valley",
+    "provider":"CyrusOne",
+    "name":"SCV1 Silicon Valley Data Center",
+    "city":"Santa Clara",
+    "state":"CA",
+    "latitude":37.367057,
+    "longitude":-121.941614
+  },
+  {
+    "id":"unitedlayer-las-vegas-north",
+    "provider":"UnitedLayer",
+    "name":"Las Vegas North Data Center",
+    "city":"Las Vegas",
+    "state":"NV",
+    "latitude":36.1655213,
+    "longitude":-115.2061232
+  },
+  {
+    "id":"valorc3-oklahoma-city",
+    "provider":null,
+    "name":"Oklahoma City Data Center",
+    "city":"Oklahoma City",
+    "state":"OK",
+    "latitude":35.4254383,
+    "longitude":-97.5999218
+  },
+  {
+    "id":"coresite-dc2-washington-dc",
+    "provider":"CoreSite",
+    "name":"DC2 Washington DC Data Center",
+    "city":"Washington",
+    "state":"DC",
+    "latitude":38.9033891,
+    "longitude":-77.0312337
+  },
+  {
+    "id":"meta-inc-stanton-springs",
+    "provider":"Meta, Inc.",
+    "name":"Stanton Springs Data Center",
+    "city":"Social Circle",
+    "state":"GA",
+    "latitude":33.6004763,
+    "longitude":-83.6970675
+  },
+  {
+    "id":"segra-winston-salem",
+    "provider":"Segra",
+    "name":"Winston-Salem Data Center",
+    "city":"Winston-Salem",
+    "state":"NC",
+    "latitude":36.0546042,
+    "longitude":-80.225593
+  },
+  {
+    "id":"carrier-one-inc-dallas-1",
+    "provider":"Carrier One Inc",
+    "name":"Dallas 1 Data Center",
+    "city":"Dallas",
+    "state":"TX",
+    "latitude":32.8379081,
+    "longitude":-96.8783932
+  },
+  {
+    "id":"fortress-sf1-san-francisco",
+    "provider":"Fortress Data Centers",
+    "name":"SF1: San Francisco",
+    "city":"San Francisco",
+    "state":"CA",
+    "latitude":37.7825848,
+    "longitude":-122.3917665
+  },
+  {
+    "id":"tierpoint-omaha-midlands",
+    "provider":"TierPoint",
+    "name":"Omaha - Midlands Data Center",
+    "city":"Papillion",
+    "state":"NE",
+    "latitude":41.1375418,
+    "longitude":-96.042826
+  },
+  {
+    "id":"evocative-atlanta-atl1",
+    "provider":"Evocative",
+    "name":"Atlanta Data Center (ATL1)",
+    "city":"Atlanta",
+    "state":"GA",
+    "latitude":33.7616391,
+    "longitude":-84.3906499
+  },
+  {
+    "id":"amazon-aws-45259-sterling",
+    "provider":"Amazon AWS",
+    "name":"45259 Sterling",
+    "city":"Sterling",
+    "state":"VA",
+    "latitude":39.0208385,
+    "longitude":-77.4346257
+  },
+  {
+    "id":"h5-san-luis-obispo",
+    "provider":null,
+    "name":"San Luis Obispo Data Center",
+    "city":"San Luis Obispo",
+    "state":"CA",
+    "latitude":35.255372,
+    "longitude":-120.6420493
+  },
+  {
+    "id":"turnkey-internet-albany",
+    "provider":"TurnKey Internet",
+    "name":"Albany Data Center",
+    "city":"Latham",
+    "state":"NY",
+    "latitude":42.7454364,
+    "longitude":-73.7592017
+  },
+  {
+    "id":"netrality-kc1-1102-grand-kansas-city",
+    "provider":"Netrality Data Centers",
+    "name":"KC1 - 1102 Grand Kansas City Data Center",
+    "city":"Kansas City",
+    "state":"MO",
+    "latitude":39.1009164,
+    "longitude":-94.5812414
+  },
+  {
+    "id":"lumen-baton-rouge-2",
+    "provider":"Lumen",
+    "name":"Baton Rouge 2 Data Center",
+    "city":"Baton Rouge",
+    "state":"LA",
+    "latitude":30.3908915,
+    "longitude":-91.1611922
+  },
+  {
+    "id":"lumen-san-diego-1",
+    "provider":"Lumen",
+    "name":"San Diego 1 Data Center",
+    "city":"San Diego",
+    "state":"CA",
+    "latitude":32.80905,
+    "longitude":-117.135902
+  },
+  {
+    "id":"colocation-northwest-redmond",
+    "provider":"Colocation Northwest",
+    "name":"Redmond Data Center",
+    "city":"Redmond",
+    "state":"WA",
+    "latitude":47.6325005,
+    "longitude":-122.1382367
+  },
+  {
+    "id":"ntt-global-ph1-phoenix-2",
+    "provider":"NTT Global Data Centers",
+    "name":"PH1 Phoenix Data Center",
+    "city":"Mesa",
+    "state":"AZ",
+    "latitude":33.3554807,
+    "longitude":-111.6112211
+  },
+  {
+    "id":"databank-databank-bwi1",
+    "provider":"DataBank",
+    "name":"DataBank BWI1 Data Center",
+    "city":"Baltimore",
+    "state":"MD",
+    "latitude":39.2917274,
+    "longitude":-76.6200357
+  },
+  {
+    "id":"iron-mountain-va-6-northern-virginia",
+    "provider":"Iron Mountain Data Centers",
+    "name":"VA-6 - Northern Virginia Data Center",
+    "city":"Manassas",
+    "state":"VA",
+    "latitude":38.7681428,
+    "longitude":-77.5386482
+  },
+  {
+    "id":"copt-defense-properties-1000-redstone-gateway-sw-huntsville",
+    "provider":null,
+    "name":"COPT Defense Properties",
+    "city":"Huntsville",
+    "state":"AL",
+    "latitude":34.698542,
+    "longitude":-86.67165
+  },
+  {
+    "id":"365-ga1-alpharetta",
+    "provider":null,
+    "name":"GA1 Alpharetta Data Center",
+    "city":"Alpharetta",
+    "state":"GA",
+    "latitude":34.062646,
+    "longitude":-84.2672136
+  },
+  {
+    "id":"quonix-philadelphia-locust-st",
+    "provider":null,
+    "name":"Quonix",
+    "city":"Philadelphia",
+    "state":"PA",
+    "latitude":39.9503551,
+    "longitude":-75.1800072
+  },
+  {
+    "id":"evocative-los-angeles-lax2",
+    "provider":"Evocative",
+    "name":"Los Angeles Data Center (LAX2)",
+    "city":"Los Angeles",
+    "state":"CA",
+    "latitude":34.0473499,
+    "longitude":-118.256999
+  },
+  {
+    "id":"netdepot-netdepot-atlanta-ga",
+    "provider":"NETdepot",
+    "name":"NETdepot - Atlanta, GA",
+    "city":"Atlanta",
+    "state":"GA",
+    "latitude":33.7339084,
+    "longitude":-84.4257293
+  },
+  {
+    "id":"nautilus-data-technologies-stockton-1",
+    "provider":"Nautilus Data Technologies",
+    "name":"Stockton 1 Data Center",
+    "city":"Stockton",
+    "state":"CA",
+    "latitude":37.9640399,
+    "longitude":-121.3688939
+  },
+  {
+    "id":"lumen-fresno-1",
+    "provider":"Lumen",
+    "name":"Fresno 1 Data Center",
+    "city":"Fresno",
+    "state":"CA",
+    "latitude":36.7475004,
+    "longitude":-119.8145415
+  },
+  {
+    "id":"databank-lax1-los-angeles-one-wilshire",
+    "provider":"DataBank",
+    "name":"LAX1 Los Angeles One Wilshire Data Center",
+    "city":"Los Angeles",
+    "state":"CA",
+    "latitude":34.0478871,
+    "longitude":-118.2555541
+  },
+  {
+    "id":"digital-realty-atlanta-atl14",
+    "provider":"Digital Realty",
+    "name":"Atlanta ATL14 Data Center",
+    "city":"Atlanta",
+    "state":"GA",
+    "latitude":33.7616391,
+    "longitude":-84.3906499
+  },
+  {
+    "id":"databank-databank-bos1",
+    "provider":"DataBank",
+    "name":"DataBank BOS1 Data Center",
+    "city":"Boston",
+    "state":"MA",
+    "latitude":42.3518246,
+    "longitude":-71.0549596
+  },
+  {
+    "id":"amazon-aws-pdx92",
+    "provider":"Amazon AWS",
+    "name":"PDX92",
+    "city":"Boardman",
+    "state":"OR",
+    "latitude":45.8436138,
+    "longitude":-119.6854187
+  },
+  {
+    "id":"digital-realty-chicago-ord12",
+    "provider":"Digital Realty",
+    "name":"Chicago ORD12 Data Center",
+    "city":"Franklin Park",
+    "state":"IL",
+    "latitude":41.9283705,
+    "longitude":-87.8592552
+  },
+  {
+    "id":"databank-hou5-houston-galleria",
+    "provider":"DataBank",
+    "name":"HOU5 -Houston Galleria Data Center",
+    "city":"Houston",
+    "state":"TX",
+    "latitude":29.7302748,
+    "longitude":-95.4473652
+  },
+  {
+    "id":"us-signal-oak-brook",
+    "provider":"US Signal",
+    "name":"Oak Brook Data Center",
+    "city":"Oak Brook",
+    "state":"IL",
+    "latitude":41.8408585,
+    "longitude":-87.9490751
+  },
+  {
+    "id":"fdcservers-net-da11-equinix",
+    "provider":"FDCservers.net",
+    "name":"DA11 Equinix",
+    "city":"Dallas",
+    "state":"TX",
+    "latitude":32.7993121,
+    "longitude":-96.8210604
+  },
+  {
+    "id":"stream-houston-1-the-woodlands",
+    "provider":"Stream Data Centers",
+    "name":"Houston 1 - The Woodlands Data Center",
+    "city":"The Woodlands",
+    "state":"TX",
+    "latitude":30.1781365,
+    "longitude":-95.4860464
+  },
+  {
+    "id":"fdcservers-net-at1-equinix",
+    "provider":"FDCservers.net",
+    "name":"AT1 Equinix",
+    "city":"Atlanta",
+    "state":"GA",
+    "latitude":33.7805138,
+    "longitude":-84.3887412
+  },
+  {
+    "id":"amazon-aws-scioto-campus",
+    "provider":"Amazon AWS",
+    "name":"Scioto Campus",
+    "city":"Hilliard",
+    "state":"OH",
+    "latitude":40.0337664,
+    "longitude":-83.1882282
+  },
+  {
+    "id":"oracle-us-gov-east-us-langley-1",
+    "provider":"Oracle",
+    "name":"US Gov East us-langley-1",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.029784,
+    "longitude":-77.4744148
+  },
+  {
+    "id":"china-telecom-coresite-la2",
+    "provider":"China Telecom",
+    "name":"Coresite LA2 Data Center",
+    "city":"Los Angeles",
+    "state":"CA",
+    "latitude":34.058197,
+    "longitude":-118.23695
+  },
+  {
+    "id":"databank-ewr2-piscataway",
+    "provider":"DataBank",
+    "name":"EWR2 - Piscataway Data Center",
+    "city":"Piscataway",
+    "state":"NJ",
+    "latitude":40.549467,
+    "longitude":-74.4558891
+  },
+  {
+    "id":"us-signal-south-bend",
+    "provider":"US Signal",
+    "name":"South Bend Data Center",
+    "city":"South Bend",
+    "state":"IN",
+    "latitude":41.6694539,
+    "longitude":-86.256206
+  },
+  {
+    "id":"coresite-ny2-new-jersey-secaucus",
+    "provider":"CoreSite",
+    "name":"NY2 New Jersey Secaucus Data Center",
+    "city":"Secaucus",
+    "state":"NJ",
+    "latitude":40.7849039,
+    "longitude":-74.0653573
+  },
+  {
+    "id":"qts-atlanta-3-dc1",
+    "provider":"QTS Data Centers",
+    "name":"Atlanta 3 DC1 Data Center",
+    "city":"Atlanta",
+    "state":"GA",
+    "latitude":33.781325,
+    "longitude":-84.4229928
+  },
+  {
+    "id":"tierpoint-lehigh-valley",
+    "provider":"TierPoint",
+    "name":"Lehigh Valley Data Center",
+    "city":"Bethlehem",
+    "state":"PA",
+    "latitude":40.6750026,
+    "longitude":-75.3780288
+  },
+  {
+    "id":"evocative-new-york-jfk2",
+    "provider":"Evocative",
+    "name":"New York Data Center (JFK2)",
+    "city":"Chappaqua",
+    "state":"NY",
+    "latitude":41.1650921,
+    "longitude":-73.7603463
+  },
+  {
+    "id":"lincoln-rackhouse-kansas-city",
+    "provider":"Lincoln Rackhouse",
+    "name":"Kansas City Data Center",
+    "city":"Kansas City",
+    "state":"MO",
+    "latitude":39.2959412,
+    "longitude":-94.6763411
+  },
+  {
+    "id":"fdcservers-net-dc15-equinix",
+    "provider":"FDCservers.net",
+    "name":"DC15 Equinix",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.0225001,
+    "longitude":-77.4502558
+  },
+  {
+    "id":"11-11-systems-philadelphia",
+    "provider":null,
+    "name":"Philadelphia Data Center",
+    "city":"Philadelphia",
+    "state":"PA",
+    "latitude":39.9597686,
+    "longitude":-75.1621643
+  },
+  {
+    "id":"edged-edged-atlanta",
+    "provider":"Edged",
+    "name":"Edged Atlanta Data Center",
+    "city":"Atlanta",
+    "state":"GA",
+    "latitude":33.7984249,
+    "longitude":-84.4354808
+  },
+  {
+    "id":"directlink-technologies-reading-pa",
+    "provider":"Direct LTx",
+    "name":"Reading PA Data Center",
+    "city":"Reading",
+    "state":"PA",
+    "latitude":40.3809499,
+    "longitude":-75.9823926
+  },
+  {
+    "id":"edgeconnex-mad01-madison",
+    "provider":"EdgeConnex",
+    "name":"MAD01 Madison Data Center",
+    "city":"Madison",
+    "state":"WI",
+    "latitude":43.0481059,
+    "longitude":-89.2982829
+  },
+  {
+    "id":"prime-prime-san-jose-6580-via-del-oro",
+    "provider":"Prime Data Centers",
+    "name":"Prime San Jose - 6580 Via Del Oro",
+    "city":"San Jose",
+    "state":"CA",
+    "latitude":37.2354283,
+    "longitude":-121.7822509
+  },
+  {
+    "id":"digital-realty-chicago-ord011",
+    "provider":"Digital Realty",
+    "name":"Chicago ORD011 Data Center",
+    "city":"Chicago",
+    "state":"IL",
+    "latitude":41.8743061,
+    "longitude":-87.6299404
+  },
+  {
+    "id":"lumen-mobile-1",
+    "provider":"Lumen",
+    "name":"Mobile 1 Data Center",
+    "city":"Mobile",
+    "state":"AL",
+    "latitude":30.690917,
+    "longitude":-88.048361
+  },
+  {
+    "id":"skybox-legacy-campus",
+    "provider":"Skybox Datacenters",
+    "name":"Legacy Campus",
+    "city":"Plano",
+    "state":"TX",
+    "latitude":33.0475651,
+    "longitude":-96.8329388
+  },
+  {
+    "id":"amazon-aws-iad32-sterling",
+    "provider":"Amazon AWS",
+    "name":"IAD32 Sterling",
+    "city":"Sterling",
+    "state":"VA",
+    "latitude":39.0215694,
+    "longitude":-77.4347945
+  },
+  {
+    "id":"amazon-aws-iad76-sterling",
+    "provider":"Amazon AWS",
+    "name":"IAD76 Sterling",
+    "city":"Sterling",
+    "state":"VA",
+    "latitude":38.9937865,
+    "longitude":-77.4505093
+  },
+  {
+    "id":"digital-realty-northern-virginia-va3",
+    "provider":"Digital Realty",
+    "name":"Northern Virginia VA3 Data Center",
+    "city":"Reston",
+    "state":"VA",
+    "latitude":38.9484063,
+    "longitude":-77.3273221
+  },
+  {
+    "id":"lumen-akron-2",
+    "provider":"Lumen",
+    "name":"Akron 2 Data Center",
+    "city":"Akron",
+    "state":"OH",
+    "latitude":41.0695694,
+    "longitude":-81.4907582
+  },
+  {
+    "id":"deft-a-summit-company-ashburn",
+    "provider":"Summit",
+    "name":"Ashburn Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.0043335,
+    "longitude":-77.4843499
+  },
+  {
+    "id":"lumen-hartford-1",
+    "provider":"Lumen",
+    "name":"Hartford 1 Data Center",
+    "city":"Hartford",
+    "state":"CT",
+    "latitude":41.7450929,
+    "longitude":-72.6651517
+  },
+  {
+    "id":"amazon-aws-northeast-creek-technology-campus",
+    "provider":"Amazon AWS",
+    "name":"Northeast Creek Technology Campus",
+    "city":"Louisa",
+    "state":"VA",
+    "latitude":37.9890793,
+    "longitude":-77.9505145
+  },
+  {
+    "id":"digital-realty-dallas-dfw26",
+    "provider":"Digital Realty",
+    "name":"Dallas DFW26 Data Center",
+    "city":"Lewisville",
+    "state":"TX",
+    "latitude":33.0292234,
+    "longitude":-96.9912483
+  },
+  {
+    "id":"databank-dfw1-downtown-dallas",
+    "provider":"DataBank",
+    "name":"DFW1 - Downtown Dallas Data Center",
+    "city":"Dallas",
+    "state":"TX",
+    "latitude":32.7783206,
+    "longitude":-96.7985002
+  },
+  {
+    "id":"edgeconnex-det01-detroit",
+    "provider":"EdgeConnex",
+    "name":"DET01 Detroit Data Center",
+    "city":"Southfield",
+    "state":"MI",
+    "latitude":42.4462382,
+    "longitude":-83.2594922
+  },
+  {
+    "id":"digital-realty-silicon-valley-sfo12",
+    "provider":"Digital Realty",
+    "name":"Silicon Valley SFO12 Data Center",
+    "city":"San Francisco",
+    "state":"CA",
+    "latitude":37.788731,
+    "longitude":-122.3904691
+  },
+  {
+    "id":"fiberstate-fiberstate-slc1",
+    "provider":"Fiberstate",
+    "name":"FiberState SLC1",
+    "city":"Draper",
+    "state":"UT",
+    "latitude":40.511709,
+    "longitude":-111.8883122
+  },
+  {
+    "id":"h5-nashville",
+    "provider":null,
+    "name":"Nashville Data Center",
+    "city":"Nashville",
+    "state":"TN",
+    "latitude":36.2241981,
+    "longitude":-86.6287683
+  },
+  {
+    "id":"lumen-san-bernardino-1",
+    "provider":"Lumen",
+    "name":"San Bernardino 1 Data Center",
+    "city":"San Bernardino",
+    "state":"CA",
+    "latitude":34.1787409,
+    "longitude":-117.3480365
+  },
+  {
+    "id":"rackspace-nyc2-new-york-metro",
+    "provider":"Rackspace",
+    "name":"NYC2 New York Metro Data Center",
+    "city":"Franklin Township",
+    "state":"NJ",
+    "latitude":40.545758,
+    "longitude":-74.5403097
+  },
+  {
+    "id":"365-ma1-marlboro",
+    "provider":null,
+    "name":"MA1 Marlboro Data Center",
+    "city":"Marlborough",
+    "state":"MA",
+    "latitude":42.3524553,
+    "longitude":-71.5860482
+  },
+  {
+    "id":"lumen-san-antonio-1",
+    "provider":"Lumen",
+    "name":"San Antonio 1 Data Center",
+    "city":"San Antonio",
+    "state":"TX",
+    "latitude":29.4756086,
+    "longitude":-98.391472
+  },
+  {
+    "id":"datacate-inc-sjc1-bay-area-santa-clara",
+    "provider":"Datacate, Inc",
+    "name":"SJC1 Bay Area Santa Clara Data Center",
+    "city":"Santa Clara",
+    "state":"CA",
+    "latitude":37.3885828,
+    "longitude":-121.9626957
+  },
+  {
+    "id":"dc-blox-birmingham-bhm1",
+    "provider":"DC BLOX",
+    "name":"Birmingham BHM1 Data Center",
+    "city":"Birmingham",
+    "state":"AL",
+    "latitude":33.5272243,
+    "longitude":-86.8874025
+  },
+  {
+    "id":"lumen-rochester-3",
+    "provider":"Lumen",
+    "name":"Rochester 3 Data Center",
+    "city":"Rochester",
+    "state":"NY",
+    "latitude":43.1502963,
+    "longitude":-77.7301979
+  },
+  {
+    "id":"equinix-cu1-culpeper",
+    "provider":"Equinix",
+    "name":"CU1 Culpeper Data Center",
+    "city":"Culpeper",
+    "state":"VA",
+    "latitude":38.4551359,
+    "longitude":-77.9780171
+  },
+  {
+    "id":"expedient-baltimore-tide-point",
+    "provider":"Expedient",
+    "name":"Baltimore Tide Point Data Center",
+    "city":"Baltimore",
+    "state":"MD",
+    "latitude":39.2746901,
+    "longitude":-76.5916456
+  },
+  {
+    "id":"dc-blox-huntsville-hsv1",
+    "provider":"DC BLOX",
+    "name":"Huntsville HSV1 Data Center",
+    "city":"Huntsville",
+    "state":"AL",
+    "latitude":34.7104202,
+    "longitude":-86.6921561
+  },
+  {
+    "id":"365-bu1-buffalo",
+    "provider":null,
+    "name":"BU1 Buffalo Data Center",
+    "city":"Buffalo",
+    "state":"NY",
+    "latitude":42.8836357,
+    "longitude":-78.8756886
+  },
+  {
+    "id":"cyrusone-nva4-northern-virginia-sterling",
+    "provider":"CyrusOne",
+    "name":"NVA4 Northern Virginia Sterling Data Center",
+    "city":"Sterling",
+    "state":"VA",
+    "latitude":38.9856194,
+    "longitude":-77.4242505
+  },
+  {
+    "id":"equinix-dc22-ashburn",
+    "provider":"Equinix",
+    "name":"DC22 Ashburn Data Center",
+    "city":"Ashburn",
+    "state":"VA",
+    "latitude":39.0200441,
+    "longitude":-77.4564882
+  },
+  {
+    "id":"dynascale-west7center",
+    "provider":"Dynascale",
+    "name":"West7Center Data Center",
+    "city":"Los Angeles",
+    "state":"CA",
+    "latitude":34.0511072,
+    "longitude":-118.2659163
+  },
+  {
+    "id":"qts-miami",
+    "provider":"QTS Data Centers",
+    "name":"Miami Data Center",
+    "city":"Miami",
+    "state":"FL",
+    "latitude":25.7915328,
+    "longitude":-80.3795596
+  },
+  {
+    "id":"cogent-communications-akron",
+    "provider":"Cogent Communications",
+    "name":"Akron Data Center",
+    "city":"Akron",
+    "state":"OH",
+    "latitude":41.085524,
+    "longitude":-81.513988
+  },
+  {
+    "id":"h5-atlanta",
+    "provider":null,
+    "name":"Atlanta Data Center",
+    "city":"Atlanta",
+    "state":"GA",
+    "latitude":33.764767,
+    "longitude":-84.384012
+  },
+  {
+    "id":"databank-den4-westminster",
+    "provider":"DataBank",
+    "name":"DEN4 Westminster Data Center",
+    "city":"Westminster",
+    "state":"CO",
+    "latitude":39.8835405,
+    "longitude":-105.0810265
+  },
+  {
+    "id":"365-dt1-detroit",
+    "provider":null,
+    "name":"DT1 Detroit Data Center",
+    "city":"Southfield",
+    "state":"MI",
+    "latitude":42.4691728,
+    "longitude":-83.2604844
+  },
+  {
+    "id":"databank-data-bank-slc2",
+    "provider":"DataBank",
+    "name":"Data Bank SLC2 Data Center",
+    "city":"Salt Lake",
+    "state":"UT",
+    "latitude":40.4854322,
+    "longitude":-111.900578
+  },
+  {
+    "id":"databank-databank-cle1",
+    "provider":"DataBank",
+    "name":"DataBank CLE1 Data Center",
+    "city":"Cleveland",
+    "state":"OH",
+    "latitude":41.5011702,
+    "longitude":-81.6835113
+  },
+  {
+    "id":"windstream-colorado-springs-co",
+    "provider":"Windstream",
+    "name":"Colorado Springs, CO Data Center",
+    "city":"Colorado Springs",
+    "state":"CO",
+    "latitude":38.997225,
+    "longitude":-104.792806
+  },
+  {
+    "id":"edgeconnex-mia02-miami",
+    "provider":"EdgeConnex",
+    "name":"MIA02 Miami Data Center",
+    "city":"Miami",
+    "state":"FL",
+    "latitude":25.9455284,
+    "longitude":-80.191054
+  },
+  {
+    "id":"stellar-technologies-inc-hnl01",
+    "provider":"Stellar Technologies Inc.",
+    "name":"HNl01 Data Center",
+    "city":"Honolulu",
+    "state":"HI",
+    "latitude":21.3344171,
+    "longitude":-157.9171752
+  },
+  {
+    "id":"coresite-at1-atlanta",
+    "provider":"CoreSite",
+    "name":"AT1 Atlanta Data Center",
+    "city":"Atlanta",
+    "state":"GA",
+    "latitude":33.7755704,
+    "longitude":-84.4068285
+  },
+  {
+    "id":"databank-dfw4-dallas-empire-central",
+    "provider":"DataBank",
+    "name":"DFW4 - Dallas Empire Central Data Center",
+    "city":"Dallas",
+    "state":"TX",
+    "latitude":32.8217451,
+    "longitude":-96.8736322
+  },
+  {
+    "id":"databank-databank-iad5",
+    "provider":"DataBank",
+    "name":"DataBank IAD5 Data Center",
+    "city":"Culpeper",
+    "state":"VA",
+    "latitude":38.4492071,
+    "longitude":-77.9821013
+  },
+  {
+    "id":"centersquare-sea2-a-tukwila",
+    "provider":"Centersquare",
+    "name":"SEA2-A Tukwila Data Center",
+    "city":"Tukwila",
+    "state":"WA",
+    "latitude":47.4409177,
+    "longitude":-122.2564593
+  },
+  {
+    "id":"centerserv-chesapeake",
+    "provider":"CenterServ",
+    "name":"Chesapeake Data Center",
+    "city":"Chesapeake",
+    "state":"VA",
+    "latitude":36.779875,
+    "longitude":-76.239103
+  },
+  {
+    "id":"ark-boise",
+    "provider":"ark data centers",
+    "name":"Boise Data Center",
+    "city":"Boise",
+    "state":"ID",
+    "latitude":43.580025,
+    "longitude":-116.2908782
+  },
+  {
+    "id":"lumen-amarillo-1",
+    "provider":"Lumen",
+    "name":"Amarillo 1 Data Center",
+    "city":"Amarillo",
+    "state":"TX",
+    "latitude":35.2045334,
+    "longitude":-101.8315395
+  },
+  {
+    "id":"unitedlayer-one-wilshire",
+    "provider":"UnitedLayer",
+    "name":"One Wilshire Data Center",
+    "city":"Los Angeles",
+    "state":"CA",
+    "latitude":34.0478871,
+    "longitude":-118.2555541
+  },
+  {
+    "id":"h5-charlotte",
+    "provider":null,
+    "name":"Charlotte Data Center",
+    "city":"Charlotte",
+    "state":"NC",
+    "latitude":35.329863,
+    "longitude":-80.7657906
+  },
+  {
+    "id":"lumen-austin-2-2",
+    "provider":"Lumen",
+    "name":"Austin 2 Data Center",
+    "city":"Austin",
+    "state":"TX",
+    "latitude":30.2610485,
+    "longitude":-97.7230733
+  },
+  {
+    "id":"lumen-minnetonka-1",
+    "provider":"Lumen",
+    "name":"Minnetonka 1 Data Center",
+    "city":"Hopkins",
+    "state":"MN",
+    "latitude":44.9062302,
+    "longitude":-93.4208151
+  },
+  {
+    "id":"fdcservers-net-de1-coresite",
+    "provider":"FDCservers.net",
+    "name":"DE1 CoreSite",
+    "city":"Denver",
+    "state":"CO",
+    "latitude":39.7455712,
+    "longitude":-104.9956911
+  },
+  {
+    "id":"ibm-dal12-dallas-tx",
+    "provider":"IBM Cloud",
+    "name":"DAL12 Dallas, TX",
+    "city":"Dallas",
+    "state":"TX",
+    "latitude":32.800966,
+    "longitude":-96.819523
+  },
+  {
+    "id":"ibm-sjc04-san-jose-ca",
+    "provider":"IBM Cloud",
+    "name":"SJC04 San Jose, CA",
+    "city":"Santa Clara",
+    "state":"CA",
+    "latitude":37.3541132,
+    "longitude":-121.955174
+  },
+  {
+    "id":"coresite-la1-los-angeles",
+    "provider":"CoreSite",
+    "name":"LA1 Los Angeles Data Center",
+    "city":"Los Angeles",
+    "state":"CA",
+    "latitude":34.0478871,
+    "longitude":-118.2555541
+  }
+]

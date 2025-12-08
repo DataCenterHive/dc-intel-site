@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Subscription - DC Intelligence</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0e16;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #f9fafb;
+            background: #0a0e16;
+        }
+
+        header {
+            background: #0a0e16;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 30px;
+            transition: opacity 0.2s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            font-size: 14px;
+            color: #9ca3af;
+        }
+
+        .breadcrumb a {
+            color: #06b6d4;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        .hero {
+            background: #0a0e16;
+            color: white;
+            border-radius: 12px;
+            padding: 50px 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3);
+            position: relative;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            background: #f59e0b;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .tier-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 48px;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 20px;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 25px;
+        }
+
+        .price {
+            font-size: 36px;
+            color: white;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .price-note {
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 25px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #3498db;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .content-section {
+            background: #111827;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            border: 1px solid #374151;
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #f9fafb;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #374151;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .feature-card {
+            padding: 20px;
+            border: 2px solid #374151;
+            border-radius: 8px;
+            transition: all 0.2s;
+            background: #1f2937;
+        }
+
+        .feature-card:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #f9fafb;
+            margin-bottom: 8px;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: #d1d5db;
+            line-height: 1.5;
+        }
+
+        .check-icon {
+            color: #10b981;
+            margin-right: 10px;
+        }
+
+        .premium-icon {
+            color: #f59e0b;
+            margin-right: 10px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 10px 0;
+            border-bottom: 1px solid #374151;
+            font-size: 16px;
+            color: #d1d5db;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        .best-for {
+            background: #1f2937;
+            border-left: 4px solid #06b6d4;
+            padding: 25px;
+            border-radius: 4px;
+            margin: 25px 0;
+            border: 1px solid #374151;
+        }
+
+        .best-for h3 {
+            color: #06b6d4;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #374151;
+        }
+
+        .comparison-table th {
+            background: #1f2937;
+            font-weight: bold;
+            color: #f9fafb;
+        }
+
+        .comparison-table tr:hover {
+            background: #1f2937;
+        }
+
+        .comparison-table .premium-col {
+            background: #1f2937;
+            font-weight: bold;
+            border-left: 2px solid #06b6d4;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #1f2937;
+            border-radius: 8px;
+            border: 1px solid #374151;
+        }
+
+        .faq-question {
+            font-weight: bold;
+            color: #f9fafb;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .faq-answer {
+            color: #d1d5db;
+            line-height: 1.6;
+        }
+
+        .testimonial {
+            background: #1f2937;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid #06b6d4;
+            margin: 20px 0;
+            border: 1px solid #374151;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: #d1d5db;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: #f9fafb;
+        }
+
+        .upgrade-callout {
+            background: #1f2937;
+            border: 2px solid #f59e0b;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+
+        .upgrade-callout h3 {
+            color: #f59e0b;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+            border-top: 1px solid #374151;
+        }
+
+        footer a {
+            color: #06b6d4;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 32px;
+            }
+
+            .price {
+                font-size: 28px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .popular-badge {
+                position: static;
+                display: inline-block;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">DC Intelligence</div>
+            <div class="nav-links">
+                <a href="/dashboard_v2.html">Dashboard</a>
+                <a href="/services">Services</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="breadcrumb">
+        <a href="/dashboard_v2.html">Home</a> &gt;
+        <a href="/services">Services</a> &gt;
+        <span>Premium Subscription</span>
+    </div>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <span class="popular-badge">MOST POPULAR</span>
+            <span class="tier-badge">PREMIUM TIER</span>
+            <h1>Premium Subscription</h1>
+            <p class="tagline">Advanced intelligence for growing colocation and enterprise teams</p>
+            <div class="price">$12,500 - $25,000<span style="font-size: 20px;">/year</span></div>
+            <p class="price-note">Up to 10 user seats included | Everything in Basic PLUS premium features</p>
+
+            <div class="cta-buttons">
+                <a href="#contact-form" class="btn btn-primary">Request Demo</a>
+                <a href="#features" class="btn btn-secondary">See Features</a>
+            </div>
+        </div>
+
+        <!-- Best For Section -->
+        <div class="content-section">
+            <div class="best-for">
+                <h3>Perfect For:</h3>
+                <ul style="margin-top: 15px;">
+                    <li><span class="check-icon">✓</span> Mid-size colocation providers tracking competitive activity</li>
+                    <li><span class="check-icon">✓</span> Enterprise IT teams planning capacity expansions</li>
+                    <li><span class="check-icon">✓</span> REITs monitoring data center construction pipelines</li>
+                    <li><span class="check-icon">✓</span> Telecom operators researching market opportunities</li>
+                    <li><span class="check-icon">✓</span> Growing consulting firms serving multiple clients</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- What's New in Premium -->
+        <div class="content-section">
+            <h2>What's New in Premium</h2>
+            <p style="margin-bottom: 25px; color: #555;">Get everything in Basic, plus these advanced features designed for professionals who need deeper insights and faster alerts.</p>
+
+            <div class="features-grid">
+                <div class="feature-card" style="border-color: #f39c12;">
+                    <div class="feature-icon">🤖</div>
+                    <div class="feature-title">AI-Powered Research Summaries</div>
+                    <div class="feature-desc">Our AI automatically summarizes permit details, identifies DC-specific keywords, and highlights material information. Save hours of manual review.</div>
+                </div>
+
+                <div class="feature-card" style="border-color: #f39c12;">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">Priority Email Alerts</div>
+                    <div class="feature-desc">Real-time permit alerts delivered within hours (not weeks). Filter by city, operator, permit type, and project size. Never miss a competitor move.</div>
+                </div>
+
+                <div class="feature-card" style="border-color: #f39c12;">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-title">Advanced Dashboards</div>
+                    <div class="feature-desc">Build custom dashboards with your own filters. Compare markets, track specific operators, analyze permit trends by quarter. Export custom reports.</div>
+                </div>
+
+                <div class="feature-card" style="border-color: #f39c12;">
+                    <div class="feature-icon">📈</div>
+                    <div class="feature-title">Benchmarking Tools</div>
+                    <div class="feature-desc">Compare your target markets against industry averages. See which cities have the most DC activity, identify emerging hotspots, track operator market share.</div>
+                </div>
+
+                <div class="feature-card" style="border-color: #f39c12;">
+                    <div class="feature-icon">📄</div>
+                    <div class="feature-title">Custom Briefing (1/year)</div>
+                    <div class="feature-desc">One custom research briefing per year included. Our analysts will create a tailored report on your specific market, operator, or region of interest.</div>
+                </div>
+
+                <div class="feature-card" style="border-color: #f39c12;">
+                    <div class="feature-icon">💬</div>
+                    <div class="feature-title">Limited Analyst Access</div>
+                    <div class="feature-desc">Email and chat support with our industry analysts. Get answers to specific questions about permits, operators, or market trends within 24 hours.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Complete Feature List -->
+        <div class="content-section" id="features">
+            <h2>Complete Feature List</h2>
+            <h3 style="color: #27ae60; margin-top: 20px; margin-bottom: 15px;">✓ Everything in Basic</h3>
+            <ul>
+                <li><span class="check-icon">✓</span> 16-City Permit Database (348,000+ permits)</li>
+                <li><span class="check-icon">✓</span> News & Operator Feed (299 articles, 34 operators)</li>
+                <li><span class="check-icon">✓</span> Site Directory (2,436 existing data centers)</li>
+                <li><span class="check-icon">✓</span> 776+ explicit DC construction sites identified</li>
+                <li><span class="check-icon">✓</span> Quarterly public research reports</li>
+                <li><span class="check-icon">✓</span> Monthly data updates</li>
+            </ul>
+
+            <h3 style="color: #f39c12; margin-top: 30px; margin-bottom: 15px;">★ Premium-Only Features</h3>
+            <ul>
+                <li><span class="premium-icon">★</span> AI-powered permit summaries and keyword extraction</li>
+                <li><span class="premium-icon">★</span> Real-time email alerts (within hours, not days)</li>
+                <li><span class="premium-icon">★</span> Custom alert filters (city, operator, size, type)</li>
+                <li><span class="premium-icon">★</span> Advanced dashboards with custom filters and widgets</li>
+                <li><span class="premium-icon">★</span> Market benchmarking tools and comparisons</li>
+                <li><span class="premium-icon">★</span> Operator competitive tracking dashboards</li>
+                <li><span class="premium-icon">★</span> 1 custom research briefing per year (20-30 page report)</li>
+                <li><span class="premium-icon">★</span> Quarterly VIP reports (sponsor-specific insights)</li>
+                <li><span class="premium-icon">★</span> Limited analyst access (email/chat, 24-hour response)</li>
+                <li><span class="premium-icon">★</span> Priority customer support (4-hour response time)</li>
+                <li><span class="premium-icon">★</span> Up to 10 user seats (vs. 3 in Basic)</li>
+                <li><span class="premium-icon">★</span> Extended site directory fields (power capacity, tenant mix, etc.)</li>
+            </ul>
+        </div>
+
+        <!-- ROI Calculator -->
+        <div class="content-section">
+            <h2>Return on Investment</h2>
+            <p style="margin-bottom: 20px; color: #555;">Here's how Premium pays for itself:</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-title">Time Savings</div>
+                    <div class="feature-desc"><strong>15-20 hours/week</strong> saved vs. manual permit monitoring and news tracking. At $150/hour analyst rate, that's <strong>$117K-$156K/year</strong> in saved labor costs.</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Early Visibility</div>
+                    <div class="feature-desc">See competitor construction permits <strong>2-4 weeks</strong> before press releases. React faster to market opportunities and competitive threats.</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Better Decisions</div>
+                    <div class="feature-desc">AI summaries highlight key permit details (size, power, cooling) instantly. Make informed site selection and market entry decisions with confidence.</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-title">Custom Research</div>
+                    <div class="feature-desc">1 custom briefing/year worth <strong>$2.5K-$5K</strong> if purchased standalone. Included free with Premium subscription.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparison Table -->
+        <div class="content-section">
+            <h2>Compare Plans</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Basic</th>
+                        <th class="premium-col">Premium</th>
+                        <th>Enterprise</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>16-City Permit Database</td>
+                        <td>✓</td>
+                        <td class="premium-col">✓</td>
+                        <td>✓</td>
+                    </tr>
+                    <tr>
+                        <td>Site Directory</td>
+                        <td>Standard</td>
+                        <td class="premium-col">Extended</td>
+                        <td>Full + Custom</td>
+                    </tr>
+                    <tr>
+                        <td>Dashboards</td>
+                        <td>Pre-set</td>
+                        <td class="premium-col">Custom Filters</td>
+                        <td>Fully Custom</td>
+                    </tr>
+                    <tr>
+                        <td>Email Alerts</td>
+                        <td>Weekly</td>
+                        <td class="premium-col">Real-time + Priority</td>
+                        <td>Real-time + Custom</td>
+                    </tr>
+                    <tr>
+                        <td>AI Research Summaries</td>
+                        <td>✗</td>
+                        <td class="premium-col">✓</td>
+                        <td>✓</td>
+                    </tr>
+                    <tr>
+                        <td>Benchmarking Tools</td>
+                        <td>✗</td>
+                        <td class="premium-col">✓</td>
+                        <td>✓</td>
+                    </tr>
+                    <tr>
+                        <td>Custom Briefings</td>
+                        <td>✗</td>
+                        <td class="premium-col">1/year</td>
+                        <td>Unlimited</td>
+                    </tr>
+                    <tr>
+                        <td>Analyst Access</td>
+                        <td>Email only</td>
+                        <td class="premium-col">Email/Chat</td>
+                        <td>Direct (Phone/Video)</td>
+                    </tr>
+                    <tr>
+                        <td>API Access</td>
+                        <td>✗</td>
+                        <td>✗</td>
+                        <td>Full REST API</td>
+                    </tr>
+                    <tr>
+                        <td>User Seats</td>
+                        <td>3</td>
+                        <td class="premium-col">10</td>
+                        <td>Unlimited</td>
+                    </tr>
+                    <tr>
+                        <td>Pricing</td>
+                        <td>$5-7.5K/yr</td>
+                        <td class="premium-col">$12.5-25K/yr</td>
+                        <td>$25-50K+/yr</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="margin-top: 25px;">
+                <a href="/services/basic.html" class="btn btn-secondary" style="display: inline-block;">View Basic →</a>
+                <a href="/services/enterprise.html" class="btn btn-secondary" style="display: inline-block; margin-left: 15px;">View Enterprise →</a>
+            </div>
+        </div>
+
+        <!-- Use Cases -->
+        <div class="content-section">
+            <h2>How Premium Customers Use the Platform</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">Colocation Provider: Competitive Intelligence</div>
+                <div class="faq-answer">Set up real-time alerts for all competitor permits in your top 5 target markets. Get notified within hours when Equinix, Digital Realty, or CyrusOne file new construction permits. Track their expansion patterns, project sizes, and market entry strategies.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">REIT Analyst: Pipeline Forecasting</div>
+                <div class="faq-answer">Use benchmarking tools to compare DC construction activity across markets. Identify which cities are seeing the most investment, track operator market share trends, and forecast supply pipeline for next 12-24 months.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Enterprise IT: Capacity Planning</div>
+                <div class="faq-answer">Monitor new DC construction in your key markets (Northern Virginia, Dallas, Silicon Valley). AI summaries highlight power capacity, cooling methods, and expected completion dates. Plan your capacity expansions ahead of supply constraints.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Consulting Firm: Client Deliverables</div>
+                <div class="faq-answer">Create custom dashboards for each client showing their target markets. Export professional reports with your branding. Use the included custom briefing for your largest client project each year.</div>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="content-section">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">How fast are the "real-time" alerts?</div>
+                <div class="faq-answer">Premium alerts are delivered within 6-12 hours of permit filing (vs. weekly digests in Basic). We check high-priority cities twice daily and send immediate email alerts when new DC permits match your filters.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What does AI-powered research summaries include?</div>
+                <div class="faq-answer">Our AI reads each permit and extracts: project size (sq ft), power capacity (MW), cooling methods, estimated cost, completion timeline, and operator identification. It also flags keywords like "data center," "hyperscale," "colocation," etc.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Can I upgrade from Basic to Premium mid-year?</div>
+                <div class="faq-answer">Yes! We'll pro-rate your remaining Basic subscription value and apply it toward Premium. Most customers upgrade within 3-6 months after seeing the value of Basic tier.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What's included in the custom briefing?</div>
+                <div class="faq-answer">One 20-30 page analyst-written report per year on a topic of your choice: specific market deep-dive, operator competitive analysis, regional trend report, or custom research question. Typical turnaround: 2-3 weeks.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">How many custom dashboards can I create?</div>
+                <div class="faq-answer">Unlimited! Create separate dashboards for different markets, operators, or use cases. Share with team members. Save custom filters for quick access.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">When should I consider Enterprise instead?</div>
+                <div class="faq-answer">Upgrade to Enterprise if you need: (1) Full API access for system integrations, (2) Unlimited custom briefings, (3) Direct analyst access (phone/video calls), (4) More than 10 user seats, or (5) Custom feature development.</div>
+            </div>
+        </div>
+
+        <!-- Testimonials -->
+        <div class="content-section">
+            <h2>What Premium Customers Say</h2>
+
+            <div class="testimonial">
+                <div class="testimonial-text">"The real-time alerts gave us a 3-week head start on a competitor's expansion into Dallas. We were able to adjust our strategy before they even announced publicly. The ROI paid for itself in the first quarter."</div>
+                <div class="testimonial-author">— David Martinez, VP Market Strategy, Regional Colocation Provider</div>
+            </div>
+
+            <div class="testimonial">
+                <div class="testimonial-text">"AI summaries save our team 10+ hours per week. Instead of reading through hundreds of permits manually, we get instant highlights of the most relevant DC projects. Game changer for our investment research."</div>
+                <div class="testimonial-author">— Jennifer Lee, Senior Analyst, Data Center REIT</div>
+            </div>
+
+            <div class="testimonial">
+                <div class="testimonial-text">"The custom briefing feature is worth the premium price alone. Our analyst created a comprehensive Northern Virginia market report that we used for a major client presentation. Would have cost $7.5K+ to commission externally."</div>
+                <div class="testimonial-author">— Robert Thompson, Partner, Infrastructure Consulting Firm</div>
+            </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="content-section" id="contact-form">
+            <h2>Request a Premium Demo</h2>
+            <p style="margin-bottom: 25px; color: #d1d5db;">Fill out the form below and we'll contact you within 24 hours to schedule a personalized demo of Premium features.</p>
+
+            <form id="inquiry-form" style="max-width: 600px;">
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px; color: #f9fafb;">Full Name *</label>
+                    <input type="text" name="name" required style="width: 100%; padding: 12px; border: 2px solid #374151; border-radius: 6px; font-size: 16px; background: #1f2937; color: #f9fafb;">
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px; color: #f9fafb;">Email Address *</label>
+                    <input type="email" name="email" required style="width: 100%; padding: 12px; border: 2px solid #374151; border-radius: 6px; font-size: 16px; background: #1f2937; color: #f9fafb;">
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px; color: #f9fafb;">Company Name *</label>
+                    <input type="text" name="company" required style="width: 100%; padding: 12px; border: 2px solid #374151; border-radius: 6px; font-size: 16px; background: #1f2937; color: #f9fafb;">
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px; color: #f9fafb;">Job Title</label>
+                    <input type="text" name="job_title" style="width: 100%; padding: 12px; border: 2px solid #374151; border-radius: 6px; font-size: 16px; background: #1f2937; color: #f9fafb;">
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px; color: #f9fafb;">Phone Number</label>
+                    <input type="tel" name="phone" style="width: 100%; padding: 12px; border: 2px solid #374151; border-radius: 6px; font-size: 16px; background: #1f2937; color: #f9fafb;">
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px; color: #f9fafb;">Company Size</label>
+                    <select name="company_size" style="width: 100%; padding: 12px; border: 2px solid #374151; border-radius: 6px; font-size: 16px; background: #1f2937; color: #f9fafb;">
+                        <option value="">Select...</option>
+                        <option value="1-50">1-50 employees</option>
+                        <option value="51-200">51-200 employees</option>
+                        <option value="201-1000">201-1000 employees</option>
+                        <option value="1000+">1000+ employees</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px; color: #f9fafb;">Current Challenges</label>
+                    <textarea name="use_case" rows="4" placeholder="Tell us about your competitive intelligence needs, target markets, or specific pain points..." style="width: 100%; padding: 12px; border: 2px solid #374151; border-radius: 6px; font-size: 16px; resize: vertical; background: #1f2937; color: #f9fafb;"></textarea>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px; color: #f9fafb;">Preferred Start Date</label>
+                    <input type="date" name="start_date" style="width: 100%; padding: 12px; border: 2px solid #374151; border-radius: 6px; font-size: 16px; background: #1f2937; color: #f9fafb;">
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: flex; align-items: center; color: #d1d5db;">
+                        <input type="checkbox" name="consent_emails" required style="margin-right: 10px; width: 18px; height: 18px; accent-color: #06b6d4;">
+                        <span>I agree to receive emails about product updates *</span>
+                    </label>
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <label style="display: flex; align-items: center; color: #d1d5db;">
+                        <input type="checkbox" name="consent_terms" required style="margin-right: 10px; width: 18px; height: 18px; accent-color: #06b6d4;">
+                        <span>I agree to the Terms of Service and Privacy Policy *</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%); color: white;">Submit Request</button>
+            </form>
+
+            <div id="form-message" style="margin-top: 20px; padding: 15px; border-radius: 6px; display: none;"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>DC Intelligence Platform &copy; 2025</p>
+        <p style="margin-top: 10px;">
+            <a href="mailto:sales@dc-intelligence.com">sales@dc-intelligence.com</a> |
+            <a href="tel:+15551234567">(555) 123-4567</a>
+        </p>
+    </footer>
+
+    <script>
+        // Handle form submission
+        document.getElementById('inquiry-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const data = {
+                service_tier: 'premium',
+                name: formData.get('name'),
+                email: formData.get('email'),
+                company: formData.get('company'),
+                job_title: formData.get('job_title'),
+                phone: formData.get('phone'),
+                company_size: formData.get('company_size'),
+                use_case: formData.get('use_case'),
+                start_date: formData.get('start_date'),
+                consent_emails: formData.get('consent_emails') === 'on',
+                consent_terms: formData.get('consent_terms') === 'on'
+            };
+
+            const messageDiv = document.getElementById('form-message');
+
+            try {
+                const response = await fetch('http://127.0.0.1:8010/api/inquiry/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    messageDiv.style.display = 'block';
+                    messageDiv.style.background = '#d4edda';
+                    messageDiv.style.color = '#155724';
+                    messageDiv.style.border = '1px solid #c3e6cb';
+                    messageDiv.textContent = 'Thank you! We\'ll contact you within 24 hours.';
+                    this.reset();
+                } else {
+                    throw new Error('Submission failed');
+                }
+            } catch (error) {
+                messageDiv.style.display = 'block';
+                messageDiv.style.background = '#f8d7da';
+                messageDiv.style.color = '#721c24';
+                messageDiv.style.border = '1px solid #f5c6cb';
+                messageDiv.textContent = 'Error submitting form. Please email sales@dc-intelligence.com directly.';
+            }
+        });
+    </script>
+</body>
+</html>

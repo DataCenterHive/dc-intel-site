@@ -1,0 +1,383 @@
+{
+  "sheets": [
+    "tiers",
+    "redundancy",
+    "cooling_methods",
+    "lifecycle_phases",
+    "roles",
+    "metrics",
+    "markets_US"
+  ],
+  "data": {
+    "tiers": [
+      {
+        "code": "I",
+        "name": "Basic capacity",
+        "availability_target": "99.671%",
+        "typical_use": "Lab/dev, non-critical edge",
+        "notes": "Single path, no redundancy; planned shutdowns required"
+      },
+      {
+        "code": "II",
+        "name": "Redundant components",
+        "availability_target": "99.741%",
+        "typical_use": "Small enterprise rooms",
+        "notes": "Single distribution path, N+1 components"
+      },
+      {
+        "code": "III",
+        "name": "Concurrent maintainable",
+        "availability_target": "99.982%",
+        "typical_use": "Colo/hyperscale blocks",
+        "notes": "Multiple paths; any one component can be maintained without downtime"
+      },
+      {
+        "code": "IV",
+        "name": "Fault tolerant",
+        "availability_target": "99.995%",
+        "typical_use": "Financial/mission critical",
+        "notes": "Fully redundant, independent paths; withstands worst‑case single failure"
+      }
+    ],
+    "redundancy": [
+      {
+        "name": "N",
+        "layer": "power",
+        "description": "Exact capacity equals load",
+        "pros": "High efficiency, low cost",
+        "cons": "No fault tolerance",
+        "typical_use": "Test/dev, non-critical"
+      },
+      {
+        "name": "N+1",
+        "layer": "power",
+        "description": "One extra module beyond N",
+        "pros": "Tolerates single fault",
+        "cons": "More CapEx/space",
+        "typical_use": "Most colocation suites"
+      },
+      {
+        "name": "2N",
+        "layer": "power",
+        "description": "Two independent full-capacity paths",
+        "pros": "High resilience",
+        "cons": "High CapEx/OpEx",
+        "typical_use": "Trading floors, FT workloads"
+      },
+      {
+        "name": "2(N+1)",
+        "layer": "power",
+        "description": "Two paths, each N+1 modular",
+        "pros": "Maintenance + fault safe",
+        "cons": "Complexity",
+        "typical_use": "Large campuses"
+      },
+      {
+        "name": "N+1",
+        "layer": "cooling",
+        "description": "One extra chiller/CRA(H) beyond demand",
+        "pros": "Maintenance flexibility",
+        "cons": "Partial redundancy",
+        "typical_use": "Common enterprise"
+      },
+      {
+        "name": "2N",
+        "layer": "cooling",
+        "description": "Dual plants or loops",
+        "pros": "Plant-level resilience",
+        "cons": "High cost",
+        "typical_use": "Tier IV aspirations"
+      }
+    ],
+    "cooling_methods": [
+      {
+        "name": "CRAC (DX)",
+        "liquid?": false,
+        "free_cooling?": false,
+        "density_suitable(kW/rack)": 5,
+        "notes": "Direct expansion coil; compact; suitable for small rooms"
+      },
+      {
+        "name": "CRAH (chilled water)",
+        "liquid?": false,
+        "free_cooling?": false,
+        "density_suitable(kW/rack)": 15,
+        "notes": "Coil fed by chiller plant; scalable; pairs with economizer"
+      },
+      {
+        "name": "Air economizer",
+        "liquid?": false,
+        "free_cooling?": true,
+        "density_suitable(kW/rack)": 10,
+        "notes": "Uses outdoor air to reduce compressor energy; filtration needed"
+      },
+      {
+        "name": "Glycol dry cooler",
+        "liquid?": false,
+        "free_cooling?": true,
+        "density_suitable(kW/rack)": 15,
+        "notes": "Dry coolers with glycol mix; freeze protection"
+      },
+      {
+        "name": "Evaporative condenser",
+        "liquid?": false,
+        "free_cooling?": true,
+        "density_suitable(kW/rack)": 15,
+        "notes": "Adiabatic assistance for hot/dry climates; watch WUE"
+      },
+      {
+        "name": "Rear door heat exchanger",
+        "liquid?": false,
+        "free_cooling?": false,
+        "density_suitable(kW/rack)": 25,
+        "notes": "Row-level coil that intercepts hot air at rack exit"
+      },
+      {
+        "name": "Cold plates (D2C)",
+        "liquid?": true,
+        "free_cooling?": false,
+        "density_suitable(kW/rack)": 50,
+        "notes": "Direct-to-chip liquid for CPUs/GPUs; manifolds required"
+      },
+      {
+        "name": "Single-phase immersion",
+        "liquid?": true,
+        "free_cooling?": false,
+        "density_suitable(kW/rack)": 80,
+        "notes": "Dielectric bath; pumped loop; high density"
+      },
+      {
+        "name": "Two-phase immersion",
+        "liquid?": true,
+        "free_cooling?": false,
+        "density_suitable(kW/rack)": 100,
+        "notes": "Boiling dielectric; highest heat flux; specialized fluids"
+      }
+    ],
+    "lifecycle_phases": [
+      {
+        "phase": "Site selection",
+        "key_decisions": "Power lead-time, fiber routes, land use, water, incentives",
+        "key_risks": "Entitlement delays, interconnect risk, climate hazards",
+        "primary_inputs": "Load forecast, utility queue, metro fiber map, permitting path",
+        "typical_owners": "Developer, utility, carriers"
+      },
+      {
+        "phase": "Entitlements",
+        "key_decisions": "Zoning, environmental, interconnect applications",
+        "key_risks": "Appeals, conditions, timeline slips",
+        "primary_inputs": "Site surveys, studies, agency meetings",
+        "typical_owners": "Developer, counsel, AHJs"
+      },
+      {
+        "phase": "Design",
+        "key_decisions": "Topology, density roadmap, cooling approach",
+        "key_risks": "Over/under-spec, supply chain",
+        "primary_inputs": "Basis of design, vendor selections, controls",
+        "typical_owners": "A/E, owner, operators"
+      },
+      {
+        "phase": "Construction",
+        "key_decisions": "Phasing, logistics, long-lead equipment",
+        "key_risks": "Change orders, safety, QA",
+        "primary_inputs": "Submittals, FATs, method statements",
+        "typical_owners": "GC, trades, owner rep"
+      },
+      {
+        "phase": "Commissioning",
+        "key_decisions": "L1–L5 testing, IST, documentation",
+        "key_risks": "Defects found late, retests",
+        "primary_inputs": "Test scripts, load banks, as-builts",
+        "typical_owners": "CxA, OEMs, ops"
+      },
+      {
+        "phase": "Operations",
+        "key_decisions": "Capacity, maintenance, incidents, energy",
+        "key_risks": "Unplanned downtime, aging assets",
+        "primary_inputs": "CMMS/DCIM data, MOP/SOP/EOP",
+        "typical_owners": "Site ops, vendor PM, customers"
+      }
+    ],
+    "roles": [
+      {
+        "role": "Real estate lead",
+        "org_type": "Developer/Operator",
+        "primary_goals": "Secure land/power/fiber at right cost and timeline",
+        "buy_signals": "Utility LOIs, substation plans, IX presence",
+        "objections": "High land cost; slow utility queue"
+      },
+      {
+        "role": "Design engineer (EE)",
+        "org_type": "A/E Firm",
+        "primary_goals": "Select safe, efficient electrical topology and protection",
+        "buy_signals": "Tier objective, density, arc-flash limits",
+        "objections": "Cost, footprint, lead times"
+      },
+      {
+        "role": "Design engineer (ME)",
+        "org_type": "A/E Firm",
+        "primary_goals": "Design cooling plant and distribution for target density",
+        "buy_signals": "Climate hours, water policy, liquid-ready",
+        "objections": "WUE, Legionella, water rights"
+      },
+      {
+        "role": "Construction PM",
+        "org_type": "GC",
+        "primary_goals": "Deliver on time/quality within budget",
+        "buy_signals": "Long-lead tracking, FAT dates",
+        "objections": "Change orders, weather"
+      },
+      {
+        "role": "Commissioning agent",
+        "org_type": "CxA",
+        "primary_goals": "Validate systems performance and fault response",
+        "buy_signals": "Test scripts, IST windows",
+        "objections": "Retest costs, vendor availability"
+      },
+      {
+        "role": "Site operations lead",
+        "org_type": "Operator",
+        "primary_goals": "Run safely and meet SLAs",
+        "buy_signals": "PM schedules, spares, NOC alerts",
+        "objections": "Access conflicts, outage windows"
+      },
+      {
+        "role": "Network architect",
+        "org_type": "Operator/ISP",
+        "primary_goals": "Assure diverse fiber and IX options",
+        "buy_signals": "Conduit routes, MMR density",
+        "objections": "ROW delays, carrier SLAs"
+      },
+      {
+        "role": "Customer DC lead",
+        "org_type": "Tenant",
+        "primary_goals": "Meet compute growth and resilience targets",
+        "buy_signals": "kW commit, cross-connects",
+        "objections": "Price escalators, CX lead times"
+      }
+    ],
+    "metrics": [
+      {
+        "metric": "PUE",
+        "definition": "Total facility energy / IT energy",
+        "unit": "ratio",
+        "good_range": "<=1.3 new‑build (climate‑dependent)",
+        "notes": "Track trend; beware partial metering"
+      },
+      {
+        "metric": "WUE",
+        "definition": "Annual water use / IT energy",
+        "unit": "L/kWh",
+        "good_range": "As low as practical; policy‑driven",
+        "notes": "Adiabatic tradeoffs"
+      },
+      {
+        "metric": "Rack density",
+        "definition": "Power allocated per rack",
+        "unit": "kW/rack",
+        "good_range": "10–30 typical; 30–80+ for AI/HPC",
+        "notes": "Drives cooling choice"
+      },
+      {
+        "metric": "Cross‑connect price",
+        "definition": "Monthly fee per L1 interconnect",
+        "unit": "USD/mo",
+        "good_range": "Market‑dependent",
+        "notes": "Impacts ecosystem stickiness"
+      },
+      {
+        "metric": "Time‑to‑power",
+        "definition": "Months from LOI to first MW usable",
+        "unit": "months",
+        "good_range": "<=18 desired",
+        "notes": "Utility queue critical"
+      },
+      {
+        "metric": "Generator run time",
+        "definition": "Fuel autonomy at full critical load",
+        "unit": "hours",
+        "good_range": ">=24 baseline",
+        "notes": "Depends on refuel SLAs"
+      },
+      {
+        "metric": "Fiber diversity",
+        "definition": "Count of physically diverse routes",
+        "unit": "count",
+        "good_range": ">=2 preferred",
+        "notes": "Verify true path separation"
+      }
+    ],
+    "markets_US": [
+      {
+        "code": "IAD",
+        "market_name": "Northern Virginia (Loudoun/Prince William/Fairfax)",
+        "notes": "Largest global hub; dense fiber; utility queue is gating factor"
+      },
+      {
+        "code": "DFW",
+        "market_name": "Dallas–Fort Worth",
+        "notes": "Land and incentives; fast growth; multiple utilities"
+      },
+      {
+        "code": "PHX",
+        "market_name": "Phoenix (Mesa/Chandler/Goodyear)",
+        "notes": "Hot/dry; strong economizer hours; water mgmt critical"
+      },
+      {
+        "code": "ATL",
+        "market_name": "Atlanta",
+        "notes": "Enterprise base; diverse carriers; substation planning"
+      },
+      {
+        "code": "SJE",
+        "market_name": "Santa Clara / San Jose",
+        "notes": "Scarce land; high cost; top-tier IX ecosystem"
+      },
+      {
+        "code": "SEA",
+        "market_name": "Seattle",
+        "notes": "Cloud presence; hydro power context; seismic considerations"
+      },
+      {
+        "code": "PDX",
+        "market_name": "Portland/Hillsboro",
+        "notes": "Hyperscale growth; trans‑Pacific cables; incentives"
+      },
+      {
+        "code": "CHI",
+        "market_name": "Chicago/Elk Grove",
+        "notes": "Major Midwest hub; multi‑utility; strong MMR density"
+      },
+      {
+        "code": "SAT",
+        "market_name": "San Antonio",
+        "notes": "Growth corridor; land and power availability improving"
+      },
+      {
+        "code": "RIC",
+        "market_name": "Richmond",
+        "notes": "Edge of NoVA sphere; power cost and land optionality"
+      },
+      {
+        "code": "CLT",
+        "market_name": "Charlotte",
+        "notes": "Financial services presence; developing interconnection"
+      },
+      {
+        "code": "DEN",
+        "market_name": "Denver",
+        "notes": "Central U.S. reach; altitude/cooling context"
+      },
+      {
+        "code": "LAS",
+        "market_name": "Las Vegas",
+        "notes": "Dry climate; land availability; water constraints"
+      },
+      {
+        "code": "MIA",
+        "market_name": "Miami",
+        "notes": "Subtropical; hurricane design and Latin America routes"
+      }
+    ]
+  }
+}
