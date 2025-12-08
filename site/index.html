@@ -3789,7 +3789,7 @@
         async function loadExistingDCs() {
             try {
                 // Load from enriched geocoded JSON file (2,446 DCs)
-                const response = await fetch('/site/details_enriched_geocoded.json');
+                const response = await fetch('/details_enriched_geocoded.json');
                 const allDCs = await response.json();
 
                 if (!allDCs || allDCs.length === 0) {
