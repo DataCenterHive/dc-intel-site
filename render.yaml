@@ -1,0 +1,7 @@
+services:
+  - type: static_site
+    name: dc-intel-site
+    branch: main
+    rootDir: site
+    buildCommand: ""
+    staticPublishPath: .
