@@ -2134,6 +2134,10 @@
         const API_BASE = 'http://127.0.0.1:8010';
         const API_KEY = 'keepongoing';
 
+        // Public Data API Configuration (tier-based access)
+        const PUBLIC_API_BASE = 'http://127.0.0.1:8000'; // TODO: Change to https://dc-intel-api.onrender.com after deployment
+        const PUBLIC_API_KEY = 'free_demo_key_12345'; // TODO: Change based on user tier (free/basic/premium/enterprise)
+
         // User subscription tier management
         // Tiers: 'free', 'basic', 'premium', 'enterprise'
         // For demo purposes, defaulting to 'free'. In production, this would be fetched from auth/session
@@ -2490,9 +2494,12 @@
         // Hexbin Heatmap Rendering Function
         async function renderHexbinHeatmap(containerId) {
             try {
-                // Load enriched geocoded data (2,446 DCs)
-                const response = await fetch('details_enriched_geocoded.json');
-                const dcData = await response.json();
+                // Load enriched geocoded data from API
+                const response = await fetch(`${PUBLIC_API_BASE}/existing-dcs`, {
+                    headers: { 'X-API-Key': PUBLIC_API_KEY }
+                });
+                const data = await response.json();
+                const dcData = data.items || [];
 
                 console.log(`Loaded ${dcData.length} DCs with coordinates`);
 
@@ -3807,9 +3814,12 @@
         // Existing DCs with heatmap visualization
         async function loadExistingDCs() {
             try {
-                // Load from enriched geocoded JSON file (2,446 DCs)
-                const response = await fetch('/details_enriched_geocoded.json');
-                const allDCs = await response.json();
+                // Load from API
+                const response = await fetch(`${PUBLIC_API_BASE}/existing-dcs`, {
+                    headers: { 'X-API-Key': PUBLIC_API_KEY }
+                });
+                const data = await response.json();
+                const allDCs = data.items || [];
 
                 if (!allDCs || allDCs.length === 0) {
                     document.getElementById('existingDCsTableView').innerHTML = '<p style="text-align: center;">Unable to load data centers.</p>';
@@ -3822,7 +3832,7 @@
                     filteredDCs = allDCs.filter(dc => matchesQuickLinkCategory(dc, window.activeQuickLinkCategory));
                 }
 
-                const data = { items: filteredDCs, total: filteredDCs.length };
+                const tableData = { items: filteredDCs, total: filteredDCs.length };
 
                 // Generate hexbin heatmap visualization
                 await renderHexbinHeatmap('heatmapViz');
@@ -3866,7 +3876,7 @@
                 if (existingSort.key) {
                     const key = existingSort.key;
                     const dir = existingSort.dir;
-                    data.items.sort((a, b) => {
+                    tableData.items.sort((a, b) => {
                         const getVal = (item) => {
                             if (key === 'provider') return (item.provider || '').toLowerCase();
                             if (key === 'title') return (item.name || '').toLowerCase();
@@ -3934,7 +3944,7 @@
                 html += '</tr>';
 
                 // Table rows
-                data.items.forEach((item, idx) => {
+                tableData.items.forEach((item, idx) => {
                     const bg = idx % 2 === 0 ? '#fff' : '#f9f9f9';
                     const provider = item.provider || 'Unknown';
                     const title = item.name || 'N/A';
