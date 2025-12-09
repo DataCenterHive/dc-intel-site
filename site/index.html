@@ -1,5 +1,5 @@
    <!DOCTYPE html>
-<!-- Updated: Dec 9, 2025 - Added 3-state Source toggle + YYYY-MM-DD date sorting -->
+<!-- Updated: Dec 9, 2025 - Fixed onclick handlers (single quotes) + 3-state Source toggle + YYYY-MM-DD date sorting -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -4161,11 +4161,11 @@
                 tableHTML += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
                 tableHTML += '<tr style="background: #000; color: #fff;">';
                 // FREE tier columns
-                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\"location\")">Location</th>';
-                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\"address\")">Address</th>';
-                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\"status\")">Status</th>';
-                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\"firstSeen\")">First Seen</th>';
-                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\"source\")">Source</th>';
+                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\'location\')">Location</th>';
+                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\'address\')">Address</th>';
+                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\'status\')">Status</th>';
+                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\'firstSeen\')">First Seen</th>';
+                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\'source\')">Source</th>';
                 // BASIC tier columns (+lat/long) - note we don't have lat/long in CSV yet, placeholder for now
                 if (hasTierAccess('basic')) {
                     tableHTML += '<th style="padding: 8px; text-align: left; background: #4a5568;">Lat/Long</th>';
