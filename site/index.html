@@ -2160,11 +2160,28 @@
         }
 
         function setUpcomingSort(key) {
-            if (upcomingSort.key === key) {
-                upcomingSort.dir *= -1;
+            // Special handling for "source" column: 3-state toggle
+            if (key === 'source') {
+                if (upcomingSort.key === 'source' && upcomingSort.dir === 1) {
+                    // First click: news first (dir=1) -> Second click: permits first (dir=-1)
+                    upcomingSort.dir = -1;
+                } else if (upcomingSort.key === 'source' && upcomingSort.dir === -1) {
+                    // Second click: permits first -> Third click: reset to default (newest dates first)
+                    upcomingSort.key = 'firstSeen';
+                    upcomingSort.dir = -1;
+                } else {
+                    // Not currently sorted by source -> First click: show news first
+                    upcomingSort.key = 'source';
+                    upcomingSort.dir = 1;
+                }
             } else {
-                upcomingSort.key = key;
-                upcomingSort.dir = 1;
+                // Standard 2-state toggle for other columns
+                if (upcomingSort.key === key) {
+                    upcomingSort.dir *= -1;
+                } else {
+                    upcomingSort.key = key;
+                    upcomingSort.dir = 1;
+                }
             }
             loadUpcomingDCs();
         }
