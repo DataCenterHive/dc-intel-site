@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: dc-intel-site
+    env: static
+    branch: main
+    buildCommand: ""
+    staticPublishPath: site
