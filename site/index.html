@@ -2141,7 +2141,7 @@
         let hasEmailAccess = !!userEmail; // True if user provided email
         let taxonomyLoaded = false;
         let existingSort = { key: null, dir: 1 };
-        let upcomingSort = { key: null, dir: 1 };
+        let upcomingSort = { key: 'firstSeen', dir: -1 }; // Default: sort by newest dates first
 
         // Helper function to check tier access
         function hasTierAccess(requiredTier) {
