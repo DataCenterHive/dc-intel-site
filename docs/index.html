@@ -3605,38 +3605,38 @@
             event.target.reset();
         }
 
-        // Knowledge base - load from API
+        // Knowledge base - load from local CSV file
         async function loadKnowledge() {
             try {
-                // Try to load from API first
-                const response = await fetch(`${PUBLIC_API_BASE}/knowledge/glossary`, {
-                    headers: { 'X-API-Key': PUBLIC_API_KEY }
-                });
+                // Load from local CSV file
+                const response = await fetch('knowledge/dc_glossary.csv');
+                const csvText = await response.text();
 
                 let knowledge = [];
 
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.items && Array.isArray(data.items)) {
-                        knowledge = data.items.map(item => ({
-                            term: item.term || item.Term,
-                            def: item.definition || item.Definition || item.def
-                        }));
+                // Parse CSV (skip header row)
+                const lines = csvText.split('\n').slice(1);
+                for (const line of lines) {
+                    if (!line.trim()) continue;
+
+                    // Simple CSV parsing (handles quoted fields)
+                    const match = line.match(/^"?([^",]+)"?,?"?([^"]+)"?/);
+                    if (match) {
+                        knowledge.push({
+                            term: match[1].trim(),
+                            def: match[2].replace(/^"|"$/g, '').trim()
+                        });
                     }
                 }
 
-                // Fallback to hardcoded if API fails or returns nothing
+                // Fallback if file loading fails
                 if (knowledge.length === 0) {
                     knowledge = [
                         { term: "Colocation", def: "A data center facility where multiple companies rent space for their servers and equipment. Typically offers shared infrastructure including power, cooling, and connectivity." },
                         { term: "Hyperscale", def: "Massive data centers (typically 100MW+) operated by tech giants like Google, Amazon, Microsoft. Characterized by thousands of servers and enormous power requirements." },
                         { term: "Edge Computing", def: "Distributed computing infrastructure placed closer to end-users for lower latency. Typically smaller facilities in metro areas or near content consumers." },
                         { term: "Power Usage Effectiveness (PUE)", def: "Ratio measuring data center energy efficiency. Calculated as total facility energy divided by IT equipment energy. Lower is better, with 1.0 being ideal." },
-                        { term: "Tier Rating", def: "Classification system (I-IV) indicating data center reliability and redundancy levels. Tier IV represents highest availability with fully redundant systems." },
-                        { term: "Critical Power", def: "The maximum IT load a data center can support, measured in watts or megawatts. Determines capacity available for servers and networking equipment." },
-                        { term: "Uptime", def: "Percentage of time a data center remains operational. Tier IV targets 99.995% uptime, allowing only 26 minutes downtime per year." },
-                        { term: "Hot Aisle/Cold Aisle", def: "Server layout design optimizing cooling efficiency by separating hot exhaust air from cold intake air, reducing energy consumption." },
-                        { term: "Cross-Connect", def: "Physical cable connecting different customer equipment within a colocation facility, enabling direct private connectivity between parties." }
+                        { term: "Tier Rating", def: "Classification system (I-IV) indicating data center reliability and redundancy levels. Tier IV represents highest availability with fully redundant systems." }
                     ];
                 }
 
@@ -3658,8 +3658,17 @@
 
             } catch (error) {
                 console.error('Error loading knowledge:', error);
-                // Use fallback data
-                loadKnowledge();
+                // Use fallback hardcoded data on error
+                document.getElementById('knowledgeGrid').innerHTML = `
+                    <div class="knowledge-card">
+                        <h4>Colocation</h4>
+                        <p>A data center facility where multiple companies rent space for their servers and equipment.</p>
+                    </div>
+                    <div class="knowledge-card">
+                        <h4>Hyperscale</h4>
+                        <p>Massive data centers (typically 100MW+) operated by tech giants like Google, Amazon, Microsoft.</p>
+                    </div>
+                `;
             }
         }
 
@@ -3683,30 +3692,24 @@
             }
         }
 
-        // Load handbook
+        // Load handbook from local markdown file
         async function loadHandbook() {
             try {
-                const response = await fetch(`${PUBLIC_API_BASE}/knowledge/handbook`, {
-                    headers: { 'X-API-Key': PUBLIC_API_KEY }
-                });
+                const response = await fetch('knowledge/dc_handbook.md');
+                const markdown = await response.text();
 
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.ok && data.preview) {
-                        // Convert markdown to HTML-like display
-                        let content = data.preview
-                            .replace(/^# (.+)$/gm, '<h2 style="text-align: center; font-size: 24px; margin: 20px 0; text-transform: uppercase; letter-spacing: 2px; border-bottom: 3px double #000; padding-bottom: 10px;">$1</h2>')
-                            .replace(/^## (.+)$/gm, '<h3 style="font-size: 18px; margin: 18px 0 10px 0; font-weight: bold; border-bottom: 2px solid #000; padding-bottom: 5px;">$1</h3>')
-                            .replace(/^### (.+)$/gm, '<h4 style="font-size: 16px; margin: 15px 0 8px 0; font-weight: bold;">$1</h4>')
-                            .replace(/^\*\*(.+?)\*\*/gm, '<strong>$1</strong>')
-                            .replace(/^- (.+)$/gm, '<li style="margin: 5px 0;">$1</li>')
-                            .replace(/\n\n/g, '<p style="margin: 12px 0;"></p>')
-                            .replace(/\n/g, '<br>');
+                // Convert markdown to HTML-like display
+                let content = markdown
+                    .replace(/^# (.+)$/gm, '<h2 style="text-align: center; font-size: 24px; margin: 20px 0; text-transform: uppercase; letter-spacing: 2px; border-bottom: 3px double #000; padding-bottom: 10px;">$1</h2>')
+                    .replace(/^## (.+)$/gm, '<h3 style="font-size: 18px; margin: 18px 0 10px 0; font-weight: bold; border-bottom: 2px solid #000; padding-bottom: 5px;">$1</h3>')
+                    .replace(/^### (.+)$/gm, '<h4 style="font-size: 16px; margin: 15px 0 8px 0; font-weight: bold;">$1</h4>')
+                    .replace(/^\*\*(.+?)\*\*/gm, '<strong>$1</strong>')
+                    .replace(/^- (.+)$/gm, '<li style="margin: 5px 0;">$1</li>')
+                    .replace(/\n\n/g, '<p style="margin: 12px 0;"></p>')
+                    .replace(/\n/g, '<br>');
 
-                        document.getElementById('handbookContent').innerHTML = content;
-                        window.handbookLoaded = true;
-                    }
-                }
+                document.getElementById('handbookContent').innerHTML = content;
+                window.handbookLoaded = true;
             } catch (error) {
                 console.error('Error loading handbook:', error);
                 document.getElementById('handbookContent').innerHTML = '<p style="text-align: center; color: #c00;">Failed to load handbook content.</p>';
