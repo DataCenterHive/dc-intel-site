@@ -3609,7 +3609,7 @@
         async function loadKnowledge() {
             try {
                 // Try to load from API first
-                const response = await fetch(`${API_BASE}/knowledge/glossary`, {
+                const response = await fetch(`${PUBLIC_API_BASE}/knowledge/glossary`, {
                     headers: { 'X-API-Key': API_KEY }
                 });
 
@@ -3686,7 +3686,7 @@
         // Load handbook
         async function loadHandbook() {
             try {
-                const response = await fetch(`${API_BASE}/knowledge/handbook`, {
+                const response = await fetch(`${PUBLIC_API_BASE}/knowledge/handbook`, {
                     headers: { 'X-API-Key': API_KEY }
                 });
 
