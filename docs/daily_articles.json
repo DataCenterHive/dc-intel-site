@@ -1,15 +1,15 @@
 {
-  "generated_date": "2025-12-07T06:00:09.337933",
-  "day_of_week": "Sunday",
+  "generated_date": "2025-12-11T12:17:25.864274",
+  "day_of_week": "Thursday",
   "includes_services": false,
   "articles": [
     {
-      "headline": "Data Center Development Continues Nationwide",
-      "content": "Industry analysis shows sustained growth in data center construction across major markets. Demand driven by cloud computing and AI workloads remains strong through 2025."
+      "headline": "Oklahoma Sees Growing Data Center Investment in Emerging Tech Hub",
+      "content": "A significant new data center construction project is underway in Owasso, Oklahoma, signaling the state's expanding role in the rapidly evolving digital infrastructure landscape. The development represents a strategic expansion of data center capacity in the region, potentially attracting hyperscale cloud providers and enterprise customers seeking reliable, geographically diverse computing infrastructure. While specific details about the project's operator and total capacity remain limited, the ongoing construction suggests continued momentum in Oklahoma's data center market."
     },
     {
-      "headline": "Data Center Development Continues Nationwide",
-      "content": "Industry analysis shows sustained growth in data center construction across major markets. Demand driven by cloud computing and AI workloads remains strong through 2025."
+      "headline": "Microsoft Expands Hyperscale Data Center Footprint in Wyoming's Capital",
+      "content": "Microsoft is constructing a new 3.0 MW data center facility in Cheyenne, further solidifying the company's strategic infrastructure expansion in the Rocky Mountain region. The project represents a significant investment in edge computing capacity and demonstrates the growing importance of Wyoming as a destination for major cloud and enterprise data center deployments. By leveraging the state's favorable business climate and renewable energy potential, Microsoft continues to build out its network of advanced computing infrastructure."
     }
   ]
 }
