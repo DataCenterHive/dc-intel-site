@@ -3610,7 +3610,7 @@
             try {
                 // Try to load from API first
                 const response = await fetch(`${PUBLIC_API_BASE}/knowledge/glossary`, {
-                    headers: { 'X-API-Key': API_KEY }
+                    headers: { 'X-API-Key': PUBLIC_API_KEY }
                 });
 
                 let knowledge = [];
@@ -3687,7 +3687,7 @@
         async function loadHandbook() {
             try {
                 const response = await fetch(`${PUBLIC_API_BASE}/knowledge/handbook`, {
-                    headers: { 'X-API-Key': API_KEY }
+                    headers: { 'X-API-Key': PUBLIC_API_KEY }
                 });
 
                 if (response.ok) {
