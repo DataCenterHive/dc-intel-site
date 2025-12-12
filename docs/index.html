@@ -1432,7 +1432,7 @@
                                     <p style="font-size: 12px; font-style: italic; margin: 10px 0;">Core Infrastructure</p>
                                     <div style="font-size: 12px; line-height: 1.8; margin: 15px 0;">
                                         <div style="margin-bottom: 8px;">           <a class="study-link" href="knowledge/sources/Handbook - Part B - Core/Data Center Handbook (Part B).pdf">Research Paper (PDF)</a></div>
-                                        <div style="margin-bottom: 8px;">           <a class="study-link" href="knowledge/sources/Handbook - Part B - Core/PartB_Handbook.pdf">Deep-Dive Study (PDF)</a></div>
+                                        <div style="margin-bottom: 8px;">           <a class="study-link" href="knowledge/sources/Handbook - Part B - Core/Data_Center_Core_Pillars.pdf">Deep-Dive Study (PDF)</a></div>
                                         <div style="margin-bottom: 8px;">          <a class="study-link" href="knowledge/sources/Handbook - Part B - Core/unnamed (4).png" target="_blank">Infographic (PNG)</a></div>
                                         <div style="margin-bottom: 8px;">         <a class="study-link" href="#" onclick="openVideo(this.getAttribute('data-video'), this.getAttribute('data-title')); return false;" data-video="knowledge/sources/Handbook - Part B - Core/Inside_the_Digital_Engine.mp4" data-title="DC Handbook - Part B: Core Infrastructure">Watch Video</a></div>
                                     </div>
@@ -1923,6 +1923,7 @@
                     <div style="margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
                         <input id="existingSearch" type="text" placeholder="Filter existing DCs (name, city, state, provider, certs…)" style="flex: 1 1 240px; padding: 10px; border: 2px solid #000; font-size: 12px;">
                         <button onclick="clearExistingFilter()" style="padding: 10px 14px; border: 2px solid #000; background: #fff; cursor: pointer; font-weight: bold;">Clear</button>
+                        <button onclick="exportExistingDCsToCSV()" id="existingExportBtn" style="padding: 10px 14px; border: 2px solid #000; background: #fff; cursor: pointer; font-weight: bold; display: none;">Export CSV</button>
                     </div>
                     <p style="text-align: center; margin-bottom: 15px;">Comprehensive table view of all existing data centers</p>
                     <div id="existingDCsTableView"></div>
@@ -1979,6 +1980,7 @@
                 <div style="margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
                     <input id="upcomingSearch" type="text" placeholder="Filter upcoming DCs (location, status, provider…)" style="flex: 1 1 240px; padding: 10px; border: 2px solid #000; font-size: 12px;">
                     <button onclick="clearUpcomingFilter()" style="padding: 10px 14px; border: 2px solid #000; background: #fff; cursor: pointer; font-weight: bold;">Clear</button>
+                    <button onclick="exportUpcomingDCsToCSV()" id="upcomingExportBtn" style="padding: 10px 14px; border: 2px solid #000; background: #fff; cursor: pointer; font-weight: bold; display: none;">Export CSV</button>
                 </div>
                 <h3 style="text-align: center; margin: 20px 0 15px; font-size: 16px;">Project Details</h3>
                 <div id="upcomingDCsTable" style="background: #f9f9f9; padding: 20px; border: 2px solid #000; overflow-x: auto;"></div>
@@ -3829,6 +3831,15 @@
                     return;
                 }
 
+                // Store data globally for export
+                window.existingDCsData = allDCs;
+
+                // Show export button for BASIC tier and above
+                const exportBtn = document.getElementById('existingExportBtn');
+                if (exportBtn && userTier && ['basic', 'premium', 'enterprise'].includes(userTier)) {
+                    exportBtn.style.display = 'inline-block';
+                }
+
                 // Apply quick link category filter if active
                 let filteredDCs = allDCs;
                 if (window.activeQuickLinkCategory) {
@@ -4067,6 +4078,103 @@
             return rows;
         }
 
+        // CSV Export Functions
+        function getExportColumns(tier, dataType) {
+            const EXISTING_DCS_COLUMNS = {
+                "free": ["provider", "title", "name", "address_line_raw", "latitude", "longitude"],
+                "basic": ["total_sqft"],
+                "premium": ["contact", "contact_email", "contact_phone", "power_capacity_mw"],
+                "enterprise": ["street_full_guess", "city", "state", "zip", "country"]
+            };
+
+            const UPCOMING_DCS_COLUMNS = {
+                "free": ["city", "state", "address_raw", "latest_status", "first_seen_applied_date", "source", "latitude", "longitude"],
+                "basic": [],
+                "premium": ["latest_description"],
+                "enterprise": ["latest_valuation_usd", "record_ids_sample", "statuses_sample", "latest_contractor", "latest_owner", "latest_permit_type", "permits_count"]
+            };
+
+            const TIER_HIERARCHY = ["free", "basic", "premium", "enterprise"];
+            const columnMap = dataType === 'existing' ? EXISTING_DCS_COLUMNS : UPCOMING_DCS_COLUMNS;
+            const tierIndex = TIER_HIERARCHY.indexOf(tier);
+            let allowedColumns = [];
+
+            for (let i = 0; i <= tierIndex; i++) {
+                const tierName = TIER_HIERARCHY[i];
+                if (columnMap[tierName]) {
+                    allowedColumns = allowedColumns.concat(columnMap[tierName]);
+                }
+            }
+
+            return allowedColumns;
+        }
+
+        function convertToCSV(data, columns) {
+            if (!data || data.length === 0) return '';
+
+            // CSV header
+            const header = columns.join(',');
+
+            // CSV rows
+            const rows = data.map(item => {
+                return columns.map(col => {
+                    let value = item[col] || '';
+                    // Escape quotes and wrap in quotes if contains comma, quote, or newline
+                    if (typeof value === 'string') {
+                        value = value.replace(/"/g, '""');
+                        if (value.includes(',') || value.includes('"') || value.includes('\n')) {
+                            value = `"${value}"`;
+                        }
+                    }
+                    return value;
+                }).join(',');
+            });
+
+            return header + '\n' + rows.join('\n');
+        }
+
+        function downloadCSV(csvContent, filename) {
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function exportExistingDCsToCSV() {
+            if (!window.existingDCsData || window.existingDCsData.length === 0) {
+                alert('No data available to export. Please load the data first.');
+                return;
+            }
+
+            const tier = userTier || 'free';
+            const columns = getExportColumns(tier, 'existing');
+            const csvContent = convertToCSV(window.existingDCsData, columns);
+            const timestamp = new Date().toISOString().split('T')[0];
+            const filename = `existing-dcs-${tier}-${timestamp}.csv`;
+
+            downloadCSV(csvContent, filename);
+        }
+
+        function exportUpcomingDCsToCSV() {
+            if (!window.upcomingDCsData || window.upcomingDCsData.length === 0) {
+                alert('No data available to export. Please load the data first.');
+                return;
+            }
+
+            const tier = userTier || 'free';
+            const columns = getExportColumns(tier, 'upcoming');
+            const csvContent = convertToCSV(window.upcomingDCsData, columns);
+            const timestamp = new Date().toISOString().split('T')[0];
+            const filename = `upcoming-dcs-${tier}-${timestamp}.csv`;
+
+            downloadCSV(csvContent, filename);
+        }
+
         async function loadUpcomingDCs() {
             try {
                 // Load from API
@@ -4093,6 +4201,15 @@
                 // Apply quick link category filter if active
                 if (window.activeQuickLinkCategory) {
                     projects = projects.filter(p => matchesQuickLinkCategory(p, window.activeQuickLinkCategory));
+                }
+
+                // Store data globally for export (before filtering)
+                window.upcomingDCsData = apiData.items || [];
+
+                // Show export button for BASIC tier and above
+                const exportBtn = document.getElementById('upcomingExportBtn');
+                if (exportBtn && userTier && ['basic', 'premium', 'enterprise'].includes(userTier)) {
+                    exportBtn.style.display = 'inline-block';
                 }
 
                 if (!projects || projects.length === 0) {
