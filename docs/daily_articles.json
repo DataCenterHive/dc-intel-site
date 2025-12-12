@@ -1,15 +1,15 @@
 {
-  "generated_date": "2025-12-12T06:00:07.641348",
+  "generated_date": "2025-12-12T12:24:49.749424",
   "day_of_week": "Friday",
   "includes_services": true,
   "articles": [
     {
-      "headline": "Data Center Development Continues Nationwide",
-      "content": "Industry analysis shows sustained growth in data center construction across major markets. Demand driven by cloud computing and AI workloads remains strong through 2025."
+      "headline": "Amazon Web Services Breaks Ground on Major Indiana Data Center Facility",
+      "content": "Amazon Web Services has initiated construction of a significant hyperscale data center complex in New Carlisle, Indiana, signaling continued expansion of its infrastructure footprint in the Midwest. The project represents another strategic investment by AWS in developing robust computing infrastructure to support growing cloud service demands across the region. While specific capacity details remain undisclosed, the facility is expected to enhance AWS's regional data center capabilities and support enterprise cloud computing requirements."
     },
     {
-      "headline": "Data Center Development Continues Nationwide",
-      "content": "Industry analysis shows sustained growth in data center construction across major markets. Demand driven by cloud computing and AI workloads remains strong through 2025."
+      "headline": "DC Intel Expands Data Center Transaction Services Across North America",
+      "content": "DC Intel continues to strengthen its specialized brokerage capabilities in the data center real estate sector, offering comprehensive transaction support for complex acquisitions and leasing opportunities. The firm provides strategic advisory services that help clients navigate intricate market dynamics, leveraging deep industry knowledge to facilitate high-value data center deals across multiple regions."
     }
   ]
 }
