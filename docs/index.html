@@ -2144,9 +2144,17 @@
         const API_BASE = 'http://127.0.0.1:8010';
         const API_KEY = 'keepongoing';
 
-        // Public Data API Configuration (tier-based access)
+        // Public Data API Configuration (tier-based access via JWT)
         const PUBLIC_API_BASE = 'https://dc-intel-api.onrender.com';
-        const PUBLIC_API_KEY = 'free_demo_key_12345'; // TODO: Change based on user tier (free/basic/premium/enterprise)
+
+        // Helper function to get authentication headers with JWT token
+        function authHeaders() {
+            const token = localStorage.getItem('dc_intel_token');
+            if (token && !token.startsWith('test_token_')) {
+                return { 'Authorization': `Bearer ${token}` };
+            }
+            return {};
+        }
 
         // User subscription tier management
         // Tiers: 'free', 'basic', 'premium', 'enterprise'
@@ -2335,13 +2343,12 @@
                 }
             }
 
-            // If not a test account, try backend API
+            // If not a test account, try backend JWT API
             try {
-                const response = await fetch(`${API_BASE}/api/auth/login`, {
+                const response = await fetch(`${PUBLIC_API_BASE}/auth/login`, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'X-API-Key': API_KEY
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
                         email: email,
@@ -2349,20 +2356,28 @@
                     })
                 });
 
+                if (!response.ok) {
+                    const error = await response.json();
+                    alert(error.detail || 'Login failed. Please check your credentials.');
+                    return;
+                }
+
                 const data = await response.json();
 
-                if (data.ok || data.token) {
-                    localStorage.setItem('dc_intel_token', data.token);
-                    localStorage.setItem('dc_intel_user', JSON.stringify(data.user));
-                    if (data.user.tier) {
-                        localStorage.setItem('dc_intel_tier', data.user.tier);
-                        userTier = data.user.tier;
-                    }
+                // JWT auth response: {access_token, token_type, tier, expires_in}
+                if (data.access_token) {
+                    localStorage.setItem('dc_intel_token', data.access_token);
+                    localStorage.setItem('dc_intel_tier', data.tier);
+                    localStorage.setItem('dc_intel_user', JSON.stringify({
+                        email: email,
+                        tier: data.tier
+                    }));
+                    userTier = data.tier;
 
                     // Reload page immediately to refresh the UI
                     window.location.reload();
                 } else {
-                    alert(data.error || 'Login failed. Please check your credentials.');
+                    alert('Login failed. Invalid response from server.');
                 }
             } catch (error) {
                 console.error('Login error:', error);
@@ -2506,7 +2521,7 @@
             try {
                 // Load enriched geocoded data from API
                 const response = await fetch(`${PUBLIC_API_BASE}/existing-dcs`, {
-                    headers: { 'X-API-Key': PUBLIC_API_KEY }
+                    headers: authHeaders()
                 });
                 const data = await response.json();
                 const dcData = data.items || [];
@@ -3829,7 +3844,7 @@
             try {
                 // Load from API
                 const response = await fetch(`${PUBLIC_API_BASE}/existing-dcs`, {
-                    headers: { 'X-API-Key': PUBLIC_API_KEY }
+                    headers: authHeaders()
                 });
                 const data = await response.json();
                 const allDCs = data.items || [];
@@ -4264,7 +4279,7 @@
             try {
                 // Load from API
                 const response = await fetch(`${PUBLIC_API_BASE}/upcoming-dcs?limit=5000`, {
-                    headers: { 'X-API-Key': PUBLIC_API_KEY }
+                    headers: authHeaders()
                 });
 
                 if (!response.ok) {
@@ -4691,7 +4706,7 @@
             try {
                 // Load from API
                 const response = await fetch(`${PUBLIC_API_BASE}/news-latest?limit=20`, {
-                    headers: { 'X-API-Key': PUBLIC_API_KEY }
+                    headers: authHeaders()
                 });
 
                 if (!response.ok) {
@@ -4784,7 +4799,7 @@
             try {
                 // Load from API (Enterprise only)
                 const response = await fetch(`${PUBLIC_API_BASE}/news-archive`, {
-                    headers: { 'X-API-Key': PUBLIC_API_KEY }
+                    headers: authHeaders()
                 });
 
                 if (!response.ok) {
