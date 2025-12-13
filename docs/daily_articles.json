@@ -1,15 +1,15 @@
 {
-  "generated_date": "2025-12-12T12:24:49.749424",
-  "day_of_week": "Friday",
-  "includes_services": true,
+  "generated_date": "2025-12-13T07:00:15.254644",
+  "day_of_week": "Saturday",
+  "includes_services": false,
   "articles": [
     {
-      "headline": "Amazon Web Services Breaks Ground on Major Indiana Data Center Facility",
-      "content": "Amazon Web Services has initiated construction of a significant hyperscale data center complex in New Carlisle, Indiana, signaling continued expansion of its infrastructure footprint in the Midwest. The project represents another strategic investment by AWS in developing robust computing infrastructure to support growing cloud service demands across the region. While specific capacity details remain undisclosed, the facility is expected to enhance AWS's regional data center capabilities and support enterprise cloud computing requirements."
+      "headline": "New Data Center Proposal Signals Potential Infrastructure Growth in Washington",
+      "content": "A proposed data center project in Port Washington is generating interest among industry observers, suggesting potential expansion of regional digital infrastructure. While specific details about the operator and total capacity remain undisclosed, the project represents a noteworthy development in the Pacific Northwest's evolving hyperscale and colocation landscape. The initiative could potentially address growing regional demand for advanced data center capacity and support emerging technology ecosystems."
     },
     {
-      "headline": "DC Intel Expands Data Center Transaction Services Across North America",
-      "content": "DC Intel continues to strengthen its specialized brokerage capabilities in the data center real estate sector, offering comprehensive transaction support for complex acquisitions and leasing opportunities. The firm provides strategic advisory services that help clients navigate intricate market dynamics, leveraging deep industry knowledge to facilitate high-value data center deals across multiple regions."
+      "headline": "Michigan's Tech Hub Sees Potential Growth with New Data Center Proposal",
+      "content": "A proposed data center project has emerged in Ann Arbor, signaling continued investment interest in Michigan's emerging digital infrastructure landscape. While specific details about the facility's operator and total capacity remain undisclosed, the project represents a potential expansion of the region's data center ecosystem. The development could potentially attract technology companies seeking strategic Midwest locations with robust connectivity and favorable infrastructure conditions."
     }
   ]
 }
