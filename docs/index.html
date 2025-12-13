@@ -1196,6 +1196,8 @@
     <script src="https://d3js.org/d3-hexbin.v0.2.min.js"></script>
     <script src="https://d3js.org/d3-geo.v3.min.js"></script>
     <script src="https://d3js.org/topojson.v3.min.js"></script>
+    <!-- SheetJS library for Excel export -->
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 </head>
 <body>
     <div class="loading-overlay" id="loadingOverlay">
@@ -1923,7 +1925,10 @@
                     <div style="margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
                         <input id="existingSearch" type="text" placeholder="Filter existing DCs (name, city, state, provider, certs…)" style="flex: 1 1 240px; padding: 10px; border: 2px solid #000; font-size: 12px;">
                         <button onclick="clearExistingFilter()" style="padding: 10px 14px; border: 2px solid #000; background: #fff; cursor: pointer; font-weight: bold;">Clear</button>
-                        <button onclick="exportExistingDCsToCSV()" id="existingExportBtn" style="padding: 10px 14px; border: 2px solid #000; background: #fff; cursor: pointer; font-weight: bold; display: none;">Export CSV</button>
+                        <div id="existingExportBtns" style="display: none; gap: 10px;">
+                            <button onclick="exportExistingDCsToCSV()" style="padding: 10px 16px; border: 2px solid #000; background: #fff; cursor: pointer; font-weight: bold; transition: all 0.2s;">📄 CSV</button>
+                            <button onclick="exportExistingDCsToExcel()" style="padding: 10px 16px; border: 2px solid #000; background: #e8f5e9; cursor: pointer; font-weight: bold; transition: all 0.2s;">📊 Excel</button>
+                        </div>
                     </div>
                     <p style="text-align: center; margin-bottom: 15px;">Comprehensive table view of all existing data centers</p>
                     <div id="existingDCsTableView"></div>
@@ -1980,7 +1985,10 @@
                 <div style="margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
                     <input id="upcomingSearch" type="text" placeholder="Filter upcoming DCs (location, status, provider…)" style="flex: 1 1 240px; padding: 10px; border: 2px solid #000; font-size: 12px;">
                     <button onclick="clearUpcomingFilter()" style="padding: 10px 14px; border: 2px solid #000; background: #fff; cursor: pointer; font-weight: bold;">Clear</button>
-                    <button onclick="exportUpcomingDCsToCSV()" id="upcomingExportBtn" style="padding: 10px 14px; border: 2px solid #000; background: #fff; cursor: pointer; font-weight: bold; display: none;">Export CSV</button>
+                    <div id="upcomingExportBtns" style="display: none; gap: 10px;">
+                        <button onclick="exportUpcomingDCsToCSV()" style="padding: 10px 16px; border: 2px solid #000; background: #fff; cursor: pointer; font-weight: bold; transition: all 0.2s;">📄 CSV</button>
+                        <button onclick="exportUpcomingDCsToExcel()" style="padding: 10px 16px; border: 2px solid #000; background: #e8f5e9; cursor: pointer; font-weight: bold; transition: all 0.2s;">📊 Excel</button>
+                    </div>
                 </div>
                 <h3 style="text-align: center; margin: 20px 0 15px; font-size: 16px;">Project Details</h3>
                 <div id="upcomingDCsTable" style="background: #f9f9f9; padding: 20px; border: 2px solid #000; overflow-x: auto;"></div>
@@ -3834,10 +3842,10 @@
                 // Store data globally for export
                 window.existingDCsData = allDCs;
 
-                // Show export button for BASIC tier and above
-                const exportBtn = document.getElementById('existingExportBtn');
-                if (exportBtn && userTier && ['basic', 'premium', 'enterprise'].includes(userTier)) {
-                    exportBtn.style.display = 'inline-block';
+                // Show export buttons for BASIC tier and above
+                const exportBtns = document.getElementById('existingExportBtns');
+                if (exportBtns && userTier && ['basic', 'premium', 'enterprise'].includes(userTier)) {
+                    exportBtns.style.display = 'flex';
                 }
 
                 // Apply quick link category filter if active
@@ -4175,6 +4183,83 @@
             downloadCSV(csvContent, filename);
         }
 
+        // Excel Export Functions
+        function exportExistingDCsToExcel() {
+            if (!window.existingDCsData || window.existingDCsData.length === 0) {
+                alert('No data available to export. Please load the data first.');
+                return;
+            }
+
+            const tier = userTier || 'free';
+            const columns = getExportColumns(tier, 'existing');
+
+            // Filter data to only include allowed columns
+            const filteredData = window.existingDCsData.map(item => {
+                const filtered = {};
+                columns.forEach(col => {
+                    filtered[col] = item[col] || '';
+                });
+                return filtered;
+            });
+
+            // Create workbook and worksheet
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.json_to_sheet(filteredData);
+
+            // Auto-size columns
+            const colWidths = columns.map(col => ({
+                wch: Math.max(col.length, 15)
+            }));
+            ws['!cols'] = colWidths;
+
+            XLSX.utils.book_append_sheet(wb, ws, 'Existing DCs');
+
+            // Generate filename
+            const timestamp = new Date().toISOString().split('T')[0];
+            const filename = `existing-dcs-${tier}-${timestamp}.xlsx`;
+
+            // Download file
+            XLSX.writeFile(wb, filename);
+        }
+
+        function exportUpcomingDCsToExcel() {
+            if (!window.upcomingDCsData || window.upcomingDCsData.length === 0) {
+                alert('No data available to export. Please load the data first.');
+                return;
+            }
+
+            const tier = userTier || 'free';
+            const columns = getExportColumns(tier, 'upcoming');
+
+            // Filter data to only include allowed columns
+            const filteredData = window.upcomingDCsData.map(item => {
+                const filtered = {};
+                columns.forEach(col => {
+                    filtered[col] = item[col] || '';
+                });
+                return filtered;
+            });
+
+            // Create workbook and worksheet
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.json_to_sheet(filteredData);
+
+            // Auto-size columns
+            const colWidths = columns.map(col => ({
+                wch: Math.max(col.length, 15)
+            }));
+            ws['!cols'] = colWidths;
+
+            XLSX.utils.book_append_sheet(wb, ws, 'Upcoming DCs');
+
+            // Generate filename
+            const timestamp = new Date().toISOString().split('T')[0];
+            const filename = `upcoming-dcs-${tier}-${timestamp}.xlsx`;
+
+            // Download file
+            XLSX.writeFile(wb, filename);
+        }
+
         async function loadUpcomingDCs() {
             try {
                 // Load from API
@@ -4206,10 +4291,10 @@
                 // Store data globally for export (before filtering)
                 window.upcomingDCsData = apiData.items || [];
 
-                // Show export button for BASIC tier and above
-                const exportBtn = document.getElementById('upcomingExportBtn');
-                if (exportBtn && userTier && ['basic', 'premium', 'enterprise'].includes(userTier)) {
-                    exportBtn.style.display = 'inline-block';
+                // Show export buttons for BASIC tier and above
+                const exportBtns = document.getElementById('upcomingExportBtns');
+                if (exportBtns && userTier && ['basic', 'premium', 'enterprise'].includes(userTier)) {
+                    exportBtns.style.display = 'flex';
                 }
 
                 if (!projects || projects.length === 0) {
