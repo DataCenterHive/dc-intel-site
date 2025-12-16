@@ -1,15 +1,15 @@
 {
-  "generated_date": "2025-12-15T07:00:14.452349",
-  "day_of_week": "Monday",
-  "includes_services": false,
+  "generated_date": "2025-12-16T07:00:16.680787",
+  "day_of_week": "Tuesday",
+  "includes_services": true,
   "articles": [
     {
-      "headline": "Google Expands Hyperscale Data Center Footprint in Indiana's Franklin Township",
-      "content": "Tech giant Google has secured approval for a new data center project in Franklin Township, Indiana, signaling continued investment in the state's growing digital infrastructure landscape. While specific capacity details remain undisclosed, the project represents another strategic expansion of Google's extensive network of hyperscale computing facilities. The development underscores the region's increasing attractiveness for major cloud and technology companies seeking robust locations for mission-critical data center deployments."
+      "headline": "New Washington Data Center Signals Growing Infrastructure Investment Wave",
+      "content": "A significant data center construction project is now underway in Port Washington, advancing the region's strategic digital infrastructure development. The project represents another indication of increasing demand for regional compute and storage capacity, reflecting the broader trends of hyperscale expansion in the Pacific Northwest. While specific operational details remain limited, the development suggests continued momentum in data center investment across emerging technology corridors."
     },
     {
-      "headline": "Ann Arbor Emerges as Potential Data Center Hub with New Proposed Project",
-      "content": "Michigan's tech landscape could be expanding with a new data center proposal in Ann Arbor, signaling growing interest in the region's digital infrastructure potential. While specific details about the project's operator and total capacity remain undisclosed, the proposed development suggests continued momentum in the Midwest's evolving data center market. The Ann Arbor project could represent an emerging opportunity for regional economic growth and technological investment."
+      "headline": "DC Intel Expands Nationwide Permit Tracking and Market Intelligence Services",
+      "content": "DC Intel provides comprehensive market intelligence services through advanced data analytics, tracking over 1,000 active projects across multiple industries nationwide. The company's sophisticated permit tracking system enables clients to access real-time insights and strategic market data, supporting informed decision-making for businesses seeking competitive market intelligence."
     }
   ]
 }
