@@ -452,6 +452,9 @@
             display: inline-block;
             padding-left: 100%;
             animation: ticker 30s linear infinite;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
 
         @keyframes ticker {
@@ -2032,7 +2035,6 @@
             <img src="9e224nbi.png" alt="DC Intel Logo" class="modal-logo">
             <div class="modal-header">Sign In</div>
             <form id="loginForm" onsubmit="handleLogin(event)">
-                <p style="font-size: 12px; margin-bottom: 10px; color: #444;">Try test accounts: basic@test.com / premium@test.com / enterprise@test.com (password: <code style="font-family: monospace;">tiername123</code>).</p>
                 <div class="form-group">
                     <label>Email Address</label>
                     <input type="email" name="email" required>
@@ -2166,6 +2168,7 @@
         let taxonomyLoaded = false;
         let existingSort = { key: null, dir: 1 };
         let upcomingSort = { key: 'firstSeen', dir: -1 }; // Default: sort by newest dates first
+        let upcomingSourceFilter = 'all'; // Filter by data source: 'all', 'news', or 'permit'
 
         // Helper function to check tier access
         function hasTierAccess(requiredTier) {
@@ -2207,6 +2210,24 @@
                     upcomingSort.dir = 1;
                 }
             }
+            loadUpcomingDCs();
+        }
+
+        function filterUpcomingBySource(source) {
+            upcomingSourceFilter = source;
+
+            // Update button styles
+            const allBtn = document.getElementById('filterAll');
+            const newsBtn = document.getElementById('filterNews');
+            const permitBtn = document.getElementById('filterPermit');
+
+            if (allBtn) allBtn.style.background = source === 'all' ? '#000' : '#fff';
+            if (allBtn) allBtn.style.color = source === 'all' ? '#fff' : '#000';
+            if (newsBtn) newsBtn.style.background = source === 'news' ? '#000' : '#fff';
+            if (newsBtn) newsBtn.style.color = source === 'news' ? '#fff' : '#000';
+            if (permitBtn) permitBtn.style.background = source === 'permit' ? '#000' : '#fff';
+            if (permitBtn) permitBtn.style.color = source === 'permit' ? '#fff' : '#000';
+
             loadUpcomingDCs();
         }
 
@@ -3897,14 +3918,13 @@
                             <h4 style="margin: 0 0 10px 0; font-size: 16px; color: #7e22ce;">          Get More Data with Paid Tiers</h4>
                             <p style="margin: 0 0 10px 0; font-size: 13px;">Unlock additional columns and features:</p>
                             <ul style="margin: 0 0 10px 0; padding-left: 20px; font-size: 12px;">
-                                <li><strong>Basic ($299/mo):</strong> + Square footage, latitude and longitude</li>
-                                <li><strong>Premium ($999/mo):</strong> + Contact info, detailed specs</li>
-                                <li><strong>Enterprise ($2,499/mo):</strong> + Full data access, API integration</li>
+                                <li><strong>Basic ($299/mo):</strong> + Sqft, Lat & Long</li>
+                                <li><strong>Premium ($999/mo):</strong> + Contact, Specs</li>
+                                <li><strong>Enterprise ($2,499/mo):</strong> + API Access</li>
                             </ul>
                             <button onclick="switchSection('pricing')" style="padding: 8px 20px; background: #000; color: #fff; border: 3px solid #9333ea; border-radius: 3px; font-weight: bold; cursor: pointer;">
                                 View Pricing Plans
                             </button>
-                            <span style="margin-left: 10px; font-size: 11px; color: #666;">(Testing? Console: setTier('basic'), setTier('premium'), setTier('enterprise'), clearEmail())</span>
                         </div>
                     `;
                 }
@@ -3941,7 +3961,7 @@
                     `;
                 }
                 let html = filterStatus + `<h3 style="text-align: center; margin-bottom: 15px;">Operational Data Centers</h3>`;
-                html += '<div class="table-legend">Columns by tier: Free (Name/City/State)    Basic (+Certs/City/State)    Premium (+Description)    Enterprise (+Valuation/Details)</div>';
+                html += '<div style="text-align: center; font-size: 16px; font-weight: bold; color: #7e22ce; background: #f5f1e8; padding: 12px; border: 2px solid #9333ea; border-radius: 5px; margin-bottom: 15px;">Columns by tier: Free (Provider/Title/Address/Certifications)  ·  Basic (+Sqft/Lat & Long)  ·  Premium (+Contact/Specs)  ·  Enterprise (+API Access)</div>';
                 html += '<div class="table-wrapper">';
                 html += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
 
@@ -4303,6 +4323,14 @@
                     projects = projects.filter(p => matchesQuickLinkCategory(p, window.activeQuickLinkCategory));
                 }
 
+                // Apply source filter
+                if (upcomingSourceFilter === 'news') {
+                    projects = projects.filter(p => p.source === 'news');
+                } else if (upcomingSourceFilter === 'permit') {
+                    projects = projects.filter(p => p.source === 'permit');
+                }
+                // If 'all', don't filter
+
                 // Store data globally for export (before filtering)
                 window.upcomingDCsData = apiData.items || [];
 
@@ -4388,7 +4416,22 @@
 
                 // Generate project table with tiered access columns
                                 let tableHTML = filterStatus;
-                tableHTML += '<div class="table-legend">Columns by tier: Free (Location/Address/Status/First Seen/Source)    Basic (+Lat/Long)    Premium (+Description)    Enterprise (+Valuation/Details)</div>';
+
+                // Add source filter controls
+                tableHTML += '<div style="text-align: center; margin-bottom: 15px; padding: 15px; background: #f9f9f9; border: 2px solid #000;">';
+                tableHTML += '<p style="font-size: 14px; margin-bottom: 10px; font-weight: bold;">Filter by Data Source:</p>';
+                tableHTML += '<p style="font-size: 12px; margin-bottom: 12px; color: #555;">';
+                tableHTML += '<strong>News:</strong> Projects discovered from news articles and industry announcements. ';
+                tableHTML += '<strong>Permits:</strong> Data center related permits tracking new facilities, construction and upgrades to existing facilities, data center hall expansions, infrastructure builds, and all project stages from initial permits through completion.';
+                tableHTML += '</p>';
+                tableHTML += '<div style="display: flex; gap: 10px; justify-content: center;">';
+                tableHTML += '<button onclick="filterUpcomingBySource(\'all\')" id="filterAll" style="padding: 8px 16px; cursor: pointer; background: #000; color: #fff; border: 2px solid #000; font-weight: bold;">All Sources</button>';
+                tableHTML += '<button onclick="filterUpcomingBySource(\'news\')" id="filterNews" style="padding: 8px 16px; cursor: pointer; background: #fff; color: #000; border: 2px solid #000; font-weight: bold;">News Only</button>';
+                tableHTML += '<button onclick="filterUpcomingBySource(\'permit\')" id="filterPermit" style="padding: 8px 16px; cursor: pointer; background: #fff; color: #000; border: 2px solid #000; font-weight: bold;">Permits Only</button>';
+                tableHTML += '</div>';
+                tableHTML += '</div>';
+
+                tableHTML += '<div style="text-align: center; font-size: 16px; font-weight: bold; color: #7e22ce; background: #f5f1e8; padding: 12px; border: 2px solid #9333ea; border-radius: 5px; margin-bottom: 15px;">Columns by tier: Free (Location/Address/Status/First Seen/Source)  ·  Basic (+Lat/Long)  ·  Premium (+Most Recent Description)  ·  Enterprise (+Total Permit Quantity per permit address/All previous Details)</div>';
                 tableHTML += '<div class="table-wrapper">';
                 tableHTML += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
                 tableHTML += '<tr style="background: #000; color: #fff;">';
@@ -4527,14 +4570,13 @@
                             <h4 style="margin: 0 0 10px 0; font-size: 16px; color: #7e22ce;">          Unlock More Data with Paid Tiers</h4>
                             <p style="margin: 0 0 10px 0; font-size: 13px;">You're seeing basic columns. Upgrade to access:</p>
                             <ul style="margin: 0; padding-left: 20px; font-size: 12px;">
-                                <li><strong>Basic ($299/mo):</strong> + Latitude/Longitude coordinates</li>
-                                <li><strong>Premium ($999/mo):</strong> + Project descriptions</li>
-                                <li><strong>Enterprise ($2,499/mo):</strong> + Valuations & full permit details</li>
+                                <li><strong>Basic ($299/mo):</strong> + Lat/Long</li>
+                                <li><strong>Premium ($999/mo):</strong> + Most Recent Description</li>
+                                <li><strong>Enterprise ($2,499/mo):</strong> + Total Permit Quantity per permit address, All previous Details</li>
                             </ul>
                             <button onclick="switchSection('pricing')" style="margin-top: 10px; padding: 8px 20px; background: #000; color: #fff; border: 3px solid #9333ea; border-radius: 3px; font-weight: bold; cursor: pointer;">
                                 View Pricing Plans
                             </button>
-                            <span style="margin-left: 10px; font-size: 11px; color: #666;">(Testing? Use console: setTier('basic'), setTier('premium'), setTier('enterprise'))</span>
                         </div>
                     `;
                 }
