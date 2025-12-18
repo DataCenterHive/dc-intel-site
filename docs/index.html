@@ -1765,14 +1765,6 @@
                         Yes! You can upgrade or downgrade your subscription at any time. Changes take effect at the start of your next billing cycle. Contact us at support@dc-intel.com to make changes.
                     </p>
                 </div>
-
-                <div style="margin-bottom: 20px;">
-                    <p style="font-weight: bold; margin-bottom: 8px; font-size: 14px;">Can I try before subscribing?</p>
-                    <p style="font-size: 13px; line-height: 1.6;">
-                        Yes! You can browse our <strong>Existing DCs</strong> directory for free (showing facility name, provider, city, state). Enter your email to unlock certification data (SOC2, HIPAA, PCI-DSS, ISO27001) and see the full value of our platform.<br><br>
-                        For paid features like daily permit alerts, DC matchmaking, advisor calls, and full facility specs, we offer a <strong>30-day money-back guarantee</strong> on the <strong>Basic tier ($299/month)</strong>. No risk       if it doesn't deliver value, we'll refund 100%.
-                    </p>
-                </div>
             </div>
         </div>
 
@@ -3775,7 +3767,7 @@
                             const keys = Object.keys(row || {});
                             const term = keys.length > 0 ? (row[keys[0]] || '') : '';
                             const definition = keys.length > 1 ? (row[keys[1]] || '') : '';
-                            const extras = keys.slice(2).map(k => `${k}: ${row[k] || ''}`).filter(Boolean).join('    ');
+                            const extras = keys.slice(2).map(k => `${k}: ${row[k] || ''}`).filter(Boolean).join('<br>');
                             return `
                                 <div class="taxonomy-row">
                                     <div class="taxonomy-term">${term}</div>
@@ -3961,7 +3953,7 @@
                     `;
                 }
                 let html = filterStatus + `<h3 style="text-align: center; margin-bottom: 15px;">Operational Data Centers</h3>`;
-                html += '<div style="text-align: center; font-size: 16px; font-weight: bold; color: #7e22ce; background: #f5f1e8; padding: 12px; border: 2px solid #9333ea; border-radius: 5px; margin-bottom: 15px;">Columns by tier: Free (Provider/Title/Address/Certifications)  ·  Basic (+Sqft/Lat & Long)  ·  Premium (+Contact/Specs)  ·  Enterprise (+API Access)</div>';
+                html += '<div style="text-align: center; font-size: 16px; font-weight: bold; color: #d97706; background: #fef3c7; padding: 12px; border: 2px solid #f59e0b; border-radius: 5px; margin-bottom: 15px;">Columns by tier: Free (Provider/Title/Address/Certifications)  ·  Basic (+Sqft/Lat & Long)  ·  Premium (+Contact/Specs)  ·  Enterprise (+API Access)</div>';
                 html += '<div class="table-wrapper">';
                 html += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
 
@@ -4414,6 +4406,9 @@
                     `;
                 }
 
+                // Table Legend (displayed first)
+                const tableLegend = '<div style="text-align: center; font-size: 16px; font-weight: bold; color: #d97706; background: #fef3c7; padding: 12px; border: 2px solid #f59e0b; border-radius: 5px; margin-bottom: 15px;">Columns by tier: Free (Location/Address/Status/First Seen/Source)  ·  Basic (+Lat/Long)  ·  Premium (+Most Recent Description)  ·  Enterprise (+Total Permit Quantity per permit address/All previous Details)</div>';
+
                 // Generate project table with tiered access columns
                                 let tableHTML = filterStatus;
 
@@ -4430,8 +4425,6 @@
                 tableHTML += '<button onclick="filterUpcomingBySource(\'permit\')" id="filterPermit" style="padding: 8px 16px; cursor: pointer; background: #fff; color: #000; border: 2px solid #000; font-weight: bold;">Permits Only</button>';
                 tableHTML += '</div>';
                 tableHTML += '</div>';
-
-                tableHTML += '<div style="text-align: center; font-size: 16px; font-weight: bold; color: #7e22ce; background: #f5f1e8; padding: 12px; border: 2px solid #9333ea; border-radius: 5px; margin-bottom: 15px;">Columns by tier: Free (Location/Address/Status/First Seen/Source)  ·  Basic (+Lat/Long)  ·  Premium (+Most Recent Description)  ·  Enterprise (+Total Permit Quantity per permit address/All previous Details)</div>';
                 tableHTML += '<div class="table-wrapper">';
                 tableHTML += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
                 tableHTML += '<tr style="background: #000; color: #fff;">';
@@ -4590,7 +4583,7 @@
                     </div>
                 `;
 
-                document.getElementById('upcomingDCsTable').innerHTML = upgradeBanner + summaryHTML + tableHTML;
+                document.getElementById('upcomingDCsTable').innerHTML = tableLegend + upgradeBanner + summaryHTML + tableHTML;
 
             } catch (error) {
                 console.error('Error loading upcoming DCs:', error);
