@@ -1,5 +1,4 @@
 # Data Center Handbook (Analyst & Engineering Edition)
-_Last updated: 2025-10-17 22:47 UTC_
 
 ## 1. What a Data Center Is and Why It Exists
 A data center is a facility purpose‑built to host IT equipment (compute, storage, and networking) with continuous power, cooling, connectivity, and physical security. It exists to provide reliable, low‑latency digital services—everything from enterprise apps to cloud workloads and AI training—in a controlled environment with strict availability targets.
@@ -89,10 +88,4 @@ Neutral colocation, wholesale landlords, and hyperscale self‑builds all coexis
 - **Commercials:** Contract flexibility, metering (kW vs. kWh), cross‑connect pricing, expansion rights.
 
 ---
-
-## Appendix A — Glossary
-See **dc_glossary.csv** for engineering‑level definitions suitable for L2/L3 readers.
-
-## Appendix B — Taxonomy
-See **dc_taxonomy.xlsx**; sheets align to tiers, redundancy, cooling, lifecycle, roles, metrics, and U.S. markets.
 
