@@ -1,15 +1,15 @@
 {
-  "generated_date": "2025-12-17T07:00:22.054323",
-  "day_of_week": "Wednesday",
-  "includes_services": false,
+  "generated_date": "2025-12-19T07:00:15.245849",
+  "day_of_week": "Friday",
+  "includes_services": true,
   "articles": [
     {
-      "headline": "Amazon Web Services Expands Hyperscale Infrastructure in Indiana",
-      "content": "Amazon Web Services has initiated construction of a significant data center facility in New Carlisle, Indiana, signaling continued strategic expansion of its cloud computing infrastructure in the Midwest region. The project represents another key investment by AWS in enhancing regional network capacity and supporting growing enterprise cloud demands. While specific technical details remain limited, the development underscores the ongoing trend of major cloud providers investing in distributed, geographically diverse data center ecosystems."
+      "headline": "Fort Worth Lands New Data Center Project in Booming Texas Market",
+      "content": "A significant data center development has been approved for the Fort Worth metropolitan area, signaling continued expansion in Texas's robust digital infrastructure landscape. The project represents another strategic investment in the state's growing technology ecosystem, which has become increasingly attractive to data center operators seeking business-friendly environments and robust connectivity. While specific details about the facility's capacity and operator remain undisclosed, the approved project underscores North Texas's continued appeal as a prime location for hyperscale and enterprise data center deployments."
     },
     {
-      "headline": "New Data Center Development Planned for Washington's Growing Tech Hub",
-      "content": "A proposed data center project is set to emerge in Port Washington, signaling continued expansion in the region's robust digital infrastructure landscape. While specific details about the operator and total capacity remain undisclosed, the project represents potential growth in the Northwest's increasingly competitive data center market. The development could potentially attract hyperscale cloud providers or enterprise colocation interests seeking strategic infrastructure in the Pacific Northwest."
+      "headline": "DC Intel Expands Data Center Brokerage Services Across Major Markets",
+      "content": "DC Intel continues to provide specialized brokerage expertise in data center real estate transactions, focusing on comprehensive acquisition and leasing services. The firm's strategic approach connects clients with valuable market opportunities, leveraging deep industry knowledge to facilitate complex data center deals. With a proven track record of navigating intricate transaction landscapes, DC Intel offers clients precise insights and targeted support throughout the acquisition and disposition process."
     }
   ]
 }
