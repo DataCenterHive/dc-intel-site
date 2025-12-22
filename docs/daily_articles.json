@@ -1,15 +1,15 @@
 {
-  "generated_date": "2025-12-19T07:00:15.245849",
-  "day_of_week": "Friday",
-  "includes_services": true,
+  "generated_date": "2025-12-22T07:00:18.308664",
+  "day_of_week": "Monday",
+  "includes_services": false,
   "articles": [
     {
-      "headline": "Fort Worth Lands New Data Center Project in Booming Texas Market",
-      "content": "A significant data center development has been approved for the Fort Worth metropolitan area, signaling continued expansion in Texas's robust digital infrastructure landscape. The project represents another strategic investment in the state's growing technology ecosystem, which has become increasingly attractive to data center operators seeking business-friendly environments and robust connectivity. While specific details about the facility's capacity and operator remain undisclosed, the approved project underscores North Texas's continued appeal as a prime location for hyperscale and enterprise data center deployments."
+      "headline": "Amazon Web Services Expands Hyperscale Infrastructure in Indiana Heartland",
+      "content": "Amazon Web Services continues its strategic data center expansion with a new construction project in New Carlisle, Indiana, signaling continued investment in Midwestern digital infrastructure. The facility represents AWS's ongoing commitment to building out regional compute and cloud capacity to support growing enterprise and regional connectivity demands. While specific technical details remain limited, the project underscores the company's persistent growth strategy in deploying large-scale, mission-critical data center assets across the United States."
     },
     {
-      "headline": "DC Intel Expands Data Center Brokerage Services Across Major Markets",
-      "content": "DC Intel continues to provide specialized brokerage expertise in data center real estate transactions, focusing on comprehensive acquisition and leasing services. The firm's strategic approach connects clients with valuable market opportunities, leveraging deep industry knowledge to facilitate complex data center deals. With a proven track record of navigating intricate transaction landscapes, DC Intel offers clients precise insights and targeted support throughout the acquisition and disposition process."
+      "headline": "New Data Center Facility Expands Digital Infrastructure in Metro Atlanta Region",
+      "content": "A recently operational data center in Fayetteville, Georgia, represents another strategic addition to the Southeast's growing technology ecosystem. The facility strengthens the region's digital infrastructure capabilities, potentially attracting enterprise and cloud computing workloads to the metro Atlanta area. While specific operational details remain limited, the project signals continued investment in Georgia's expanding data center market."
     }
   ]
 }
