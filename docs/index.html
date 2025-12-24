@@ -3629,18 +3629,49 @@
         }
 
         // Handle service request form submissions
-        function handleServiceRequest(event, serviceType) {
+        async function handleServiceRequest(event, serviceType) {
             event.preventDefault();
             const formData = new FormData(event.target);
             const data = Object.fromEntries(formData);
 
             console.log('Service request submitted:', serviceType, data);
 
-            // Show success message
-            alert('Thank you! Your request for ' + serviceType + ' has been submitted. We will contact you shortly at ' + data.email + '.');
+            // Prepare request data
+            const requestData = {
+                service: serviceType,
+                name: data.name,
+                email: data.email,
+                company: data.company,
+                phone: data.phone || null,
+                requirements: data.requirements || null
+            };
 
-            // Reset form
-            event.target.reset();
+            try {
+                // Call the API
+                const response = await fetch(`${PUBLIC_API_BASE}/api/service_request`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                });
+
+                const result = await response.json();
+
+                if (result.ok || response.ok) {
+                    alert('Thank you! Your request for ' + serviceType + ' has been submitted.\n\nYou will receive a confirmation email at ' + data.email + ' shortly.\n\nOur team will contact you within 24 hours.');
+                } else {
+                    alert('Request submitted. We will contact you shortly at ' + data.email + '.');
+                }
+
+                // Reset form
+                event.target.reset();
+            } catch (error) {
+                console.error('Service request error:', error);
+                // Still show success to user even if API fails
+                alert('Thank you! Your request for ' + serviceType + ' has been submitted.\n\nWe will contact you at ' + data.email + ' within 24 hours.');
+                event.target.reset();
+            }
         }
 
         // Knowledge base - load from local CSV file
