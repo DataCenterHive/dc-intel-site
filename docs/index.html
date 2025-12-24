@@ -4628,10 +4628,10 @@
             showLoading();
 
             try {
-                const response = await fetch(`${API_BASE}/ask_v2`, {
+                const response = await fetch(`${PUBLIC_API_BASE}/ask`, {
                     method: 'POST',
                     headers: {
-                        'X-API-Key': API_KEY,
+                        ...authHeaders(),
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({ q: query })
@@ -4649,9 +4649,8 @@
 
             } catch (error) {
                 hideLoading();
-                alert('API Error: ' + error.message + '\n\nMake sure server is running on http://127.0.0.1:8010');
-                document.getElementById('apiStatus').textContent = 'OFFLINE';
-                document.getElementById('apiStatus').style.color = 'red';
+                alert('Search Error: ' + error.message + '\n\nPlease try again or contact support.');
+                console.error('Search error:', error);
             }
         }
 
