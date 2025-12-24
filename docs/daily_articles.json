@@ -1,15 +1,15 @@
 {
-  "generated_date": "2025-12-22T07:00:18.308664",
-  "day_of_week": "Monday",
-  "includes_services": false,
+  "generated_date": "2025-12-23T07:00:17.434634",
+  "day_of_week": "Tuesday",
+  "includes_services": true,
   "articles": [
     {
-      "headline": "Amazon Web Services Expands Hyperscale Infrastructure in Indiana Heartland",
-      "content": "Amazon Web Services continues its strategic data center expansion with a new construction project in New Carlisle, Indiana, signaling continued investment in Midwestern digital infrastructure. The facility represents AWS's ongoing commitment to building out regional compute and cloud capacity to support growing enterprise and regional connectivity demands. While specific technical details remain limited, the project underscores the company's persistent growth strategy in deploying large-scale, mission-critical data center assets across the United States."
+      "headline": "Fayetteville Data Center Expansion Signals Growing Regional Tech Infrastructure",
+      "content": "A new operational data center in Fayetteville, Georgia, represents another strategic addition to the region's expanding digital infrastructure landscape. While specific details about the facility's operator and total capacity remain undisclosed, the project underscores metro Atlanta's increasing attractiveness for data center investments driven by robust connectivity and favorable business conditions. The development suggests continued momentum in Georgia's emerging data center ecosystem, which has been drawing significant interest from hyperscale cloud providers and enterprise colocation customers."
     },
     {
-      "headline": "New Data Center Facility Expands Digital Infrastructure in Metro Atlanta Region",
-      "content": "A recently operational data center in Fayetteville, Georgia, represents another strategic addition to the Southeast's growing technology ecosystem. The facility strengthens the region's digital infrastructure capabilities, potentially attracting enterprise and cloud computing workloads to the metro Atlanta area. While specific operational details remain limited, the project signals continued investment in Georgia's expanding data center market."
+      "headline": "DC Intel Expands Market Reach in Data Center Brokerage Services",
+      "content": "DC Intel continues to strengthen its position in the data center real estate market through specialized brokerage services focused on complex transactions and strategic acquisitions. The firm provides comprehensive support for clients navigating intricate data center leasing, purchasing, and sales processes, leveraging deep industry expertise and extensive market insights to facilitate high-value deal flow."
     }
   ]
 }
