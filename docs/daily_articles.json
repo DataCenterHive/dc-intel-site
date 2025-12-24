@@ -1,15 +1,15 @@
 {
-  "generated_date": "2025-12-23T07:00:17.434634",
-  "day_of_week": "Tuesday",
-  "includes_services": true,
+  "generated_date": "2025-12-24T07:00:17.449895",
+  "day_of_week": "Wednesday",
+  "includes_services": false,
   "articles": [
     {
-      "headline": "Fayetteville Data Center Expansion Signals Growing Regional Tech Infrastructure",
-      "content": "A new operational data center in Fayetteville, Georgia, represents another strategic addition to the region's expanding digital infrastructure landscape. While specific details about the facility's operator and total capacity remain undisclosed, the project underscores metro Atlanta's increasing attractiveness for data center investments driven by robust connectivity and favorable business conditions. The development suggests continued momentum in Georgia's emerging data center ecosystem, which has been drawing significant interest from hyperscale cloud providers and enterprise colocation customers."
+      "headline": "Amazon Web Services Expands Hyperscale Infrastructure in Northern Indiana",
+      "content": "Amazon Web Services continues its strategic data center expansion with a new construction project in New Carlisle, Indiana, signaling the company's ongoing commitment to regional cloud infrastructure development. The project represents another significant investment in the Midwest's growing data center corridor, potentially enhancing AWS's computing capacity and network resilience for enterprise and government cloud services. While specific technical details remain limited, the development underscores the ongoing trend of major cloud providers investing in distributed, geographically diverse data center networks."
     },
     {
-      "headline": "DC Intel Expands Market Reach in Data Center Brokerage Services",
-      "content": "DC Intel continues to strengthen its position in the data center real estate market through specialized brokerage services focused on complex transactions and strategic acquisitions. The firm provides comprehensive support for clients navigating intricate data center leasing, purchasing, and sales processes, leveraging deep industry expertise and extensive market insights to facilitate high-value deal flow."
+      "headline": "New Data Center Project Advances in Fort Worth's Growing Tech Landscape",
+      "content": "Fort Worth has secured approval for an emerging data center development, signaling continued expansion of the region's digital infrastructure capabilities. The project represents another strategic investment in Texas's robust data center market, which continues to attract significant interest from technology and cloud computing sectors. While specific details remain limited, the approved facility underscores the metropolitan area's increasing attractiveness for hyperscale and enterprise-level data center deployments."
     }
   ]
 }
