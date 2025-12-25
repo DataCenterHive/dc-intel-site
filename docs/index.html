@@ -5010,11 +5010,10 @@
             };
 
             try {
-                const response = await fetch(`${API_BASE}/api/service_request`, {
+                const response = await fetch(`${PUBLIC_API_BASE}/api/service_request`, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'X-API-Key': API_KEY
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(requestData)
                 });
