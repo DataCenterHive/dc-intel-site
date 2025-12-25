@@ -5139,9 +5139,7 @@
         }
 
         // Check API status on load
-        fetch(`${PUBLIC_API_BASE}/rollups/addresses?limit=1`, {
-            headers: { 'X-API-Key': API_KEY }
-        })
+        fetch(`${PUBLIC_API_BASE}/health`)
         .then(res => {
             if (res.ok) {
                 document.getElementById('apiStatus').textContent = 'ONLINE';
