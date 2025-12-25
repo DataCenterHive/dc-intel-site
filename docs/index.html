@@ -2409,7 +2409,7 @@
             }
 
             try {
-                const response = await fetch(`${API_BASE}/api/auth/register`, {
+                const response = await fetch(`${PUBLIC_API_BASE}/api/auth/register`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -5139,7 +5139,7 @@
         }
 
         // Check API status on load
-        fetch(`${API_BASE}/rollups/addresses?limit=1`, {
+        fetch(`${PUBLIC_API_BASE}/rollups/addresses?limit=1`, {
             headers: { 'X-API-Key': API_KEY }
         })
         .then(res => {
