@@ -4994,46 +4994,6 @@
             showServiceModal('Request Coverage Expansion');
         }
 
-        async function handleServiceRequest(event) {
-            event.preventDefault();
-            const form = event.target;
-            const formData = new FormData(form);
-            const serviceName = document.getElementById('serviceModalTitle').textContent;
-
-            const requestData = {
-                service: serviceName,
-                name: formData.get('name'),
-                email: formData.get('email'),
-                company: formData.get('company'),
-                phone: formData.get('phone'),
-                details: formData.get('details')
-            };
-
-            try {
-                const response = await fetch(`${PUBLIC_API_BASE}/api/service_request`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(requestData)
-                });
-
-                const data = await response.json();
-
-                if (data.ok || response.ok) {
-                    alert('Thank you! Your service request has been submitted. We will contact you within 24 hours.');
-                    closeModal('serviceModal');
-                } else {
-                    alert('Request submitted locally. Our team will review and respond soon.');
-                    closeModal('serviceModal');
-                }
-            } catch (error) {
-                console.error('Service request error:', error);
-                alert('Request submitted. We will contact you at the email address provided.');
-                closeModal('serviceModal');
-            }
-        }
-
         // Quick Link Category Filter
         function showQuickLinkCategory(category) {
             // Store the active category filter globally
