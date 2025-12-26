@@ -1,15 +1,15 @@
 {
-  "generated_date": "2025-12-25T07:00:14.609944",
-  "day_of_week": "Thursday",
-  "includes_services": false,
+  "generated_date": "2025-12-26T07:00:12.440336",
+  "day_of_week": "Friday",
+  "includes_services": true,
   "articles": [
     {
-      "headline": "Michigan Tech Hub Ann Arbor Eyes Major Data Center Development Proposal",
-      "content": "A new data center project is reportedly under consideration for the Ann Arbor metropolitan area, signaling potential growth in Michigan's technology infrastructure landscape. While specific details about the proposed facility remain limited, the project represents an emerging opportunity for regional digital expansion and potential economic development in the tech-centric university community. The development could potentially attract hyperscale cloud providers or enterprise colocation interests seeking strategic Midwestern deployment sites."
+      "headline": "Amazon Web Services Expands Northern Virginia Data Center Footprint",
+      "content": "Amazon Web Services is advancing its significant data center infrastructure project in Louisa County, further solidifying the region's status as a premier hyperscale computing hub. The project represents another strategic investment by AWS in Virginia's robust digital ecosystem, which continues to attract major cloud computing investments. While specific capacity details remain undisclosed, the development signals ongoing expansion of the company's critical data center network in a key Mid-Atlantic technology corridor."
     },
     {
-      "headline": "Google Advances Indiana Data Center Project With Township Approval",
-      "content": "Tech giant Google has secured approval for a new data center development in Franklin Township, Indiana, signaling continued expansion of its hyperscale infrastructure footprint. The project represents another strategic investment in the Midwest's growing data center corridor, potentially adding significant computational capacity to Google's regional network. While specific technical details remain limited, the approved facility underscores the company's ongoing commitment to expanding its cloud computing and digital infrastructure capabilities."
+      "headline": "DC Intel Expands Custom Research Services for Financial Institutions",
+      "content": "DC Intel provides specialized research and market analysis tailored specifically for institutional investors seeking nuanced strategic insights. The firm's custom reports draw on comprehensive data aggregation and deep sector expertise to deliver actionable intelligence across multiple market segments. Their research methodology integrates quantitative analysis with qualitative assessment, enabling clients to make informed investment decisions."
     }
   ]
 }
