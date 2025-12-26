@@ -1376,28 +1376,7 @@
                                     <li>Key industry players</li>
                                 </ul>
                                 <button style="width: 100%; padding: 10px; background: #000; color: #fff; border: 2px solid #000; font-family: Georgia, serif; font-size: 13px; font-weight: bold; cursor: pointer;"
-                                        onclick="alert('Enter your email to download:\n\nsupport@dc-intel.com')">
-                                    FREE DOWNLOAD (Email Required)
-                                </button>
-                            </div>
-
-                            <!-- Free Guide 2: Glossary -->
-                            <div style="border: 3px solid #000; padding: 20px; background: #fffef5;">
-                                <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px; border-bottom: 2px solid #ccc; padding-bottom: 8px;">
-                                    <h4 style="margin-top: 0; font-size: 16px;">DC Industry Glossary</h4>
-                                    <span class="badge free">Free</span>
-                                </div>
-                                <p style="font-size: 13px; line-height: 1.6; margin: 15px 0;">
-                                    Essential terminology guide covering 200+ data center terms, acronyms, and technical concepts. Great reference for interviews and daily work.
-                                </p>
-                                <ul style="font-size: 12px; line-height: 1.8; margin: 15px 0 20px; padding-left: 20px;">
-                                    <li>24 pages       PDF format</li>
-                                    <li>200+ industry terms</li>
-                                    <li>Technical & business terms</li>
-                                    <li>Acronyms explained</li>
-                                </ul>
-                                <button style="width: 100%; padding: 10px; background: #000; color: #fff; border: 2px solid #000; font-family: Georgia, serif; font-size: 13px; font-weight: bold; cursor: pointer;"
-                                        onclick="alert('Enter your email to download:\n\nsupport@dc-intel.com')">
+                                        onclick="openStudyGuideModal()">
                                     FREE DOWNLOAD (Email Required)
                                 </button>
                             </div>
@@ -1789,8 +1768,8 @@
                         VIEW PRICING PLANS
                     </button>
                     <button style="padding: 15px 40px; background: #fff; color: #000; border: 2px solid #000; font-family: Georgia, serif; font-size: 16px; font-weight: bold; cursor: pointer;"
-                            onclick="alert('Contact us at support@dc-intel.com or schedule a demo')">
-                        SCHEDULE A DEMO
+                            onclick="openDemoModal()">
+                        REQUEST A DEMO
                     </button>
                 </div>
             </div>
@@ -3671,6 +3650,96 @@
                 // Still show success to user even if API fails
                 alert('Thank you! Your request for ' + serviceType + ' has been submitted.\n\nWe will contact you at ' + data.email + ' within 24 hours.');
                 event.target.reset();
+            }
+        }
+
+        // Modal functions
+        function openStudyGuideModal() {
+            document.getElementById('emailGateModal').style.display = 'block';
+        }
+
+        function closeEmailGateModal() {
+            document.getElementById('emailGateModal').style.display = 'none';
+        }
+
+        function openDemoModal() {
+            document.getElementById('demoModal').style.display = 'block';
+        }
+
+        function closeDemoModal() {
+            document.getElementById('demoModal').style.display = 'none';
+        }
+
+        // Handle study guide download with email gate
+        async function handleStudyGuideDownload(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const email = formData.get('email');
+
+            try {
+                // Track the download
+                const response = await fetch(`${PUBLIC_API_BASE}/api/study_guide_download`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        email: email,
+                        guide_name: 'DC Market Overview 2025'
+                    })
+                });
+
+                // Open PDF in new window
+                window.open('https://datacenterhive.com/dc-market-overview-2025.pdf', '_blank');
+
+                // Close modal and reset form
+                closeEmailGateModal();
+                event.target.reset();
+
+                alert('Thank you! The study guide will open in a new window.\n\nCheck your email for future updates from DataCenter Hive.');
+            } catch (error) {
+                console.error('Study guide download tracking error:', error);
+                // Still open PDF even if tracking fails
+                window.open('https://datacenterhive.com/dc-market-overview-2025.pdf', '_blank');
+                closeEmailGateModal();
+                event.target.reset();
+            }
+        }
+
+        // Handle demo request
+        async function handleDemoRequest(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const data = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                company: formData.get('company'),
+                phone: formData.get('phone') || null,
+                address: formData.get('address') || null,
+                message: formData.get('message') || null
+            };
+
+            try {
+                const response = await fetch(`${PUBLIC_API_BASE}/api/demo_request`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                // Close modal and reset form
+                closeDemoModal();
+                event.target.reset();
+
+                if (result.ok || response.ok) {
+                    alert('Thank you for your demo request!\n\nOur team will reach out to you within 24 hours at ' + data.email + ' to schedule your personalized demo.');
+                }
+            } catch (error) {
+                console.error('Demo request error:', error);
+                closeDemoModal();
+                event.target.reset();
+                alert('Thank you for your demo request!\n\nOur team will reach out to you within 24 hours at ' + data.email + ' to schedule your personalized demo.');
             }
         }
 
@@ -5622,6 +5691,97 @@
             <div id="modalContent" style="padding: 30px; min-height: 400px;"></div>
         </div>
     </div>
+
+    <!-- Study Guide Email Gate Modal -->
+    <div id="emailGateModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10001; overflow: auto;">
+        <div style="position: relative; max-width: 500px; margin: 100px auto; background: #fff; border: 4px solid #000; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+            <!-- Modal Header -->
+            <div style="background: #000; color: #fff; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #000;">
+                <h2 style="margin: 0; font-size: 20px; font-family: Georgia, serif;">Download Free Study Guide</h2>
+                <button onclick="closeEmailGateModal()" style="background: transparent; border: none; color: #fff; font-size: 32px; cursor: pointer; padding: 0; width: 40px; height: 40px; line-height: 32px;">&times;</button>
+            </div>
+
+            <!-- Modal Content -->
+            <div style="padding: 30px;">
+                <p style="font-size: 15px; line-height: 1.6; margin-bottom: 20px;">
+                    Enter your email to download the <strong>DC Market Overview 2025</strong> study guide. The PDF will open in a new window.
+                </p>
+
+                <form id="emailGateForm" onsubmit="handleStudyGuideDownload(event)">
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Email Address *</label>
+                        <input type="email" name="email" required
+                               style="width: 100%; padding: 10px; border: 2px solid #000; font-family: Georgia, serif; font-size: 14px;">
+                    </div>
+
+                    <button type="submit" style="width: 100%; padding: 12px; background: #000; color: #fff; border: 2px solid #000; font-family: Georgia, serif; font-size: 15px; font-weight: bold; cursor: pointer;">
+                        DOWNLOAD FREE GUIDE
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Demo Request Modal -->
+    <div id="demoModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10001; overflow: auto;">
+        <div style="position: relative; max-width: 600px; margin: 60px auto; background: #fff; border: 4px solid #000; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+            <!-- Modal Header -->
+            <div style="background: #000; color: #fff; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #000;">
+                <h2 style="margin: 0; font-size: 20px; font-family: Georgia, serif;">Request a Demo</h2>
+                <button onclick="closeDemoModal()" style="background: transparent; border: none; color: #fff; font-size: 32px; cursor: pointer; padding: 0; width: 40px; height: 40px; line-height: 32px;">&times;</button>
+            </div>
+
+            <!-- Modal Content -->
+            <div style="padding: 30px;">
+                <p style="font-size: 15px; line-height: 1.6; margin-bottom: 20px;">
+                    See how DataCenter Hive can help you access comprehensive data center intelligence. Our team will reach out within 24 hours to schedule your personalized demo.
+                </p>
+
+                <form id="demoRequestForm" onsubmit="handleDemoRequest(event)">
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Full Name *</label>
+                        <input type="text" name="name" required
+                               style="width: 100%; padding: 10px; border: 2px solid #000; font-family: Georgia, serif; font-size: 14px;">
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Email Address *</label>
+                        <input type="email" name="email" required
+                               style="width: 100%; padding: 10px; border: 2px solid #000; font-family: Georgia, serif; font-size: 14px;">
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Company *</label>
+                        <input type="text" name="company" required
+                               style="width: 100%; padding: 10px; border: 2px solid #000; font-family: Georgia, serif; font-size: 14px;">
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Phone Number</label>
+                        <input type="tel" name="phone"
+                               style="width: 100%; padding: 10px; border: 2px solid #000; font-family: Georgia, serif; font-size: 14px;">
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Address</label>
+                        <input type="text" name="address"
+                               style="width: 100%; padding: 10px; border: 2px solid #000; font-family: Georgia, serif; font-size: 14px;">
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Message (optional)</label>
+                        <textarea name="message" rows="4"
+                                  style="width: 100%; padding: 10px; border: 2px solid #000; font-family: Georgia, serif; font-size: 14px; resize: vertical;"></textarea>
+                    </div>
+
+                    <button type="submit" style="width: 100%; padding: 12px; background: #000; color: #fff; border: 2px solid #000; font-family: Georgia, serif; font-size: 15px; font-weight: bold; cursor: pointer;">
+                        SUBMIT REQUEST
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     </body>
 </html>
 
