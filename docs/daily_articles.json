@@ -1,15 +1,15 @@
 {
-  "generated_date": "2025-12-26T07:00:12.440336",
-  "day_of_week": "Friday",
-  "includes_services": true,
+  "generated_date": "2025-12-27T07:00:14.503780",
+  "day_of_week": "Saturday",
+  "includes_services": false,
   "articles": [
     {
-      "headline": "Amazon Web Services Expands Northern Virginia Data Center Footprint",
-      "content": "Amazon Web Services is advancing its significant data center infrastructure project in Louisa County, further solidifying the region's status as a premier hyperscale computing hub. The project represents another strategic investment by AWS in Virginia's robust digital ecosystem, which continues to attract major cloud computing investments. While specific capacity details remain undisclosed, the development signals ongoing expansion of the company's critical data center network in a key Mid-Atlantic technology corridor."
+      "headline": "Amazon Web Services Expands Midwest Hyperscale Data Center Footprint",
+      "content": "Amazon Web Services is progressing with a significant new data center construction project in New Carlisle, Indiana, signaling continued strategic infrastructure expansion in the Midwest region. The facility represents AWS's ongoing commitment to building out its cloud computing and colocation capabilities in strategic geographic locations with robust power and connectivity infrastructure. While specific capacity details remain undisclosed, the project underscores the continued robust growth of hyperscale data center development across the United States."
     },
     {
-      "headline": "DC Intel Expands Custom Research Services for Financial Institutions",
-      "content": "DC Intel provides specialized research and market analysis tailored specifically for institutional investors seeking nuanced strategic insights. The firm's custom reports draw on comprehensive data aggregation and deep sector expertise to deliver actionable intelligence across multiple market segments. Their research methodology integrates quantitative analysis with qualitative assessment, enabling clients to make informed investment decisions."
+      "headline": "Fort Worth Welcomes New Data Center Project in Strategic Expansion",
+      "content": "A significant data center development has been approved for the Fort Worth metropolitan area, signaling continued growth in Texas's robust digital infrastructure landscape. While specific details about the operator and total capacity remain undisclosed, the project represents another strategic investment in the region's expanding hyperscale and colocation ecosystem. The approval marks a promising advancement for the local technology and commercial real estate markets, highlighting Fort Worth's increasing attractiveness for data center investment."
     }
   ]
 }
