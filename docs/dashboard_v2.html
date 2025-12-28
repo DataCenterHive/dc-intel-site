@@ -2029,7 +2029,52 @@
                     <label>Password</label>
                     <input type="password" name="password" required>
                 </div>
+                <div style="text-align: right; margin-bottom: 15px;">
+                    <a href="#" onclick="event.preventDefault(); closeModal('loginModal'); openModal('forgotPasswordModal');" style="color: #666; font-size: 14px; text-decoration: none;">Forgot Password?</a>
+                </div>
                 <button type="submit" class="form-submit">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- FORGOT PASSWORD MODAL -->
+    <div class="modal-overlay" id="forgotPasswordModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('forgotPasswordModal', event)">&times;</span>
+            <img src="9e224nbi.png" alt="DC Intel Logo" class="modal-logo">
+            <div class="modal-header">Reset Password</div>
+            <p style="text-align: center; color: #666; margin-bottom: 20px;">Enter your email address and we'll send you a link to reset your password.</p>
+            <form id="forgotPasswordForm" onsubmit="handleForgotPassword(event)">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" name="email" required>
+                </div>
+                <button type="submit" class="form-submit">Send Reset Link</button>
+                <div style="text-align: center; margin-top: 15px;">
+                    <a href="#" onclick="event.preventDefault(); closeModal('forgotPasswordModal'); openModal('loginModal');" style="color: #666; font-size: 14px; text-decoration: none;">Back to Sign In</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- RESET PASSWORD MODAL -->
+    <div class="modal-overlay" id="resetPasswordModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('resetPasswordModal', event)">&times;</span>
+            <img src="9e224nbi.png" alt="DC Intel Logo" class="modal-logo">
+            <div class="modal-header">Create New Password</div>
+            <p style="text-align: center; color: #666; margin-bottom: 20px;">Enter your new password below.</p>
+            <form id="resetPasswordForm" onsubmit="handleResetPassword(event)">
+                <input type="hidden" name="token" id="resetToken">
+                <div class="form-group">
+                    <label>New Password</label>
+                    <input type="password" name="new_password" required minlength="8">
+                </div>
+                <div class="form-group">
+                    <label>Confirm New Password</label>
+                    <input type="password" name="confirm_password" required>
+                </div>
+                <button type="submit" class="form-submit">Reset Password</button>
             </form>
         </div>
     </div>
@@ -2130,6 +2175,7 @@
         // Storage is only cleared on explicit logout or browser close
 
         const API_BASE = 'http://127.0.0.1:8010';
+        const PUBLIC_API_BASE = 'https://dc-intel-api.onrender.com';
         const API_KEY = 'keepongoing';
 
         // User subscription tier management
@@ -2408,6 +2454,91 @@
             // Reload page to reset all content and tier access
             window.location.reload();
         }
+
+        async function handleForgotPassword(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch(`${PUBLIC_API_BASE}/api/auth/forgot-password`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: formData.get('email')
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    closeModal('forgotPasswordModal');
+                    alert('If an account exists with that email, a password reset link has been sent. Please check your inbox.');
+                    form.reset();
+                } else {
+                    alert(data.detail || 'Failed to send reset email. Please try again.');
+                }
+            } catch (error) {
+                console.error('Forgot password error:', error);
+                alert('Failed to send reset email. Please try again later.');
+            }
+        }
+
+        async function handleResetPassword(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+
+            if (formData.get('new_password') !== formData.get('confirm_password')) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            const token = formData.get('token');
+
+            try {
+                const response = await fetch(`${PUBLIC_API_BASE}/api/auth/reset-password`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        token: token,
+                        new_password: formData.get('new_password')
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    closeModal('resetPasswordModal');
+                    alert('Password successfully reset! You can now log in with your new password.');
+                    form.reset();
+                    openModal('loginModal');
+                } else {
+                    alert(data.detail || 'Failed to reset password. The link may have expired.');
+                }
+            } catch (error) {
+                console.error('Reset password error:', error);
+                alert('Failed to reset password. Please try again.');
+            }
+        }
+
+        // Check for reset token in URL on page load
+        (function checkResetToken() {
+            const hash = window.location.hash;
+            if (hash.startsWith('#reset-password?token=')) {
+                const token = hash.split('token=')[1];
+                if (token) {
+                    document.getElementById('resetToken').value = token;
+                    openModal('resetPasswordModal');
+                    // Clear the hash
+                    history.replaceState(null, null, ' ');
+                }
+            }
+        })();
 
         function updateAuthUI(user) {
             const authButtons = document.getElementById('authButtons');
