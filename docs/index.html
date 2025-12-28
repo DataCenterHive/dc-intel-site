@@ -2404,14 +2404,14 @@
 
                 const data = await response.json();
 
-                if (data.ok || data.token) {
-                    localStorage.setItem('dc_intel_token', data.token);
+                if (response.ok && data.access_token) {
+                    localStorage.setItem('dc_intel_token', data.access_token);
                     localStorage.setItem('dc_intel_user', JSON.stringify(data.user));
                     updateAuthUI(data.user);
                     closeModal('registerModal');
                     alert('Registration successful! Welcome to DC Intel.');
                 } else {
-                    alert(data.error || 'Registration failed. Please try again.');
+                    alert(data.error || data.detail || 'Registration failed. Please try again.');
                 }
             } catch (error) {
                 console.error('Registration error:', error);
