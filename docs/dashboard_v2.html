@@ -2337,8 +2337,17 @@
             }
         }
 
+        let isRegistering = false;  // Prevent double-submission
+
         async function handleRegister(event) {
             event.preventDefault();
+
+            // Prevent double-submission
+            if (isRegistering) {
+                console.log('Registration already in progress...');
+                return;
+            }
+
             const form = event.target;
             const formData = new FormData(form);
 
@@ -2346,6 +2355,8 @@
                 alert('Passwords do not match!');
                 return;
             }
+
+            isRegistering = true;  // Lock the form
 
             try {
                 const response = await fetch(`${API_BASE}/api/auth/register`, {
@@ -2369,6 +2380,7 @@
                     localStorage.setItem('dc_intel_user', JSON.stringify(data.user));
                     updateAuthUI(data.user);
                     closeModal('registerModal');
+                    form.reset();  // Clear the form
                     alert('Registration successful! Welcome to DC Intel.');
                 } else {
                     alert(data.error || data.detail || 'Registration failed. Please try again.');
@@ -2376,6 +2388,8 @@
             } catch (error) {
                 console.error('Registration error:', error);
                 alert('Registration failed. This feature requires server implementation.');
+            } finally {
+                isRegistering = false;  // Unlock the form
             }
         }
 
