@@ -2327,6 +2327,13 @@
             return false;
         }
 
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('active');
+            }
+        }
+
         // Simple modal handlers - click outside to close
         document.addEventListener('DOMContentLoaded', function() {
             // Close modal when clicking on the dark overlay (not on the modal content)
