@@ -2069,7 +2069,16 @@
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal('registerModal', event)">&times;</span>
             <img src="9e224nbi.png" alt="DC Intel Logo" class="modal-logo">
-            <div class="modal-header">Register</div>
+            <div class="modal-header">Create Your Free Account</div>
+            <div style="background: #f0fdf4; border-left: 3px solid #10b981; padding: 12px; margin-bottom: 15px; font-size: 13px;">
+                <strong style="color: #059669;">Free Account Includes:</strong>
+                <ul style="margin: 8px 0 0 20px; line-height: 1.8;">
+                    <li>✅ Certification data for 4,436+ DCs</li>
+                    <li>✅ Save & track favorite data centers</li>
+                    <li>✅ Export up to 10 DC records</li>
+                    <li>✅ Email alerts for new projects</li>
+                </ul>
+            </div>
             <form id="registerForm" onsubmit="handleRegister(event)">
                 <div class="form-group">
                     <label>Full Name</label>
@@ -2127,21 +2136,23 @@
         </div>
     </div>
 
-    <!-- EMAIL CAPTURE MODAL (for unlocking certifications data) -->
+    <!-- LOGIN PROMPT MODAL (for unlocking certifications data) -->
     <div class="modal-overlay" id="emailCaptureModal">
         <div class="modal-content" style="max-width: 500px;">
             <span class="modal-close" onclick="closeEmailCaptureModal()">&times;</span>
-            <div class="modal-header">          Unlock Certification Data</div>
+            <div class="modal-header">Create Free Account to Unlock</div>
             <div style="padding: 20px; font-size: 14px; line-height: 1.6;">
-                <p style="margin-bottom: 15px;">Enter your email to unlock <strong>certification columns</strong> (SOC2, HIPAA, PCI-DSS, ISO27001) for all 4,436+ data centers.</p>
-                <p style="margin-bottom: 15px; font-size: 13px; color: #666;">This is completely free. We'll only send you occasional updates about new DC intel.</p>
-                <form id="emailCaptureForm" onsubmit="handleEmailCapture(event)">
-                    <div class="form-group">
-                        <label>Email Address</label>
-                        <input type="email" id="emailCaptureInput" name="email" required placeholder="your@email.com">
-                    </div>
-                    <button type="submit" class="form-submit" style="width: 100%;">Unlock Certifications Data</button>
-                </form>
+                <p style="margin-bottom: 15px; font-weight: bold;">Sign in or create a free account to unlock:</p>
+                <ul style="margin: 0 0 20px 20px; line-height: 2;">
+                    <li><strong>Certification columns</strong> (SOC2, HIPAA, PCI-DSS, ISO27001)</li>
+                    <li><strong>Save & track</strong> favorite data centers</li>
+                    <li><strong>Export data</strong> (up to 10 DCs free)</li>
+                    <li><strong>Email alerts</strong> for new DC projects</li>
+                </ul>
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="closeEmailCaptureModal(); openModal('loginModal');" class="form-submit" style="flex: 1;">Sign In</button>
+                    <button onclick="closeEmailCaptureModal(); openModal('registerModal');" class="form-submit" style="flex: 1; background: #10b981;">Create Account</button>
+                </div>
                 <p style="margin-top: 15px; font-size: 11px; color: #999; text-align: center;">
                     Want even more data? <a href="#" onclick="closeEmailCaptureModal(); switchSection('pricing'); return false;" style="color: #667eea; text-decoration: underline;">View Paid Plans</a>
                 </p>
@@ -2247,9 +2258,12 @@
             loadUpcomingDCs();
         }
 
-        // Helper function to check if user has email access (unlocked certifications)
+        // Helper function to check if user has access to certifications
+        // Now requires being logged in (free accounts get it) or paid tier
         function hasEmailGateAccess() {
-            return hasEmailAccess || hasTierAccess('basic'); // Paid tiers get it automatically
+            const token = localStorage.getItem('dc_intel_token');
+            const isLoggedIn = !!token;
+            return isLoggedIn || hasTierAccess('basic'); // Logged in users + paid tiers get it
         }
 
         // Helper function to set tier (for testing - remove in production)
