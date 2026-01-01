@@ -1,15 +1,15 @@
 {
-  "generated_date": "2025-12-31T07:00:15.762693",
-  "day_of_week": "Wednesday",
+  "generated_date": "2026-01-01T07:00:15.595340",
+  "day_of_week": "Thursday",
   "includes_services": false,
   "articles": [
     {
-      "headline": "Amazon Web Services Expands Northern Virginia Data Center Footprint",
-      "content": "Amazon Web Services has signaled its continued commitment to the region's thriving data center ecosystem with a new hyperscale facility project in Louisa County, Virginia. The strategic investment further solidifies the area's reputation as a premier global data center hub, potentially adding significant compute capacity to AWS's extensive infrastructure network. While specific details about the project's total megawatt capacity remain undisclosed, the development is expected to support growing cloud computing and enterprise infrastructure demands."
+      "headline": "Oklahoma Data Center Expansion Signals Midwest Tech Infrastructure Growth",
+      "content": "A new data center project is taking shape in Owasso, Oklahoma, marking another significant development in the region's evolving digital infrastructure landscape. The construction-stage facility represents continued investment in regional data center capacity, potentially positioning Oklahoma as an increasingly attractive destination for technology and cloud computing infrastructure. While specific details about the operator and total capacity remain limited, the project underscores the ongoing expansion of data center footprints in strategically selected midwestern locations."
     },
     {
-      "headline": "New Oklahoma Data Center Signals Growing Midwest Digital Infrastructure Investment",
-      "content": "Construction is underway on a significant data center project in Owasso, Oklahoma, marking another strategic expansion of digital infrastructure in the region's emerging technology landscape. While specific operator and capacity details remain undisclosed, the project represents ongoing regional efforts to attract hyperscale computing and colocation investments that capitalize on Oklahoma's advantageous geographic and economic development conditions."
+      "headline": "Microsoft Expands Hyperscale Infrastructure in Wyoming Data Center Project",
+      "content": "Microsoft is advancing its strategic data center expansion with a new 3.0 MW facility under construction in Cheyenne, Wyoming. The project represents another significant investment by the cloud computing giant in expanding its regional infrastructure footprint, leveraging the state's attractive power economics and strategic geographic positioning. This development underscores the continued demand for robust computing capacity in emerging data center markets beyond traditional tech hubs."
     }
   ]
 }
