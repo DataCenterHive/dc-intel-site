@@ -1,15 +1,15 @@
 {
-  "generated_date": "2025-12-28T07:00:14.184963",
-  "day_of_week": "Sunday",
+  "generated_date": "2025-12-31T07:00:15.762693",
+  "day_of_week": "Wednesday",
   "includes_services": false,
   "articles": [
     {
-      "headline": "New Data Center Proposal Signals Tech Growth in Ann Arbor Market",
-      "content": "A potential data center project is taking shape in Ann Arbor, Michigan, highlighting the region's emerging potential as a strategic hyperscale infrastructure destination. While specific details about the facility's operator and total capacity remain undisclosed, the proposed development suggests increasing investment interest in Michigan's technology infrastructure landscape. The project represents a promising signal of expanding digital ecosystem opportunities in the Midwest's growing data center market."
+      "headline": "Amazon Web Services Expands Northern Virginia Data Center Footprint",
+      "content": "Amazon Web Services has signaled its continued commitment to the region's thriving data center ecosystem with a new hyperscale facility project in Louisa County, Virginia. The strategic investment further solidifies the area's reputation as a premier global data center hub, potentially adding significant compute capacity to AWS's extensive infrastructure network. While specific details about the project's total megawatt capacity remain undisclosed, the development is expected to support growing cloud computing and enterprise infrastructure demands."
     },
     {
-      "headline": "New Data Center Expansion Boosts Georgia's Growing Digital Infrastructure",
-      "content": "A recently operational data center in Fayetteville marks another significant milestone for metro Atlanta's expanding technology ecosystem. The facility represents continued investment in Georgia's strategic data center market, which has been attracting increasing attention from technology companies seeking robust regional infrastructure. While specific details about the project's operator and total capacity remain limited, the new data center underscores the state's ongoing momentum in supporting advanced digital infrastructure development."
+      "headline": "New Oklahoma Data Center Signals Growing Midwest Digital Infrastructure Investment",
+      "content": "Construction is underway on a significant data center project in Owasso, Oklahoma, marking another strategic expansion of digital infrastructure in the region's emerging technology landscape. While specific operator and capacity details remain undisclosed, the project represents ongoing regional efforts to attract hyperscale computing and colocation investments that capitalize on Oklahoma's advantageous geographic and economic development conditions."
     }
   ]
 }

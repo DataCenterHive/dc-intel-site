@@ -1238,7 +1238,8 @@
                     <a href="#" onclick="switchSection('pricing'); return false;" id="navPricing">Pricing</a> |
                     <a href="#" onclick="switchSection('services'); return false;" id="navServices">Services</a> |
                     <a href="#" onclick="switchSection('existing-dcs'); return false;" id="navExisting">Existing DCs</a> |
-                    <a href="#" onclick="switchSection('upcoming-dcs'); return false;" id="navUpcoming">Upcoming DCs</a>
+                    <a href="#" onclick="switchSection('upcoming-dcs'); return false;" id="navUpcoming">Upcoming DCs</a> |
+                    <a href="#" onclick="switchSection('watchlist'); return false;" id="navWatchlist" style="display: none; color: #0284c7; font-weight: bold;">★ My Watchlist</a>
                 </div>
             <div class="api-status">API Status: <strong id="apiStatus">ONLINE</strong></div>
         </div>
@@ -1590,6 +1591,22 @@
                         </button>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- MY WATCHLIST SECTION -->
+        <div class="content-section" id="watchlistSection">
+            <h2 style="text-align: center; margin-bottom: 20px; border-bottom: 3px solid #000; padding-bottom: 10px;">★ My Watchlist</h2>
+
+            <div style="text-align: center; margin-bottom: 20px; padding: 15px; background: #e0f2fe; border: 2px solid #0284c7; border-radius: 5px;">
+                <strong>Save your favorite data centers for quick access</strong>
+                <p style="margin: 10px 0 0 0; font-size: 13px;">Click the "★ Save" button on any data center in the Existing DCs table to add it to your watchlist.</p>
+            </div>
+
+            <div id="watchlistContent">
+                <p style="text-align: center; padding: 40px;">
+                    Loading watchlist...
+                </p>
             </div>
         </div>
 
@@ -2160,6 +2177,55 @@
         </div>
     </div>
 
+    <!-- EXPORT LIMIT REACHED MODAL -->
+    <div class="modal-overlay" id="exportLimitModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <span class="modal-close" onclick="closeModal('exportLimitModal', event)">&times;</span>
+            <div class="modal-header" style="background: #fef3c7; color: #92400e; border-bottom: 3px solid #f59e0b;">Export Limit Reached</div>
+            <div style="padding: 30px; font-size: 14px; line-height: 1.6;">
+                <div style="text-align: center; margin-bottom: 25px;">
+                    <div style="font-size: 48px; margin-bottom: 10px;">📊</div>
+                    <h3 style="margin: 0 0 10px 0; font-size: 20px; color: #92400e;">You've Used All 10 Free Exports</h3>
+                    <p style="margin: 0; color: #666;">Upgrade to continue exporting data center intelligence</p>
+                </div>
+
+                <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 15px; margin-bottom: 25px;">
+                    <p style="margin: 0 0 10px 0; font-weight: bold; color: #059669;">Upgrade Benefits:</p>
+                    <ul style="margin: 0; padding-left: 20px; line-height: 2;">
+                        <li><strong>Unlimited exports</strong> (CSV & Excel)</li>
+                        <li><strong>Advanced data fields</strong> (sqft, coordinates, specs)</li>
+                        <li><strong>Priority support</strong></li>
+                        <li><strong>API access</strong> (Enterprise tier)</li>
+                    </ul>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px;">
+                    <div style="border: 2px solid #4a5568; padding: 15px; text-align: center; border-radius: 5px;">
+                        <div style="font-weight: bold; color: #4a5568; margin-bottom: 5px;">Basic</div>
+                        <div style="font-size: 24px; font-weight: bold; color: #000;">$99</div>
+                        <div style="font-size: 11px; color: #666;">per month</div>
+                    </div>
+                    <div style="border: 3px solid #6b46c1; padding: 15px; text-align: center; border-radius: 5px; background: #faf5ff;">
+                        <div style="font-weight: bold; color: #6b46c1; margin-bottom: 5px;">Premium</div>
+                        <div style="font-size: 24px; font-weight: bold; color: #000;">$499</div>
+                        <div style="font-size: 11px; color: #666;">per month</div>
+                        <div style="margin-top: 5px; background: #6b46c1; color: #fff; padding: 3px 8px; border-radius: 3px; font-size: 10px; font-weight: bold;">POPULAR</div>
+                    </div>
+                    <div style="border: 2px solid #d97706; padding: 15px; text-align: center; border-radius: 5px;">
+                        <div style="font-weight: bold; color: #d97706; margin-bottom: 5px;">Enterprise</div>
+                        <div style="font-size: 24px; font-weight: bold; color: #000;">$2,499</div>
+                        <div style="font-size: 11px; color: #666;">per month</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="closeModal('exportLimitModal', event); switchSection('pricing');" class="form-submit" style="flex: 1; background: #6b46c1;">View All Plans</button>
+                    <button onclick="closeModal('exportLimitModal', event);" class="form-submit" style="flex: 1; background: #6b7280;">Maybe Later</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="ticker">
         <div class="ticker-content" id="tickerContent">
             LATEST: Google announces Virginia expansion       AWS Dallas project valued at $500M       Equinix opens new Ashburn facility       Microsoft Azure capacity doubles in Phoenix       QTS reports record quarter       Switch announces Nevada mega-campus       Approximately 700,000 permits tracked nationwide       Over 1,000 confirmed data center projects       Real-time intelligence via DC Intel API
@@ -2266,6 +2332,239 @@
             return isLoggedIn || hasTierAccess('basic'); // Logged in users + paid tiers get it
         }
 
+        // Helper function to check if user is logged in
+        function isLoggedIn() {
+            const token = localStorage.getItem('dc_intel_token');
+            return !!token;
+        }
+
+        // Watchlist functions
+        async function toggleWatchlist(dcId, dcName, dcLocation) {
+            try {
+                const token = localStorage.getItem('dc_intel_token');
+                if (!token) {
+                    openModal('loginModal');
+                    return;
+                }
+
+                const button = document.getElementById(`save-btn-${dcId}`);
+                if (!button) return;
+
+                // Check if already in watchlist
+                const isSaved = button.textContent.includes('Saved');
+
+                if (isSaved) {
+                    // Remove from watchlist
+                    const response = await fetch(`${PUBLIC_API_BASE}/api/watchlist/remove/${dcId}`, {
+                        method: 'DELETE',
+                        headers: authHeaders()
+                    });
+
+                    if (response.ok) {
+                        button.textContent = '★ Save';
+                        button.style.background = '#0284c7';
+                        console.log(`Removed ${dcId} from watchlist`);
+                    }
+                } else {
+                    // Add to watchlist
+                    const response = await fetch(`${PUBLIC_API_BASE}/api/watchlist/add`, {
+                        method: 'POST',
+                        headers: {
+                            ...authHeaders(),
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            dc_id: dcId,
+                            dc_name: dcName,
+                            dc_location: dcLocation
+                        })
+                    });
+
+                    const result = await response.json();
+                    if (result.ok) {
+                        button.textContent = '✓ Saved';
+                        button.style.background = '#10b981';
+                        console.log(`Added ${dcId} to watchlist`);
+                    } else if (!result.ok && result.message && result.message.includes('Already')) {
+                        button.textContent = '✓ Saved';
+                        button.style.background = '#10b981';
+                    }
+                }
+            } catch (error) {
+                console.error('Error toggling watchlist:', error);
+                alert('Failed to update watchlist. Please try again.');
+            }
+        }
+
+        async function loadWatchlist() {
+            try {
+                const token = localStorage.getItem('dc_intel_token');
+                if (!token) {
+                    document.getElementById('watchlistContent').innerHTML = `
+                        <p style="text-align: center; padding: 40px;">
+                            Please <a href="#" onclick="openModal('loginModal'); return false;" style="color: #0284c7; font-weight: bold;">log in</a> to view your watchlist.
+                        </p>
+                    `;
+                    return;
+                }
+
+                const response = await fetch(`${PUBLIC_API_BASE}/api/watchlist`, {
+                    headers: authHeaders()
+                });
+
+                const data = await response.json();
+                const watchlist = data.items || [];
+
+                if (watchlist.length === 0) {
+                    document.getElementById('watchlistContent').innerHTML = `
+                        <p style="text-align: center; padding: 40px; color: #666;">
+                            Your watchlist is empty. Click the "★ Save" button on any data center to add it to your watchlist.
+                        </p>
+                    `;
+                    return;
+                }
+
+                let html = `<h3 style="text-align: center; margin-bottom: 20px;">My Saved Data Centers (${watchlist.length})</h3>`;
+                html += '<div class="table-wrapper">';
+                html += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
+                html += '<tr style="background: #000; color: #fff;">';
+                html += '<th style="padding: 8px; text-align: left;">Name</th>';
+                html += '<th style="padding: 8px; text-align: left;">Location</th>';
+                html += '<th style="padding: 8px; text-align: center;">Date Saved</th>';
+                html += '<th style="padding: 8px; text-align: center;">Action</th>';
+                html += '</tr>';
+
+                watchlist.forEach((item, idx) => {
+                    const bg = idx % 2 === 0 ? '#fff' : '#f9f9f9';
+                    const savedDate = new Date(item.added_at).toLocaleDateString();
+                    html += `<tr style="background: ${bg}; border-bottom: 1px solid #ccc;">`;
+                    html += `<td style="padding: 8px;">${item.dc_name || 'N/A'}</td>`;
+                    html += `<td style="padding: 8px;">${item.dc_location || 'N/A'}</td>`;
+                    html += `<td style="padding: 8px; text-align: center;">${savedDate}</td>`;
+                    html += `<td style="padding: 8px; text-align: center;">
+                        <button onclick="removeFromWatchlist('${item.dc_id}'); return false;"
+                            style="padding: 4px 10px; background: #dc2626; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
+                            Remove
+                        </button>
+                    </td>`;
+                    html += '</tr>';
+                });
+
+                html += '</table></div>';
+
+                document.getElementById('watchlistContent').innerHTML = html;
+
+            } catch (error) {
+                console.error('Error loading watchlist:', error);
+                document.getElementById('watchlistContent').innerHTML = `
+                    <p style="text-align: center; padding: 40px; color: #c00;">
+                        Error loading watchlist. Please try again.
+                    </p>
+                `;
+            }
+        }
+
+        async function removeFromWatchlist(dcId) {
+            try {
+                const response = await fetch(`${PUBLIC_API_BASE}/api/watchlist/remove/${dcId}`, {
+                    method: 'DELETE',
+                    headers: authHeaders()
+                });
+
+                if (response.ok) {
+                    console.log(`Removed ${dcId} from watchlist`);
+                    loadWatchlist(); // Reload the watchlist
+                }
+            } catch (error) {
+                console.error('Error removing from watchlist:', error);
+                alert('Failed to remove from watchlist. Please try again.');
+            }
+        }
+
+        // Export limit checking function
+        async function checkAndLogExport() {
+            try {
+                const token = localStorage.getItem('dc_intel_token');
+                if (!token) {
+                    alert('Please create a free account to export data.');
+                    openModal('registerModal');
+                    return false;
+                }
+
+                // Check current export count
+                const countResponse = await fetch(`${PUBLIC_API_BASE}/api/export/count`, {
+                    headers: authHeaders()
+                });
+
+                if (!countResponse.ok) {
+                    console.error('Failed to check export count');
+                    return true; // Allow export if API fails
+                }
+
+                const countData = await countResponse.json();
+                const { export_count, tier, limit, remaining, unlimited } = countData;
+
+                console.log(`Export count: ${export_count}, Tier: ${tier}, Remaining: ${remaining}`);
+
+                // If unlimited (paid tier), allow export
+                if (unlimited) {
+                    // Still log the export for analytics
+                    await fetch(`${PUBLIC_API_BASE}/api/export/log`, {
+                        method: 'POST',
+                        headers: authHeaders()
+                    });
+                    return true;
+                }
+
+                // Free tier: check if limit reached
+                if (export_count >= limit) {
+                    // Show upgrade modal
+                    showExportLimitModal();
+                    return false;
+                }
+
+                // Log the export
+                const logResponse = await fetch(`${PUBLIC_API_BASE}/api/export/log`, {
+                    method: 'POST',
+                    headers: authHeaders()
+                });
+
+                if (!logResponse.ok) {
+                    const error = await logResponse.json();
+                    if (error.detail && error.detail.includes('limit reached')) {
+                        showExportLimitModal();
+                        return false;
+                    }
+                }
+
+                const logData = await logResponse.json();
+
+                // Show warning if approaching limit (8 or 9 exports used)
+                if (logData.export_count >= 8 && logData.export_count < 10 && logData.tier === 'free') {
+                    const exportsLeft = 10 - logData.export_count;
+                    alert(`Export successful! You have ${exportsLeft} export${exportsLeft !== 1 ? 's' : ''} remaining on your free account.`);
+                }
+
+                return true;
+
+            } catch (error) {
+                console.error('Error checking export limit:', error);
+                // Allow export if API is unavailable
+                return true;
+            }
+        }
+
+        function showExportLimitModal() {
+            const modal = document.getElementById('exportLimitModal');
+            if (modal) {
+                modal.classList.add('active');
+            } else {
+                // Fallback alert if modal doesn't exist
+                alert('Free tier export limit reached (10 exports). Upgrade to Basic, Premium, or Enterprise for unlimited exports!\n\nView our pricing page for more details.');
+                switchSection('pricing');
+            }
+        }
+
         // Helper function to set tier (for testing - remove in production)
         function setTier(tier) {
             userTier = tier;
@@ -2361,6 +2660,12 @@
                     }
                 });
             });
+
+            // Show watchlist nav link if user is logged in
+            const navWatchlist = document.getElementById('navWatchlist');
+            if (navWatchlist && isLoggedIn()) {
+                navWatchlist.style.display = 'inline';
+            }
         });
 
         async function handleLogin(event) {
@@ -2483,7 +2788,9 @@
 
                 if (response.ok && data.access_token) {
                     localStorage.setItem('dc_intel_token', data.access_token);
+                    localStorage.setItem('dc_intel_tier', data.user.tier);
                     localStorage.setItem('dc_intel_user', JSON.stringify(data.user));
+                    userTier = data.user.tier;  // Update global tier variable
                     updateAuthUI(data.user);
                     closeModal('registerModal');
                     form.reset();  // Clear the form
@@ -2604,16 +2911,19 @@
             const authButtons = document.getElementById('authButtons');
             const userInfo = document.getElementById('userInfo');
             const logoutFallback = document.getElementById('logoutFallback');
+            const navWatchlist = document.getElementById('navWatchlist');
 
             if (user) {
                 authButtons.style.display = 'none';
                 userInfo.style.display = 'block';
                 document.getElementById('userName').textContent = user.name || user.email;
                 if (logoutFallback) logoutFallback.style.display = 'inline-block';
+                if (navWatchlist) navWatchlist.style.display = 'inline';
             } else {
                 authButtons.style.display = 'flex';
                 userInfo.style.display = 'none';
                 if (logoutFallback) logoutFallback.style.display = 'none';
+                if (navWatchlist) navWatchlist.style.display = 'none';
             }
         }
 
@@ -3342,7 +3652,8 @@
                 'pricing': 'pricingSection',
                 'services': 'servicesSection',
                 'existing-dcs': 'existingDCsSection',
-                'upcoming-dcs': 'upcomingDCsSection'
+                'upcoming-dcs': 'upcomingDCsSection',
+                'watchlist': 'watchlistSection'
             };
 
             const sectionId = sectionMap[section];
@@ -3371,6 +3682,7 @@
             if (section === 'services') loadServices();
             if (section === 'existing-dcs') loadExistingDCs();
             if (section === 'upcoming-dcs') loadUpcomingDCs();
+            if (section === 'watchlist') loadWatchlist();
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -4229,6 +4541,11 @@
                 html += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setExistingSort(\'title\')">Title</th>';
                 html += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setExistingSort(\'address\')">Address</th>';
 
+                // Save button for logged-in users
+                if (isLoggedIn()) {
+                    html += '<th style="padding: 8px; text-align: center; background: #0284c7;">Save</th>';
+                }
+
                 // EMAIL GATE columns (certifications)
                 if (hasEmailGateAccess()) {
                     html += '<th style="padding: 8px; text-align: center; background: #10b981;">SOC2</th>';
@@ -4263,6 +4580,7 @@
                     const provider = item.provider || 'Unknown';
                     const title = item.name || 'N/A';
                     const address = item.address_line_raw || 'N/A';
+                    const dcId = `${provider}-${title}-${idx}`.replace(/[^a-zA-Z0-9-]/g, '_');
 
                     html += `<tr style="background: ${bg}; border-bottom: 1px solid #ccc;">`;
 
@@ -4270,6 +4588,17 @@
                     html += `<td style="padding: 8px;">${provider}</td>`;
                     html += `<td style="padding: 8px;">${title}</td>`;
                     html += `<td style="padding: 8px;">${address}</td>`;
+
+                    // Save button for logged-in users
+                    if (isLoggedIn()) {
+                        const fullName = `${provider} - ${title}`;
+                        html += `<td style="padding: 8px; text-align: center;">
+                            <button id="save-btn-${dcId}" onclick="toggleWatchlist('${dcId}', '${fullName.replace(/'/g, "\\'")}', '${address.replace(/'/g, "\\'")}'); return false;"
+                                style="padding: 4px 10px; background: #0284c7; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
+                                ★ Save
+                            </button>
+                        </td>`;
+                    }
 
                     // EMAIL GATE columns (certifications)
                     if (hasEmailGateAccess()) {
@@ -4445,11 +4774,21 @@
             document.body.removeChild(link);
         }
 
-        function exportExistingDCsToCSV() {
+        async function exportExistingDCsToCSV() {
             if (!window.existingDCsData || window.existingDCsData.length === 0) {
                 alert('No data available to export. Please load the data first.');
                 return;
             }
+
+            // Require login to export
+            if (!isLoggedIn()) {
+                alert('Please create a free account to export data.');
+                openModal('registerModal');
+                return;
+            }
+
+            const canExport = await checkAndLogExport();
+            if (!canExport) return;
 
             const tier = userTier || 'free';
             const columns = getExportColumns(tier, 'existing');
@@ -4460,11 +4799,21 @@
             downloadCSV(csvContent, filename);
         }
 
-        function exportUpcomingDCsToCSV() {
+        async function exportUpcomingDCsToCSV() {
             if (!window.upcomingDCsData || window.upcomingDCsData.length === 0) {
                 alert('No data available to export. Please load the data first.');
                 return;
             }
+
+            // Require login to export
+            if (!isLoggedIn()) {
+                alert('Please create a free account to export data.');
+                openModal('registerModal');
+                return;
+            }
+
+            const canExport = await checkAndLogExport();
+            if (!canExport) return;
 
             const tier = userTier || 'free';
             const columns = getExportColumns(tier, 'upcoming');
@@ -4476,11 +4825,21 @@
         }
 
         // Excel Export Functions
-        function exportExistingDCsToExcel() {
+        async function exportExistingDCsToExcel() {
             if (!window.existingDCsData || window.existingDCsData.length === 0) {
                 alert('No data available to export. Please load the data first.');
                 return;
             }
+
+            // Require login to export
+            if (!isLoggedIn()) {
+                alert('Please create a free account to export data.');
+                openModal('registerModal');
+                return;
+            }
+
+            const canExport = await checkAndLogExport();
+            if (!canExport) return;
 
             const tier = userTier || 'free';
             const columns = getExportColumns(tier, 'existing');
@@ -4514,11 +4873,21 @@
             XLSX.writeFile(wb, filename);
         }
 
-        function exportUpcomingDCsToExcel() {
+        async function exportUpcomingDCsToExcel() {
             if (!window.upcomingDCsData || window.upcomingDCsData.length === 0) {
                 alert('No data available to export. Please load the data first.');
                 return;
             }
+
+            // Require login to export
+            if (!isLoggedIn()) {
+                alert('Please create a free account to export data.');
+                openModal('registerModal');
+                return;
+            }
+
+            const canExport = await checkAndLogExport();
+            if (!canExport) return;
 
             const tier = userTier || 'free';
             const columns = getExportColumns(tier, 'upcoming');
