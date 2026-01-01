@@ -33,7 +33,7 @@
         }
 
         body {
-            background: var(--bg-primary);
+            background: var(--bg-secondary);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif;
             color: var(--text-primary);
             padding: calc(var(--spacing-unit) * 2.5);
@@ -479,201 +479,6 @@
             transform: translateY(-1px);
             box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
         }
-
-        /* Toast Notification System */
-        #toast-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 99999;
-            display: flex;
-            flex-direction: column;
-            gap: calc(var(--spacing-unit) * 1);
-        }
-
-        .toast {
-            background: var(--bg-primary);
-            border: 1px solid var(--border-default);
-            border-radius: calc(var(--spacing-unit) * 1);
-            padding: calc(var(--spacing-unit) * 2);
-            min-width: 300px;
-            max-width: 400px;
-            box-shadow: var(--shadow-md);
-            display: flex;
-            align-items: flex-start;
-            gap: calc(var(--spacing-unit) * 1.5);
-            animation: slideIn 0.3s ease;
-        }
-
-        .toast.success { border-left: 4px solid var(--success); }
-        .toast.error { border-left: 4px solid #dc2626; }
-        .toast.info { border-left: 4px solid var(--brand-primary); }
-        .toast.warning { border-left: 4px solid var(--warning); }
-
-        .toast-message {
-            flex: 1;
-            font-size: 14px;
-            line-height: 1.4;
-            color: var(--text-primary);
-        }
-
-        .toast-close {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-size: 18px;
-            line-height: 1;
-            padding: 0;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(400px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        /* Utility Classes */
-        .btn-block {
-            width: 100%;
-            display: block;
-        }
-
-        .mt-20 {
-            margin-top: calc(var(--spacing-unit) * 2.5);
-        }
-
-        /* Pricing Card Classes */
-        .pricing-card {
-            border: 2px solid var(--border-emphasis);
-            padding: calc(var(--spacing-unit) * 3);
-            background: var(--bg-primary);
-            position: relative;
-            border-radius: calc(var(--spacing-unit) * 1);
-        }
-
-        .pricing-card__header {
-            background: var(--text-primary);
-            color: #ffffff;
-            border: none;
-            padding: calc(var(--spacing-unit) * 1);
-            text-align: center;
-            margin: calc(var(--spacing-unit) * -3) calc(var(--spacing-unit) * -3) calc(var(--spacing-unit) * 2.5);
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        .pricing-card__price {
-            text-align: center;
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: calc(var(--spacing-unit) * 1);
-        }
-
-        .pricing-card__price span {
-            font-size: 14px;
-            font-weight: normal;
-        }
-
-        .pricing-card__subtitle {
-            text-align: center;
-            font-size: 13px;
-            margin-bottom: calc(var(--spacing-unit) * 2.5);
-            font-style: italic;
-        }
-
-        .pricing-card__divider {
-            border: 1px solid var(--border-default);
-            margin: calc(var(--spacing-unit) * 2.5) 0;
-        }
-
-        .pricing-card__features {
-            list-style: none;
-            padding: 0;
-            font-size: 13px;
-            line-height: 2;
-        }
-
-        .pricing-card__features li {
-            margin-bottom: calc(var(--spacing-unit) * 0.5);
-        }
-
-        .pricing-card__features .feature-divider {
-            margin-top: calc(var(--spacing-unit) * 1.25);
-            padding-top: calc(var(--spacing-unit) * 1.25);
-            border-top: 1px solid var(--border-default);
-        }
-
-        .pricing-card__features .feature-note {
-            margin-top: calc(var(--spacing-unit) * 1.25);
-            font-style: italic;
-            color: var(--text-secondary);
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: calc(var(--spacing-unit) * 3.75);
-            max-width: 1100px;
-            margin: 0 auto calc(var(--spacing-unit) * 5);
-        }
-
-        .pricing-header {
-            text-align: center;
-            margin-bottom: calc(var(--spacing-unit) * 3.75);
-            border-bottom: 3px solid var(--divider-strong);
-            padding-bottom: calc(var(--spacing-unit) * 1.25);
-        }
-
-        .pricing-intro {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto calc(var(--spacing-unit) * 5);
-            font-size: 15px;
-            line-height: 1.6;
-        }
-
-        .data-freshness {
-            color: var(--text-secondary);
-            font-size: 12px;
-            margin-bottom: calc(var(--spacing-unit) * 1);
-            font-weight: 500;
-        }
-
-        .news-card {
-            background: var(--bg-primary);
-            border: 1px solid var(--border-default);
-            border-radius: calc(var(--spacing-unit) * 1);
-            padding: calc(var(--spacing-unit) * 3);
-            margin-bottom: calc(var(--spacing-unit) * 2);
-            box-shadow: var(--shadow-sm);
-            transition: box-shadow 0.2s ease;
-        }
-
-        .news-card:hover {
-            box-shadow: var(--shadow-md);
-        }
-
-        .news-card__headline {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: calc(var(--spacing-unit) * 1);
-            color: var(--text-primary);
-        }
-
-        .news-card__summary {
-            font-size: 14px;
-            line-height: 1.6;
-            color: var(--text-secondary);
-            margin-bottom: calc(var(--spacing-unit) * 1.5);
-        }
-
-        .news-card__meta {
-            font-size: 12px;
-            color: var(--text-secondary);
-            display: flex;
-            gap: calc(var(--spacing-unit) * 2);
-        }
-
 
         .ticker {
             background: #000;
@@ -1853,28 +1658,28 @@
 
         <!-- PRICING SECTION -->
         <div class="content-section" id="pricingSection">
-            <h2 class="pricing-header">Subscription Pricing</h2>
+            <h2 style="text-align: center; margin-bottom: 30px; border-bottom: 3px solid #000; padding-bottom: 10px;">Subscription Pricing</h2>
 
-            <p class="pricing-intro">
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 40px; font-size: 15px; line-height: 1.6;">
                 Comprehensive Data Center Intelligence | 4,436+ Facilities | 80+ Markets | Real-Time Permit Tracking
             </p>
 
             <!-- Pricing Tiers Grid -->
-            <div class="pricing-grid">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1100px; margin: 0 auto 40px;">
 
                 <!-- BASIC TIER -->
-                <div class="pricing-card">
-                    <div class="pricing-card__header">
+                <div style="border: 2px solid var(--border-emphasis); padding: 25px; background: var(--bg-primary); position: relative; ">
+                    <div style="background: var(--text-primary); color: #fff; border: none; padding: 8px; text-align: center; margin: -25px -25px 20px; font-weight: bold; letter-spacing: 1px;">
                         BASIC TIER
                     </div>
-                    <div class="pricing-card__price">
-                        $299<span>/month</span>
+                    <div style="text-align: center; font-size: 28px; font-weight: bold; margin-bottom: 10px;">
+                        $299<span style="font-size: 14px; font-weight: normal;">/month</span>
                     </div>
-                    <p class="pricing-card__subtitle">
+                    <p style="text-align: center; font-size: 13px; margin-bottom: 20px; font-style: italic;">
                         Self-service intelligence
                     </p>
-                    <hr class="pricing-card__divider">
-                    <ul class="pricing-card__features">
+                    <hr style="border: 1px solid #ccc; margin: 20px 0;">
+                    <ul style="list-style: none; padding: 0; font-size: 13px; line-height: 2;">
                         <li>-  <strong>Full DC directory access</strong> (4,436+ facilities)</li>
                         <li>-  <strong>Certification data</strong> (SOC2, HIPAA, PCI, ISO27001)</li>
                         <li>-  <strong>Building permits database</strong> (2.52M permits, 32 cities)</li>
@@ -1883,24 +1688,28 @@
                         <li>-  Monthly market reports</li>
                         <li>-  Data export (CSV/Excel)</li>
                         <li>-  Email support (48-hour response time)</li>
-                        <li class="feature-divider"><strong>-  Study Guide Access: Core Fundamentals</strong></li>
+                        <li style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #ccc;"><strong>-  Study Guide Access: Core Fundamentals</strong></li>
                     </ul>
-                    <a href="javascript:void(0)" class="btn-primary btn-block mt-20" onclick="showTrialModal()">START TRIAL</a>
+                    <a href="mailto:sales@datacenterhive.com?subject=Basic%20Tier%20Inquiry"
+                       class="btn-primary"
+                       style="width: 100%; margin-top: 20px; display: block;">
+                        CONTACT SALES
+                    </a>
                 </div>
 
                 <!-- PREMIUM TIER -->
-                <div class="pricing-card">
-                    <div class="pricing-card__header">
+                <div style="border: 2px solid var(--border-emphasis); padding: 25px; background: #fff; position: relative;">
+                    <div style="background: var(--text-primary); color: #fff; border: none; padding: 8px; text-align: center; margin: -25px -25px 20px; font-weight: bold; letter-spacing: 1px;">
                         PREMIUM TIER
                     </div>
-                    <div class="pricing-card__price">
-                        $999<span>/month</span>
+                    <div style="text-align: center; font-size: 28px; font-weight: bold; margin-bottom: 10px;">
+                        $999<span style="font-size: 14px; font-weight: normal;">/month</span>
                     </div>
-                    <p class="pricing-card__subtitle">
+                    <p style="text-align: center; font-size: 13px; margin-bottom: 20px; font-style: italic;">
                         Guided advisory
                     </p>
-                    <hr class="pricing-card__divider">
-                    <ul class="pricing-card__features">
+                    <hr style="border: 1px solid #ccc; margin: 20px 0;">
+                    <ul style="list-style: none; padding: 0; font-size: 13px; line-height: 2;">
                         <li>-  Everything in Basic</li>
                         <li>-  <strong>Upcoming DCs with full project descriptions</strong></li>
                         <li>-  <strong>Quarterly advisor calls</strong> (4 calls per year)</li>
@@ -1911,27 +1720,28 @@
                         <li>-  <strong>Warm introductions</strong> to data center operators</li>
                         <li>-  <strong>Monthly market intelligence briefing</strong></li>
                         <li>-  <strong>Deal alert notifications</strong> (M&A, leases, announcements)</li>
-                        <li class="feature-divider"><strong>-  Study Guide Access: Essential Infrastructure + Core Fundamentals</strong></li>
+                        <li style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #ccc;"><strong>-  Study Guide Access: Essential Infrastructure + Core Fundamentals</strong></li>
                     </ul>
                     <a href="https://calendly.com/datacenterhive/demo" target="_blank"
-                       class="btn-primary btn-block mt-20">
+                       class="btn-primary"
+                       style="width: 100%; margin-top: 20px; display: block;">
                         SCHEDULE DEMO
                     </a>
                 </div>
 
                 <!-- ENTERPRISE TIER -->
-                <div class="pricing-card">
-                    <div class="pricing-card__header">
+                <div style="border: 2px solid var(--border-emphasis); padding: 25px; background: #fff; position: relative;">
+                    <div style="background: var(--text-primary); color: #fff; border: none; padding: 8px; text-align: center; margin: -25px -25px 20px; font-weight: bold; letter-spacing: 1px;">
                         ENTERPRISE TIER
                     </div>
-                    <div class="pricing-card__price">
-                        $2,499<span>/month</span>
+                    <div style="text-align: center; font-size: 28px; font-weight: bold; margin-bottom: 10px;">
+                        $2,499<span style="font-size: 14px; font-weight: normal;">/month</span>
                     </div>
-                    <p class="pricing-card__subtitle">
+                    <p style="text-align: center; font-size: 13px; margin-bottom: 20px; font-style: italic;">
                         Full-service advisory & brokerage
                     </p>
-                    <hr class="pricing-card__divider">
-                    <ul class="pricing-card__features">
+                    <hr style="border: 1px solid #ccc; margin: 20px 0;">
+                    <ul style="list-style: none; padding: 0; font-size: 13px; line-height: 2;">
                         <li>-  Everything in Premium</li>
                         <li>-  <strong>Full permit history for upcoming DCs</strong> (descriptions + valuations)</li>
                         <li>-  <strong>DC News Archive</strong> (full historical archive of all DC-related articles)</li>
@@ -1944,11 +1754,12 @@
                         <li>-  <strong>Custom research projects</strong> (unlimited requests)</li>
                         <li>-  <strong>API access</strong> (programmatic data access)</li>
                         <li>-  <strong>White-glove concierge service</strong></li>
-                        <li class="feature-divider"><strong>-  Study Guide Access: Complete Library (all guides)</strong></li>
-                        <li class="feature-note">+ Success fees: 5-10% of first year contract value</li>
+                        <li style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #ccc;"><strong>-  Study Guide Access: Complete Library (all guides)</strong></li>
+                        <li style="margin-top: 10px; font-style: italic; color: #666;">+ Success fees: 5-10% of first year contract value</li>
                     </ul>
                     <a href="mailto:sales@datacenterhive.com?subject=Enterprise%20Tier%20Inquiry"
-                       class="btn-secondary btn-block mt-20">
+                       class="btn-secondary"
+                       style="width: 100%; margin-top: 20px; display: block;">
                         CONTACT SALES
                     </a>
                 </div>
@@ -2130,7 +1941,6 @@
         <!-- EXISTING DCS SECTION -->
         <div class="content-section" id="existingDCsSection">
             <h2 style="text-align: center; margin-bottom: 20px; border-bottom: 3px solid #000; padding-bottom: 10px;">Existing Data Centers Database</h2>
-            <p class="data-freshness" style="text-align: center;">Data refresh: Daily</p>
 
             <!-- Tabs for Existing DCs -->
             <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #ccc;">
@@ -2191,7 +2001,6 @@
         <!-- UPCOMING DCS SECTION -->
         <div class="content-section" id="upcomingDCsSection">
             <h2 style="text-align: center; margin-bottom: 20px; border-bottom: 3px solid #000; padding-bottom: 10px;">Upcoming Data Center Projects</h2>
-            <p class="data-freshness" style="text-align: center;">Data refresh: Daily</p>
             <p style="text-align: center; margin-bottom: 20px; font-size: 13px;">Intelligence gathered from industry news sources and public construction permits nationwide</p>
 
             <!-- Tabs for Upcoming DCs -->
@@ -2625,7 +2434,7 @@
                 }
             } catch (error) {
                 console.error('Error toggling watchlist:', error);
-                showToast('Failed to update watchlist. Please try again.', 'error');
+                alert('Failed to update watchlist. Please try again.');
             }
         }
 
@@ -2710,7 +2519,7 @@
                 }
             } catch (error) {
                 console.error('Error removing from watchlist:', error);
-                showToast('Failed to remove from watchlist. Please try again.', 'error');
+                alert('Failed to remove from watchlist. Please try again.');
             }
         }
 
@@ -2719,7 +2528,7 @@
             try {
                 const token = localStorage.getItem('dc_intel_token');
                 if (!token) {
-                    showToast('Please create a free account to export data.', 'info');
+                    alert('Please create a free account to export data.');
                     openModal('registerModal');
                     return false;
                 }
@@ -2775,7 +2584,7 @@
                 // Show warning if approaching limit (8 or 9 exports used)
                 if (logData.export_count >= 8 && logData.export_count < 10 && logData.tier === 'free') {
                     const exportsLeft = 10 - logData.export_count;
-                    showToast(`Export successful! You have ${exportsLeft} export${exportsLeft !== 1 ? 's' : ''} remaining.`, 'success');
+                    alert(`Export successful! You have ${exportsLeft} export${exportsLeft !== 1 ? 's' : ''} remaining on your free account.`);
                 }
 
                 return true;
@@ -2833,7 +2642,7 @@
             closeEmailCaptureModal();
 
             // Show success message
-            showToast('Certification data unlocked!', 'success');
+            alert('Thank you! Certification data is now unlocked. Refreshing the table...');
 
             // Reload Existing DCs to show unlocked columns
             loadExistingDCs();
@@ -2930,7 +2739,7 @@
                     window.location.reload();
                     return;
                 } else {
-                    showToast('Invalid password for test account.', 'error');
+                    alert('Invalid password for test account.');
                     return;
                 }
             }
@@ -2950,7 +2759,7 @@
 
                 if (!response.ok) {
                     const error = await response.json();
-                    showToast(error.detail || 'Login failed. Please check your credentials.', 'error');
+                    alert(error.detail || 'Login failed. Please check your credentials.');
                     return;
                 }
 
@@ -2969,11 +2778,11 @@
                     // Reload page immediately to refresh the UI
                     window.location.reload();
                 } else {
-                    showToast('Login failed. Invalid response from server.', 'error');
+                    alert('Login failed. Invalid response from server.');
                 }
             } catch (error) {
                 console.error('Login error:', error);
-                showToast('Login failed. Use test accounts: basic@test.com, premium@test.com, or enterprise@test.com', 'error');
+                alert('Login failed. Backend API not available. Use test accounts: basic@test.com, premium@test.com, or enterprise@test.com');
             }
         }
 
@@ -2992,7 +2801,7 @@
             const formData = new FormData(form);
 
             if (formData.get('password') !== formData.get('confirm_password')) {
-                showToast('Passwords do not match!', 'error');
+                alert('Passwords do not match!');
                 return;
             }
 
@@ -3023,13 +2832,13 @@
                     updateAuthUI(data.user);
                     closeModal('registerModal');
                     form.reset();  // Clear the form
-                    showToast('Registration successful! Welcome to DC Intel.', 'success');
+                    alert('Registration successful! Welcome to DC Intel.');
                 } else {
-                    showToast(data.error || data.detail || 'Registration failed. Please try again.', 'error');
+                    alert(data.error || data.detail || 'Registration failed. Please try again.');
                 }
             } catch (error) {
                 console.error('Registration error:', error);
-                showToast('Registration failed. Server not available.', 'error');
+                alert('Registration failed. This feature requires server implementation.');
             } finally {
                 isRegistering = false;  // Unlock the form
             }
@@ -3046,7 +2855,7 @@
             if (typeof updateTierVisibility === 'function') {
                 updateTierVisibility();
             }
-            showToast('You have been logged out.', 'info');
+            alert('You have been logged out.');
             // Reload page to reset all content and tier access
             window.location.reload();
         }
@@ -3071,14 +2880,14 @@
 
                 if (response.ok) {
                     closeModal('forgotPasswordModal');
-                    showToast('Password reset link sent. Please check your email.', 'success');
+                    alert('If an account exists with that email, a password reset link has been sent. Please check your inbox.');
                     form.reset();
                 } else {
-                    showToast(data.detail || 'Failed to send reset email.', 'error');
+                    alert(data.detail || 'Failed to send reset email. Please try again.');
                 }
             } catch (error) {
                 console.error('Forgot password error:', error);
-                showToast('Failed to send reset email. Please try again later.', 'error');
+                alert('Failed to send reset email. Please try again later.');
             }
         }
 
@@ -3088,7 +2897,7 @@
             const formData = new FormData(form);
 
             if (formData.get('new_password') !== formData.get('confirm_password')) {
-                showToast('Passwords do not match!', 'error');
+                alert('Passwords do not match!');
                 return;
             }
 
@@ -3110,15 +2919,15 @@
 
                 if (response.ok) {
                     closeModal('resetPasswordModal');
-                    showToast('Password successfully reset!', 'success');
+                    alert('Password successfully reset! You can now log in with your new password.');
                     form.reset();
                     openModal('loginModal');
                 } else {
-                    showToast(data.detail || 'Password reset failed. Link may have expired.', 'error');
+                    alert(data.detail || 'Failed to reset password. The link may have expired.');
                 }
             } catch (error) {
                 console.error('Reset password error:', error);
-                showToast('Failed to reset password. Please try again.', 'error');
+                alert('Failed to reset password. Please try again.');
             }
         }
 
@@ -4032,10 +3841,10 @@
 
             if (!access.hasAccess) {
                 if (access.reason === 'login') {
-                    showToast('Please log in to access Study Guide content.', 'info');
+                    alert('Please log in to access Study Guide content.\n\nClick the Login button in the top-right corner.');
                     return;
                 } else if (access.reason === 'upgrade') {
-                    showUpgradeModal('study-guide', access.requiredTier);
+                    alert(`This content requires a ${access.requiredTier} subscription.\n\nPlease upgrade your plan to access this content.`);
                     return;
                 }
             }
@@ -4140,10 +3949,10 @@
 
             if (!access.hasAccess) {
                 if (access.reason === 'login') {
-                    showToast('Please log in to access Study Guide content.', 'info');
+                    alert('Please log in to access Study Guide content.\n\nClick the Login button in the top-right corner.');
                     return;
                 } else if (access.reason === 'upgrade') {
-                    showUpgradeModal('study-guide', access.requiredTier);
+                    alert(`This content requires a ${access.requiredTier} subscription.\n\nPlease upgrade your plan to access this content.`);
                     return;
                 }
             }
@@ -4179,10 +3988,10 @@
 
             if (!access.hasAccess) {
                 if (access.reason === 'login') {
-                    showToast('Please log in to access Study Guide content.', 'info');
+                    alert('Please log in to access Study Guide content.\n\nClick the Login button in the top-right corner.');
                     return;
                 } else if (access.reason === 'upgrade') {
-                    showUpgradeModal('study-guide', access.requiredTier);
+                    alert(`This content requires a ${access.requiredTier} subscription.\n\nPlease upgrade your plan to access this content.`);
                     return;
                 }
             }
@@ -4344,9 +4153,9 @@
                 const result = await response.json();
 
                 if (result.ok || response.ok) {
-                    showToast('Request submitted! We will contact you within 24 hours.', 'success');
+                    alert('Thank you! Your request for ' + serviceType + ' has been submitted.\n\nYou will receive a confirmation email at ' + data.email + ' shortly.\n\nOur team will contact you within 24 hours.');
                 } else {
-                    showToast('Request submitted. We will contact you shortly.', 'success');
+                    alert('Request submitted. We will contact you shortly at ' + data.email + '.');
                 }
 
                 // Reset form
@@ -4354,7 +4163,7 @@
             } catch (error) {
                 console.error('Service request error:', error);
                 // Still show success to user even if API fails
-                showToast('Request submitted! We will contact you within 24 hours.', 'success');
+                alert('Thank you! Your request for ' + serviceType + ' has been submitted.\n\nWe will contact you at ' + data.email + ' within 24 hours.');
                 event.target.reset();
             }
         }
@@ -4401,7 +4210,7 @@
                 closeEmailGateModal();
                 event.target.reset();
 
-                showToast('Study guide opened! Check your email for updates.', 'success');
+                alert('Thank you! The study guide will open in a new window.\n\nCheck your email for future updates from DataCenter Hive.');
             } catch (error) {
                 console.error('Study guide download tracking error:', error);
                 // Still open PDF even if tracking fails
@@ -4439,13 +4248,13 @@
                 event.target.reset();
 
                 if (result.ok || response.ok) {
-                    showToast('Demo request received! We will contact you within 24 hours.', 'success');
+                    alert('Thank you for your demo request!\n\nOur team will reach out to you within 24 hours at ' + data.email + ' to schedule your personalized demo.');
                 }
             } catch (error) {
                 console.error('Demo request error:', error);
                 closeDemoModal();
                 event.target.reset();
-                showToast('Demo request received! We will contact you within 24 hours.', 'success');
+                alert('Thank you for your demo request!\n\nOur team will reach out to you within 24 hours at ' + data.email + ' to schedule your personalized demo.');
             }
         }
 
@@ -4650,7 +4459,7 @@
             const data = Object.fromEntries(formData);
 
             console.log('Service inquiry submitted:', serviceType, data);
-            showToast('Thank you! We will contact you shortly.', 'success');
+            alert('Thank you for your interest in ' + serviceType + '! We will contact you shortly at ' + data.email + '.');
 
             // Close modal and reset form
             const modalId = event.target.closest('.modal-overlay').id.replace('serviceModal_', '');
@@ -5005,13 +4814,13 @@
 
         async function exportExistingDCsToCSV() {
             if (!window.existingDCsData || window.existingDCsData.length === 0) {
-                showToast('No data available. Please load data first.', 'error');
+                alert('No data available to export. Please load the data first.');
                 return;
             }
 
             // Require login to export
             if (!isLoggedIn()) {
-                showToast('Please create a free account to export data.', 'info');
+                alert('Please create a free account to export data.');
                 openModal('registerModal');
                 return;
             }
@@ -5030,13 +4839,13 @@
 
         async function exportUpcomingDCsToCSV() {
             if (!window.upcomingDCsData || window.upcomingDCsData.length === 0) {
-                showToast('No data available. Please load data first.', 'error');
+                alert('No data available to export. Please load the data first.');
                 return;
             }
 
             // Require login to export
             if (!isLoggedIn()) {
-                showToast('Please create a free account to export data.', 'info');
+                alert('Please create a free account to export data.');
                 openModal('registerModal');
                 return;
             }
@@ -5056,13 +4865,13 @@
         // Excel Export Functions
         async function exportExistingDCsToExcel() {
             if (!window.existingDCsData || window.existingDCsData.length === 0) {
-                showToast('No data available. Please load data first.', 'error');
+                alert('No data available to export. Please load the data first.');
                 return;
             }
 
             // Require login to export
             if (!isLoggedIn()) {
-                showToast('Please create a free account to export data.', 'info');
+                alert('Please create a free account to export data.');
                 openModal('registerModal');
                 return;
             }
@@ -5104,13 +4913,13 @@
 
         async function exportUpcomingDCsToExcel() {
             if (!window.upcomingDCsData || window.upcomingDCsData.length === 0) {
-                showToast('No data available. Please load data first.', 'error');
+                alert('No data available to export. Please load the data first.');
                 return;
             }
 
             // Require login to export
             if (!isLoggedIn()) {
-                showToast('Please create a free account to export data.', 'info');
+                alert('Please create a free account to export data.');
                 openModal('registerModal');
                 return;
             }
@@ -5480,7 +5289,7 @@
         async function doSearch(query) {
             if (!query) query = document.getElementById('searchInput').value.trim();
             if (!query) {
-                showToast('Please enter a search query', 'info');
+                alert('Please enter a search query');
                 return;
             }
 
@@ -5504,7 +5313,7 @@
                 hideLoading();
 
                 if (!data.ok) {
-                    showToast('Search failed. Please try again.', 'error');
+                    alert('Search failed. Please try again.');
                     return;
                 }
 
@@ -5512,7 +5321,7 @@
 
             } catch (error) {
                 hideLoading();
-                showToast('Search error: ' + error.message, 'error');
+                alert('Search Error: ' + error.message + '\n\nPlease try again or contact support.');
                 console.error('Search error:', error);
             }
         }
@@ -5608,7 +5417,7 @@
 
                 if (!response.ok) {
                     hideLoading();
-                    showToast('Unable to load news articles.', 'error');
+                    alert('Unable to load news articles.');
                     return;
                 }
 
@@ -5617,7 +5426,7 @@
 
                 if (articles.length === 0) {
                     hideLoading();
-                    showToast('No news articles available.', 'info');
+                    alert('No news articles available.');
                     return;
                 }
 
@@ -5678,7 +5487,7 @@
 
             } catch (error) {
                 hideLoading();
-                showToast('Error loading news: ' + error.message, 'error');
+                alert('Error loading news: ' + error.message);
                 console.error('News load error:', error);
             }
         }
@@ -5686,7 +5495,7 @@
 
         async function loadNewsArchive() {
             if (!hasTierAccess('enterprise')) {
-                showUpgradeModal('news-archive', 'Enterprise');
+                alert('News Archive is an Enterprise-only feature.\n\nUpgrade to Enterprise tier ($2,499/month) to access the complete historical archive of DC-related news articles.\n\nContact: support@dc-intel.com');
                 return;
             }
 
@@ -5701,7 +5510,7 @@
 
                 if (!response.ok) {
                     hideLoading();
-                    showToast('Unable to load news archive.', 'error');
+                    alert('Unable to load news archive.');
                     return;
                 }
 
@@ -5710,7 +5519,7 @@
 
                 if (articles.length === 0) {
                     hideLoading();
-                    showToast('No archive articles available.', 'info');
+                    alert('No archive articles available.');
                     return;
                 }
 
@@ -5766,7 +5575,7 @@
 
             } catch (error) {
                 hideLoading();
-                showToast('Error loading news archive: ' + error.message, 'error');
+                alert('Error loading news archive: ' + error.message);
                 console.error('News archive load error:', error);
             }
         }
@@ -6353,7 +6162,7 @@
             <p style="font-size: 14px; font-style: italic; margin-top: 20px;">
                 We've helped clients select sites for over $5B in data center projects across North America.
             </p>
-            <button class="modal-btn" onclick="showToast('Contact form coming soon! Email: contact@dc-intel.com', 'info')">Request Consultation</button>
+            <button class="modal-btn" onclick="alert('Contact form coming soon! Email: contact@dc-intel.com')">Request Consultation</button>
         </div>
     </div>
 
@@ -6438,76 +6247,7 @@
                 closeVideo();
             }
         });
-    
-
-        // Toast notification system
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toast-container');
-            if (!container) return;
-
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.innerHTML = `
-                <div class="toast-message">${escapeHtml(message)}</div>
-                <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
-            `;
-
-            container.appendChild(toast);
-
-            // Auto-remove after 5 seconds
-            setTimeout(() => {
-                if (toast.parentElement) {
-                    toast.style.animation = 'slideIn 0.3s ease reverse';
-                    setTimeout(() => toast.remove(), 300);
-                }
-            }, 5000);
-        }
-
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        // Upgrade modal for tier-gated features
-        function showUpgradeModal(feature, requiredTier) {
-            const messages = {
-                'study-guide': `This content requires a ${requiredTier} subscription. Upgrade to access study guides.`,
-                'news-archive': `News Archive is an Enterprise-only feature. Upgrade to access the complete historical archive.`
-            };
-
-            const modal = document.getElementById('exportLimitModal');
-            if (modal) {
-                // Reuse export modal with custom message
-                const content = modal.querySelector('.modal-content h2');
-                if (content) {
-                    const originalText = content.textContent;
-                    content.textContent = `Upgrade to ${requiredTier}`;
-                    modal.classList.add('active');
-
-                    // Restore original text when closed
-                    const closeBtn = modal.querySelector('.modal-close');
-                    const restoreOriginal = () => {
-                        content.textContent = originalText;
-                        closeBtn.removeEventListener('click', restoreOriginal);
-                    };
-                    closeBtn.addEventListener('click', restoreOriginal);
-                }
-            } else {
-                showToast(messages[feature] || `This feature requires ${requiredTier} tier.`, 'info');
-            }
-        }
-
-        // Trial modal function
-        function showTrialModal() {
-            showToast('Trial access: Create a free account to start your 14-day trial with full Basic tier features.', 'info');
-            setTimeout(() => {
-                const registerLink = document.querySelector('a[href="auth/register.html"]');
-                if (registerLink) registerLink.click();
-            }, 2000);
-        }
-
-        </script>
+    </script>
 
 
     <!-- Study Guide Modal -->
@@ -6613,8 +6353,6 @@
             </div>
         </div>
     </div>
-    <div id="toast-container"></div>
-
 
     </body>
 </html>
