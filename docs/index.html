@@ -8,6 +8,24 @@
     <title>DataCenter Hive Dashboard</title>
     <link rel="icon" type="image/png" href="9e224nbi.png">
     <style>
+        :root {
+            /* Design Tokens for Premium B2B SaaS */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --border-default: #e2e8f0;
+            --border-emphasis: #cbd5e1;
+            --divider-strong: #0f172a;
+            --brand-primary: #2563eb;
+            --brand-hover: #1d4ed8;
+            --success: #059669;
+            --warning: #d97706;
+            --shadow-sm: 0 1px 2px rgba(15,23,42,.06);
+            --shadow-md: 0 8px 24px rgba(15,23,42,.10);
+            --spacing-unit: 8px;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -15,24 +33,27 @@
         }
 
         body {
-            background: #f5f5dc;
-            font-family: Georgia, 'Times New Roman', Times, serif;
-            color: #000;
-            padding: 20px;
+            background: var(--bg-secondary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+            color: var(--text-primary);
+            padding: calc(var(--spacing-unit) * 2.5);
+            font-size: 16px;
+            line-height: 1.6;
         }
 
         .newspaper-container {
             max-width: 1200px;
             margin: 0 auto;
-            background: #fff;
-            padding: 40px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: var(--bg-primary);
+            padding: calc(var(--spacing-unit) * 5);
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1), 0 1px 2px rgba(15, 23, 42, 0.06);
+            border-radius: calc(var(--spacing-unit) * 1);
         }
 
         .masthead {
-            border-bottom: 4px double #000;
-            padding-bottom: 20px;
-            margin-bottom: 15px;
+            border-bottom: 2px solid var(--border-emphasis);
+            padding-bottom: calc(var(--spacing-unit) * 2.5);
+            margin-bottom: calc(var(--spacing-unit) * 2);
             position: relative;
         }
 
@@ -52,8 +73,9 @@
             object-fit: contain;
             object-position: left center;
             flex-shrink: 0;
-            padding: 6px;
-            box-shadow: 0 0 0 3px #f7f7f0, 0 0 0 5px #000;
+            padding: calc(var(--spacing-unit) * 1);
+            border: 2px solid var(--border-emphasis);
+            border-radius: calc(var(--spacing-unit) * 1);
         }
 
         .masthead-title-group {
@@ -68,19 +90,20 @@
         }
 
         .masthead h1 {
-            font-size: 32px;
-            font-weight: bold;
-            letter-spacing: 3px;
-            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
             margin: 0;
-            color: #1a1a1a;
+            color: var(--text-primary);
         }
 
         .masthead .tagline {
-            font-size: 13px;
-            font-style: italic;
-            margin-top: 8px;
-            color: #333;
+            font-size: 14px;
+            font-style: normal;
+            margin-top: calc(var(--spacing-unit) * 1);
+            color: var(--text-secondary);
+            font-weight: 500;
         }
 
         .auth-buttons {
@@ -93,32 +116,46 @@
             z-index: 10000;
         }
 
+        /* Unified Button System */
+        .btn-primary,
         .auth-btn {
-            padding: 8px 16px;
-            background: #000;
-            color: #fff;
-            border: 2px solid #000;
-            font-family: Georgia, serif;
-            font-size: 12px;
+            padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 3);
+            background: var(--brand-primary);
+            color: #ffffff;
+            border: 2px solid var(--brand-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
-            font-weight: bold;
             text-decoration: none;
-            transition: all 0.3s;
+            transition: all 0.2s ease;
+            border-radius: calc(var(--spacing-unit) * 0.75);
+            display: inline-block;
+            text-align: center;
         }
 
+        .btn-primary:hover,
         .auth-btn:hover {
-            background: #fff;
-            color: #000;
+            background: var(--brand-hover);
+            border-color: var(--brand-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
         }
 
+        .btn-secondary,
         .auth-btn.secondary {
-            background: #fff;
-            color: #000;
+            background: #ffffff;
+            color: var(--brand-primary);
+            border: 2px solid var(--border-emphasis);
         }
 
+        .btn-secondary:hover,
         .auth-btn.secondary:hover {
-            background: #000;
-            color: #fff;
+            background: var(--bg-secondary);
+            border-color: var(--brand-primary);
+            color: var(--brand-primary);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
         .user-info {
@@ -227,7 +264,7 @@
         #searchInput {
             flex: 1;
             padding: 12px;
-            font-family: Georgia, serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             font-size: 14px;
             border: 1px solid #333;
         }
@@ -237,7 +274,7 @@
             background: #000;
             color: #fff;
             border: none;
-            font-family: Georgia, serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             font-size: 14px;
             cursor: pointer;
             font-weight: bold;
@@ -354,7 +391,7 @@
             margin-bottom: 5px;
         }
 
-        /* Modal Popup Styles */
+        /* Modal Popup Styles - Updated for B2B SaaS */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -362,7 +399,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.7);
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(4px);
             z-index: 9999;
             justify-content: center;
             align-items: center;
@@ -373,65 +411,73 @@
         }
 
         .modal-content {
-            background: #fff;
-            padding: 40px;
+            background: var(--bg-primary);
+            padding: calc(var(--spacing-unit) * 5);
             max-width: 600px;
             width: 90%;
-            border: 4px solid #000;
+            border: 1px solid var(--border-default);
+            border-radius: calc(var(--spacing-unit) * 1.5);
             position: relative;
-            font-family: Georgia, serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
 
         .modal-close {
             position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 30px;
+            top: calc(var(--spacing-unit) * 2);
+            right: calc(var(--spacing-unit) * 2);
+            font-size: 24px;
             cursor: pointer;
             background: none;
             border: none;
-            font-weight: bold;
+            font-weight: 600;
             z-index: 10001;
-            color: #000;
+            color: var(--text-secondary);
             line-height: 1;
-            padding: 5px 10px;
+            padding: calc(var(--spacing-unit) * 1);
             user-select: none;
+            transition: color 0.2s ease;
         }
 
         .modal-close:hover {
-            color: #999;
-            transform: scale(1.1);
+            color: var(--text-primary);
         }
 
         .modal-content h2 {
             font-size: 24px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #000;
-            padding-bottom: 10px;
+            font-weight: 700;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+            border-bottom: 2px solid var(--border-default);
+            padding-bottom: calc(var(--spacing-unit) * 2);
+            color: var(--text-primary);
         }
 
         .modal-content ul {
             list-style: disc;
-            margin-left: 20px;
-            margin-bottom: 20px;
-            line-height: 1.8;
+            margin-left: calc(var(--spacing-unit) * 3);
+            margin-bottom: calc(var(--spacing-unit) * 3);
+            line-height: 1.6;
         }
 
         .modal-btn {
-            background: #000;
-            color: #fff;
-            padding: 12px 30px;
-            border: 2px solid #000;
-            font-family: Georgia, serif;
+            background: var(--brand-primary);
+            color: #ffffff;
+            padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 4);
+            border: 2px solid var(--brand-primary);
+            border-radius: calc(var(--spacing-unit) * 0.75);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
-            font-weight: bold;
-            margin-top: 20px;
+            margin-top: calc(var(--spacing-unit) * 2);
+            transition: all 0.2s ease;
         }
 
         .modal-btn:hover {
-            background: #fff;
-            color: #000;
+            background: var(--brand-hover);
+            border-color: var(--brand-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
         }
 
         .ticker {
@@ -503,7 +549,7 @@
         }
 
         .knowledge-card {
-            background: #fffef5; /* Aged paper color */
+            background: var(--bg-primary); /* Aged paper color */
             border: 2px solid #000;
             padding: 15px;
             box-shadow:
@@ -588,7 +634,7 @@
             margin-top: 10px;
         }
         .taxonomy-card {
-            background: #fffef5;
+            background: var(--bg-primary);
             border: 2px solid #000;
             padding: 14px;
             box-shadow: 3px 3px 6px rgba(0,0,0,0.3);
@@ -632,7 +678,7 @@
 
         /* Taxonomy cards */
         .taxonomy-card {
-            background: #fffef5;
+            background: var(--bg-primary);
             border: 2px solid #000;
             padding: 20px;
             box-shadow: 3px 3px 6px rgba(0,0,0,0.3);
@@ -677,7 +723,7 @@
         }
 
         .plan-card {
-            background: #fffef5;
+            background: var(--bg-primary);
             border: 3px double #000;
             padding: 20px;
             text-align: center;
@@ -726,7 +772,7 @@
             background: #000;
             color: #fff;
             border: 2px solid #000;
-            font-family: Georgia, serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             font-size: 14px;
             font-weight: bold;
             cursor: pointer;
@@ -1103,7 +1149,7 @@
         }
 
         .modal-content {
-            background: #fffef5;
+            background: var(--bg-primary);
             border: 4px double #000;
             padding: 30px;
             max-width: 500px;
@@ -1150,7 +1196,7 @@
         .form-group select {
             width: 100%;
             padding: 10px;
-            font-family: Georgia, serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             font-size: 13px;
             border: 2px solid #000;
             background: #fff;
@@ -1167,7 +1213,7 @@
             background: #000;
             color: #fff;
             border: 2px solid #000;
-            font-family: Georgia, serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             font-size: 14px;
             font-weight: bold;
             cursor: pointer;
@@ -1321,13 +1367,13 @@
 
             <!-- Glossary View -->
             <div id="glossaryView" class="knowledge-view">
-                <input type="text" id="knowledgeSearch" placeholder="Search glossary terms..." style="width: 100%; padding: 12px; margin-bottom: 20px; border: 2px solid #000; font-family: Georgia, serif;">
+                <input type="text" id="knowledgeSearch" placeholder="Search glossary terms..." style="width: 100%; padding: 12px; margin-bottom: 20px; border: 2px solid #000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
                 <div class="knowledge-grid" id="knowledgeGrid"></div>
             </div>
 
             <!-- Handbook View -->
             <div id="handbookView" class="knowledge-view" style="display: none;">
-                <div id="handbookContent" style="background: #fffef5; border: 3px double #000; padding: 30px; max-width: 900px; margin: 0 auto; line-height: 1.8; font-size: 14px; box-shadow: 3px 3px 8px rgba(0,0,0,0.3);">
+                <div id="handbookContent" style="background: var(--bg-primary); border: 3px double #000; padding: 30px; max-width: 900px; margin: 0 auto; line-height: 1.8; font-size: 14px; box-shadow: 3px 3px 8px rgba(0,0,0,0.3);">
                     <p style="text-align: center; font-style: italic;">Loading handbook...</p>
                 </div>
             </div>
@@ -1362,7 +1408,7 @@
 
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
                             <!-- Free Guide 1: Market Overview -->
-                            <div style="border: 3px solid #000; padding: 20px; background: #fffef5;">
+                            <div style="border: 2px solid var(--border-emphasis); padding: 20px; background: var(--bg-primary);">
                                 <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px; border-bottom: 2px solid #ccc; padding-bottom: 8px;">
                                     <h4 style="margin-top: 0; font-size: 16px;">DC Market Overview 2025</h4>
                                     <span class="badge free">Free</span>
@@ -1376,7 +1422,7 @@
                                     <li>Top 10 DC markets in US</li>
                                     <li>Key industry players</li>
                                 </ul>
-                                <button style="width: 100%; padding: 10px; background: #000; color: #fff; border: 2px solid #000; font-family: Georgia, serif; font-size: 13px; font-weight: bold; cursor: pointer;"
+                                <button style="width: 100%; padding: 10px; background: var(--text-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 13px; font-weight: bold; cursor: pointer;"
                                         onclick="openStudyGuideModal()">
                                     FREE DOWNLOAD (Email Required)
                                 </button>
@@ -1389,7 +1435,7 @@
                         <h3 style="border-bottom: 3px solid #000; padding-bottom: 8px; margin-bottom: 15px; font-size: 18px; letter-spacing: 1px;">PREMIUM KNOWLEDGE LIBRARY</h3>
 
                         <!-- Disclaimer about AI-curated content -->
-                        <div style="background: #fffef5; border: 2px solid #000; padding: 15px; margin-bottom: 25px; font-size: 12px; line-height: 1.6;">
+                        <div style="background: var(--bg-primary); border: 2px solid #000; padding: 15px; margin-bottom: 25px; font-size: 12px; line-height: 1.6;">
                             <strong>Note:</strong> Content developed from research papers guided and curated by our data center experts. Each topic includes comprehensive research materials, visual summaries, and educational videos.
                         </div>
 
@@ -1401,7 +1447,7 @@
 
                             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
                                 <!-- Handbook Part A -->
-                                <div style="border: 3px solid #000; padding: 20px; background: #fff;">
+                                <div style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff;">
                                     <h4 style="margin-top: 0; font-size: 15px; border-bottom: 2px solid #ccc; padding-bottom: 8px;">DC Handbook - Part A</h4>
                                     <p style="font-size: 12px; font-style: italic; margin: 10px 0;">Executive Summary</p>
                                     <div style="font-size: 12px; line-height: 1.8; margin: 15px 0;">
@@ -1412,7 +1458,7 @@
                                 </div>
 
                                 <!-- Handbook Part B -->
-                                <div style="border: 3px solid #000; padding: 20px; background: #fff;">
+                                <div style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff;">
                                     <h4 style="margin-top: 0; font-size: 15px; border-bottom: 2px solid #ccc; padding-bottom: 8px;">DC Handbook - Part B</h4>
                                     <p style="font-size: 12px; font-style: italic; margin: 10px 0;">Core Infrastructure</p>
                                     <div style="font-size: 12px; line-height: 1.8; margin: 15px 0;">
@@ -1424,7 +1470,7 @@
                                 </div>
 
                                 <!-- Handbook Part C -->
-                                <div style="border: 3px solid #000; padding: 20px; background: #fff;">
+                                <div style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff;">
                                     <h4 style="margin-top: 0; font-size: 15px; border-bottom: 2px solid #ccc; padding-bottom: 8px;">DC Handbook - Part C</h4>
                                     <p style="font-size: 12px; font-style: italic; margin: 10px 0;">Advanced Topics</p>
                                     <div style="font-size: 12px; line-height: 1.8; margin: 15px 0;">
@@ -1446,7 +1492,7 @@
 
                             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
                                 <!-- Building Design -->
-                                <div style="border: 3px solid #000; padding: 20px; background: #fff;">
+                                <div style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff;">
                                     <h4 style="margin-top: 0; font-size: 15px; border-bottom: 2px solid #ccc; padding-bottom: 8px;">Building Design & Construction</h4>
                                     <div style="font-size: 12px; line-height: 1.8; margin: 15px 0;">
                                         <div style="margin-bottom: 8px;">           <a class="study-link" href="knowledge/sources/Building Design and Construction/Data Center Building Design & Construction Source Pack (2020-2025).pdf">Research Paper (PDF)</a></div>
@@ -1457,7 +1503,7 @@
                                 </div>
 
                                 <!-- Cooling Systems -->
-                                <div style="border: 3px solid #000; padding: 20px; background: #fff;">
+                                <div style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff;">
                                     <h4 style="margin-top: 0; font-size: 15px; border-bottom: 2px solid #ccc; padding-bottom: 8px;">Cooling Systems</h4>
                                     <div style="font-size: 12px; line-height: 1.8; margin: 15px 0;">
                                         <div style="margin-bottom: 8px;">           <a class="study-link" href="knowledge/sources/Colling Systems(B)/Cooling Systems Source Pack (B-Cooling).pdf">Research Paper (PDF)</a></div>
@@ -1468,7 +1514,7 @@
                                 </div>
 
                                 <!-- Power Infrastructure -->
-                                <div style="border: 3px solid #000; padding: 20px; background: #fff;">
+                                <div style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff;">
                                     <h4 style="margin-top: 0; font-size: 15px; border-bottom: 2px solid #ccc; padding-bottom: 8px;">Power Infrastructure</h4>
                                     <div style="font-size: 12px; line-height: 1.8; margin: 15px 0;">
                                         <div style="margin-bottom: 8px;">           <a class="study-link" href="knowledge/sources/Power infrastructure/Data Center Power Infrastructure Source Pack (2020      2025).pdf">Research Paper (PDF)</a></div>
@@ -1479,7 +1525,7 @@
                                 </div>
 
                                 <!-- Network and Connectivity -->
-                                <div style="border: 3px solid #000; padding: 20px; background: #fff;">
+                                <div style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff;">
                                     <h4 style="margin-top: 0; font-size: 15px; border-bottom: 2px solid #ccc; padding-bottom: 8px;">Network & Connectivity</h4>
                                     <div style="font-size: 12px; line-height: 1.8; margin: 15px 0;">
                                         <div style="margin-bottom: 8px;">           <a class="study-link" href="knowledge/sources/Network and Connectivity/Data Center Network & Connectivity Source Pack (B-Network).pdf">Research Paper (PDF)</a></div>
@@ -1490,7 +1536,7 @@
                                 </div>
 
                                 <!-- Markets and Drivers -->
-                                <div style="border: 3px solid #000; padding: 20px; background: #fff;">
+                                <div style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff;">
                                     <h4 style="margin-top: 0; font-size: 15px; border-bottom: 2px solid #ccc; padding-bottom: 8px;">Markets & Drivers</h4>
                                     <div style="font-size: 12px; line-height: 1.8; margin: 15px 0;">
                                         <div style="margin-bottom: 8px;">           <a class="study-link" href="knowledge/sources/Markets and Drivers/Markets & Drivers Source Pack (U.S. Data Center Hubs 2020      2025).pdf">Research Paper (PDF)</a></div>
@@ -1511,7 +1557,7 @@
 
                             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
                                 <!-- Disaster Recovery -->
-                                <div style="border: 3px solid #000; padding: 20px; background: #fff;">
+                                <div style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff;">
                                     <h4 style="margin-top: 0; font-size: 15px; border-bottom: 2px solid #ccc; padding-bottom: 8px;">Disaster Recovery & Business Continuity</h4>
                                     <div style="font-size: 12px; line-height: 1.8; margin: 15px 0;">
                                         <div style="margin-bottom: 8px;">           <a class="study-link" href="knowledge/sources/Disaster Recovery and Business Continuity/Data Center Disaster Recovery & Business Continuity Source Pack (2020-2025).pdf">Research Paper (PDF)</a></div>
@@ -1522,7 +1568,7 @@
                                 </div>
 
                                 <!-- Emerging Technologies -->
-                                <div style="border: 3px solid #000; padding: 20px; background: #fff;">
+                                <div style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff;">
                                     <h4 style="margin-top: 0; font-size: 15px; border-bottom: 2px solid #ccc; padding-bottom: 8px;">Emerging Technologies</h4>
                                     <div style="font-size: 12px; line-height: 1.8; margin: 15px 0;">
                                         <div style="margin-bottom: 8px;">           <a class="study-link" href="knowledge/sources/Emerging Technologies/Data Center Emerging Technologies Source Pack (2020-2025).pdf">Research Paper (PDF)</a></div>
@@ -1533,7 +1579,7 @@
                                 </div>
 
                                 <!-- Fire Suppression -->
-                                <div style="border: 3px solid #000; padding: 20px; background: #fff;">
+                                <div style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff;">
                                     <h4 style="margin-top: 0; font-size: 15px; border-bottom: 2px solid #ccc; padding-bottom: 8px;">Fire Suppression & Life Safety</h4>
                                     <div style="font-size: 12px; line-height: 1.8; margin: 15px 0;">
                                         <div style="margin-bottom: 8px;">           <a class="study-link" href="knowledge/sources/Fire Suppression and Life Safety/Data Center Fire Suppression & Life Safety Source Pack (2020-2025).pdf">Research Paper (PDF)</a></div>
@@ -1544,7 +1590,7 @@
                                 </div>
 
                                 <!-- Physical Security -->
-                                <div style="border: 3px solid #000; padding: 20px; background: #fff;">
+                                <div style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff;">
                                     <h4 style="margin-top: 0; font-size: 15px; border-bottom: 2px solid #ccc; padding-bottom: 8px;">Physical Security & Access Controls</h4>
                                     <div style="font-size: 12px; line-height: 1.8; margin: 15px 0;">
                                         <div style="margin-bottom: 8px;">           <a class="study-link" href="knowledge/sources/Physcial Security and Access Controls/Data Center Physical Security & Access Control Source Pack (2020-2025).pdf">Research Paper (PDF)</a></div>
@@ -1555,7 +1601,7 @@
                                 </div>
 
                                 <!-- Reliability and Compliance -->
-                                <div style="border: 3px solid #000; padding: 20px; background: #fff;">
+                                <div style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff;">
                                     <h4 style="margin-top: 0; font-size: 15px; border-bottom: 2px solid #ccc; padding-bottom: 8px;">Reliability & Compliance Standards</h4>
                                     <div style="font-size: 12px; line-height: 1.8; margin: 15px 0;">
                                         <div style="margin-bottom: 8px;">           <a class="study-link" href="knowledge/sources/Realiability and Compliance Standards/Compliance & Reliability Source Pack.pdf">Research Paper (PDF)</a></div>
@@ -1566,7 +1612,7 @@
                                 </div>
 
                                 <!-- Sustainability -->
-                                <div style="border: 3px solid #000; padding: 20px; background: #fff;">
+                                <div style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff;">
                                     <h4 style="margin-top: 0; font-size: 15px; border-bottom: 2px solid #ccc; padding-bottom: 8px;">Sustainability & Energy Efficiency</h4>
                                     <div style="font-size: 12px; line-height: 1.8; margin: 15px 0;">
                                         <div style="margin-bottom: 8px;">           <a class="study-link" href="knowledge/sources/Sustainability and Energy Efficiency/Data Center Sustainability & Energy Efficiency Source Pack (2020-2025) (1).pdf">Research Paper (PDF)</a></div>
@@ -1585,7 +1631,7 @@
                         <p style="font-size: 14px; line-height: 1.6; margin-bottom: 20px;">
                             Business customers get access to our full data center intelligence platform, expert advisory services, and real-time market data.
                         </p>
-                        <button style="padding: 12px 30px; background: #000; color: #fff; border: 2px solid #000; font-family: Georgia, serif; font-size: 14px; font-weight: bold; cursor: pointer;"
+                        <button style="padding: 12px 30px; background: var(--text-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; font-weight: bold; cursor: pointer;"
                                 onclick="switchSection('pricing'); return false;">
                             VIEW SUBSCRIPTION PLANS
                         </button>
@@ -1622,8 +1668,8 @@
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1100px; margin: 0 auto 40px;">
 
                 <!-- BASIC TIER -->
-                <div style="border: 3px solid #000; padding: 25px; background: #fffef5; position: relative; box-shadow: 4px 4px 0 #000;">
-                    <div style="background: #000; color: #fff; border: 2px solid #000; padding: 8px; text-align: center; margin: -25px -25px 20px; font-weight: bold; letter-spacing: 1px;">
+                <div style="border: 2px solid var(--border-emphasis); padding: 25px; background: var(--bg-primary); position: relative; ">
+                    <div style="background: var(--text-primary); color: #fff; border: none; padding: 8px; text-align: center; margin: -25px -25px 20px; font-weight: bold; letter-spacing: 1px;">
                         BASIC TIER
                     </div>
                     <div style="text-align: center; font-size: 28px; font-weight: bold; margin-bottom: 10px;">
@@ -1644,15 +1690,16 @@
                         <li>-  Email support (48-hour response time)</li>
                         <li style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #ccc;"><strong>-  Study Guide Access: Core Fundamentals</strong></li>
                     </ul>
-                    <button style="width: 100%; padding: 12px; margin-top: 20px; background: #000; color: #fff; border: 2px solid #000; font-family: Georgia, serif; font-size: 14px; font-weight: bold; cursor: pointer;"
-                            onclick="alert('Stripe checkout integration - Coming soon!')">
-                        SUBSCRIBE NOW
-                    </button>
+                    <a href="mailto:sales@datacenterhive.com?subject=Basic%20Tier%20Inquiry"
+                       class="btn-primary"
+                       style="width: 100%; padding: 12px; margin-top: 20px; display: block; text-decoration: none;">
+                        CONTACT SALES
+                    </a>
                 </div>
 
                 <!-- PREMIUM TIER -->
-                <div style="border: 3px solid #000; padding: 25px; background: #fff; position: relative;">
-                    <div style="background: #000; color: #fff; border: 2px solid #000; padding: 8px; text-align: center; margin: -25px -25px 20px; font-weight: bold; letter-spacing: 1px;">
+                <div style="border: 2px solid var(--border-emphasis); padding: 25px; background: #fff; position: relative;">
+                    <div style="background: var(--text-primary); color: #fff; border: none; padding: 8px; text-align: center; margin: -25px -25px 20px; font-weight: bold; letter-spacing: 1px;">
                         PREMIUM TIER
                     </div>
                     <div style="text-align: center; font-size: 28px; font-weight: bold; margin-bottom: 10px;">
@@ -1675,29 +1722,23 @@
                         <li>-  <strong>Deal alert notifications</strong> (M&A, leases, announcements)</li>
                         <li style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #ccc;"><strong>-  Study Guide Access: Essential Infrastructure + Core Fundamentals</strong></li>
                     </ul>
-                    <button style="width: 100%; padding: 12px; margin-top: 20px; background: #000; color: #fff; border: 2px solid #000; font-family: Georgia, serif; font-size: 14px; font-weight: bold; cursor: pointer;"
-                            onclick="alert('Stripe checkout + Calendly integration - Coming soon!')">
-                        SUBSCRIBE NOW
-                    </button>
+                    <a href="https://calendly.com/datacenterhive/demo" target="_blank"
+                       class="btn-primary"
+                       style="width: 100%; padding: 12px; margin-top: 20px; display: block; text-decoration: none;">
+                        SCHEDULE DEMO
+                    </a>
                 </div>
 
-                <!-- ENTERPRISE TIER (Coming Soon) -->
-                <div style="border: 3px solid #000; padding: 25px; background: #fff; position: relative; opacity: 0.9;">
-                    <!-- Coming Soon Badge -->
-                    <div style="position: absolute; top: 15px; right: 15px; background: #ff6b00; color: #fff; padding: 5px 10px; font-size: 11px; font-weight: bold; letter-spacing: 1px; border: 2px solid #000;">
-                        COMING SOON
-                    </div>
-                    <div style="background: #000; color: #fff; border: 2px solid #000; padding: 8px; text-align: center; margin: -25px -25px 20px; font-weight: bold; letter-spacing: 1px;">
+                <!-- ENTERPRISE TIER -->
+                <div style="border: 2px solid var(--border-emphasis); padding: 25px; background: #fff; position: relative;">
+                    <div style="background: var(--text-primary); color: #fff; border: none; padding: 8px; text-align: center; margin: -25px -25px 20px; font-weight: bold; letter-spacing: 1px;">
                         ENTERPRISE TIER
                     </div>
                     <div style="text-align: center; font-size: 28px; font-weight: bold; margin-bottom: 10px;">
                         $2,499<span style="font-size: 14px; font-weight: normal;">/month</span>
                     </div>
-                    <p style="text-align: center; font-size: 13px; margin-bottom: 5px; font-style: italic;">
+                    <p style="text-align: center; font-size: 13px; margin-bottom: 20px; font-style: italic;">
                         Full-service advisory & brokerage
-                    </p>
-                    <p style="text-align: center; font-size: 12px; margin-bottom: 20px; color: #ff6b00; font-weight: bold;">
-                        Available December 6, 2025
                     </p>
                     <hr style="border: 1px solid #ccc; margin: 20px 0;">
                     <ul style="list-style: none; padding: 0; font-size: 13px; line-height: 2;">
@@ -1716,10 +1757,11 @@
                         <li style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #ccc;"><strong>-  Study Guide Access: Complete Library (all guides)</strong></li>
                         <li style="margin-top: 10px; font-style: italic; color: #666;">+ Success fees: 5-10% of first year contract value</li>
                     </ul>
-                    <button style="width: 100%; padding: 12px; margin-top: 20px; background: #fff; color: #000; border: 2px solid #000; font-family: Georgia, serif; font-size: 14px; font-weight: bold; cursor: pointer;"
-                            onclick="alert('Enterprise tier launching December 6, 2025. Enter your email to be notified:\n\nsupport@dc-intel.com')">
-                        NOTIFY ME
-                    </button>
+                    <a href="mailto:sales@datacenterhive.com?subject=Enterprise%20Tier%20Inquiry"
+                       class="btn-secondary"
+                       style="width: 100%; padding: 12px; margin-top: 20px; display: block; text-decoration: none;">
+                        CONTACT SALES
+                    </a>
                 </div>
 
             </div>
@@ -1769,7 +1811,7 @@
             <h2 style="text-align: center; margin-bottom: 30px; border-bottom: 3px solid #000; padding-bottom: 10px;">Advisory & Intelligence Services</h2>
 
             <!-- Services Overview -->
-            <div style="max-width: 900px; margin: 0 auto 40px; padding: 30px; background: #fffef5; border: 3px double #000;">
+            <div style="max-width: 900px; margin: 0 auto 40px; padding: 30px; background: var(--bg-primary); border: 3px double #000;">
                 <h3 style="text-align: center; margin-top: 0; font-size: 22px; border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 20px;">
                     We're Not Brokers       We're Your Data Center Intelligence Partner
                 </h3>
@@ -1780,11 +1822,11 @@
                     Our proprietary data platform combines <strong>4,436+ data center facilities</strong>, <strong>2.52M+ building permits from 32 cities</strong>, and <strong>real-time industry news</strong> to give you the competitive intelligence edge.
                 </p>
                 <div style="text-align: center;">
-                    <button style="padding: 15px 40px; background: #000; color: #fff; border: 2px solid #000; font-family: Georgia, serif; font-size: 16px; font-weight: bold; cursor: pointer; margin-right: 15px;"
+                    <button style="padding: 15px 40px; background: var(--text-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 16px; font-weight: bold; cursor: pointer; margin-right: 15px;"
                             onclick="switchSection('pricing'); return false;">
                         VIEW PRICING PLANS
                     </button>
-                    <button style="padding: 15px 40px; background: #fff; color: #000; border: 2px solid #000; font-family: Georgia, serif; font-size: 16px; font-weight: bold; cursor: pointer;"
+                    <button style="padding: 15px 40px; background: #fff; color: #000; border: 2px solid #000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 16px; font-weight: bold; cursor: pointer;"
                             onclick="openDemoModal()">
                         REQUEST A DEMO
                     </button>
@@ -1799,7 +1841,7 @@
 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
                     <!-- Service 1: Market Intelligence -->
-                    <div style="border: 3px solid #000; padding: 20px; background: #fff;">
+                    <div style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff;">
                         <h4 style="margin-top: 0; font-size: 16px; border-bottom: 2px solid #ccc; padding-bottom: 10px;">          Market Intelligence</h4>
                         <ul style="font-size: 13px; line-height: 1.8; padding-left: 20px;">
                             <li>4,436+ data center facilities tracked</li>
@@ -1814,7 +1856,7 @@
                     </div>
 
                     <!-- Service 2: Advisory Services -->
-                    <div style="border: 3px solid #000; padding: 20px; background: #fff;">
+                    <div style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff;">
                         <h4 style="margin-top: 0; font-size: 16px; border-bottom: 2px solid #ccc; padding-bottom: 10px;">         Advisory Services</h4>
                         <ul style="font-size: 13px; line-height: 1.8; padding-left: 20px;">
                             <li>DC matchmaking service (find facilities for you)</li>
@@ -1829,7 +1871,7 @@
                     </div>
 
                     <!-- Service 3: Full-Service Support -->
-                    <div style="border: 3px solid #000; padding: 20px; background: #fff;">
+                    <div style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff;">
                         <h4 style="margin-top: 0; font-size: 16px; border-bottom: 2px solid #ccc; padding-bottom: 10px;">         Full-Service Support</h4>
                         <ul style="font-size: 13px; line-height: 1.8; padding-left: 20px;">
                             <li>RFQ/RFP management</li>
@@ -1889,7 +1931,7 @@
                         </div>
                     </div>
                 </div>
-                <button style="padding: 15px 40px; background: #000; color: #fff; border: 2px solid #000; font-family: Georgia, serif; font-size: 16px; font-weight: bold; cursor: pointer;"
+                <button style="padding: 15px 40px; background: var(--text-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 16px; font-weight: bold; cursor: pointer;"
                         onclick="switchSection('pricing'); return false;">
                     SEE ALL PRICING OPTIONS
                 </button>
@@ -2558,10 +2600,6 @@
             const modal = document.getElementById('exportLimitModal');
             if (modal) {
                 modal.classList.add('active');
-            } else {
-                // Fallback alert if modal doesn't exist
-                alert('Free tier export limit reached (10 exports). Upgrade to Basic, Premium, or Enterprise for unlimited exports!\n\nView our pricing page for more details.');
-                switchSection('pricing');
             }
         }
 
@@ -3927,10 +3965,10 @@
 
             modalContent.innerHTML = `
                 <div style="text-align: center; margin-bottom: 20px;">
-                    <a href="${pdfPath}" download style="display: inline-block; padding: 12px 30px; background: #000; color: #fff; text-decoration: none; font-family: Georgia, serif; font-size: 14px; font-weight: bold; border: 2px solid #000;">
+                    <a href="${pdfPath}" download style="display: inline-block; padding: 12px 30px; background: #000; color: #fff; text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; font-weight: bold; border: 2px solid #000;">
                         Download PDF
                     </a>
-                    <a href="${pdfPath}" target="_blank" style="display: inline-block; padding: 12px 30px; background: #fff; color: #000; text-decoration: none; font-family: Georgia, serif; font-size: 14px; font-weight: bold; border: 2px solid #000; margin-left: 10px;">
+                    <a href="${pdfPath}" target="_blank" style="display: inline-block; padding: 12px 30px; background: #fff; color: #000; text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; font-weight: bold; border: 2px solid #000; margin-left: 10px;">
                         Open in New Tab
                     </a>
                 </div>
@@ -3969,10 +4007,10 @@
                     <img src="${imagePath}" alt="${title}" style="max-width: 100%; height: auto; border: 2px solid #ccc;">
                 </div>
                 <div style="text-align: center; margin-top: 20px;">
-                    <a href="${imagePath}" download style="display: inline-block; padding: 12px 30px; background: #000; color: #fff; text-decoration: none; font-family: Georgia, serif; font-size: 14px; font-weight: bold; border: 2px solid #000;">
+                    <a href="${imagePath}" download style="display: inline-block; padding: 12px 30px; background: #000; color: #fff; text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; font-weight: bold; border: 2px solid #000;">
                         Download Image
                     </a>
-                    <a href="${imagePath}" target="_blank" style="display: inline-block; padding: 12px 30px; background: #fff; color: #000; text-decoration: none; font-family: Georgia, serif; font-size: 14px; font-weight: bold; border: 2px solid #000; margin-left: 10px;">
+                    <a href="${imagePath}" target="_blank" style="display: inline-block; padding: 12px 30px; background: #fff; color: #000; text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; font-weight: bold; border: 2px solid #000; margin-left: 10px;">
                         Open in New Tab
                     </a>
                 </div>
@@ -5054,7 +5092,7 @@
                 tableHTML += '<strong>Permits:</strong> Data center related permits tracking new facilities, construction and upgrades to existing facilities, data center hall expansions, infrastructure builds, and all project stages from initial permits through completion.';
                 tableHTML += '</p>';
                 tableHTML += '<div style="display: flex; gap: 10px; justify-content: center;">';
-                tableHTML += '<button onclick="filterUpcomingBySource(\'all\')" id="filterAll" style="padding: 8px 16px; cursor: pointer; background: #000; color: #fff; border: 2px solid #000; font-weight: bold;">All Sources</button>';
+                tableHTML += '<button onclick="filterUpcomingBySource(\'all\')" id="filterAll" style="padding: 8px 16px; cursor: pointer; background: var(--text-primary); color: #fff; border: none; font-weight: bold;">All Sources</button>';
                 tableHTML += '<button onclick="filterUpcomingBySource(\'news\')" id="filterNews" style="padding: 8px 16px; cursor: pointer; background: #fff; color: #000; border: 2px solid #000; font-weight: bold;">News Only</button>';
                 tableHTML += '<button onclick="filterUpcomingBySource(\'permit\')" id="filterPermit" style="padding: 8px 16px; cursor: pointer; background: #fff; color: #000; border: 2px solid #000; font-weight: bold;">Permits Only</button>';
                 tableHTML += '</div>';
@@ -6132,12 +6170,12 @@
     <div id="videoModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); z-index: 10000; justify-content: center; align-items: center;">
         <div style="position: relative; width: 90%; max-width: 1200px; background: #000; border: 3px solid #fff; box-shadow: 0 0 30px rgba(255,255,255,0.3);">
             <!-- Close Button -->
-            <button onclick="closeVideo()" style="position: absolute; top: -15px; right: -15px; width: 40px; height: 40px; background: #fff; color: #000; border: 3px solid #000; border-radius: 50%; font-size: 24px; font-weight: bold; cursor: pointer; z-index: 10001;">
+            <button onclick="closeVideo()" style="position: absolute; top: -15px; right: -15px; width: 40px; height: 40px; background: #fff; color: #000; border: 2px solid var(--border-emphasis); border-radius: 50%; font-size: 24px; font-weight: bold; cursor: pointer; z-index: 10001;">
                 &times;
             </button>
 
             <!-- Video Title -->
-            <div id="videoTitle" style="background: #fff; color: #000; padding: 15px 20px; font-family: Georgia, serif; font-size: 18px; font-weight: bold; border-bottom: 3px solid #000;">
+            <div id="videoTitle" style="background: #fff; color: #000; padding: 15px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 18px; font-weight: bold; border-bottom: 3px solid #000;">
                 Educational Video
             </div>
 
@@ -6217,7 +6255,7 @@
         <div style="position: relative; max-width: 1200px; margin: 40px auto; background: #fff; border: 4px solid #000; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
             <!-- Modal Header -->
             <div style="background: #000; color: #fff; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #000;">
-                <h2 id="modalTitle" style="margin: 0; font-size: 22px; font-family: Georgia, serif;"></h2>
+                <h2 id="modalTitle" style="margin: 0; font-size: 22px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;"></h2>
                 <button onclick="closeStudyGuideModal()" style="background: transparent; border: none; color: #fff; font-size: 32px; cursor: pointer; padding: 0; width: 40px; height: 40px; line-height: 32px;">&times;</button>
             </div>
 
@@ -6231,7 +6269,7 @@
         <div style="position: relative; max-width: 500px; margin: 100px auto; background: #fff; border: 4px solid #000; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
             <!-- Modal Header -->
             <div style="background: #000; color: #fff; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #000;">
-                <h2 style="margin: 0; font-size: 20px; font-family: Georgia, serif;">Download Free Study Guide</h2>
+                <h2 style="margin: 0; font-size: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">Download Free Study Guide</h2>
                 <button onclick="closeEmailGateModal()" style="background: transparent; border: none; color: #fff; font-size: 32px; cursor: pointer; padding: 0; width: 40px; height: 40px; line-height: 32px;">&times;</button>
             </div>
 
@@ -6245,10 +6283,10 @@
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Email Address *</label>
                         <input type="email" name="email" required
-                               style="width: 100%; padding: 10px; border: 2px solid #000; font-family: Georgia, serif; font-size: 14px;">
+                               style="width: 100%; padding: 10px; border: 2px solid #000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px;">
                     </div>
 
-                    <button type="submit" style="width: 100%; padding: 12px; background: #000; color: #fff; border: 2px solid #000; font-family: Georgia, serif; font-size: 15px; font-weight: bold; cursor: pointer;">
+                    <button type="submit" style="width: 100%; padding: 12px; background: var(--text-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 15px; font-weight: bold; cursor: pointer;">
                         DOWNLOAD FREE GUIDE
                     </button>
                 </form>
@@ -6261,7 +6299,7 @@
         <div style="position: relative; max-width: 600px; margin: 60px auto; background: #fff; border: 4px solid #000; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
             <!-- Modal Header -->
             <div style="background: #000; color: #fff; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #000;">
-                <h2 style="margin: 0; font-size: 20px; font-family: Georgia, serif;">Request a Demo</h2>
+                <h2 style="margin: 0; font-size: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">Request a Demo</h2>
                 <button onclick="closeDemoModal()" style="background: transparent; border: none; color: #fff; font-size: 32px; cursor: pointer; padding: 0; width: 40px; height: 40px; line-height: 32px;">&times;</button>
             </div>
 
@@ -6275,40 +6313,40 @@
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Full Name *</label>
                         <input type="text" name="name" required
-                               style="width: 100%; padding: 10px; border: 2px solid #000; font-family: Georgia, serif; font-size: 14px;">
+                               style="width: 100%; padding: 10px; border: 2px solid #000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px;">
                     </div>
 
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Email Address *</label>
                         <input type="email" name="email" required
-                               style="width: 100%; padding: 10px; border: 2px solid #000; font-family: Georgia, serif; font-size: 14px;">
+                               style="width: 100%; padding: 10px; border: 2px solid #000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px;">
                     </div>
 
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Company *</label>
                         <input type="text" name="company" required
-                               style="width: 100%; padding: 10px; border: 2px solid #000; font-family: Georgia, serif; font-size: 14px;">
+                               style="width: 100%; padding: 10px; border: 2px solid #000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px;">
                     </div>
 
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Phone Number</label>
                         <input type="tel" name="phone"
-                               style="width: 100%; padding: 10px; border: 2px solid #000; font-family: Georgia, serif; font-size: 14px;">
+                               style="width: 100%; padding: 10px; border: 2px solid #000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px;">
                     </div>
 
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Address</label>
                         <input type="text" name="address"
-                               style="width: 100%; padding: 10px; border: 2px solid #000; font-family: Georgia, serif; font-size: 14px;">
+                               style="width: 100%; padding: 10px; border: 2px solid #000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px;">
                     </div>
 
                     <div style="margin-bottom: 20px;">
                         <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Message (optional)</label>
                         <textarea name="message" rows="4"
-                                  style="width: 100%; padding: 10px; border: 2px solid #000; font-family: Georgia, serif; font-size: 14px; resize: vertical;"></textarea>
+                                  style="width: 100%; padding: 10px; border: 2px solid #000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; resize: vertical;"></textarea>
                     </div>
 
-                    <button type="submit" style="width: 100%; padding: 12px; background: #000; color: #fff; border: 2px solid #000; font-family: Georgia, serif; font-size: 15px; font-weight: bold; cursor: pointer;">
+                    <button type="submit" style="width: 100%; padding: 12px; background: var(--text-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 15px; font-weight: bold; cursor: pointer;">
                         SUBMIT REQUEST
                     </button>
                 </form>
