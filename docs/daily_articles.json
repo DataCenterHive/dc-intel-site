@@ -1,15 +1,15 @@
 {
-  "generated_date": "2026-01-01T07:00:15.595340",
-  "day_of_week": "Thursday",
-  "includes_services": false,
+  "generated_date": "2026-01-02T07:00:13.821922",
+  "day_of_week": "Friday",
+  "includes_services": true,
   "articles": [
     {
-      "headline": "Oklahoma Data Center Expansion Signals Midwest Tech Infrastructure Growth",
-      "content": "A new data center project is taking shape in Owasso, Oklahoma, marking another significant development in the region's evolving digital infrastructure landscape. The construction-stage facility represents continued investment in regional data center capacity, potentially positioning Oklahoma as an increasingly attractive destination for technology and cloud computing infrastructure. While specific details about the operator and total capacity remain limited, the project underscores the ongoing expansion of data center footprints in strategically selected midwestern locations."
+      "headline": "Proposed Data Center Project Signals Growth in Washington State Market",
+      "content": "A new data center development is slated for Port Washington, marking continued expansion of the region's digital infrastructure landscape. While specific operational details remain limited, the project represents a potential opportunity for hyperscale cloud providers or enterprise colocation services seeking strategic infrastructure in the Pacific Northwest. The proposed facility underscores ongoing momentum in Washington's competitive data center ecosystem, which has been attracting significant technology investment in recent years."
     },
     {
-      "headline": "Microsoft Expands Hyperscale Infrastructure in Wyoming Data Center Project",
-      "content": "Microsoft is advancing its strategic data center expansion with a new 3.0 MW facility under construction in Cheyenne, Wyoming. The project represents another significant investment by the cloud computing giant in expanding its regional infrastructure footprint, leveraging the state's attractive power economics and strategic geographic positioning. This development underscores the continued demand for robust computing capacity in emerging data center markets beyond traditional tech hubs."
+      "headline": "DC Intel Expands Data Center Transaction Advisory Services Nationwide",
+      "content": "DC Intel provides specialized brokerage services focusing on data center acquisitions, leasing, and sales transactions across key markets. The firm's experienced team leverages deep industry knowledge to facilitate complex real estate deals for enterprise and institutional clients in the technology infrastructure sector. With a strategic approach to deal flow, DC Intel assists clients in navigating the nuanced landscape of data center commercial transactions."
     }
   ]
 }
