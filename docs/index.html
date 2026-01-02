@@ -176,15 +176,18 @@
         .logout-btn {
             margin-left: 10px;
             padding: 4px 10px;
-            background: var(--text-primary);
+            background: var(--brand-primary);
             color: #fff;
-            border: 1px solid var(--border-emphasis);
+            border: 1px solid var(--brand-primary);
             cursor: pointer;
             font-size: 10px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
         }
 
         .logout-btn:hover {
-            background: #333;
+            background: var(--brand-hover);
+            border-color: var(--brand-hover);
         }
 
         .edition-info {
@@ -270,18 +273,23 @@
         }
 
         #searchBtn {
-            padding: 12px 30px;
-            background: var(--text-primary);
-            color: #fff;
-            border: none;
+            padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 3.75);
+            background: var(--brand-primary);
+            color: #ffffff;
+            border: 2px solid var(--brand-primary);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
-            font-weight: bold;
+            border-radius: calc(var(--spacing-unit) * 0.75);
+            transition: all 0.2s ease;
         }
 
         #searchBtn:hover {
-            background: #333;
+            background: var(--brand-hover);
+            border-color: var(--brand-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
         }
 
         .quick-queries {
@@ -436,11 +444,13 @@
             line-height: 1;
             padding: calc(var(--spacing-unit) * 1);
             user-select: none;
-            transition: color 0.2s ease;
+            transition: transform 0.2s ease, color 0.2s ease;
+            border-radius: 4px;
         }
 
         .modal-close:hover {
             color: var(--text-primary);
+            transform: scale(1.08);
         }
 
         .modal-content h2 {
@@ -552,7 +562,7 @@
         }
 
         .pricing-card__header {
-            background: var(--text-primary);
+            background: var(--brand-primary);
             color: #ffffff;
             border: none;
             padding: calc(var(--spacing-unit) * 1);
@@ -669,7 +679,7 @@
         /* Watchlist Button */
         .btn-watchlist {
             padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 3.75);
-            background: var(--text-primary);
+            background: var(--brand-primary);
             color: #ffffff;
             border: none;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -780,6 +790,22 @@
             color: #ffffff;
         }
 
+        /* Button variant classes for modals/CTAs */
+        .btn-success-solid {
+            background: var(--success) !important;
+            border-color: var(--success) !important;
+        }
+
+        .btn-purple {
+            background: #6b46c1 !important;
+            border-color: #6b46c1 !important;
+        }
+
+        .btn-muted {
+            background: #6b7280 !important;
+            border-color: #6b7280 !important;
+        }
+
 
         .data-freshness {
             color: var(--text-secondary);
@@ -826,7 +852,7 @@
 
 
         .ticker {
-            background: var(--text-primary);
+            background: var(--brand-primary);
             color: #fff;
             padding: 10px;
             font-size: 11px;
@@ -957,6 +983,7 @@
             transition: all 0.3s;
             text-transform: uppercase;
             letter-spacing: 1px;
+            border-radius: 6px;
         }
 
         .knowledge-tab:hover {
@@ -966,7 +993,7 @@
         }
 
         .knowledge-tab.active-tab {
-            background: var(--text-primary);
+            background: var(--brand-primary);
             color: #fff;
             box-shadow: inset 2px 2px 4px rgba(0,0,0,0.5);
         }
@@ -1114,7 +1141,7 @@
         .plan-btn {
             width: 100%;
             padding: 12px;
-            background: var(--text-primary);
+            background: var(--brand-primary);
             color: #fff;
             border: 2px solid var(--divider-strong);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -1162,7 +1189,7 @@
             padding: 12px 18px;
             font-weight: bold;
             border: 2px solid var(--divider-strong);
-            background: var(--text-primary);
+            background: var(--brand-primary);
             color: #fff;
             cursor: pointer;
         }
@@ -1176,22 +1203,17 @@
 
         /* Navigation / tabs */
         .navigation a,
-        .knowledge-tab {
-            transition: all 0.2s ease;
-        }
         .navigation {
             margin-bottom: 10px;
         }
-        .navigation a.active,
-        .knowledge-tab.active-tab {
-            background: var(--text-primary);
+        .navigation a.active {
+            background: var(--brand-primary);
             color: #fff;
             border-radius: 4px;
             padding: 6px 12px;
         }
-        .navigation a:hover,
-        .knowledge-tab:hover {
-            background: #111;
+        .navigation a:hover {
+            background: var(--brand-hover);
             color: #fff;
         }
 
@@ -1257,13 +1279,6 @@
         .modal-content {
             padding: 24px;
         }
-        .modal-close {
-            transition: transform 0.2s ease, color 0.2s ease;
-        }
-        .modal-close:hover {
-            color: #c00;
-            transform: scale(1.08);
-        }
 
         /* News grid for News UI */
         .news-grid {
@@ -1304,7 +1319,7 @@
             text-decoration: none;
         }
         .news-btn:hover {
-            background: var(--text-primary);
+            background: var(--brand-primary);
             color: #fff;
         }
         /* Study guide resource buttons */
@@ -1319,7 +1334,7 @@
             text-decoration: none;
         }
         .study-link:hover {
-            background: var(--text-primary);
+            background: var(--brand-primary);
             color: #fff;
         }
         .service-item h3 {
@@ -1516,14 +1531,6 @@
             letter-spacing: 2px;
         }
 
-        .modal-close {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 24px;
-            cursor: pointer;
-            font-weight: bold;
-        }
 
         .form-group {
             margin-bottom: 15px;
@@ -1555,18 +1562,22 @@
         .form-submit {
             width: 100%;
             padding: 12px;
-            background: var(--text-primary);
+            background: var(--brand-primary);
             color: #fff;
-            border: 2px solid var(--divider-strong);
+            border: 2px solid var(--brand-primary);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             font-size: 14px;
             font-weight: bold;
             cursor: pointer;
             text-transform: uppercase;
+            border-radius: 6px;
+            transition: all 0.2s ease;
         }
 
         .form-submit:hover {
-            background: #333;
+            background: var(--brand-hover);
+            border-color: var(--brand-hover);
+            transform: translateY(-1px);
         }
 
         @media print {
@@ -1767,7 +1778,7 @@
                                     <li>Top 10 DC markets in US</li>
                                     <li>Key industry players</li>
                                 </ul>
-                                <button style="width: 100%; padding: 10px; background: var(--text-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 13px; font-weight: bold; cursor: pointer;"
+                                <button style="width: 100%; padding: 10px; background: var(--brand-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 13px; font-weight: bold; cursor: pointer; border-radius: 6px;"
                                         onclick="openStudyGuideModal()">
                                     FREE DOWNLOAD (Email Required)
                                 </button>
@@ -1786,7 +1797,7 @@
 
                         <!-- BASIC TIER CONTENT -->
                         <div class="tier-basic-only" style="margin-bottom: 35px; display: none;">
-                            <div style="background: var(--text-primary); color: #fff; padding: 8px 15px; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px; font-size: 14px;">
+                            <div style="background: var(--brand-primary); color: #fff; padding: 8px 15px; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px; font-size: 14px;">
                                 BASIC TIER ($299/month) - CORE FUNDAMENTALS
                             </div>
 
@@ -1830,7 +1841,7 @@
 
                         <!-- PREMIUM TIER CONTENT -->
                         <div class="tier-premium-only" style="margin-bottom: 35px; display: none;">
-                            <div style="background: var(--text-primary); color: #fff; padding: 8px 15px; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px; font-size: 14px;">
+                            <div style="background: var(--brand-primary); color: #fff; padding: 8px 15px; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px; font-size: 14px;">
                                 PREMIUM TIER ($999/month) - ESSENTIAL INFRASTRUCTURE
                                 <span style="font-weight: normal; font-size: 12px; margin-left: 10px;">(Includes all Basic content +)</span>
                             </div>
@@ -1895,7 +1906,7 @@
 
                         <!-- ENTERPRISE TIER CONTENT -->
                         <div class="tier-enterprise-only" style="margin-bottom: 20px; display: none;">
-                            <div style="background: var(--text-primary); color: #fff; padding: 8px 15px; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px; font-size: 14px;">
+                            <div style="background: var(--brand-primary); color: #fff; padding: 8px 15px; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px; font-size: 14px;">
                                 ENTERPRISE TIER ($2,499/month) - COMPLETE LIBRARY
                                 <span style="font-weight: normal; font-size: 12px; margin-left: 10px;">(Includes all Premium content +)</span>
                             </div>
@@ -2098,7 +2109,7 @@
                         <li class="feature-note">+ Success fees: 5-10% of first year contract value</li>
                     </ul>
                     <a href="mailto:sales@datacenterhive.com?subject=Enterprise%20Tier%20Inquiry"
-                       class="btn-secondary btn-block mt-20">
+                       class="btn-primary btn-block mt-20">
                         CONTACT SALES
                     </a>
                 </div>
@@ -2161,11 +2172,11 @@
                     Our proprietary data platform combines <strong>4,436+ data center facilities</strong>, <strong>2.52M+ building permits from 32 cities</strong>, and <strong>real-time industry news</strong> to give you the competitive intelligence edge.
                 </p>
                 <div style="text-align: center;">
-                    <button style="padding: 15px 40px; background: var(--text-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 16px; font-weight: bold; cursor: pointer; margin-right: 15px;"
+                    <button style="padding: 15px 40px; background: var(--brand-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 16px; font-weight: bold; cursor: pointer; margin-right: 15px; border-radius: 6px;"
                             onclick="switchSection('pricing'); return false;">
                         VIEW PRICING PLANS
                     </button>
-                    <button style="padding: 15px 40px; background: #fff; color: var(--text-primary); border: 2px solid var(--divider-strong); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 16px; font-weight: bold; cursor: pointer;"
+                    <button style="padding: 15px 40px; background: #fff; color: var(--text-primary); border: 2px solid var(--divider-strong); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 6px;"
                             onclick="openDemoModal()">
                         REQUEST A DEMO
                     </button>
@@ -2270,7 +2281,7 @@
                         </div>
                     </div>
                 </div>
-                <button style="padding: 15px 40px; background: var(--text-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 16px; font-weight: bold; cursor: pointer;"
+                <button style="padding: 15px 40px; background: var(--brand-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 6px;"
                         onclick="switchSection('pricing'); return false;">
                     SEE ALL PRICING OPTIONS
                 </button>
@@ -2297,10 +2308,10 @@
                 <div style="background: #f9f9f9; padding: 20px; border: 2px solid var(--divider-strong);">
                     <div style="margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
                         <input id="existingSearch" type="text" placeholder="Filter existing DCs (name, city, state, provider, certs…)" style="flex: 1 1 240px; padding: 10px; border: 2px solid var(--divider-strong); font-size: 12px;">
-                        <button onclick="clearExistingFilter()" style="padding: 10px 14px; border: 2px solid var(--divider-strong); background: #fff; cursor: pointer; font-weight: bold;">Clear</button>
+                        <button onclick="clearExistingFilter()" style="padding: 10px 14px; border: 2px solid var(--divider-strong); background: #fff; cursor: pointer; font-weight: bold; border-radius: 6px;">Clear</button>
                         <div id="existingExportBtns" style="display: none; gap: 10px;">
-                            <button onclick="exportExistingDCsToCSV()" style="padding: 10px 16px; border: 2px solid var(--divider-strong); background: #fff; cursor: pointer; font-weight: bold; transition: all 0.2s;">📄 CSV</button>
-                            <button onclick="exportExistingDCsToExcel()" style="padding: 10px 16px; border: 2px solid var(--divider-strong); background: #e8f5e9; cursor: pointer; font-weight: bold; transition: all 0.2s;">📊 Excel</button>
+                            <button onclick="exportExistingDCsToCSV()" style="padding: 10px 16px; border: 2px solid var(--divider-strong); background: #fff; cursor: pointer; font-weight: bold; transition: all 0.2s; border-radius: 6px;">📄 CSV</button>
+                            <button onclick="exportExistingDCsToExcel()" style="padding: 10px 16px; border: 2px solid var(--divider-strong); background: #e8f5e9; cursor: pointer; font-weight: bold; transition: all 0.2s; border-radius: 6px;">📊 Excel</button>
                         </div>
                     </div>
                     <p style="text-align: center; margin-bottom: 15px;">Comprehensive table view of all existing data centers</p>
@@ -2358,10 +2369,10 @@
             <div id="upcomingTabTableContent" style="display: none;">
                 <div style="margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
                     <input id="upcomingSearch" type="text" placeholder="Filter upcoming DCs (location, status, provider…)" style="flex: 1 1 240px; padding: 10px; border: 2px solid var(--divider-strong); font-size: 12px;">
-                    <button onclick="clearUpcomingFilter()" style="padding: 10px 14px; border: 2px solid var(--divider-strong); background: #fff; cursor: pointer; font-weight: bold;">Clear</button>
+                    <button onclick="clearUpcomingFilter()" style="padding: 10px 14px; border: 2px solid var(--divider-strong); background: #fff; cursor: pointer; font-weight: bold; border-radius: 6px;">Clear</button>
                     <div id="upcomingExportBtns" style="display: none; gap: 10px;">
-                        <button onclick="exportUpcomingDCsToCSV()" style="padding: 10px 16px; border: 2px solid var(--divider-strong); background: #fff; cursor: pointer; font-weight: bold; transition: all 0.2s;">📄 CSV</button>
-                        <button onclick="exportUpcomingDCsToExcel()" style="padding: 10px 16px; border: 2px solid var(--divider-strong); background: #e8f5e9; cursor: pointer; font-weight: bold; transition: all 0.2s;">📊 Excel</button>
+                        <button onclick="exportUpcomingDCsToCSV()" style="padding: 10px 16px; border: 2px solid var(--divider-strong); background: #fff; cursor: pointer; font-weight: bold; transition: all 0.2s; border-radius: 6px;">📄 CSV</button>
+                        <button onclick="exportUpcomingDCsToExcel()" style="padding: 10px 16px; border: 2px solid var(--divider-strong); background: #e8f5e9; cursor: pointer; font-weight: bold; transition: all 0.2s; border-radius: 6px;">📊 Excel</button>
                     </div>
                 </div>
                 <h3 class="h3-project-details">Project Details</h3>
@@ -2551,7 +2562,7 @@
                 </ul>
                 <div style="display: flex; gap: 10px;">
                     <button onclick="closeEmailCaptureModal(); openModal('loginModal');" class="form-submit" style="flex: 1;">Sign In</button>
-                    <button onclick="closeEmailCaptureModal(); openModal('registerModal');" class="form-submit" style="flex: 1; background: #10b981;">Create Account</button>
+                    <button onclick="closeEmailCaptureModal(); openModal('registerModal');" class="form-submit btn-success-solid" style="flex: 1;">Create Account</button>
                 </div>
                 <p style="margin-top: 15px; font-size: 11px; color: #999; text-align: center;">
                     Want even more data? <a href="#" onclick="closeEmailCaptureModal(); switchSection('pricing'); return false;" style="color: #667eea; text-decoration: underline;">View Paid Plans</a>
@@ -2602,8 +2613,8 @@
                 </div>
 
                 <div style="display: flex; gap: 10px;">
-                    <button onclick="closeModal('exportLimitModal', event); switchSection('pricing');" class="form-submit" style="flex: 1; background: #6b46c1;">View All Plans</button>
-                    <button onclick="closeModal('exportLimitModal', event);" class="form-submit" style="flex: 1; background: #6b7280;">Maybe Later</button>
+                    <button onclick="closeModal('exportLimitModal', event); switchSection('pricing');" class="form-submit btn-purple" style="flex: 1;">View All Plans</button>
+                    <button onclick="closeModal('exportLimitModal', event);" class="form-submit btn-muted" style="flex: 1;">Maybe Later</button>
                 </div>
             </div>
         </div>
@@ -2810,7 +2821,7 @@
                 let html = `<h3 class="h3-centered">My Saved Data Centers (${watchlist.length})</h3>`;
                 html += '<div class="table-wrapper">';
                 html += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
-                html += '<tr style="background: var(--text-primary); color: #fff;">';
+                html += '<tr style="background: var(--brand-primary); color: #fff;">';
                 html += '<th style="padding: 8px; text-align: left;">Name</th>';
                 html += '<th style="padding: 8px; text-align: left;">Location</th>';
                 html += '<th style="padding: 8px; text-align: center;">Date Saved</th>';
@@ -4198,9 +4209,9 @@
 
             // Enhanced video player with resize controls and keyboard shortcuts
             modalContent.innerHTML = `
-                <div style="position: relative; background: var(--text-primary);">
+                <div style="position: relative; background: var(--brand-primary);">
                     <video id="studyGuideVideo" controls autoplay
-                           style="width: 100%; max-height: 70vh; display: block; background: var(--text-primary);"
+                           style="width: 100%; max-height: 70vh; display: block; background: var(--brand-primary);"
                            controlsList="nodownload">
                         <source src="${videoPath}" type="video/mp4">
                         Your browser does not support the video tag.
@@ -4306,7 +4317,7 @@
 
             modalContent.innerHTML = `
                 <div style="text-align: center; margin-bottom: 20px;">
-                    <a href="${pdfPath}" download style="display: inline-block; padding: 12px 30px; background: var(--text-primary); color: #fff; text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; font-weight: bold; border: 2px solid var(--divider-strong);">
+                    <a href="${pdfPath}" download style="display: inline-block; padding: 12px 30px; background: var(--brand-primary); color: #fff; text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; font-weight: bold; border: 2px solid var(--divider-strong);">
                         Download PDF
                     </a>
                     <a href="${pdfPath}" target="_blank" style="display: inline-block; padding: 12px 30px; background: #fff; color: var(--text-primary); text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; font-weight: bold; border: 2px solid var(--divider-strong); margin-left: 10px;">
@@ -4348,7 +4359,7 @@
                     <img src="${imagePath}" alt="${title}" style="max-width: 100%; height: auto; border: 2px solid #ccc;">
                 </div>
                 <div style="text-align: center; margin-top: 20px;">
-                    <a href="${imagePath}" download style="display: inline-block; padding: 12px 30px; background: var(--text-primary); color: #fff; text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; font-weight: bold; border: 2px solid var(--divider-strong);">
+                    <a href="${imagePath}" download style="display: inline-block; padding: 12px 30px; background: var(--brand-primary); color: #fff; text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; font-weight: bold; border: 2px solid var(--divider-strong);">
                         Download Image
                     </a>
                     <a href="${imagePath}" target="_blank" style="display: inline-block; padding: 12px 30px; background: #fff; color: var(--text-primary); text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; font-weight: bold; border: 2px solid var(--divider-strong); margin-left: 10px;">
@@ -4852,7 +4863,7 @@
                         <div style="margin-bottom: 15px; padding: 15px; background: #f5f1e8; border: 3px solid #10b981; border-radius: 5px; color: var(--text-primary);">
                             <h4 style="margin: 0 0 10px 0; font-size: 16px; color: #059669;">          Certification Data Locked</h4>
                             <p style="margin: 0 0 10px 0; font-size: 13px;">Unlock <strong>SOC2, HIPAA, PCI-DSS, and ISO27001</strong> certification columns for all 4,436+ facilities.</p>
-                            <button onclick="showEmailCaptureModal()" style="padding: 8px 20px; background: var(--text-primary); color: #fff; border: 3px solid #10b981; border-radius: 3px; font-weight: bold; cursor: pointer;">
+                            <button onclick="showEmailCaptureModal()" style="padding: 8px 20px; background: var(--brand-primary); color: #fff; border: 3px solid #10b981; border-radius: 3px; font-weight: bold; cursor: pointer;">
                                 Unlock for FREE (Email Required)
                             </button>
                         </div>
@@ -4870,7 +4881,7 @@
                                 <li><strong>Premium ($999/mo):</strong> + Contact, Specs</li>
                                 <li><strong>Enterprise ($2,499/mo):</strong> + API Access</li>
                             </ul>
-                            <button onclick="switchSection('pricing')" style="padding: 8px 20px; background: var(--text-primary); color: #fff; border: 3px solid #9333ea; border-radius: 3px; font-weight: bold; cursor: pointer;">
+                            <button onclick="switchSection('pricing')" style="padding: 8px 20px; background: var(--brand-primary); color: #fff; border: 3px solid #9333ea; border-radius: 3px; font-weight: bold; cursor: pointer;">
                                 View Pricing Plans
                             </button>
                         </div>
@@ -4914,7 +4925,7 @@
                 html += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
 
                 // Table header with tiered columns
-                html += '<tr style="background: var(--text-primary); color: #fff;">';
+                html += '<tr style="background: var(--brand-primary); color: #fff;">';
                 // FREE tier columns
                 html += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setExistingSort(\'provider\')">Provider</th>';
                 html += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setExistingSort(\'title\')">Title</th>';
@@ -5433,14 +5444,14 @@
                 tableHTML += '<strong>Permits:</strong> Data center related permits tracking new facilities, construction and upgrades to existing facilities, data center hall expansions, infrastructure builds, and all project stages from initial permits through completion.';
                 tableHTML += '</p>';
                 tableHTML += '<div style="display: flex; gap: 10px; justify-content: center;">';
-                tableHTML += '<button onclick="filterUpcomingBySource(\'all\')" id="filterAll" style="padding: 8px 16px; cursor: pointer; background: var(--text-primary); color: #fff; border: none; font-weight: bold;">All Sources</button>';
-                tableHTML += '<button onclick="filterUpcomingBySource(\'news\')" id="filterNews" style="padding: 8px 16px; cursor: pointer; background: #fff; color: var(--text-primary); border: 2px solid var(--divider-strong); font-weight: bold;">News Only</button>';
-                tableHTML += '<button onclick="filterUpcomingBySource(\'permit\')" id="filterPermit" style="padding: 8px 16px; cursor: pointer; background: #fff; color: var(--text-primary); border: 2px solid var(--divider-strong); font-weight: bold;">Permits Only</button>';
+                tableHTML += '<button onclick="filterUpcomingBySource(\'all\')" id="filterAll" style="padding: 8px 16px; cursor: pointer; background: var(--brand-primary); color: #fff; border: none; font-weight: bold; border-radius: 6px;">All Sources</button>';
+                tableHTML += '<button onclick="filterUpcomingBySource(\'news\')" id="filterNews" style="padding: 8px 16px; cursor: pointer; background: #fff; color: var(--text-primary); border: 2px solid var(--divider-strong); font-weight: bold; border-radius: 6px;">News Only</button>';
+                tableHTML += '<button onclick="filterUpcomingBySource(\'permit\')" id="filterPermit" style="padding: 8px 16px; cursor: pointer; background: #fff; color: var(--text-primary); border: 2px solid var(--divider-strong); font-weight: bold; border-radius: 6px;">Permits Only</button>';
                 tableHTML += '</div>';
                 tableHTML += '</div>';
                 tableHTML += '<div class="table-wrapper">';
                 tableHTML += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
-                tableHTML += '<tr style="background: var(--text-primary); color: #fff;">';
+                tableHTML += '<tr style="background: var(--brand-primary); color: #fff;">';
                 // FREE tier columns
                 tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\'location\')">Location</th>';
                 tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\'address\')">Address</th>';
@@ -5580,7 +5591,7 @@
                                 <li><strong>Premium ($999/mo):</strong> + Most Recent Description</li>
                                 <li><strong>Enterprise ($2,499/mo):</strong> + Total Permit Quantity per permit address, All previous Details</li>
                             </ul>
-                            <button onclick="switchSection('pricing')" style="margin-top: 10px; padding: 8px 20px; background: var(--text-primary); color: #fff; border: 3px solid #9333ea; border-radius: 3px; font-weight: bold; cursor: pointer;">
+                            <button onclick="switchSection('pricing')" style="margin-top: 10px; padding: 8px 20px; background: var(--brand-primary); color: #fff; border: 3px solid #9333ea; border-radius: 3px; font-weight: bold; cursor: pointer;">
                                 View Pricing Plans
                             </button>
                         </div>
@@ -6509,7 +6520,7 @@
 
     <!-- VIDEO PLAYER MODAL -->
     <div id="videoModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); z-index: 10000; justify-content: center; align-items: center;">
-        <div style="position: relative; width: 90%; max-width: 1200px; background: var(--text-primary); border: 3px solid #fff; box-shadow: 0 0 30px rgba(255,255,255,0.3);">
+        <div style="position: relative; width: 90%; max-width: 1200px; background: var(--brand-primary); border: 3px solid #fff; box-shadow: 0 0 30px rgba(255,255,255,0.3);">
             <!-- Close Button -->
             <button onclick="closeVideo()" style="position: absolute; top: -15px; right: -15px; width: 40px; height: 40px; background: #fff; color: var(--text-primary); border: 2px solid var(--border-emphasis); border-radius: 50%; font-size: 24px; font-weight: bold; cursor: pointer; z-index: 10001;">
                 &times;
@@ -6523,7 +6534,7 @@
             <!-- Video Player -->
             <video
                 id="videoPlayer"
-                style="width: 100%; height: auto; display: block; background: var(--text-primary);"
+                style="width: 100%; height: auto; display: block; background: var(--brand-primary);"
                 controls
                 controlsList="nodownload nofullscreen"
                 disablePictureInPicture
@@ -6664,7 +6675,7 @@
     <div id="studyGuideModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10000; overflow: auto;">
         <div style="position: relative; max-width: 1200px; margin: 40px auto; background: #fff; border: 4px solid var(--divider-strong); box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
             <!-- Modal Header -->
-            <div style="background: var(--text-primary); color: #fff; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--divider-strong);">
+            <div style="background: var(--brand-primary); color: #fff; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--divider-strong);">
                 <h2 id="modalTitle" class="h2-modal"></h2>
                 <button onclick="closeStudyGuideModal()" style="background: transparent; border: none; color: #fff; font-size: 32px; cursor: pointer; padding: 0; width: 40px; height: 40px; line-height: 32px;">&times;</button>
             </div>
@@ -6678,7 +6689,7 @@
     <div id="emailGateModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10001; overflow: auto;">
         <div style="position: relative; max-width: 500px; margin: 100px auto; background: #fff; border: 4px solid var(--divider-strong); box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
             <!-- Modal Header -->
-            <div style="background: var(--text-primary); color: #fff; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--divider-strong);">
+            <div style="background: var(--brand-primary); color: #fff; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--divider-strong);">
                 <h2 class="h2-modal-small">Download Free Study Guide</h2>
                 <button onclick="closeEmailGateModal()" style="background: transparent; border: none; color: #fff; font-size: 32px; cursor: pointer; padding: 0; width: 40px; height: 40px; line-height: 32px;">&times;</button>
             </div>
@@ -6696,7 +6707,7 @@
                                style="width: 100%; padding: 10px; border: 2px solid var(--divider-strong); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px;">
                     </div>
 
-                    <button type="submit" style="width: 100%; padding: 12px; background: var(--text-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 15px; font-weight: bold; cursor: pointer;">
+                    <button type="submit" style="width: 100%; padding: 12px; background: var(--brand-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 15px; font-weight: bold; cursor: pointer;">
                         DOWNLOAD FREE GUIDE
                     </button>
                 </form>
@@ -6708,7 +6719,7 @@
     <div id="demoModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10001; overflow: auto;">
         <div style="position: relative; max-width: 600px; margin: 60px auto; background: #fff; border: 4px solid var(--divider-strong); box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
             <!-- Modal Header -->
-            <div style="background: var(--text-primary); color: #fff; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--divider-strong);">
+            <div style="background: var(--brand-primary); color: #fff; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--divider-strong);">
                 <h2 class="h2-modal-small">Request a Demo</h2>
                 <button onclick="closeDemoModal()" style="background: transparent; border: none; color: #fff; font-size: 32px; cursor: pointer; padding: 0; width: 40px; height: 40px; line-height: 32px;">&times;</button>
             </div>
@@ -6756,7 +6767,7 @@
                                   style="width: 100%; padding: 10px; border: 2px solid var(--divider-strong); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; resize: vertical;"></textarea>
                     </div>
 
-                    <button type="submit" style="width: 100%; padding: 12px; background: var(--text-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 15px; font-weight: bold; cursor: pointer;">
+                    <button type="submit" style="width: 100%; padding: 12px; background: var(--brand-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 15px; font-weight: bold; cursor: pointer;">
                         SUBMIT REQUEST
                     </button>
                 </form>
