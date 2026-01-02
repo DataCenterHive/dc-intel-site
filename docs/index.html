@@ -165,7 +165,7 @@
             font-size: 12px;
             padding: 8px 16px;
             background: #f0f0f0;
-            border: 2px solid #000;
+            border: 2px solid var(--divider-strong);
             z-index: 10001;
         }
 
@@ -176,9 +176,9 @@
         .logout-btn {
             margin-left: 10px;
             padding: 4px 10px;
-            background: #000;
+            background: var(--text-primary);
             color: #fff;
-            border: 1px solid #000;
+            border: 1px solid var(--border-emphasis);
             cursor: pointer;
             font-size: 10px;
         }
@@ -210,7 +210,7 @@
         }
 
         .navigation a {
-            color: #000;
+            color: var(--text-primary);
             text-decoration: none;
             padding: 5px 15px;
             cursor: pointer;
@@ -219,11 +219,11 @@
         }
 
         .navigation a:hover {
-            border-bottom: 2px solid #000;
+            border-bottom: 2px solid var(--divider-strong);
         }
 
         .navigation a.active {
-            border-bottom: 3px solid #000;
+            border-bottom: 3px solid var(--divider-strong);
             font-weight: 700;
         }
 
@@ -241,7 +241,7 @@
 
         .search-box-container {
             background: #f9f9f9;
-            border: 2px solid #000;
+            border: 2px solid var(--divider-strong);
             padding: 20px;
             margin-bottom: 30px;
             text-align: center;
@@ -271,7 +271,7 @@
 
         #searchBtn {
             padding: 12px 30px;
-            background: #000;
+            background: var(--text-primary);
             color: #fff;
             border: none;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -290,7 +290,7 @@
         }
 
         .quick-queries a {
-            color: #000;
+            color: var(--text-primary);
             text-decoration: underline;
             margin: 0 10px;
             cursor: pointer;
@@ -314,14 +314,14 @@
             font-weight: bold;
             margin-bottom: 15px;
             text-align: center;
-            border-bottom: 3px solid #000;
+            border-bottom: 3px solid var(--divider-strong);
             padding-bottom: 10px;
         }
 
         .article {
             break-inside: avoid;
             margin-bottom: 25px;
-            border: 2px solid #000;
+            border: 2px solid var(--divider-strong);
             padding: 15px;
             background: #fffef8;
             box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
@@ -350,7 +350,7 @@
         .classifieds {
             column-span: all;
             background: #fffef0;
-            border: 1px solid #000;
+            border: 1px solid var(--border-emphasis);
             padding: 15px;
             margin-top: 30px;
         }
@@ -359,7 +359,7 @@
             font-size: 18px;
             text-transform: uppercase;
             text-align: center;
-            border-bottom: 2px double #000;
+            border-bottom: 2px double var(--divider-strong);
             padding-bottom: 5px;
             margin-bottom: 15px;
         }
@@ -381,7 +381,7 @@
 
         .classified-item:hover {
             background: #f0f0f0;
-            border-color: #000;
+            border-color: var(--text-primary);
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
@@ -632,12 +632,162 @@
             line-height: 1.6;
         }
 
+        .section-header {
+            text-align: center;
+            margin-bottom: calc(var(--spacing-unit) * 2.5);
+            border-bottom: 3px solid var(--divider-strong);
+            padding-bottom: calc(var(--spacing-unit) * 1.25);
+        }
+
+        .section-subheader {
+            text-align: center;
+            margin-bottom: calc(var(--spacing-unit) * 1.875);
+            border-bottom: 2px solid var(--divider-strong);
+            padding-bottom: calc(var(--spacing-unit) * 1.25);
+        }
+
+        /* Notice/Info Box */
+        .notice {
+            text-align: center;
+            margin-bottom: calc(var(--spacing-unit) * 2.5);
+            padding: calc(var(--spacing-unit) * 2);
+            border-radius: calc(var(--spacing-unit) * 1);
+            border: 2px solid var(--border-emphasis);
+            background: var(--bg-secondary);
+        }
+
+        .notice-info {
+            background: #e0f2fe;
+            border-color: #0284c7;
+        }
+
+        .notice p {
+            margin: calc(var(--spacing-unit) * 1.25) 0 0 0;
+            font-size: 13px;
+        }
+
+        /* Watchlist Button */
+        .btn-watchlist {
+            padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 3.75);
+            background: var(--text-primary);
+            color: #ffffff;
+            border: none;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: calc(var(--spacing-unit) * 0.5);
+            transition: all 0.2s ease;
+        }
+
+        .btn-watchlist:hover {
+            background: var(--divider-strong);
+            transform: translateY(-1px);
+        }
+
+        /* Header Utility Classes */
+        .h3-tight {
+            margin: 0 0 6px;
+            font-size: 17px;
+            letter-spacing: 1px;
+        }
+
+        .h3-medium {
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+
+        .h3-large {
+            font-size: 20px;
+        }
+
+        .h3-xlarge {
+            font-size: 22px;
+        }
+
+        .h3-small {
+            font-size: 16px;
+        }
+
+        .h3-cta {
+            margin-top: 0;
+            font-size: 20px;
+        }
+
+        .h3-centered {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .h3-centered-sm {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .h3-project-details {
+            text-align: center;
+            margin: 20px 0 15px;
+            font-size: 16px;
+        }
+
+        .h3-export-warning {
+            margin: 0 0 10px 0;
+            font-size: 20px;
+            color: #92400e;
+        }
+
+        .h2-modal {
+            margin: 0;
+            font-size: 22px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .h2-modal-small {
+            margin: 0;
+            font-size: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        /* Margin utilities */
+        .mb-10 {
+            margin-bottom: 10px;
+        }
+
+        .mb-12 {
+            margin-bottom: calc(var(--spacing-unit) * 1.5);
+        }
+
+        .mb-24 {
+            margin-bottom: calc(var(--spacing-unit) * 3);
+        }
+
+        .mb-30 {
+            margin-bottom: calc(var(--spacing-unit) * 3.75);
+        }
+
+        .mt-0 {
+            margin-top: 0;
+        }
+
+        /* Button state classes */
+        .btn-info {
+            background: var(--brand-primary);
+            color: #ffffff;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: #ffffff;
+        }
+
+
         .data-freshness {
             color: var(--text-secondary);
             font-size: 12px;
             margin-bottom: calc(var(--spacing-unit) * 1);
             font-weight: 500;
         }
+
 
         .news-card {
             background: var(--bg-primary);
@@ -676,7 +826,7 @@
 
 
         .ticker {
-            background: #000;
+            background: var(--text-primary);
             color: #fff;
             padding: 10px;
             font-size: 11px;
@@ -706,7 +856,7 @@
         .weather-box {
             column-span: all;
             background: #e8e8e8;
-            border: 2px solid #000;
+            border: 2px solid var(--divider-strong);
             padding: 10px;
             margin: 20px 0;
             text-align: center;
@@ -745,7 +895,7 @@
 
         .knowledge-card {
             background: var(--bg-primary); /* Aged paper color */
-            border: 2px solid #000;
+            border: 2px solid var(--divider-strong);
             padding: 15px;
             box-shadow:
                 3px 3px 6px rgba(0,0,0,0.3),
@@ -778,7 +928,7 @@
             font-size: 16px;
             margin-bottom: 10px;
             text-align: center;
-            border-bottom: 2px solid #000;
+            border-bottom: 2px solid var(--divider-strong);
             padding-bottom: 8px;
             font-weight: bold;
             text-transform: uppercase;
@@ -801,7 +951,7 @@
             font-size: 14px;
             font-weight: bold;
             padding: 10px 20px;
-            border: 2px solid #000;
+            border: 2px solid var(--divider-strong);
             background: #f5f5f0;
             cursor: pointer;
             transition: all 0.3s;
@@ -816,7 +966,7 @@
         }
 
         .knowledge-tab.active-tab {
-            background: #000;
+            background: var(--text-primary);
             color: #fff;
             box-shadow: inset 2px 2px 4px rgba(0,0,0,0.5);
         }
@@ -830,7 +980,7 @@
         }
         .taxonomy-card {
             background: var(--bg-primary);
-            border: 2px solid #000;
+            border: 2px solid var(--divider-strong);
             padding: 14px;
             box-shadow: 3px 3px 6px rgba(0,0,0,0.3);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -845,7 +995,7 @@
             text-align: center;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            border-bottom: 2px solid #000;
+            border-bottom: 2px solid var(--divider-strong);
             padding-bottom: 8px;
         }
         .taxonomy-row {
@@ -874,7 +1024,7 @@
         /* Taxonomy cards */
         .taxonomy-card {
             background: var(--bg-primary);
-            border: 2px solid #000;
+            border: 2px solid var(--divider-strong);
             padding: 20px;
             box-shadow: 3px 3px 6px rgba(0,0,0,0.3);
             transform: rotate(-0.5deg);
@@ -891,7 +1041,7 @@
             font-size: 18px;
             margin-bottom: 15px;
             text-align: center;
-            border-bottom: 3px double #000;
+            border-bottom: 3px double var(--divider-strong);
             padding-bottom: 10px;
             font-weight: bold;
             text-transform: uppercase;
@@ -919,7 +1069,7 @@
 
         .plan-card {
             background: var(--bg-primary);
-            border: 3px double #000;
+            border: 3px double var(--divider-strong);
             padding: 20px;
             text-align: center;
             box-shadow: 3px 3px 8px rgba(0,0,0,0.2);
@@ -935,7 +1085,7 @@
             font-size: 22px;
             margin-bottom: 10px;
             text-transform: uppercase;
-            border-bottom: 2px solid #000;
+            border-bottom: 2px solid var(--divider-strong);
             padding-bottom: 10px;
         }
 
@@ -964,9 +1114,9 @@
         .plan-btn {
             width: 100%;
             padding: 12px;
-            background: #000;
+            background: var(--text-primary);
             color: #fff;
-            border: 2px solid #000;
+            border: 2px solid var(--divider-strong);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             font-size: 14px;
             font-weight: bold;
@@ -976,7 +1126,7 @@
 
         .plan-btn:hover {
             background: #fff;
-            color: #000;
+            color: var(--text-primary);
         }
 
         .services-list {
@@ -985,7 +1135,7 @@
         }
 
         .service-item {
-            border-left: 4px solid #000;
+            border-left: 4px solid var(--divider-strong);
             padding-left: 20px;
         }
 
@@ -1011,14 +1161,14 @@
             text-align: center;
             padding: 12px 18px;
             font-weight: bold;
-            border: 2px solid #000;
-            background: #000;
+            border: 2px solid var(--divider-strong);
+            background: var(--text-primary);
             color: #fff;
             cursor: pointer;
         }
         .cta-btn.light {
             background: #fff;
-            color: #000;
+            color: var(--text-primary);
         }
         .cta-btn:hover {
             opacity: 0.9;
@@ -1034,7 +1184,7 @@
         }
         .navigation a.active,
         .knowledge-tab.active-tab {
-            background: #000;
+            background: var(--text-primary);
             color: #fff;
             border-radius: 4px;
             padding: 6px 12px;
@@ -1068,7 +1218,7 @@
             align-items: center;
             gap: 6px;
             padding: 6px 10px;
-            border: 2px solid #000;
+            border: 2px solid var(--divider-strong);
             border-radius: 999px;
             font-weight: bold;
             font-size: 12px;
@@ -1076,7 +1226,7 @@
         .badge {
             display: inline-block;
             padding: 2px 8px;
-            border: 1px solid #000;
+            border: 1px solid var(--border-emphasis);
             font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -1125,10 +1275,10 @@
             column-count: 1;
         }
         .news-card {
-            border: 2px solid #000;
+            border: 2px solid var(--divider-strong);
             background: #fff;
             padding: 12px;
-            box-shadow: 3px 3px 0 #000;
+            box-shadow: 3px 3px 0 var(--text-primary);
             display: flex;
             flex-direction: column;
             min-height: 100%;
@@ -1146,30 +1296,30 @@
             margin-top: auto;
             display: inline-block;
             padding: 6px 10px;
-            border: 2px solid #000;
+            border: 2px solid var(--divider-strong);
             background: #f7f7f7;
-            color: #000;
+            color: var(--text-primary);
             font-size: 12px;
             font-weight: bold;
             text-decoration: none;
         }
         .news-btn:hover {
-            background: #000;
+            background: var(--text-primary);
             color: #fff;
         }
         /* Study guide resource buttons */
         .study-link {
             display: inline-block;
             padding: 6px 10px;
-            border: 2px solid #000;
+            border: 2px solid var(--divider-strong);
             background: #f7f7f7;
-            color: #000;
+            color: var(--text-primary);
             font-size: 12px;
             font-weight: bold;
             text-decoration: none;
         }
         .study-link:hover {
-            background: #000;
+            background: var(--text-primary);
             color: #fff;
         }
         .service-item h3 {
@@ -1196,7 +1346,7 @@
 
         .heatmap-cell {
             background: #f0f0f0;
-            border: 1px solid #000;
+            border: 1px solid var(--border-emphasis);
             padding: 10px;
             text-align: center;
             font-size: 11px;
@@ -1279,7 +1429,7 @@
         }
 
         .hexagon:hover {
-            stroke: #000 !important;
+            stroke: var(--text-primary) !important;
             stroke-width: 3px !important;
             filter: brightness(1.3);
             opacity: 1 !important;
@@ -1345,7 +1495,7 @@
 
         .modal-content {
             background: var(--bg-primary);
-            border: 4px double #000;
+            border: 4px double var(--divider-strong);
             padding: 30px;
             max-width: 500px;
             width: 90%;
@@ -1359,7 +1509,7 @@
             font-size: 24px;
             font-weight: bold;
             text-align: center;
-            border-bottom: 3px solid #000;
+            border-bottom: 3px solid var(--divider-strong);
             padding-bottom: 10px;
             margin-bottom: 20px;
             text-transform: uppercase;
@@ -1393,7 +1543,7 @@
             padding: 10px;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             font-size: 13px;
-            border: 2px solid #000;
+            border: 2px solid var(--divider-strong);
             background: #fff;
         }
 
@@ -1405,9 +1555,9 @@
         .form-submit {
             width: 100%;
             padding: 12px;
-            background: #000;
+            background: var(--text-primary);
             color: #fff;
-            border: 2px solid #000;
+            border: 2px solid var(--divider-strong);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             font-size: 14px;
             font-weight: bold;
@@ -1431,7 +1581,7 @@
             max-width: 280px;
             object-fit: contain;
             padding: 4px;
-            box-shadow: 0 0 0 3px #f7f7f0, 0 0 0 5px #000;
+            box-shadow: 0 0 0 3px var(--bg-secondary), 0 0 0 5px var(--text-primary);
         }
     </style>
 
@@ -1534,10 +1684,10 @@
 
         <!-- KNOWLEDGE SECTION -->
         <div class="content-section" id="knowledgeSection">
-            <h2 style="text-align: center; margin-bottom: 20px; border-bottom: 3px solid #000; padding-bottom: 10px;">Data Center Knowledge Base</h2>
+            <h2 class="section-header">Data Center Knowledge Base</h2>
 
             <!-- Knowledge Tabs -->
-            <div style="display: flex; gap: 10px; margin-bottom: 12px; border-bottom: 2px solid #000; padding-bottom: 5px; justify-content: center; flex-wrap: wrap;">
+            <div style="display: flex; gap: 10px; margin-bottom: 12px; border-bottom: 2px solid var(--divider-strong); padding-bottom: 5px; justify-content: center; flex-wrap: wrap;">
                 <button onclick="switchKnowledgeTab('glossary')" id="tabGlossary" class="knowledge-tab active-tab">
                     GLOSSARY
                 </button>
@@ -1562,20 +1712,20 @@
 
             <!-- Glossary View -->
             <div id="glossaryView" class="knowledge-view">
-                <input type="text" id="knowledgeSearch" placeholder="Search glossary terms..." style="width: 100%; padding: 12px; margin-bottom: 20px; border: 2px solid #000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
+                <input type="text" id="knowledgeSearch" placeholder="Search glossary terms..." style="width: 100%; padding: 12px; margin-bottom: 20px; border: 2px solid var(--divider-strong); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
                 <div class="knowledge-grid" id="knowledgeGrid"></div>
             </div>
 
             <!-- Handbook View -->
             <div id="handbookView" class="knowledge-view" style="display: none;">
-                <div id="handbookContent" style="background: var(--bg-primary); border: 3px double #000; padding: 30px; max-width: 900px; margin: 0 auto; line-height: 1.8; font-size: 14px; box-shadow: 3px 3px 8px rgba(0,0,0,0.3);">
+                <div id="handbookContent" style="background: var(--bg-primary); border: 3px double var(--divider-strong); padding: 30px; max-width: 900px; margin: 0 auto; line-height: 1.8; font-size: 14px; box-shadow: 3px 3px 8px rgba(0,0,0,0.3);">
                     <p style="text-align: center; font-style: italic;">Loading handbook...</p>
                 </div>
             </div>
 
             <!-- Taxonomy View -->
             <div id="taxonomyView" class="knowledge-view" style="display: none;">
-                <h3 style="text-align: center; margin-bottom: 12px; border-bottom: 2px solid #000; padding-bottom: 6px;">Taxonomy</h3>
+                <h3 class="section-subheader mb-12">Taxonomy</h3>
                 <div id="taxonomyContent" class="taxonomy-wrapper"></div>
             </div>
 
@@ -1584,12 +1734,12 @@
                 <div style="max-width: 1000px; margin: 0 auto;">
                     <p style="text-align: center; font-size: 15px; margin-bottom: 30px; line-height: 1.7;">
                         Professional study guides and educational resources for data center professionals, students, and job seekers.
-                        <strong>Business customers:</strong> See our <a href="#" onclick="switchSection('pricing'); return false;" style="color: #000; text-decoration: underline;">subscription plans</a> for full access.
+                        <strong>Business customers:</strong> See our <a href="#" onclick="switchSection('pricing'); return false;" style="color: var(--text-primary); text-decoration: underline;">subscription plans</a> for full access.
                     </p>
 
                     <!-- A la carte paid guides -->
-                    <div style="margin-bottom: 16px; border: 2px solid #000; padding: 10px; background: #fff;">
-                        <h3 style="margin: 0 0 6px; font-size: 17px; letter-spacing: 1px;">PAID STUDY GUIDES (A LA CARTE)</h3>
+                    <div style="margin-bottom: 16px; border: 2px solid var(--divider-strong); padding: 10px; background: #fff;">
+                        <h3 class="h3-tight">PAID STUDY GUIDES (A LA CARTE)</h3>
                         <div style="font-size: 13px; line-height: 1.6;">
                             <div><strong>Core Fundamentals ($49)</strong> - Operations, infrastructure basics, market essentials.</div>
                             <div><strong>Essential Infrastructure ($99)</strong> - Site selection, sustainability metrics, best practices, power and network design.</div>
@@ -1599,7 +1749,7 @@
 
                     <!-- FREE Study Guides -->
                     <div style="margin-bottom: 40px;">
-                        <h3 style="border-bottom: 3px solid #000; padding-bottom: 8px; margin-bottom: 20px; font-size: 18px; letter-spacing: 1px;">FREE STUDY GUIDES</h3>
+                        <h3 class="section-subheader h3-medium">FREE STUDY GUIDES</h3>
 
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
                             <!-- Free Guide 1: Market Overview -->
@@ -1627,16 +1777,16 @@
 
                     <!-- SUBSCRIPTION KNOWLEDGE LIBRARY -->
                     <div style="margin-bottom: 40px;">
-                        <h3 style="border-bottom: 3px solid #000; padding-bottom: 8px; margin-bottom: 15px; font-size: 18px; letter-spacing: 1px;">PREMIUM KNOWLEDGE LIBRARY</h3>
+                        <h3 class="section-subheader h3-medium">PREMIUM KNOWLEDGE LIBRARY</h3>
 
                         <!-- Disclaimer about AI-curated content -->
-                        <div style="background: var(--bg-primary); border: 2px solid #000; padding: 15px; margin-bottom: 25px; font-size: 12px; line-height: 1.6;">
+                        <div style="background: var(--bg-primary); border: 2px solid var(--divider-strong); padding: 15px; margin-bottom: 25px; font-size: 12px; line-height: 1.6;">
                             <strong>Note:</strong> Content developed from research papers guided and curated by our data center experts. Each topic includes comprehensive research materials, visual summaries, and educational videos.
                         </div>
 
                         <!-- BASIC TIER CONTENT -->
                         <div class="tier-basic-only" style="margin-bottom: 35px; display: none;">
-                            <div style="background: #000; color: #fff; padding: 8px 15px; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px; font-size: 14px;">
+                            <div style="background: var(--text-primary); color: #fff; padding: 8px 15px; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px; font-size: 14px;">
                                 BASIC TIER ($299/month) - CORE FUNDAMENTALS
                             </div>
 
@@ -1680,7 +1830,7 @@
 
                         <!-- PREMIUM TIER CONTENT -->
                         <div class="tier-premium-only" style="margin-bottom: 35px; display: none;">
-                            <div style="background: #000; color: #fff; padding: 8px 15px; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px; font-size: 14px;">
+                            <div style="background: var(--text-primary); color: #fff; padding: 8px 15px; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px; font-size: 14px;">
                                 PREMIUM TIER ($999/month) - ESSENTIAL INFRASTRUCTURE
                                 <span style="font-weight: normal; font-size: 12px; margin-left: 10px;">(Includes all Basic content +)</span>
                             </div>
@@ -1745,7 +1895,7 @@
 
                         <!-- ENTERPRISE TIER CONTENT -->
                         <div class="tier-enterprise-only" style="margin-bottom: 20px; display: none;">
-                            <div style="background: #000; color: #fff; padding: 8px 15px; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px; font-size: 14px;">
+                            <div style="background: var(--text-primary); color: #fff; padding: 8px 15px; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px; font-size: 14px;">
                                 ENTERPRISE TIER ($2,499/month) - COMPLETE LIBRARY
                                 <span style="font-weight: normal; font-size: 12px; margin-left: 10px;">(Includes all Premium content +)</span>
                             </div>
@@ -1821,12 +1971,12 @@
                     </div>
 
                     <!-- Business Customers CTA -->
-                    <div style="background: #f9f9f9; border: 3px double #000; padding: 25px; text-align: center;">
+                    <div style="background: #f9f9f9; border: 3px double var(--divider-strong); padding: 25px; text-align: center;">
                         <h4 style="margin-top: 0; font-size: 18px;">Need More Than Study Guides?</h4>
                         <p style="font-size: 14px; line-height: 1.6; margin-bottom: 20px;">
                             Business customers get access to our full data center intelligence platform, expert advisory services, and real-time market data.
                         </p>
-                        <button style="padding: 12px 30px; background: var(--text-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; font-weight: bold; cursor: pointer;"
+                        <button class="btn-watchlist"
                                 onclick="switchSection('pricing'); return false;">
                             VIEW SUBSCRIPTION PLANS
                         </button>
@@ -1837,11 +1987,11 @@
 
         <!-- MY WATCHLIST SECTION -->
         <div class="content-section" id="watchlistSection">
-            <h2 style="text-align: center; margin-bottom: 20px; border-bottom: 3px solid #000; padding-bottom: 10px;">★ My Watchlist</h2>
+            <h2 class="section-header">★ My Watchlist</h2>
 
-            <div style="text-align: center; margin-bottom: 20px; padding: 15px; background: #e0f2fe; border: 2px solid #0284c7; border-radius: 5px;">
+            <div class="notice notice-info">
                 <strong>Save your favorite data centers for quick access</strong>
-                <p style="margin: 10px 0 0 0; font-size: 13px;">Click the "★ Save" button on any data center in the Existing DCs table to add it to your watchlist.</p>
+                <p>Click the "★ Save" button on any data center in the Existing DCs table to add it to your watchlist.</p>
             </div>
 
             <div id="watchlistContent">
@@ -1968,7 +2118,7 @@
 
             <!-- FAQ Section -->
             <div style="max-width: 900px; margin: 0 auto 40px;">
-                <h3 style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 25px; font-size: 18px; letter-spacing: 1px;">FREQUENTLY ASKED QUESTIONS</h3>
+                <h3 class="section-subheader h3-medium mb-24">FREQUENTLY ASKED QUESTIONS</h3>
 
                 <div style="margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #ccc;">
                     <p style="font-weight: bold; margin-bottom: 8px; font-size: 14px;">Why pay when brokers are free?</p>
@@ -1997,11 +2147,11 @@
 
         <!-- SERVICES SECTION -->
         <div class="content-section" id="servicesSection">
-            <h2 style="text-align: center; margin-bottom: 30px; border-bottom: 3px solid #000; padding-bottom: 10px;">Advisory & Intelligence Services</h2>
+            <h2 class="section-header">Advisory & Intelligence Services</h2>
 
             <!-- Services Overview -->
-            <div style="max-width: 900px; margin: 0 auto 40px; padding: 30px; background: var(--bg-primary); border: 3px double #000;">
-                <h3 style="text-align: center; margin-top: 0; font-size: 22px; border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 20px;">
+            <div style="max-width: 900px; margin: 0 auto 40px; padding: 30px; background: var(--bg-primary); border: 3px double var(--divider-strong);">
+                <h3 class="section-subheader h3-xlarge mt-0">
                     We're Not Brokers       We're Your Data Center Intelligence Partner
                 </h3>
                 <p style="font-size: 15px; line-height: 1.8; margin-bottom: 15px;">
@@ -2015,7 +2165,7 @@
                             onclick="switchSection('pricing'); return false;">
                         VIEW PRICING PLANS
                     </button>
-                    <button style="padding: 15px 40px; background: #fff; color: #000; border: 2px solid #000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 16px; font-weight: bold; cursor: pointer;"
+                    <button style="padding: 15px 40px; background: #fff; color: var(--text-primary); border: 2px solid var(--divider-strong); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 16px; font-weight: bold; cursor: pointer;"
                             onclick="openDemoModal()">
                         REQUEST A DEMO
                     </button>
@@ -2024,7 +2174,7 @@
 
             <!-- What We Offer -->
             <div style="max-width: 1100px; margin: 0 auto 40px;">
-                <h3 style="text-align: center; margin-bottom: 30px; font-size: 20px; border-bottom: 2px solid #000; padding-bottom: 10px;">
+                <h3 class="section-subheader h3-large mb-30">
                     What We Offer
                 </h3>
 
@@ -2077,22 +2227,22 @@
             </div>
 
             <!-- Pricing CTA -->
-            <div style="max-width: 900px; margin: 0 auto; padding: 30px; background: #f9f9f9; border: 3px double #000; text-align: center;">
-                <h3 style="margin-top: 0; font-size: 20px;">Ready to Get Started?</h3>
+            <div style="max-width: 900px; margin: 0 auto; padding: 30px; background: #f9f9f9; border: 3px double var(--divider-strong); text-align: center;">
+                <h3 class="h3-cta">Ready to Get Started?</h3>
                 <p style="font-size: 15px; line-height: 1.7; margin-bottom: 25px;">
                     Choose from our <strong>Basic ($299/mo)</strong>, <strong>Premium ($999/mo)</strong>, or <strong>Enterprise ($2,499/mo)</strong> plans.
                     Each tier is designed to match your level of need       from self-service data access to full white-glove advisory.
                 </p>
 
                 <!-- Study Guide Inclusions -->
-                <div style="background: #fff; padding: 20px; margin: 20px 0; border: 2px solid #000; text-align: left;">
+                <div style="background: #fff; padding: 20px; margin: 20px 0; border: 2px solid var(--divider-strong); text-align: left;">
                     <h4 style="margin-top: 0; margin-bottom: 15px; font-size: 16px; text-align: center; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
                         Study Guide Access Included with Each Tier
                     </h4>
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; font-size: 14px;">
                         <!-- Basic -->
                         <div style="padding: 15px; background: #f5f5f5; border: 1px solid #ddd;">
-                            <div style="font-weight: bold; margin-bottom: 8px; color: #000;">Basic</div>
+                            <div style="font-weight: bold; margin-bottom: 8px; color: var(--text-primary);">Basic</div>
                             <div style="font-size: 13px; color: #666; line-height: 1.6;">
                                 <strong>Core Fundamentals</strong><br>
                                 Essential foundational knowledge
@@ -2101,7 +2251,7 @@
 
                         <!-- Premium -->
                         <div style="padding: 15px; background: #f5f5f5; border: 1px solid #ddd;">
-                            <div style="font-weight: bold; margin-bottom: 8px; color: #000;">Premium</div>
+                            <div style="font-weight: bold; margin-bottom: 8px; color: var(--text-primary);">Premium</div>
                             <div style="font-size: 13px; color: #666; line-height: 1.6;">
                                 <strong>Essential Infrastructure</strong><br>
                                 + Core Fundamentals<br>
@@ -2111,7 +2261,7 @@
 
                         <!-- Enterprise -->
                         <div style="padding: 15px; background: #f5f5f5; border: 1px solid #ddd;">
-                            <div style="font-weight: bold; margin-bottom: 8px; color: #000;">Enterprise</div>
+                            <div style="font-weight: bold; margin-bottom: 8px; color: var(--text-primary);">Enterprise</div>
                             <div style="font-size: 13px; color: #666; line-height: 1.6;">
                                 <strong>Complete Library</strong><br>
                                 All study guides included<br>
@@ -2129,12 +2279,12 @@
 
         <!-- EXISTING DCS SECTION -->
         <div class="content-section" id="existingDCsSection">
-            <h2 style="text-align: center; margin-bottom: 20px; border-bottom: 3px solid #000; padding-bottom: 10px;">Existing Data Centers Database</h2>
+            <h2 class="section-header">Existing Data Centers Database</h2>
             <p class="data-freshness" style="text-align: center;">Data refresh: Daily</p>
 
             <!-- Tabs for Existing DCs -->
             <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #ccc;">
-                <a href="#" onclick="showExistingTab('heatmap'); return false;" id="existingTabHeatmap" style="display: inline-block; padding: 10px 20px; margin: 0 5px; font-weight: bold; color: #000; text-decoration: none; border-bottom: 3px solid #000;">Heatmap</a>
+                <a href="#" onclick="showExistingTab('heatmap'); return false;" id="existingTabHeatmap" style="display: inline-block; padding: 10px 20px; margin: 0 5px; font-weight: bold; color: var(--text-primary); text-decoration: none; border-bottom: 3px solid var(--divider-strong);">Heatmap</a>
                 <a href="#" onclick="showExistingTab('table'); return false;" id="existingTabTable" style="display: inline-block; padding: 10px 20px; margin: 0 5px; font-weight: bold; color: #666; text-decoration: none; border-bottom: 3px solid transparent;">Table View</a>
                 <a href="#" onclick="showExistingTab('contact'); return false;" id="existingTabContact" style="display: inline-block; padding: 10px 20px; margin: 0 5px; font-weight: bold; color: #666; text-decoration: none; border-bottom: 3px solid transparent;">Request Data</a>
             </div>
@@ -2144,13 +2294,13 @@
             </div>
 
             <div id="existingTabTableContent" style="display: none;">
-                <div style="background: #f9f9f9; padding: 20px; border: 2px solid #000;">
+                <div style="background: #f9f9f9; padding: 20px; border: 2px solid var(--divider-strong);">
                     <div style="margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
-                        <input id="existingSearch" type="text" placeholder="Filter existing DCs (name, city, state, provider, certs…)" style="flex: 1 1 240px; padding: 10px; border: 2px solid #000; font-size: 12px;">
-                        <button onclick="clearExistingFilter()" style="padding: 10px 14px; border: 2px solid #000; background: #fff; cursor: pointer; font-weight: bold;">Clear</button>
+                        <input id="existingSearch" type="text" placeholder="Filter existing DCs (name, city, state, provider, certs…)" style="flex: 1 1 240px; padding: 10px; border: 2px solid var(--divider-strong); font-size: 12px;">
+                        <button onclick="clearExistingFilter()" style="padding: 10px 14px; border: 2px solid var(--divider-strong); background: #fff; cursor: pointer; font-weight: bold;">Clear</button>
                         <div id="existingExportBtns" style="display: none; gap: 10px;">
-                            <button onclick="exportExistingDCsToCSV()" style="padding: 10px 16px; border: 2px solid #000; background: #fff; cursor: pointer; font-weight: bold; transition: all 0.2s;">📄 CSV</button>
-                            <button onclick="exportExistingDCsToExcel()" style="padding: 10px 16px; border: 2px solid #000; background: #e8f5e9; cursor: pointer; font-weight: bold; transition: all 0.2s;">📊 Excel</button>
+                            <button onclick="exportExistingDCsToCSV()" style="padding: 10px 16px; border: 2px solid var(--divider-strong); background: #fff; cursor: pointer; font-weight: bold; transition: all 0.2s;">📄 CSV</button>
+                            <button onclick="exportExistingDCsToExcel()" style="padding: 10px 16px; border: 2px solid var(--divider-strong); background: #e8f5e9; cursor: pointer; font-weight: bold; transition: all 0.2s;">📊 Excel</button>
                         </div>
                     </div>
                     <p style="text-align: center; margin-bottom: 15px;">Comprehensive table view of all existing data centers</p>
@@ -2159,8 +2309,8 @@
             </div>
 
             <div id="existingTabContactContent" style="display: none;">
-                <div style="max-width: 600px; margin: 0 auto; background: #f9f9f9; padding: 30px; border: 2px solid #000;">
-                    <h3 style="text-align: center; margin-bottom: 20px;">Request Existing DC Data</h3>
+                <div style="max-width: 600px; margin: 0 auto; background: #f9f9f9; padding: 30px; border: 2px solid var(--divider-strong);">
+                    <h3 class="h3-centered">Request Existing DC Data</h3>
                     <form onsubmit="handleServiceRequest(event, 'Existing DC Data')">
                         <div class="form-group">
                             <label>Your Name</label>
@@ -2190,13 +2340,13 @@
 
         <!-- UPCOMING DCS SECTION -->
         <div class="content-section" id="upcomingDCsSection">
-            <h2 style="text-align: center; margin-bottom: 20px; border-bottom: 3px solid #000; padding-bottom: 10px;">Upcoming Data Center Projects</h2>
+            <h2 class="section-header">Upcoming Data Center Projects</h2>
             <p class="data-freshness" style="text-align: center;">Data refresh: Daily</p>
             <p style="text-align: center; margin-bottom: 20px; font-size: 13px;">Intelligence gathered from industry news sources and public construction permits nationwide</p>
 
             <!-- Tabs for Upcoming DCs -->
             <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #ccc;">
-                <a href="#" onclick="showUpcomingTab('heatmap'); return false;" id="upcomingTabHeatmap" style="display: inline-block; padding: 10px 20px; margin: 0 5px; font-weight: bold; color: #000; text-decoration: none; border-bottom: 3px solid #000;">Heatmap</a>
+                <a href="#" onclick="showUpcomingTab('heatmap'); return false;" id="upcomingTabHeatmap" style="display: inline-block; padding: 10px 20px; margin: 0 5px; font-weight: bold; color: var(--text-primary); text-decoration: none; border-bottom: 3px solid var(--divider-strong);">Heatmap</a>
                 <a href="#" onclick="showUpcomingTab('table'); return false;" id="upcomingTabTable" style="display: inline-block; padding: 10px 20px; margin: 0 5px; font-weight: bold; color: #666; text-decoration: none; border-bottom: 3px solid transparent;">Project Table</a>
                 <a href="#" onclick="showUpcomingTab('contact'); return false;" id="upcomingTabContact" style="display: inline-block; padding: 10px 20px; margin: 0 5px; font-weight: bold; color: #666; text-decoration: none; border-bottom: 3px solid transparent;">Request Data</a>
             </div>
@@ -2207,20 +2357,20 @@
 
             <div id="upcomingTabTableContent" style="display: none;">
                 <div style="margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
-                    <input id="upcomingSearch" type="text" placeholder="Filter upcoming DCs (location, status, provider…)" style="flex: 1 1 240px; padding: 10px; border: 2px solid #000; font-size: 12px;">
-                    <button onclick="clearUpcomingFilter()" style="padding: 10px 14px; border: 2px solid #000; background: #fff; cursor: pointer; font-weight: bold;">Clear</button>
+                    <input id="upcomingSearch" type="text" placeholder="Filter upcoming DCs (location, status, provider…)" style="flex: 1 1 240px; padding: 10px; border: 2px solid var(--divider-strong); font-size: 12px;">
+                    <button onclick="clearUpcomingFilter()" style="padding: 10px 14px; border: 2px solid var(--divider-strong); background: #fff; cursor: pointer; font-weight: bold;">Clear</button>
                     <div id="upcomingExportBtns" style="display: none; gap: 10px;">
-                        <button onclick="exportUpcomingDCsToCSV()" style="padding: 10px 16px; border: 2px solid #000; background: #fff; cursor: pointer; font-weight: bold; transition: all 0.2s;">📄 CSV</button>
-                        <button onclick="exportUpcomingDCsToExcel()" style="padding: 10px 16px; border: 2px solid #000; background: #e8f5e9; cursor: pointer; font-weight: bold; transition: all 0.2s;">📊 Excel</button>
+                        <button onclick="exportUpcomingDCsToCSV()" style="padding: 10px 16px; border: 2px solid var(--divider-strong); background: #fff; cursor: pointer; font-weight: bold; transition: all 0.2s;">📄 CSV</button>
+                        <button onclick="exportUpcomingDCsToExcel()" style="padding: 10px 16px; border: 2px solid var(--divider-strong); background: #e8f5e9; cursor: pointer; font-weight: bold; transition: all 0.2s;">📊 Excel</button>
                     </div>
                 </div>
-                <h3 style="text-align: center; margin: 20px 0 15px; font-size: 16px;">Project Details</h3>
-                <div id="upcomingDCsTable" style="background: #f9f9f9; padding: 20px; border: 2px solid #000; overflow-x: auto;"></div>
+                <h3 class="h3-project-details">Project Details</h3>
+                <div id="upcomingDCsTable" style="background: #f9f9f9; padding: 20px; border: 2px solid var(--divider-strong); overflow-x: auto;"></div>
             </div>
 
             <div id="upcomingTabContactContent" style="display: none;">
-                <div style="max-width: 600px; margin: 0 auto; background: #f9f9f9; padding: 30px; border: 2px solid #000;">
-                    <h3 style="text-align: center; margin-bottom: 20px;">Request Upcoming DC Project Data</h3>
+                <div style="max-width: 600px; margin: 0 auto; background: #f9f9f9; padding: 30px; border: 2px solid var(--divider-strong);">
+                    <h3 class="h3-centered">Request Upcoming DC Project Data</h3>
                     <form onsubmit="handleServiceRequest(event, 'Upcoming DC Projects')">
                         <div class="form-group">
                             <label>Your Name</label>
@@ -2418,7 +2568,7 @@
             <div style="padding: 30px; font-size: 14px; line-height: 1.6;">
                 <div style="text-align: center; margin-bottom: 25px;">
                     <div style="font-size: 48px; margin-bottom: 10px;">📊</div>
-                    <h3 style="margin: 0 0 10px 0; font-size: 20px; color: #92400e;">You've Used All 10 Free Exports</h3>
+                    <h3 class="h3-export-warning">You've Used All 10 Free Exports</h3>
                     <p style="margin: 0; color: #666;">Upgrade to continue exporting data center intelligence</p>
                 </div>
 
@@ -2435,18 +2585,18 @@
                 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px;">
                     <div style="border: 2px solid #4a5568; padding: 15px; text-align: center; border-radius: 5px;">
                         <div style="font-weight: bold; color: #4a5568; margin-bottom: 5px;">Basic</div>
-                        <div style="font-size: 24px; font-weight: bold; color: #000;">$99</div>
+                        <div style="font-size: 24px; font-weight: bold; color: var(--text-primary);">$99</div>
                         <div style="font-size: 11px; color: #666;">per month</div>
                     </div>
                     <div style="border: 3px solid #6b46c1; padding: 15px; text-align: center; border-radius: 5px; background: #faf5ff;">
                         <div style="font-weight: bold; color: #6b46c1; margin-bottom: 5px;">Premium</div>
-                        <div style="font-size: 24px; font-weight: bold; color: #000;">$499</div>
+                        <div style="font-size: 24px; font-weight: bold; color: var(--text-primary);">$499</div>
                         <div style="font-size: 11px; color: #666;">per month</div>
                         <div style="margin-top: 5px; background: #6b46c1; color: #fff; padding: 3px 8px; border-radius: 3px; font-size: 10px; font-weight: bold;">POPULAR</div>
                     </div>
                     <div style="border: 2px solid #d97706; padding: 15px; text-align: center; border-radius: 5px;">
                         <div style="font-weight: bold; color: #d97706; margin-bottom: 5px;">Enterprise</div>
-                        <div style="font-size: 24px; font-weight: bold; color: #000;">$2,499</div>
+                        <div style="font-size: 24px; font-weight: bold; color: var(--text-primary);">$2,499</div>
                         <div style="font-size: 11px; color: #666;">per month</div>
                     </div>
                 </div>
@@ -2547,12 +2697,12 @@
             const newsBtn = document.getElementById('filterNews');
             const permitBtn = document.getElementById('filterPermit');
 
-            if (allBtn) allBtn.style.background = source === 'all' ? '#000' : '#fff';
-            if (allBtn) allBtn.style.color = source === 'all' ? '#fff' : '#000';
-            if (newsBtn) newsBtn.style.background = source === 'news' ? '#000' : '#fff';
-            if (newsBtn) newsBtn.style.color = source === 'news' ? '#fff' : '#000';
-            if (permitBtn) permitBtn.style.background = source === 'permit' ? '#000' : '#fff';
-            if (permitBtn) permitBtn.style.color = source === 'permit' ? '#fff' : '#000';
+            if (allBtn) allBtn.style.background = source === 'all' ? 'var(--text-primary)' : 'var(--bg-primary)';
+            if (allBtn) allBtn.style.color = source === 'all' ? '#ffffff' : 'var(--text-primary)';
+            if (newsBtn) newsBtn.style.background = source === 'news' ? 'var(--text-primary)' : 'var(--bg-primary)';
+            if (newsBtn) newsBtn.style.color = source === 'news' ? '#ffffff' : 'var(--text-primary)';
+            if (permitBtn) permitBtn.style.background = source === 'permit' ? 'var(--text-primary)' : 'var(--bg-primary)';
+            if (permitBtn) permitBtn.style.color = source === 'permit' ? '#ffffff' : 'var(--text-primary)';
 
             loadUpcomingDCs();
         }
@@ -2595,7 +2745,7 @@
 
                     if (response.ok) {
                         button.textContent = '★ Save';
-                        button.style.background = '#0284c7';
+                        button.classList.remove('btn-success'); button.classList.add('btn-info');
                         console.log(`Removed ${dcId} from watchlist`);
                     }
                 } else {
@@ -2616,11 +2766,11 @@
                     const result = await response.json();
                     if (result.ok) {
                         button.textContent = '✓ Saved';
-                        button.style.background = '#10b981';
+                        button.classList.remove('btn-info'); button.classList.add('btn-success');
                         console.log(`Added ${dcId} to watchlist`);
                     } else if (!result.ok && result.message && result.message.includes('Already')) {
                         button.textContent = '✓ Saved';
-                        button.style.background = '#10b981';
+                        button.classList.remove('btn-info'); button.classList.add('btn-success');
                     }
                 }
             } catch (error) {
@@ -2657,10 +2807,10 @@
                     return;
                 }
 
-                let html = `<h3 style="text-align: center; margin-bottom: 20px;">My Saved Data Centers (${watchlist.length})</h3>`;
+                let html = `<h3 class="h3-centered">My Saved Data Centers (${watchlist.length})</h3>`;
                 html += '<div class="table-wrapper">';
                 html += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
-                html += '<tr style="background: #000; color: #fff;">';
+                html += '<tr style="background: var(--text-primary); color: #fff;">';
                 html += '<th style="padding: 8px; text-align: left;">Name</th>';
                 html += '<th style="padding: 8px; text-align: left;">Location</th>';
                 html += '<th style="padding: 8px; text-align: center;">Date Saved</th>';
@@ -3227,7 +3377,7 @@
                 // Clear existing content
                 const container = document.getElementById(containerId);
                 container.innerHTML = `
-                    <h3 style="text-align: center; margin-bottom: 15px;">Data Center Geographic Distribution (Hexbin Heatmap)</h3>
+                    <h3 class="h3-centered-sm">Data Center Geographic Distribution (Hexbin Heatmap)</h3>
                     <div id="hexmapContainer" style="width: 100%; margin-bottom: 20px;"></div>
                     <div class="hexmap-legend" style="text-align: center; clear: both;">
                         <h4 style="margin-bottom: 10px;">Density Legend</h4>
@@ -3353,7 +3503,7 @@
                 // Clear existing content
                 const container = document.getElementById(containerId);
                 container.innerHTML = `
-                    <h3 style="text-align: center; margin-bottom: 15px;">Upcoming Data Center Projects (Hexbin Heatmap)</h3>
+                    <h3 class="h3-centered-sm">Upcoming Data Center Projects (Hexbin Heatmap)</h3>
                     <div id="upcomingHexmapContainer"></div>
                     <div class="hexmap-legend">
                         <h4>Project Density Legend</h4>
@@ -4048,9 +4198,9 @@
 
             // Enhanced video player with resize controls and keyboard shortcuts
             modalContent.innerHTML = `
-                <div style="position: relative; background: #000;">
+                <div style="position: relative; background: var(--text-primary);">
                     <video id="studyGuideVideo" controls autoplay
-                           style="width: 100%; max-height: 70vh; display: block; background: #000;"
+                           style="width: 100%; max-height: 70vh; display: block; background: var(--text-primary);"
                            controlsList="nodownload">
                         <source src="${videoPath}" type="video/mp4">
                         Your browser does not support the video tag.
@@ -4156,10 +4306,10 @@
 
             modalContent.innerHTML = `
                 <div style="text-align: center; margin-bottom: 20px;">
-                    <a href="${pdfPath}" download style="display: inline-block; padding: 12px 30px; background: #000; color: #fff; text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; font-weight: bold; border: 2px solid #000;">
+                    <a href="${pdfPath}" download style="display: inline-block; padding: 12px 30px; background: var(--text-primary); color: #fff; text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; font-weight: bold; border: 2px solid var(--divider-strong);">
                         Download PDF
                     </a>
-                    <a href="${pdfPath}" target="_blank" style="display: inline-block; padding: 12px 30px; background: #fff; color: #000; text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; font-weight: bold; border: 2px solid #000; margin-left: 10px;">
+                    <a href="${pdfPath}" target="_blank" style="display: inline-block; padding: 12px 30px; background: #fff; color: var(--text-primary); text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; font-weight: bold; border: 2px solid var(--divider-strong); margin-left: 10px;">
                         Open in New Tab
                     </a>
                 </div>
@@ -4198,10 +4348,10 @@
                     <img src="${imagePath}" alt="${title}" style="max-width: 100%; height: auto; border: 2px solid #ccc;">
                 </div>
                 <div style="text-align: center; margin-top: 20px;">
-                    <a href="${imagePath}" download style="display: inline-block; padding: 12px 30px; background: #000; color: #fff; text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; font-weight: bold; border: 2px solid #000;">
+                    <a href="${imagePath}" download style="display: inline-block; padding: 12px 30px; background: var(--text-primary); color: #fff; text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; font-weight: bold; border: 2px solid var(--divider-strong);">
                         Download Image
                     </a>
-                    <a href="${imagePath}" target="_blank" style="display: inline-block; padding: 12px 30px; background: #fff; color: #000; text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; font-weight: bold; border: 2px solid #000; margin-left: 10px;">
+                    <a href="${imagePath}" target="_blank" style="display: inline-block; padding: 12px 30px; background: #fff; color: var(--text-primary); text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; font-weight: bold; border: 2px solid var(--divider-strong); margin-left: 10px;">
                         Open in New Tab
                     </a>
                 </div>
@@ -4278,8 +4428,8 @@
 
             if (contentEl) contentEl.style.display = 'block';
             if (tabEl) {
-                tabEl.style.color = '#000';
-                tabEl.style.borderBottom = '3px solid #000';
+                tabEl.style.color = 'var(--text-primary)';
+                tabEl.style.borderBottom = '3px solid var(--divider-strong)';
             }
         }
 
@@ -4308,8 +4458,8 @@
 
             if (contentEl) contentEl.style.display = 'block';
             if (tabEl) {
-                tabEl.style.color = '#000';
-                tabEl.style.borderBottom = '3px solid #000';
+                tabEl.style.color = 'var(--text-primary)';
+                tabEl.style.borderBottom = '3px solid var(--divider-strong)';
             }
         }
 
@@ -4544,8 +4694,8 @@
 
                 // Convert markdown to HTML-like display
                 let content = markdown
-                    .replace(/^# (.+)$/gm, '<h2 style="text-align: center; font-size: 24px; margin: 20px 0; text-transform: uppercase; letter-spacing: 2px; border-bottom: 3px double #000; padding-bottom: 10px;">$1</h2>')
-                    .replace(/^## (.+)$/gm, '<h3 style="font-size: 18px; margin: 18px 0 10px 0; font-weight: bold; border-bottom: 2px solid #000; padding-bottom: 5px;">$1</h3>')
+                    .replace(/^# (.+)$/gm, '<h2 class="section-header">$1</h2>')
+                    .replace(/^## (.+)$/gm, '<h3 class="section-subheader">$1</h3>')
                     .replace(/^### (.+)$/gm, '<h4 style="font-size: 16px; margin: 15px 0 8px 0; font-weight: bold;">$1</h4>')
                     .replace(/^\*\*(.+?)\*\*/gm, '<strong>$1</strong>')
                     .replace(/^- (.+)$/gm, '<li style="margin: 5px 0;">$1</li>')
@@ -4625,8 +4775,8 @@
             document.getElementById('servicesList').innerHTML = services.map(s => `
                 <div class="service-item">
                     <h3>
-                        ${s.id ? `<a href="#" onclick="showServiceModal('${s.id}'); return false;" style="color: #000; text-decoration: none;">${s.name}</a>` : s.name}
-                        ${s.link && !s.id ? ' <a href="#" onclick="' + s.link + '(); return false;" style="font-size: 12px; color: #000; text-decoration: underline;">[Request Service]</a>' : ''}
+                        ${s.id ? `<a href="#" onclick="showServiceModal('${s.id}'); return false;" style="color: var(--text-primary); text-decoration: none;">${s.name}</a>` : s.name}
+                        ${s.link && !s.id ? ' <a href="#" onclick="' + s.link + '(); return false;" style="font-size: 12px; color: var(--text-primary); text-decoration: underline;">[Request Service]</a>' : ''}
                     </h3>
                     <p>${s.desc}</p>
                 </div>
@@ -4699,10 +4849,10 @@
                 // Email gate banner (if user hasn't provided email and isn't on paid tier)
                 if (!hasEmailGateAccess()) {
                     bannerHTML += `
-                        <div style="margin-bottom: 15px; padding: 15px; background: #f5f1e8; border: 3px solid #10b981; border-radius: 5px; color: #000;">
+                        <div style="margin-bottom: 15px; padding: 15px; background: #f5f1e8; border: 3px solid #10b981; border-radius: 5px; color: var(--text-primary);">
                             <h4 style="margin: 0 0 10px 0; font-size: 16px; color: #059669;">          Certification Data Locked</h4>
                             <p style="margin: 0 0 10px 0; font-size: 13px;">Unlock <strong>SOC2, HIPAA, PCI-DSS, and ISO27001</strong> certification columns for all 4,436+ facilities.</p>
-                            <button onclick="showEmailCaptureModal()" style="padding: 8px 20px; background: #000; color: #fff; border: 3px solid #10b981; border-radius: 3px; font-weight: bold; cursor: pointer;">
+                            <button onclick="showEmailCaptureModal()" style="padding: 8px 20px; background: var(--text-primary); color: #fff; border: 3px solid #10b981; border-radius: 3px; font-weight: bold; cursor: pointer;">
                                 Unlock for FREE (Email Required)
                             </button>
                         </div>
@@ -4712,7 +4862,7 @@
                 // Tier upgrade banner (for free users, even if they have email)
                 if (userTier === 'free') {
                     bannerHTML += `
-                        <div style="margin-bottom: 15px; padding: 15px; background: #f5f1e8; border: 3px solid #9333ea; border-radius: 5px; color: #000;">
+                        <div style="margin-bottom: 15px; padding: 15px; background: #f5f1e8; border: 3px solid #9333ea; border-radius: 5px; color: var(--text-primary);">
                             <h4 style="margin: 0 0 10px 0; font-size: 16px; color: #7e22ce;">          Get More Data with Paid Tiers</h4>
                             <p style="margin: 0 0 10px 0; font-size: 13px;">Unlock additional columns and features:</p>
                             <ul style="margin: 0 0 10px 0; padding-left: 20px; font-size: 12px;">
@@ -4720,7 +4870,7 @@
                                 <li><strong>Premium ($999/mo):</strong> + Contact, Specs</li>
                                 <li><strong>Enterprise ($2,499/mo):</strong> + API Access</li>
                             </ul>
-                            <button onclick="switchSection('pricing')" style="padding: 8px 20px; background: #000; color: #fff; border: 3px solid #9333ea; border-radius: 3px; font-weight: bold; cursor: pointer;">
+                            <button onclick="switchSection('pricing')" style="padding: 8px 20px; background: var(--text-primary); color: #fff; border: 3px solid #9333ea; border-radius: 3px; font-weight: bold; cursor: pointer;">
                                 View Pricing Plans
                             </button>
                         </div>
@@ -4750,7 +4900,7 @@
                 let filterStatus = '';
                 if (window.activeQuickLinkCategory) {
                     filterStatus = `
-                        <div style="text-align: center; margin-bottom: 10px; padding: 10px; background: #e0f2fe; border: 2px solid #0284c7; border-radius: 5px;">
+                        <div class="notice notice-info">
                             <strong>Filtered by:</strong> ${getCategoryDescription(window.activeQuickLinkCategory)}
                             <button onclick="window.activeQuickLinkCategory = null; loadExistingDCs();" style="margin-left: 10px; padding: 5px 15px; background: #dc2626; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
                                 Clear Filter
@@ -4758,13 +4908,13 @@
                         </div>
                     `;
                 }
-                let html = filterStatus + `<h3 style="text-align: center; margin-bottom: 15px;">Operational Data Centers</h3>`;
+                let html = filterStatus + `<h3 class="h3-centered-sm">Operational Data Centers</h3>`;
                 html += '<div style="text-align: center; font-size: 16px; font-weight: bold; color: #d97706; background: #fef3c7; padding: 12px; border: 2px solid #f59e0b; border-radius: 5px; margin-bottom: 15px;">Columns by tier: Free (Provider/Title/Address/Certifications)  ·  Basic (+Sqft/Lat & Long)  ·  Premium (+Contact/Specs)  ·  Enterprise (+API Access)</div>';
                 html += '<div class="table-wrapper">';
                 html += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
 
                 // Table header with tiered columns
-                html += '<tr style="background: #000; color: #fff;">';
+                html += '<tr style="background: var(--text-primary); color: #fff;">';
                 // FREE tier columns
                 html += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setExistingSort(\'provider\')">Provider</th>';
                 html += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setExistingSort(\'title\')">Title</th>';
@@ -4881,7 +5031,7 @@
 
                 // Summary bar
                 const summaryHTML = `
-                    <div style="margin-top: 10px; padding: 10px; background: #f0f0f0; border: 2px solid #000; font-size: 12px;">
+                    <div style="margin-top: 10px; padding: 10px; background: #f0f0f0; border: 2px solid var(--divider-strong); font-size: 12px;">
                         <strong>Total Facilities: ${data.total}</strong>
                         <span style="float: right; font-size: 11px;">
                             Tier: <strong style="text-transform: uppercase; color: #667eea;">${userTier}</strong>
@@ -5260,7 +5410,7 @@
                 let filterStatus = '';
                 if (window.activeQuickLinkCategory) {
                     filterStatus = `
-                        <div style="text-align: center; margin-bottom: 10px; padding: 10px; background: #e0f2fe; border: 2px solid #0284c7; border-radius: 5px;">
+                        <div class="notice notice-info">
                             <strong>Filtered by:</strong> ${getCategoryDescription(window.activeQuickLinkCategory)}
                             <button onclick="window.activeQuickLinkCategory = null; loadUpcomingDCs();" style="margin-left: 10px; padding: 5px 15px; background: #dc2626; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
                                 Clear Filter
@@ -5276,7 +5426,7 @@
                                 let tableHTML = filterStatus;
 
                 // Add source filter controls
-                tableHTML += '<div style="text-align: center; margin-bottom: 15px; padding: 15px; background: #f9f9f9; border: 2px solid #000;">';
+                tableHTML += '<div style="text-align: center; margin-bottom: 15px; padding: 15px; background: #f9f9f9; border: 2px solid var(--divider-strong);">';
                 tableHTML += '<p style="font-size: 14px; margin-bottom: 10px; font-weight: bold;">Filter by Data Source:</p>';
                 tableHTML += '<p style="font-size: 12px; margin-bottom: 12px; color: #555;">';
                 tableHTML += '<strong>News:</strong> Projects discovered from news articles and industry announcements. ';
@@ -5284,13 +5434,13 @@
                 tableHTML += '</p>';
                 tableHTML += '<div style="display: flex; gap: 10px; justify-content: center;">';
                 tableHTML += '<button onclick="filterUpcomingBySource(\'all\')" id="filterAll" style="padding: 8px 16px; cursor: pointer; background: var(--text-primary); color: #fff; border: none; font-weight: bold;">All Sources</button>';
-                tableHTML += '<button onclick="filterUpcomingBySource(\'news\')" id="filterNews" style="padding: 8px 16px; cursor: pointer; background: #fff; color: #000; border: 2px solid #000; font-weight: bold;">News Only</button>';
-                tableHTML += '<button onclick="filterUpcomingBySource(\'permit\')" id="filterPermit" style="padding: 8px 16px; cursor: pointer; background: #fff; color: #000; border: 2px solid #000; font-weight: bold;">Permits Only</button>';
+                tableHTML += '<button onclick="filterUpcomingBySource(\'news\')" id="filterNews" style="padding: 8px 16px; cursor: pointer; background: #fff; color: var(--text-primary); border: 2px solid var(--divider-strong); font-weight: bold;">News Only</button>';
+                tableHTML += '<button onclick="filterUpcomingBySource(\'permit\')" id="filterPermit" style="padding: 8px 16px; cursor: pointer; background: #fff; color: var(--text-primary); border: 2px solid var(--divider-strong); font-weight: bold;">Permits Only</button>';
                 tableHTML += '</div>';
                 tableHTML += '</div>';
                 tableHTML += '<div class="table-wrapper">';
                 tableHTML += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
-                tableHTML += '<tr style="background: #000; color: #fff;">';
+                tableHTML += '<tr style="background: var(--text-primary); color: #fff;">';
                 // FREE tier columns
                 tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\'location\')">Location</th>';
                 tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\'address\')">Address</th>';
@@ -5353,7 +5503,7 @@
                         <td style="padding: 8px;"><span class="chip ${statusClass}">${status}</span></td>
                         <td style="padding: 8px;">${firstSeen}</td>
                         <td style="padding: 8px;">
-                            <span style="background: ${isNews ? '#ffc107' : '#198754'}; color: ${isNews ? '#000' : '#fff'}; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: bold;">
+                            <span style="background: ${isNews ? '#ffc107' : '#198754'}; color: ${isNews ? 'var(--text-primary)' : '#ffffff'}; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: bold;">
                                 ${sourceLabel}
                             </span>
                         </td>`;
@@ -5422,7 +5572,7 @@
                 let upgradeBanner = '';
                 if (userTier === 'free') {
                     upgradeBanner = `
-                        <div style="margin-bottom: 15px; padding: 15px; background: #f5f1e8; border: 3px solid #9333ea; border-radius: 5px; color: #000;">
+                        <div style="margin-bottom: 15px; padding: 15px; background: #f5f1e8; border: 3px solid #9333ea; border-radius: 5px; color: var(--text-primary);">
                             <h4 style="margin: 0 0 10px 0; font-size: 16px; color: #7e22ce;">          Unlock More Data with Paid Tiers</h4>
                             <p style="margin: 0 0 10px 0; font-size: 13px;">You're seeing basic columns. Upgrade to access:</p>
                             <ul style="margin: 0; padding-left: 20px; font-size: 12px;">
@@ -5430,7 +5580,7 @@
                                 <li><strong>Premium ($999/mo):</strong> + Most Recent Description</li>
                                 <li><strong>Enterprise ($2,499/mo):</strong> + Total Permit Quantity per permit address, All previous Details</li>
                             </ul>
-                            <button onclick="switchSection('pricing')" style="margin-top: 10px; padding: 8px 20px; background: #000; color: #fff; border: 3px solid #9333ea; border-radius: 3px; font-weight: bold; cursor: pointer;">
+                            <button onclick="switchSection('pricing')" style="margin-top: 10px; padding: 8px 20px; background: var(--text-primary); color: #fff; border: 3px solid #9333ea; border-radius: 3px; font-weight: bold; cursor: pointer;">
                                 View Pricing Plans
                             </button>
                         </div>
@@ -5438,7 +5588,7 @@
                 }
 
                 const summaryHTML = `
-                    <div style="margin-top: 10px; padding: 10px; background: #f0f0f0; border: 2px solid #000; font-size: 12px;">
+                    <div style="margin-top: 10px; padding: 10px; background: #f0f0f0; border: 2px solid var(--divider-strong); font-size: 12px;">
                         <strong>Total Projects: ${projects.length}</strong>
                         (<span style="color: #ffc107; font-weight: bold;">     ${newsCount} News Discoveries</span> +
                         <span style="color: #198754; font-weight: bold;">         ${permitCount} Permitted</span>)
@@ -6341,7 +6491,7 @@
             <p style="font-size: 14px; line-height: 1.8; margin-bottom: 20px;">
                 Our site selection team combines decades of data center industry experience with proprietary market intelligence to identify optimal locations for your facility.
             </p>
-            <h3 style="font-size: 16px; margin-bottom: 10px;">What's Included:</h3>
+            <h3 class="h3-small mb-10">What's Included:</h3>
             <ul>
                 <li><strong>Power Availability Analysis:</strong> Utility capacity, redundancy, and future scalability assessment</li>
                 <li><strong>Connectivity Evaluation:</strong> Fiber networks, carrier hotels, and internet exchange proximity</li>
@@ -6359,21 +6509,21 @@
 
     <!-- VIDEO PLAYER MODAL -->
     <div id="videoModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); z-index: 10000; justify-content: center; align-items: center;">
-        <div style="position: relative; width: 90%; max-width: 1200px; background: #000; border: 3px solid #fff; box-shadow: 0 0 30px rgba(255,255,255,0.3);">
+        <div style="position: relative; width: 90%; max-width: 1200px; background: var(--text-primary); border: 3px solid #fff; box-shadow: 0 0 30px rgba(255,255,255,0.3);">
             <!-- Close Button -->
-            <button onclick="closeVideo()" style="position: absolute; top: -15px; right: -15px; width: 40px; height: 40px; background: #fff; color: #000; border: 2px solid var(--border-emphasis); border-radius: 50%; font-size: 24px; font-weight: bold; cursor: pointer; z-index: 10001;">
+            <button onclick="closeVideo()" style="position: absolute; top: -15px; right: -15px; width: 40px; height: 40px; background: #fff; color: var(--text-primary); border: 2px solid var(--border-emphasis); border-radius: 50%; font-size: 24px; font-weight: bold; cursor: pointer; z-index: 10001;">
                 &times;
             </button>
 
             <!-- Video Title -->
-            <div id="videoTitle" style="background: #fff; color: #000; padding: 15px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 18px; font-weight: bold; border-bottom: 3px solid #000;">
+            <div id="videoTitle" style="background: #fff; color: var(--text-primary); padding: 15px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 18px; font-weight: bold; border-bottom: 3px solid var(--divider-strong);">
                 Educational Video
             </div>
 
             <!-- Video Player -->
             <video
                 id="videoPlayer"
-                style="width: 100%; height: auto; display: block; background: #000;"
+                style="width: 100%; height: auto; display: block; background: var(--text-primary);"
                 controls
                 controlsList="nodownload nofullscreen"
                 disablePictureInPicture
@@ -6382,7 +6532,7 @@
             </video>
 
             <!-- Video Info -->
-            <div style="background: #fff; color: #000; padding: 15px 20px; font-size: 12px; line-height: 1.6; border-top: 3px solid #000;">
+            <div style="background: #fff; color: var(--text-primary); padding: 15px 20px; font-size: 12px; line-height: 1.6; border-top: 3px solid var(--divider-strong);">
                 <strong>Note:</strong> This video is for subscriber viewing only. Downloading or sharing is prohibited.
             </div>
         </div>
@@ -6512,10 +6662,10 @@
 
     <!-- Study Guide Modal -->
     <div id="studyGuideModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10000; overflow: auto;">
-        <div style="position: relative; max-width: 1200px; margin: 40px auto; background: #fff; border: 4px solid #000; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+        <div style="position: relative; max-width: 1200px; margin: 40px auto; background: #fff; border: 4px solid var(--divider-strong); box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
             <!-- Modal Header -->
-            <div style="background: #000; color: #fff; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #000;">
-                <h2 id="modalTitle" style="margin: 0; font-size: 22px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;"></h2>
+            <div style="background: var(--text-primary); color: #fff; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--divider-strong);">
+                <h2 id="modalTitle" class="h2-modal"></h2>
                 <button onclick="closeStudyGuideModal()" style="background: transparent; border: none; color: #fff; font-size: 32px; cursor: pointer; padding: 0; width: 40px; height: 40px; line-height: 32px;">&times;</button>
             </div>
 
@@ -6526,10 +6676,10 @@
 
     <!-- Study Guide Email Gate Modal -->
     <div id="emailGateModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10001; overflow: auto;">
-        <div style="position: relative; max-width: 500px; margin: 100px auto; background: #fff; border: 4px solid #000; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+        <div style="position: relative; max-width: 500px; margin: 100px auto; background: #fff; border: 4px solid var(--divider-strong); box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
             <!-- Modal Header -->
-            <div style="background: #000; color: #fff; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #000;">
-                <h2 style="margin: 0; font-size: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">Download Free Study Guide</h2>
+            <div style="background: var(--text-primary); color: #fff; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--divider-strong);">
+                <h2 class="h2-modal-small">Download Free Study Guide</h2>
                 <button onclick="closeEmailGateModal()" style="background: transparent; border: none; color: #fff; font-size: 32px; cursor: pointer; padding: 0; width: 40px; height: 40px; line-height: 32px;">&times;</button>
             </div>
 
@@ -6543,7 +6693,7 @@
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Email Address *</label>
                         <input type="email" name="email" required
-                               style="width: 100%; padding: 10px; border: 2px solid #000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px;">
+                               style="width: 100%; padding: 10px; border: 2px solid var(--divider-strong); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px;">
                     </div>
 
                     <button type="submit" style="width: 100%; padding: 12px; background: var(--text-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 15px; font-weight: bold; cursor: pointer;">
@@ -6556,10 +6706,10 @@
 
     <!-- Demo Request Modal -->
     <div id="demoModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10001; overflow: auto;">
-        <div style="position: relative; max-width: 600px; margin: 60px auto; background: #fff; border: 4px solid #000; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+        <div style="position: relative; max-width: 600px; margin: 60px auto; background: #fff; border: 4px solid var(--divider-strong); box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
             <!-- Modal Header -->
-            <div style="background: #000; color: #fff; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #000;">
-                <h2 style="margin: 0; font-size: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">Request a Demo</h2>
+            <div style="background: var(--text-primary); color: #fff; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--divider-strong);">
+                <h2 class="h2-modal-small">Request a Demo</h2>
                 <button onclick="closeDemoModal()" style="background: transparent; border: none; color: #fff; font-size: 32px; cursor: pointer; padding: 0; width: 40px; height: 40px; line-height: 32px;">&times;</button>
             </div>
 
@@ -6573,37 +6723,37 @@
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Full Name *</label>
                         <input type="text" name="name" required
-                               style="width: 100%; padding: 10px; border: 2px solid #000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px;">
+                               style="width: 100%; padding: 10px; border: 2px solid var(--divider-strong); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px;">
                     </div>
 
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Email Address *</label>
                         <input type="email" name="email" required
-                               style="width: 100%; padding: 10px; border: 2px solid #000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px;">
+                               style="width: 100%; padding: 10px; border: 2px solid var(--divider-strong); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px;">
                     </div>
 
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Company *</label>
                         <input type="text" name="company" required
-                               style="width: 100%; padding: 10px; border: 2px solid #000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px;">
+                               style="width: 100%; padding: 10px; border: 2px solid var(--divider-strong); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px;">
                     </div>
 
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Phone Number</label>
                         <input type="tel" name="phone"
-                               style="width: 100%; padding: 10px; border: 2px solid #000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px;">
+                               style="width: 100%; padding: 10px; border: 2px solid var(--divider-strong); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px;">
                     </div>
 
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Address</label>
                         <input type="text" name="address"
-                               style="width: 100%; padding: 10px; border: 2px solid #000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px;">
+                               style="width: 100%; padding: 10px; border: 2px solid var(--divider-strong); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px;">
                     </div>
 
                     <div style="margin-bottom: 20px;">
                         <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Message (optional)</label>
                         <textarea name="message" rows="4"
-                                  style="width: 100%; padding: 10px; border: 2px solid #000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; resize: vertical;"></textarea>
+                                  style="width: 100%; padding: 10px; border: 2px solid var(--divider-strong); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; resize: vertical;"></textarea>
                     </div>
 
                     <button type="submit" style="width: 100%; padding: 12px; background: var(--text-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 15px; font-weight: bold; cursor: pointer;">
