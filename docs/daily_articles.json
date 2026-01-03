@@ -1,15 +1,15 @@
 {
-  "generated_date": "2026-01-02T07:00:13.821922",
-  "day_of_week": "Friday",
-  "includes_services": true,
+  "generated_date": "2026-01-03T07:00:12.388977",
+  "day_of_week": "Saturday",
+  "includes_services": false,
   "articles": [
     {
-      "headline": "Proposed Data Center Project Signals Growth in Washington State Market",
-      "content": "A new data center development is slated for Port Washington, marking continued expansion of the region's digital infrastructure landscape. While specific operational details remain limited, the project represents a potential opportunity for hyperscale cloud providers or enterprise colocation services seeking strategic infrastructure in the Pacific Northwest. The proposed facility underscores ongoing momentum in Washington's competitive data center ecosystem, which has been attracting significant technology investment in recent years."
+      "headline": "New Data Center Proposal Signals Growth in Washington's Tech Infrastructure",
+      "content": "A proposed data center project is set to expand digital infrastructure capabilities in Port Washington, Washington, reflecting continued regional investment in hyperscale computing resources. While specific operational details remain limited, the project represents a potential strategic expansion of colocation and enterprise computing capacity in the Pacific Northwest technology ecosystem. The development underscores ongoing momentum in data center construction across the state's emerging tech landscape."
     },
     {
-      "headline": "DC Intel Expands Data Center Transaction Advisory Services Nationwide",
-      "content": "DC Intel provides specialized brokerage services focusing on data center acquisitions, leasing, and sales transactions across key markets. The firm's experienced team leverages deep industry knowledge to facilitate complex real estate deals for enterprise and institutional clients in the technology infrastructure sector. With a strategic approach to deal flow, DC Intel assists clients in navigating the nuanced landscape of data center commercial transactions."
+      "headline": "Ann Arbor Emerges as Potential New Midwest Data Center Hub",
+      "content": "A proposed data center project is taking shape in Ann Arbor, Michigan, signaling potential growth in the region's digital infrastructure landscape. While specific details about the project's operator and total capacity remain undisclosed, the development suggests increasing interest in Michigan's data center market. The project could represent an important expansion of hyperscale computing infrastructure in the midwestern United States."
     }
   ]
 }
