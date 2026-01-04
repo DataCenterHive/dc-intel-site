@@ -1,15 +1,15 @@
 {
-  "generated_date": "2026-01-03T07:00:12.388977",
-  "day_of_week": "Saturday",
+  "generated_date": "2026-01-04T07:00:13.186375",
+  "day_of_week": "Sunday",
   "includes_services": false,
   "articles": [
     {
-      "headline": "New Data Center Proposal Signals Growth in Washington's Tech Infrastructure",
-      "content": "A proposed data center project is set to expand digital infrastructure capabilities in Port Washington, Washington, reflecting continued regional investment in hyperscale computing resources. While specific operational details remain limited, the project represents a potential strategic expansion of colocation and enterprise computing capacity in the Pacific Northwest technology ecosystem. The development underscores ongoing momentum in data center construction across the state's emerging tech landscape."
+      "headline": "Fort Worth Poised for Major Data Center Development in Texas Market",
+      "content": "A significant data center project has been approved for the Fort Worth metropolitan area, signaling continued growth in North Texas's robust digital infrastructure landscape. The approved facility represents another strategic expansion in a region increasingly attractive to hyperscale cloud providers and enterprise colocation customers seeking robust connectivity and business-friendly environments. While specific operational details remain limited, the project underscores the ongoing momentum in Texas's data center market, which continues to draw substantial investment from technology and infrastructure developers."
     },
     {
-      "headline": "Ann Arbor Emerges as Potential New Midwest Data Center Hub",
-      "content": "A proposed data center project is taking shape in Ann Arbor, Michigan, signaling potential growth in the region's digital infrastructure landscape. While specific details about the project's operator and total capacity remain undisclosed, the development suggests increasing interest in Michigan's data center market. The project could represent an important expansion of hyperscale computing infrastructure in the midwestern United States."
+      "headline": "Amazon Web Services Expands Hyperscale Data Center Footprint in Indiana",
+      "content": "Amazon Web Services is actively constructing a new data center facility in New Carlisle, Indiana, signaling continued strategic infrastructure expansion in the Midwest region. The project represents AWS's ongoing commitment to building out its hyperscale computing infrastructure to support growing cloud computing and enterprise storage demands. While specific capacity details remain undisclosed, the investment underscores the company's continued momentum in developing critical data center assets across the United States."
     }
   ]
 }
