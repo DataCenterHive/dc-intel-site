@@ -1,15 +1,15 @@
 {
-  "generated_date": "2026-01-04T07:00:13.186375",
-  "day_of_week": "Sunday",
+  "generated_date": "2026-01-05T07:00:15.190779",
+  "day_of_week": "Monday",
   "includes_services": false,
   "articles": [
     {
-      "headline": "Fort Worth Poised for Major Data Center Development in Texas Market",
-      "content": "A significant data center project has been approved for the Fort Worth metropolitan area, signaling continued growth in North Texas's robust digital infrastructure landscape. The approved facility represents another strategic expansion in a region increasingly attractive to hyperscale cloud providers and enterprise colocation customers seeking robust connectivity and business-friendly environments. While specific operational details remain limited, the project underscores the ongoing momentum in Texas's data center market, which continues to draw substantial investment from technology and infrastructure developers."
+      "headline": "Oklahoma Data Center Project Advances With Strategic Construction Milestone",
+      "content": "A new data center development is taking shape in Owasso, Oklahoma, signaling continued infrastructure expansion in the region's emerging digital landscape. The project represents a potential investment in critical computing infrastructure, with construction currently underway to establish additional regional capacity for enterprise and cloud computing needs. While specific details about the operator and total megawatt capacity remain undisclosed, the development suggests growing interest in Oklahoma's data center market."
     },
     {
-      "headline": "Amazon Web Services Expands Hyperscale Data Center Footprint in Indiana",
-      "content": "Amazon Web Services is actively constructing a new data center facility in New Carlisle, Indiana, signaling continued strategic infrastructure expansion in the Midwest region. The project represents AWS's ongoing commitment to building out its hyperscale computing infrastructure to support growing cloud computing and enterprise storage demands. While specific capacity details remain undisclosed, the investment underscores the company's continued momentum in developing critical data center assets across the United States."
+      "headline": "Fort Worth Advances Strategic Data Center Development in Texas Market",
+      "content": "A new data center project has been approved in Fort Worth, signaling continued growth in the region's expanding digital infrastructure landscape. The project represents another strategic investment in Texas's increasingly attractive data center ecosystem, which continues to draw interest from technology companies and cloud service providers seeking robust infrastructure and favorable business conditions."
     }
   ]
 }
