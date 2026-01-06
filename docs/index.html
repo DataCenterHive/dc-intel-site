@@ -2028,7 +2028,7 @@
                     <div class="pricing-card__header">
                         BASIC TIER
                     </div>
-                    <div class="pricing-card__price">
+                    <div id="pricing-card-basic" class="pricing-card__price">
                         $299<span>/month</span>
                     </div>
                     <p class="pricing-card__subtitle">
@@ -2054,7 +2054,7 @@
                     <div class="pricing-card__header">
                         PREMIUM TIER
                     </div>
-                    <div class="pricing-card__price">
+                    <div id="pricing-card-premium" class="pricing-card__price">
                         $999<span>/month</span>
                     </div>
                     <p class="pricing-card__subtitle">
@@ -2085,7 +2085,7 @@
                     <div class="pricing-card__header">
                         ENTERPRISE TIER
                     </div>
-                    <div class="pricing-card__price">
+                    <div id="pricing-card-enterprise" class="pricing-card__price">
                         $2,499<span>/month</span>
                     </div>
                     <p class="pricing-card__subtitle">
@@ -2596,18 +2596,18 @@
                 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px;">
                     <div style="border: 2px solid #4a5568; padding: 15px; text-align: center; border-radius: 5px;">
                         <div style="font-weight: bold; color: #4a5568; margin-bottom: 5px;">Basic</div>
-                        <div style="font-size: 24px; font-weight: bold; color: var(--text-primary);">$99</div>
+                        <div id="modal-price-basic" style="font-size: 24px; font-weight: bold; color: var(--text-primary);">$299</div>
                         <div style="font-size: 11px; color: #666;">per month</div>
                     </div>
                     <div style="border: 3px solid #6b46c1; padding: 15px; text-align: center; border-radius: 5px; background: #faf5ff;">
                         <div style="font-weight: bold; color: #6b46c1; margin-bottom: 5px;">Premium</div>
-                        <div style="font-size: 24px; font-weight: bold; color: var(--text-primary);">$499</div>
+                        <div id="modal-price-premium" style="font-size: 24px; font-weight: bold; color: var(--text-primary);">$999</div>
                         <div style="font-size: 11px; color: #666;">per month</div>
                         <div style="margin-top: 5px; background: #6b46c1; color: #fff; padding: 3px 8px; border-radius: 3px; font-size: 10px; font-weight: bold;">POPULAR</div>
                     </div>
                     <div style="border: 2px solid #d97706; padding: 15px; text-align: center; border-radius: 5px;">
                         <div style="font-weight: bold; color: #d97706; margin-bottom: 5px;">Enterprise</div>
-                        <div style="font-size: 24px; font-weight: bold; color: var(--text-primary);">$2,499</div>
+                        <div id="modal-price-enterprise" style="font-size: 24px; font-weight: bold; color: var(--text-primary);">$2,499</div>
                         <div style="font-size: 11px; color: #666;">per month</div>
                     </div>
                 </div>
@@ -2635,6 +2635,99 @@
 
         // Public Data API Configuration (tier-based access via JWT)
         const PUBLIC_API_BASE = 'https://dc-intel-api.onrender.com';
+
+        // ===================================================================
+        // PRICING CONFIGURATION (Single Source of Truth)
+        // ===================================================================
+        const PRICING = {
+            free: {
+                name: 'Free',
+                price: 0,
+                period: 'Forever',
+                features: [
+                    'Certification data for 4,436+ DCs',
+                    'Save & track favorite data centers',
+                    'Export up to 10 DC records',
+                    'Email alerts for new projects'
+                ],
+                exportLimit: 10
+            },
+            basic: {
+                name: 'Basic',
+                price: 299,
+                period: 'month',
+                features: [
+                    'Everything in Free',
+                    'Unlimited exports',
+                    'Full certification database',
+                    'Priority email support'
+                ],
+                exportLimit: null
+            },
+            premium: {
+                name: 'Premium',
+                price: 999,
+                period: 'month',
+                features: [
+                    'Everything in Basic',
+                    'Square footage data',
+                    'Advanced study guides',
+                    'API access (coming soon)',
+                    'Dedicated account manager'
+                ],
+                exportLimit: null
+            },
+            enterprise: {
+                name: 'Enterprise',
+                price: 2499,
+                period: 'month',
+                features: [
+                    'Everything in Premium',
+                    'Full contact information',
+                    'Historical news archive',
+                    'Custom reports',
+                    'White-label options',
+                    'On-premise deployment'
+                ],
+                exportLimit: null,
+                comingSoon: true
+            }
+        };
+
+        // Helper function to format pricing
+        function formatPrice(tier) {
+            const plan = PRICING[tier];
+            if (!plan) return 'N/A';
+            if (plan.price === 0) return 'Free';
+            return `$${plan.price.toLocaleString()}/${plan.period}`;
+        }
+
+        // Initialize pricing displays from PRICING config
+        function initializePricingDisplays() {
+            // Update main pricing page cards
+            const basicCard = document.getElementById('pricing-card-basic');
+            const premiumCard = document.getElementById('pricing-card-premium');
+            const enterpriseCard = document.getElementById('pricing-card-enterprise');
+
+            if (basicCard) {
+                basicCard.innerHTML = `$${PRICING.basic.price.toLocaleString()}<span>/month</span>`;
+            }
+            if (premiumCard) {
+                premiumCard.innerHTML = `$${PRICING.premium.price.toLocaleString()}<span>/month</span>`;
+            }
+            if (enterpriseCard) {
+                enterpriseCard.innerHTML = `$${PRICING.enterprise.price.toLocaleString()}<span>/month</span>`;
+            }
+
+            // Update export limit modal prices
+            const modalPriceBasic = document.getElementById('modal-price-basic');
+            const modalPricePremium = document.getElementById('modal-price-premium');
+            const modalPriceEnterprise = document.getElementById('modal-price-enterprise');
+
+            if (modalPriceBasic) modalPriceBasic.textContent = `$${PRICING.basic.price.toLocaleString()}`;
+            if (modalPricePremium) modalPricePremium.textContent = `$${PRICING.premium.price.toLocaleString()}`;
+            if (modalPriceEnterprise) modalPriceEnterprise.textContent = `$${PRICING.enterprise.price.toLocaleString()}`;
+        }
 
         // Helper function to get authentication headers with JWT token
         function authHeaders() {
@@ -3056,6 +3149,9 @@
             if (navWatchlist && isLoggedIn()) {
                 navWatchlist.style.display = 'inline';
             }
+
+            // Initialize pricing displays from PRICING config
+            initializePricingDisplays();
         });
 
         async function handleLogin(event) {
