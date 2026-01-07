@@ -24,6 +24,44 @@
             --shadow-sm: 0 1px 2px rgba(15,23,42,.06);
             --shadow-md: 0 8px 24px rgba(15,23,42,.10);
             --spacing-unit: 8px;
+
+            /* PATCH #7: Additional Design Tokens (aliases for consistency) */
+            --bg: var(--bg-primary);
+            --text: var(--text-primary);
+            --muted: var(--text-secondary);
+            --border: var(--border-default);
+            --border-strong: var(--divider-strong);
+            --surface: var(--bg-secondary);
+
+            /* Brand aliases */
+            --brand: var(--brand-primary);
+
+            /* Tier Colors */
+            --tier-free: #6b7280;
+            --tier-basic: #0284c7;
+            --tier-premium: #d97706;
+            --tier-enterprise: #7c3aed;
+
+            /* Tier Borders */
+            --tier-free-border: #4b5563;
+            --tier-basic-border: #0369a1;
+            --tier-premium-border: #b45309;
+            --tier-enterprise-border: #6d28d9;
+
+            /* Additional States */
+            --danger: #ef4444;
+
+            /* Tier backgrounds (for modal headers) */
+            --tier-basic-bg: #dbeafe;
+            --tier-basic-text: #1e3a8a;
+            --tier-premium-bg: #fef3c7;
+            --tier-premium-text: #92400e;
+            --tier-enterprise-bg: #ede9fe;
+            --tier-enterprise-text: #5b21b6;
+
+            /* Radius */
+            --r-sm: 6px;
+            --r-pill: 999px;
         }
 
         * {
@@ -1221,42 +1259,362 @@
         .table-wrapper {
             overflow: auto;
         }
-        .table-sticky thead th {
-            position: sticky;
-            top: 0;
-            background: #f5f5f5;
-            z-index: 2;
-        }
-        .table-zebra tbody tr:nth-child(odd) {
-            background: #fafafa;
-        }
         .table-legend {
             font-size: 12px;
             margin: 8px 0;
             color: #333;
         }
+        /* ===================================================================
+           TIER BADGE SYSTEM (WCAG AA Compliant)
+           ================================================================== */
+
+        /* Base tier pill component */
         .tier-pill {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 6px 10px;
-            border: 2px solid var(--divider-strong);
+            padding: 6px 12px;
+            border: 2px solid #000;
             border-radius: 999px;
             font-weight: bold;
             font-size: 12px;
-        }
-        .badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border: 1px solid var(--border-emphasis);
-            font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        .badge.free { background: #f5f5f5; }
-        .badge.basic { background: #e8f5ff; }
-        .badge.premium { background: #fff3e0; }
-        .badge.enterprise { background: #f3e8ff; }
+
+        /* Tier-specific badges with WCAG AA contrast */
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge.free {
+            background: var(--tier-free);
+            color: #ffffff;
+            border: 2px solid var(--tier-free-border);
+        }
+
+        .badge.free::before {
+            content: "🆓 ";
+            speak: never;
+        }
+
+        .badge.basic {
+            background: var(--tier-basic);
+            color: #ffffff;
+            border: 2px solid var(--tier-basic-border);
+        }
+
+        .badge.basic::before {
+            content: "⭐ ";
+            speak: never;
+        }
+
+        .badge.premium {
+            background: var(--tier-premium);
+            color: #ffffff;
+            border: 2px solid var(--tier-premium-border);
+        }
+
+        .badge.premium::before {
+            content: "💎 ";
+            speak: never;
+        }
+
+        .badge.enterprise {
+            background: var(--tier-enterprise);
+            color: #ffffff;
+            border: 2px solid var(--tier-enterprise-border);
+        }
+
+        .badge.enterprise::before {
+            content: "👑 ";
+            speak: never;
+        }
+
+        /* Tier header pills (for Knowledge section) */
+        .tier-pill.free {
+            background: var(--tier-free);
+            color: #ffffff;
+        }
+
+        .tier-pill.basic {
+            background: var(--tier-basic);
+            color: #ffffff;
+        }
+
+        .tier-pill.premium {
+            background: var(--tier-premium);
+            color: #ffffff;
+        }
+
+        .tier-pill.enterprise {
+            background: var(--tier-enterprise);
+            color: #ffffff;
+        }
+
+        /* Accessibility: Focus states */
+        .badge:focus,
+        .tier-pill:focus {
+            outline: 3px solid #000;
+            outline-offset: 2px;
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .badge,
+            .tier-pill {
+                border-width: 3px;
+            }
+        }
+
+        /* ===================================================================
+           LOCKED CONTENT PATTERN
+           ================================================================== */
+
+        /* Base locked content container */
+        .locked {
+            position: relative;
+            user-select: none;
+        }
+
+        /* Blur effect for locked content preview */
+        .locked--blur {
+            filter: blur(4px);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        /* Locked overlay (absolute positioned over content) */
+        .locked-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px dashed #ccc;
+            z-index: 5;
+            text-align: center;
+            padding: 15px;
+            pointer-events: auto;
+        }
+
+        .locked-overlay__icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .locked-overlay__text {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .locked-overlay__cta {
+            padding: 8px 16px;
+            background: var(--brand);
+            color: #fff;
+            border: none;
+            border-radius: var(--r-sm);
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .locked-overlay__cta:hover {
+            background: var(--brand-hover);
+        }
+
+        /* Inline locked cell (for tables) */
+        .locked-cell {
+            position: relative;
+            background: var(--surface);
+            color: #6b7280;
+            font-style: italic;
+            text-align: center;
+            padding: 8px;
+            white-space: nowrap;
+        }
+
+        .locked-cell::before {
+            content: "🔒 ";
+            display: inline-block;
+            margin-right: 4px;
+        }
+
+        .locked-cell__link {
+            color: #0284c7;
+            text-decoration: underline;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .locked-cell__link:hover {
+            color: #0369a1;
+        }
+
+        /* Locked section (for Knowledge articles) */
+        .locked-section {
+            position: relative;
+            min-height: 200px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.9) 50%, rgba(255,255,255,1) 100%);
+        }
+
+        .locked-section__content {
+            filter: blur(3px);
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .locked-section__prompt {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            border: 3px solid #000;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-width: 400px;
+            z-index: 10;
+        }
+
+        .locked-section__prompt h3 {
+            margin: 0 0 15px 0;
+            font-size: 20px;
+        }
+
+        .locked-section__prompt p {
+            margin: 0 0 20px 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Lock icon component (standalone) */
+        .lock-icon {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .lock-icon::before {
+            content: "🔒";
+            font-size: 14px;
+        }
+
+        /* Tooltip for locked items */
+        .locked-tooltip {
+            position: relative;
+            cursor: help;
+        }
+
+        .locked-tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1f2937;
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 1000;
+            margin-bottom: 5px;
+        }
+
+        .locked-tooltip:hover::before {
+            content: "";
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: #1f2937;
+            margin-bottom: -5px;
+        }
+
+        /* ===================================================================
+           PATCH #6: SORT INDICATORS + LOADING STATES
+           ================================================================== */
+
+        th.sortable {
+            position: relative;
+            padding-right: 22px !important;
+        }
+        th.sortable::after {
+            content: "⇅";
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 11px;
+            opacity: 0.55;
+        }
+        th.sortable.sort-asc::after { content: "▲"; opacity: 0.9; }
+        th.sortable.sort-desc::after { content: "▼"; opacity: 0.9; }
+
+        .loading-overlay {
+            position: absolute;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.85);
+            z-index: 50;
+        }
+        .loading-overlay.active { display: flex; }
+
+        .loading-spinner {
+            width: 34px;
+            height: 34px;
+            border: 4px solid rgba(0,0,0,0.15);
+            border-top-color: rgba(0,0,0,0.65);
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .skeleton-row td { padding: 10px !important; }
+
+        .skeleton-line {
+            height: 10px;
+            width: 100%;
+            border-radius: 6px;
+            background: rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        .skeleton-line::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            transform: translateX(-100%);
+            background: linear-gradient(
+                90deg,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0.55) 50%,
+                rgba(255,255,255,0) 100%
+            );
+            animation: shimmer 1.2s infinite;
+        }
+        @keyframes shimmer { to { transform: translateX(100%); } }
 
         /* Status chips */
         .chip {
@@ -1578,6 +1936,235 @@
             background: var(--brand-hover);
             border-color: var(--brand-hover);
             transform: translateY(-1px);
+        }
+
+        /* ===================================================================
+           RESPONSIVE DESIGN SYSTEM
+           ================================================================== */
+
+        /* Tablet Landscape and Below (1024px) */
+        @media (max-width: 1024px) {
+            .newspaper-container {
+                padding: 30px 20px;
+            }
+
+            .masthead h1 {
+                font-size: 28px;
+                letter-spacing: 2px;
+            }
+
+            .navigation a {
+                font-size: 11px;
+                padding: 5px 8px;
+            }
+
+            /* Knowledge grid to 2 columns */
+            .knowledge-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 15px;
+            }
+        }
+
+        /* Tablet Portrait and Below (768px) */
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .newspaper-container {
+                padding: 20px 15px;
+            }
+
+            /* Masthead adjustments */
+            .masthead-logo {
+                height: 80px;
+                max-width: 150px;
+            }
+
+            .masthead h1 {
+                font-size: 24px;
+                letter-spacing: 1px;
+            }
+
+            .masthead .tagline {
+                font-size: 11px;
+            }
+
+            /* Navigation: Stack vertically or wrap */
+            .navigation {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 5px;
+                padding: 10px 0;
+            }
+
+            .navigation a {
+                font-size: 11px;
+                padding: 6px 10px;
+                white-space: nowrap;
+            }
+
+            /* Auth buttons: Stack on smaller screens */
+            .auth-buttons {
+                position: static;
+                margin-top: 10px;
+                justify-content: center;
+            }
+
+            /* Tables: Enable horizontal scroll */
+            .table-wrapper {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                /* Note: Negative margin makes tables bleed to screen edges.
+                   If you see unwanted horizontal page scroll, remove these two lines: */
+                margin: 0 -15px;
+                padding: 0 15px;
+            }
+
+            .table-wrapper table {
+                min-width: 600px; /* Force scroll on small screens */
+            }
+
+            /* Knowledge grid to 1 column */
+            .knowledge-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            /* Modals: Full width on tablet */
+            .modal-content {
+                width: 95%;
+                max-width: 500px;
+                padding: 25px;
+            }
+
+            /* Pricing cards: Stack vertically */
+            .pricing-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .pricing-grid > div {
+                width: 100% !important;
+            }
+
+            /* Typography: Increase body text */
+            body, p, td, li {
+                font-size: 14px;
+            }
+
+            /* Headlines scale down */
+            .headline-main {
+                font-size: 28px;
+            }
+        }
+
+        /* Mobile (480px and Below) */
+        @media (max-width: 480px) {
+            .newspaper-container {
+                padding: 15px 10px;
+            }
+
+            /* Masthead: Simplify layout */
+            .masthead-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .masthead-title-group {
+                position: static;
+                transform: none;
+                width: 100%;
+            }
+
+            .masthead-logo {
+                height: 60px;
+                margin: 0 auto;
+            }
+
+            .masthead h1 {
+                font-size: 20px;
+            }
+
+            /* Navigation: Reduce font further */
+            .navigation a {
+                font-size: 10px;
+                padding: 5px 7px;
+            }
+
+            /* Tables: Minimal padding */
+            .table-wrapper table th,
+            .table-wrapper table td {
+                padding: 6px !important;
+                font-size: 11px !important;
+            }
+
+            /* Buttons: Full width on mobile */
+            .auth-btn,
+            .form-submit {
+                width: 100%;
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            /* Modals: Nearly full screen */
+            .modal-content {
+                width: 100%;
+                max-width: none;
+                padding: 20px;
+                border-radius: 0;
+            }
+
+            /* Search box: Full width */
+            .search-box-container input {
+                width: 100%;
+            }
+
+            /* Ticker: Hide on very small screens */
+            .ticker {
+                display: none;
+            }
+
+            /* Article columns: Single column */
+            .article-2col,
+            .article-3col {
+                column-count: 1 !important;
+            }
+        }
+
+        /* High-Resolution Displays */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            body {
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+        }
+
+        /* Sticky Table Headers (All Breakpoints) */
+        .table-sticky thead th {
+            position: sticky;
+            top: 0;
+            background: var(--surface);
+            z-index: 10;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Prevent text selection on sortable headers */
+        .table-sticky th[onclick] {
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* Table zebra stripping remains visible */
+        .table-zebra tbody tr:nth-child(even) {
+            background: var(--surface);
+        }
+
+        .table-zebra tbody tr:hover {
+            background: #f0f0f0;
         }
 
         @media print {
@@ -2620,6 +3207,41 @@
         </div>
     </div>
 
+    <!-- Upgrade Modal (for locked content) -->
+    <div class="modal-overlay" id="upgradeModal" onclick="if(event.target===this) closeUpgradeModal()">
+        <div class="modal-content" style="max-width: 550px;">
+            <span class="modal-close" onclick="closeUpgradeModal()">&times;</span>
+            <div class="modal-header" id="upgradeModalHeader" style="background: #ede9fe; color: #5b21b6; border-bottom: 3px solid #8b5cf6;">
+                Upgrade Required
+            </div>
+            <div style="padding: 30px; font-size: 14px; line-height: 1.6;">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div id="upgradeModalIcon" style="font-size: 48px; margin-bottom: 10px;">🔒</div>
+                    <h3 id="upgradeModalTitle" class="h3-tight">Premium Content</h3>
+                    <p id="upgradeModalSubtitle" style="margin: 0; color: #666;">Unlock this feature with a paid plan</p>
+                </div>
+
+                <div id="upgradeModalFeatures" style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 15px; margin-bottom: 20px;">
+                    <p style="margin: 0 0 10px 0; font-weight: bold; color: #059669;">What You'll Get:</p>
+                    <ul id="upgradeFeatureList" style="margin: 0; padding-left: 20px; line-height: 2;">
+                        <li>Full access to this feature</li>
+                        <li>Priority support</li>
+                        <li>Advanced data export</li>
+                    </ul>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button id="upgradeModalCTA" class="form-submit btn-purple" style="flex: 1;">
+                        View Plans
+                    </button>
+                    <button onclick="closeUpgradeModal();" class="form-submit btn-muted" style="flex: 1;">
+                        Maybe Later
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="ticker">
         <div class="ticker-content" id="tickerContent">
             LATEST: Google announces Virginia expansion       AWS Dallas project valued at $500M       Equinix opens new Ashburn facility       Microsoft Azure capacity doubles in Phoenix       QTS reports record quarter       Switch announces Nevada mega-campus       Approximately 700,000 permits tracked nationwide       Over 1,000 confirmed data center projects       Real-time intelligence via DC Intel API
@@ -2702,6 +3324,353 @@
             return `$${plan.price.toLocaleString()}/mo`;
         }
 
+        // ===================================================================
+        // TIER ACCESS CONTROL
+        // ===================================================================
+
+        // Tier ordering for access checks
+        const TIER_ORDER = { free: 0, basic: 1, premium: 2, enterprise: 3 };
+
+        function getCurrentTier() {
+            // Prefer CURRENT_USER if loaded from /api/auth/me
+            if (window.CURRENT_USER?.tier) return String(window.CURRENT_USER.tier).toLowerCase();
+
+            // Fallback: localStorage tier claim
+            return (localStorage.getItem('dc_intel_tier') || 'free').toLowerCase();
+        }
+
+        function hasTierAccess(requiredTier) {
+            const current = TIER_ORDER[getCurrentTier()] ?? 0;
+            const required = TIER_ORDER[String(requiredTier).toLowerCase()] ?? 999;
+            return current >= required;
+        }
+
+        // ===================================================================
+        // TIER BADGE RENDERING HELPER
+        // ===================================================================
+
+        /**
+         * Generate tier badge HTML
+         * @param {string} tier - 'free', 'basic', 'premium', 'enterprise'
+         * @param {string} type - 'badge' or 'pill' (default: 'badge')
+         * @returns {string} HTML string for badge
+         */
+        function renderTierBadge(tier, type = 'badge') {
+            const tierNames = {
+                free: 'Free',
+                basic: 'Basic',
+                premium: 'Premium',
+                enterprise: 'Enterprise'
+            };
+
+            const safeTier = (tier || 'free').toLowerCase();
+            const className = type === 'pill' ? `tier-pill ${safeTier}` : `badge ${safeTier}`;
+            const displayName = tierNames[safeTier] || safeTier;
+
+            return `<span class="${className}" aria-label="${displayName} tier">${displayName}</span>`;
+        }
+
+        /**
+         * Get tier icon (for non-CSS contexts)
+         */
+        function getTierIcon(tier) {
+            const icons = { free: '🆓', basic: '⭐', premium: '💎', enterprise: '👑' };
+            return icons[(tier || '').toLowerCase()] || '';
+        }
+
+        // ===================================================================
+        // LOCKED CONTENT RENDERING HELPERS
+        // ===================================================================
+
+        /**
+         * Render locked content with upgrade prompt
+         * @param {string} content - The content to lock (can be partial/preview)
+         * @param {string} requiredTier - Tier needed to unlock ('basic', 'premium', 'enterprise')
+         * @param {object} options - { showPreview: true, ctaText: 'Upgrade to View', context: 'table' }
+         * @returns {string} HTML for locked content
+         */
+        function renderLockedContent(content, requiredTier, options = {}) {
+            const {
+                showPreview = false,
+                ctaText = 'Upgrade to View',
+                context = 'table' // 'table', 'section', 'inline'
+            } = options;
+
+            const tierKey = String(requiredTier || '').toLowerCase();
+            const plan = PRICING[tierKey];
+            const tierName = plan?.name || tierKey;
+
+            // Respect comingSoon (enterprise)
+            const tierPrice = (plan?.comingSoon) ? 'Contact Sales' : formatPrice(tierKey);
+
+            // TABLE CONTEXT: Inline locked cell
+            if (context === 'table') {
+                return `
+                    <div class="locked-cell locked-tooltip" data-tooltip="Requires ${tierName} tier (${tierPrice})">
+                        <span class="lock-icon"></span>
+                        <a class="locked-cell__link" href="#" onclick="showUpgradeModal('${tierKey}', 'table'); return false;">
+                            ${ctaText}
+                        </a>
+                    </div>
+                `;
+            }
+
+            // SECTION CONTEXT: Locked section with overlay
+            if (context === 'section') {
+                return `
+                    <div class="locked-section">
+                        ${showPreview ? `<div class="locked-section__content">${content}</div>` : ''}
+                        <div class="locked-section__prompt">
+                            <div class="locked-overlay__icon">🔒</div>
+                            <h3>${tierName} Content</h3>
+                            <p>Upgrade to <strong>${tierName}</strong> to access this content</p>
+                            <button class="locked-overlay__cta" onclick="showUpgradeModal('${tierKey}', 'section'); return false;">
+                                ${ctaText} (${tierPrice})
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // INLINE CONTEXT: Simple lock with link
+            return `
+                <span class="lock-icon locked-tooltip" data-tooltip="Requires ${tierName} tier">
+                    <a href="#" onclick="showUpgradeModal('${tierKey}', 'inline'); return false;">
+                        ${ctaText}
+                    </a>
+                </span>
+            `;
+        }
+
+        /**
+         * Check if content should be locked
+         * @param {string} requiredTier - Tier needed
+         * @returns {boolean} True if content is locked for current user
+         */
+        function isContentLocked(requiredTier) {
+            return !hasTierAccess(requiredTier);
+        }
+
+        /**
+         * Wrap locked sections in Knowledge tab
+         * Call after rendering study guides
+         */
+        function applyLockedSections() {
+            const basicSections = document.querySelectorAll('.tier-basic-only');
+            const premiumSections = document.querySelectorAll('.tier-premium-only');
+            const enterpriseSections = document.querySelectorAll('.tier-enterprise-only');
+
+            function lockSection(el, requiredTier, icon) {
+                // Prevent double-wrapping if already processed
+                if (el.dataset.lockedApplied === '1') return;
+                el.dataset.lockedApplied = '1';
+
+                const plan = PRICING[requiredTier];
+                const priceText = plan?.comingSoon ? 'Contact Sales' : formatPrice(requiredTier);
+
+                el.style.display = 'block';
+                el.style.position = 'relative';
+                el.style.minHeight = '150px';
+
+                // SECURITY: Do NOT include real locked content in DOM (prevents devtools leak)
+                // If you need a preview, use a sanitized teaser string you control
+                const safePreview = ''; // No content preview to prevent data leakage
+
+                el.innerHTML = `
+                    <div style="filter: blur(3px); opacity: 0.3; user-select: none; pointer-events:none;">
+                        ${safePreview}
+                    </div>
+                    <div class="locked-overlay">
+                        <div class="locked-overlay__icon">${icon}</div>
+                        <div class="locked-overlay__text">${plan?.name || requiredTier} Tier Required</div>
+                        <button class="locked-overlay__cta" onclick="showUpgradeModal('${requiredTier}', 'knowledge'); return false;">
+                            Upgrade (${priceText})
+                        </button>
+                    </div>
+                `;
+            }
+
+            if (!hasTierAccess('basic')) basicSections.forEach(el => lockSection(el, 'basic', '🔒'));
+            if (!hasTierAccess('premium')) premiumSections.forEach(el => lockSection(el, 'premium', '💎'));
+            if (!hasTierAccess('enterprise')) enterpriseSections.forEach(el => lockSection(el, 'enterprise', '👑'));
+        }
+
+        // ===================================================================
+        // UPGRADE MODAL FUNCTIONS
+        // ===================================================================
+
+        function showUpgradeModal(tier, context = 'general') {
+            const modal = document.getElementById('upgradeModal');
+            const header = document.getElementById('upgradeModalHeader');
+            const icon = document.getElementById('upgradeModalIcon');
+            const title = document.getElementById('upgradeModalTitle');
+            const subtitle = document.getElementById('upgradeModalSubtitle');
+            const featureList = document.getElementById('upgradeFeatureList');
+            const cta = document.getElementById('upgradeModalCTA');
+
+            if (!modal) return;
+
+            const tierKey = String(tier || 'basic').toLowerCase();
+            const plan = PRICING[tierKey];
+            if (!plan) return;
+
+            const tierName = plan.name;
+            const tierIcon = getTierIcon(tierKey);
+            const priceText = plan.comingSoon ? 'Contact Sales' : formatPrice(tierKey);
+
+            // Context-specific messaging
+            const contextMessages = {
+                table: {
+                    title: `${tierName} Access Required`,
+                    subtitle: 'Unlock advanced data fields and unlimited exports'
+                },
+                section: {
+                    title: `${tierName} Content Locked`,
+                    subtitle: 'Get full access to premium knowledge and insights'
+                },
+                knowledge: {
+                    title: `${tierName} Study Guide`,
+                    subtitle: 'Access our complete library of data center intelligence guides'
+                },
+                news: {
+                    title: `${tierName} News Archive`,
+                    subtitle: 'Access the full historical archive of DC-related news'
+                },
+                inline: {
+                    title: `${tierName} Feature`,
+                    subtitle: 'Upgrade to unlock this premium feature'
+                },
+                general: {
+                    title: `Upgrade to ${tierName}`,
+                    subtitle: 'Get access to premium features and data'
+                }
+            };
+
+            const msg = contextMessages[context] || contextMessages.general;
+
+            // Update modal styling based on tier
+            const tierColors = {
+                basic: { bg: '#dbeafe', text: '#1e3a8a', border: '#3b82f6' },
+                premium: { bg: '#fef3c7', text: '#92400e', border: '#f59e0b' },
+                enterprise: { bg: '#ede9fe', text: '#5b21b6', border: '#8b5cf6' }
+            };
+
+            const colors = tierColors[tierKey] || tierColors.basic;
+            header.style.background = colors.bg;
+            header.style.color = colors.text;
+            header.style.borderBottom = `3px solid ${colors.border}`;
+            header.textContent = `${tierIcon} ${tierName} Tier Required`;
+
+            icon.textContent = tierIcon;
+            title.textContent = msg.title;
+            subtitle.textContent = msg.subtitle;
+
+            // Build feature list from PRICING config
+            featureList.innerHTML = '';
+            if (plan.features && plan.features.length > 0) {
+                plan.features.slice(0, 5).forEach(feature => {
+                    const li = document.createElement('li');
+                    li.textContent = feature;
+                    featureList.appendChild(li);
+                });
+            } else {
+                featureList.innerHTML = `
+                    <li>Full access to this feature</li>
+                    <li>Unlimited data exports</li>
+                    <li>Priority support</li>
+                `;
+            }
+
+            // Update CTA button
+            if (plan.comingSoon) {
+                cta.textContent = 'Contact Sales';
+                cta.onclick = () => {
+                    closeUpgradeModal();
+                    window.location.href = 'mailto:sales@datacenterhive.com?subject=Enterprise%20Tier%20Inquiry';
+                };
+            } else {
+                cta.textContent = `Upgrade to ${tierName} (${priceText})`;
+                cta.onclick = () => {
+                    closeUpgradeModal();
+                    switchSection('pricing');
+                };
+            }
+
+            // Show modal
+            modal.classList.add('active');
+        }
+
+        function closeUpgradeModal() {
+            const modal = document.getElementById('upgradeModal');
+            if (modal) modal.classList.remove('active');
+        }
+
+        // Close upgrade modal on ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('upgradeModal');
+                if (modal && modal.classList.contains('active')) {
+                    closeUpgradeModal();
+                }
+            }
+        });
+
+        // ===================================================================
+        // PATCH #6: SORT INDICATORS + LOADING HELPERS
+        // ===================================================================
+
+        function setSortIndicator(tableEl, thIndex, direction) {
+            if (!tableEl) return;
+            const ths = tableEl.querySelectorAll('thead th');
+            ths.forEach((th, idx) => {
+                // Remove all sort-related classes first (deterministic state)
+                th.classList.remove('sortable', 'sort-asc', 'sort-desc');
+
+                // Only add .sortable to headers that have onclick handlers
+                const onclick = th.getAttribute('onclick');
+                if (onclick && (onclick.includes('setExistingSort') || onclick.includes('setUpcomingSort'))) {
+                    th.classList.add('sortable');
+                }
+
+                // Add direction class to the sorted column
+                if (idx === thIndex) {
+                    if (direction === 'asc') th.classList.add('sort-asc');
+                    else if (direction === 'desc') th.classList.add('sort-desc');
+                    // If direction is neither 'asc' nor 'desc' (e.g., neutral/0), no arrow is added
+                }
+            });
+        }
+
+        function setLoading(containerEl, isLoading) {
+            if (!containerEl) return;
+
+            const cs = window.getComputedStyle(containerEl);
+            if (cs.position === 'static') containerEl.style.position = 'relative';
+
+            let overlay = containerEl.querySelector('.loading-overlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.className = 'loading-overlay';
+                overlay.innerHTML = '<div class="loading-spinner" aria-label="Loading"></div>';
+                containerEl.appendChild(overlay);
+            }
+            overlay.classList.toggle('active', !!isLoading);
+        }
+
+        function renderSkeletonRows(tbodyEl, colCount, rowCount = 8) {
+            if (!tbodyEl) return;
+            const cols = Math.max(1, Number(colCount) || 1);
+            const rows = Math.max(1, Number(rowCount) || 1);
+
+            let html = '';
+            for (let r = 0; r < rows; r++) {
+                html += '<tr class="skeleton-row">';
+                for (let c = 0; c < cols; c++) html += '<td><div class="skeleton-line"></div></td>';
+                html += '</tr>';
+            }
+            tbodyEl.innerHTML = html;
+        }
+
         // Initialize pricing displays from PRICING config
         function initializePricingDisplays() {
             // Update main pricing page cards
@@ -2716,7 +3685,11 @@
                 premiumCard.innerHTML = `$${PRICING.premium.price.toLocaleString()}<span>/month</span>`;
             }
             if (enterpriseCard) {
-                enterpriseCard.innerHTML = `$${PRICING.enterprise.price.toLocaleString()}<span>/month</span>`;
+                if (PRICING.enterprise.comingSoon) {
+                    enterpriseCard.innerHTML = `Contact Sales<span style="font-size: 14px; display:block; margin-top:4px;">Coming soon</span>`;
+                } else {
+                    enterpriseCard.innerHTML = `$${PRICING.enterprise.price.toLocaleString()}<span>/month</span>`;
+                }
             }
 
             // Update export limit modal prices
@@ -2724,9 +3697,11 @@
             const modalPricePremium = document.getElementById('modal-price-premium');
             const modalPriceEnterprise = document.getElementById('modal-price-enterprise');
 
-            if (modalPriceBasic) modalPriceBasic.textContent = `$${PRICING.basic.price.toLocaleString()}`;
-            if (modalPricePremium) modalPricePremium.textContent = `$${PRICING.premium.price.toLocaleString()}`;
-            if (modalPriceEnterprise) modalPriceEnterprise.textContent = `$${PRICING.enterprise.price.toLocaleString()}`;
+            if (modalPriceBasic) modalPriceBasic.textContent = formatPrice('basic');
+            if (modalPricePremium) modalPricePremium.textContent = formatPrice('premium');
+            if (modalPriceEnterprise) {
+                modalPriceEnterprise.textContent = PRICING.enterprise.comingSoon ? 'Contact Sales' : formatPrice('enterprise');
+            }
         }
 
         // Helper function to get authentication headers with JWT token
@@ -2766,6 +3741,40 @@
             loadExistingDCs();
         }
 
+        function updateExistingSortIndicators() {
+            const table = document.querySelector('#existingDCsTableView table');
+            if (!table) return;
+
+            // Normalized text helper (resilient to whitespace, case, icons, wrappers)
+            const norm = s => (s || '').replace(/\s+/g, ' ').trim().toLowerCase();
+
+            // Map sort keys to column text to find the right th
+            const keyToColumnText = {
+                'provider': 'Provider',
+                'title': 'Title',
+                'address': 'Address'
+            };
+
+            const columnText = keyToColumnText[existingSort.key];
+            if (!columnText) return;
+
+            const ths = Array.from(table.querySelectorAll('thead th'));
+            const thIndex = ths.findIndex(th => norm(th.textContent).includes(norm(columnText)));
+
+            if (thIndex !== -1) {
+                // Handle direction properly (support neutral/3-state if needed)
+                let direction = 'asc';
+                if (existingSort.dir === -1) direction = 'desc';
+                else if (existingSort.dir === 0) {
+                    // Neutral - explicitly clear all indicators to avoid stale arrows
+                    setSortIndicator(table, -1, null);
+                    return;
+                }
+
+                setSortIndicator(table, thIndex, direction);
+            }
+        }
+
         function setUpcomingSort(key) {
             // Special handling for "source" column: 3-state toggle
             if (key === 'source') {
@@ -2791,6 +3800,42 @@
                 }
             }
             loadUpcomingDCs();
+        }
+
+        function updateUpcomingSortIndicators() {
+            const table = document.querySelector('#upcomingDCsTable table');
+            if (!table) return;
+
+            // Normalized text helper (resilient to whitespace, case, icons, wrappers)
+            const norm = s => (s || '').replace(/\s+/g, ' ').trim().toLowerCase();
+
+            // Map sort keys to column text to find the right th
+            const keyToColumnText = {
+                'location': 'Location',
+                'address': 'Address',
+                'status': 'Status',
+                'firstSeen': 'First Seen',
+                'source': 'Source'
+            };
+
+            const columnText = keyToColumnText[upcomingSort.key];
+            if (!columnText) return;
+
+            const ths = Array.from(table.querySelectorAll('thead th'));
+            const thIndex = ths.findIndex(th => norm(th.textContent).includes(norm(columnText)));
+
+            if (thIndex !== -1) {
+                // Handle direction properly (especially for 3-state source toggle)
+                let direction = 'asc';
+                if (upcomingSort.dir === -1) direction = 'desc';
+                else if (upcomingSort.dir === 0) {
+                    // Neutral - explicitly clear all indicators to avoid stale arrows
+                    setSortIndicator(table, -1, null);
+                    return;
+                }
+
+                setSortIndicator(table, thIndex, direction);
+            }
         }
 
         function filterUpcomingBySource(source) {
@@ -2884,6 +3929,9 @@
         }
 
         async function loadWatchlist() {
+            const container = document.getElementById('watchlistSection');
+            setLoading(container, true);
+
             try {
                 const token = localStorage.getItem('dc_intel_token');
                 if (!token) {
@@ -2914,12 +3962,15 @@
                 let html = `<h3 class="h3-centered">My Saved Data Centers (${watchlist.length})</h3>`;
                 html += '<div class="table-wrapper">';
                 html += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
+                html += '<thead>';
                 html += '<tr style="background: var(--brand-primary); color: #fff;">';
                 html += '<th style="padding: 8px; text-align: left;">Name</th>';
                 html += '<th style="padding: 8px; text-align: left;">Location</th>';
                 html += '<th style="padding: 8px; text-align: center;">Date Saved</th>';
                 html += '<th style="padding: 8px; text-align: center;">Action</th>';
                 html += '</tr>';
+                html += '</thead>';
+                html += '<tbody>';
 
                 watchlist.forEach((item, idx) => {
                     const bg = idx % 2 === 0 ? '#fff' : '#f9f9f9';
@@ -2937,7 +3988,7 @@
                     html += '</tr>';
                 });
 
-                html += '</table></div>';
+                html += '</tbody></table></div>';
 
                 document.getElementById('watchlistContent').innerHTML = html;
 
@@ -2948,6 +3999,8 @@
                         Error loading watchlist. Please try again.
                     </p>
                 `;
+            } finally {
+                setLoading(container, false);
             }
         }
 
@@ -4281,6 +5334,9 @@
                     el.style.display = 'block';
                 });
             }
+
+            // Apply locked overlays to sections user doesn't have access to
+            applyLockedSections();
         }
 
         // Open video in modal with enhanced controls
@@ -4292,7 +5348,7 @@
                     showToast('Please log in to access Study Guide content.', 'info');
                     return;
                 } else if (access.reason === 'upgrade') {
-                    showUpgradeModal('study-guide', access.requiredTier);
+                    showUpgradeModal(access.requiredTier, 'knowledge');
                     return;
                 }
             }
@@ -4400,7 +5456,7 @@
                     showToast('Please log in to access Study Guide content.', 'info');
                     return;
                 } else if (access.reason === 'upgrade') {
-                    showUpgradeModal('study-guide', access.requiredTier);
+                    showUpgradeModal(access.requiredTier, 'knowledge');
                     return;
                 }
             }
@@ -4439,7 +5495,7 @@
                     showToast('Please log in to access Study Guide content.', 'info');
                     return;
                 } else if (access.reason === 'upgrade') {
-                    showUpgradeModal('study-guide', access.requiredTier);
+                    showUpgradeModal(access.requiredTier, 'knowledge');
                     return;
                 }
             }
@@ -4917,6 +5973,9 @@
 
         // Existing DCs with heatmap visualization
         async function loadExistingDCs() {
+            const container = document.getElementById('existingDCsSection');
+            setLoading(container, true);
+
             try {
                 // Load from API
                 const response = await fetch(`${PUBLIC_API_BASE}/existing-dcs`, {
@@ -5019,6 +6078,7 @@
                 html += '<div style="text-align: center; font-size: 16px; font-weight: bold; color: #d97706; background: #fef3c7; padding: 12px; border: 2px solid #f59e0b; border-radius: 5px; margin-bottom: 15px;">Columns by tier: Free (Provider/Title/Address/Certifications)  ·  Basic (+Sqft/Lat & Long)  ·  Premium (+Contact/Specs)  ·  Enterprise (+API Access)</div>';
                 html += '<div class="table-wrapper">';
                 html += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
+                html += '<thead>';
 
                 // Table header with tiered columns
                 html += '<tr style="background: var(--brand-primary); color: #fff;">';
@@ -5059,6 +6119,8 @@
                 }
 
                 html += '</tr>';
+                html += '</thead>';
+                html += '<tbody>';
 
                 // Table rows
                 tableData.items.forEach((item, idx) => {
@@ -5134,7 +6196,7 @@
                     html += '</tr>';
                 });
 
-                html += '</table></div>';
+                html += '</tbody></table></div>';
 
                 // Summary bar
                 const summaryHTML = `
@@ -5150,10 +6212,15 @@
                 // Populate the table view tab
                 document.getElementById('existingDCsTableView').innerHTML = bannerHTML + html + summaryHTML;
 
+                // Update sort indicators
+                updateExistingSortIndicators();
+
             } catch (error) {
                 console.error('Error loading DCs:', error);
                 const errorMsg = '<p style="text-align: center;">Error loading data. Please check API connection.</p>';
                 document.getElementById('existingDCsTableView').innerHTML = errorMsg;
+            } finally {
+                setLoading(container, false);
             }
         }
 
@@ -5408,6 +6475,9 @@
         }
 
         async function loadUpcomingDCs() {
+            const container = document.getElementById('upcomingDCsSection');
+            setLoading(container, true);
+
             try {
                 // Load from API
                 const response = await fetch(`${PUBLIC_API_BASE}/upcoming-dcs?limit=5000`, {
@@ -5547,6 +6617,7 @@
                 tableHTML += '</div>';
                 tableHTML += '<div class="table-wrapper">';
                 tableHTML += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
+                tableHTML += '<thead>';
                 tableHTML += '<tr style="background: var(--brand-primary); color: #fff;">';
                 // FREE tier columns
                 tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\'location\')">Location</th>';
@@ -5568,6 +6639,8 @@
                     tableHTML += '<th style="padding: 8px; text-align: center; background: #d97706;">Details</th>';
                 }
                 tableHTML += '</tr>';
+                tableHTML += '</thead>';
+                tableHTML += '<tbody>';
                 projects.forEach((project, idx) => {
                     const isNews = project.source === 'news';
 
@@ -5669,7 +6742,7 @@
                     }
                 });
 
-                tableHTML += '</table></div>';
+                tableHTML += '</tbody></table></div>';
 
                 // Add summary
                 const newsCount = projects.filter(p => p.source === 'news').length;
@@ -5705,9 +6778,14 @@
 
                 document.getElementById('upcomingDCsTable').innerHTML = tableLegend + upgradeBanner + summaryHTML + tableHTML;
 
+                // Update sort indicators
+                updateUpcomingSortIndicators();
+
             } catch (error) {
                 console.error('Error loading upcoming DCs:', error);
                 document.getElementById('upcomingDCsTable').innerHTML = '<p style="text-align: center;">Error loading data. Please check CSV file location.</p>';
+            } finally {
+                setLoading(container, false);
             }
         }
 
@@ -5943,7 +7021,7 @@
 
         async function loadNewsArchive() {
             if (!hasTierAccess('enterprise')) {
-                showUpgradeModal('news-archive', 'Enterprise');
+                showUpgradeModal('enterprise', 'news');
                 return;
             }
 
@@ -6724,35 +7802,6 @@
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
-        }
-
-        // Upgrade modal for tier-gated features
-        function showUpgradeModal(feature, requiredTier) {
-            const messages = {
-                'study-guide': `This content requires a ${requiredTier} subscription. Upgrade to access study guides.`,
-                'news-archive': `News Archive is an Enterprise-only feature. Upgrade to access the complete historical archive.`
-            };
-
-            const modal = document.getElementById('exportLimitModal');
-            if (modal) {
-                // Reuse export modal with custom message
-                const content = modal.querySelector('.modal-content h2');
-                if (content) {
-                    const originalText = content.textContent;
-                    content.textContent = `Upgrade to ${requiredTier}`;
-                    modal.classList.add('active');
-
-                    // Restore original text when closed
-                    const closeBtn = modal.querySelector('.modal-close');
-                    const restoreOriginal = () => {
-                        content.textContent = originalText;
-                        closeBtn.removeEventListener('click', restoreOriginal);
-                    };
-                    closeBtn.addEventListener('click', restoreOriginal);
-                }
-            } else {
-                showToast(messages[feature] || `This feature requires ${requiredTier} tier.`, 'info');
-            }
         }
 
         // Trial modal function
