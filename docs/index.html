@@ -2643,7 +2643,7 @@
             free: {
                 name: 'Free',
                 price: 0,
-                period: 'Forever',
+                period: 'forever',
                 features: [
                     'Certification data for 4,436+ DCs',
                     'Save & track favorite data centers',
@@ -2699,7 +2699,7 @@
             const plan = PRICING[tier];
             if (!plan) return 'N/A';
             if (plan.price === 0) return 'Free';
-            return `$${plan.price.toLocaleString()}/${plan.period}`;
+            return `$${plan.price.toLocaleString()}/mo`;
         }
 
         // Initialize pricing displays from PRICING config
