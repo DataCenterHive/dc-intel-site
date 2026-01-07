@@ -1,15 +1,15 @@
 {
-  "generated_date": "2026-01-05T07:00:15.190779",
-  "day_of_week": "Monday",
-  "includes_services": false,
+  "generated_date": "2026-01-06T07:00:20.605521",
+  "day_of_week": "Tuesday",
+  "includes_services": true,
   "articles": [
     {
-      "headline": "Oklahoma Data Center Project Advances With Strategic Construction Milestone",
-      "content": "A new data center development is taking shape in Owasso, Oklahoma, signaling continued infrastructure expansion in the region's emerging digital landscape. The project represents a potential investment in critical computing infrastructure, with construction currently underway to establish additional regional capacity for enterprise and cloud computing needs. While specific details about the operator and total megawatt capacity remain undisclosed, the development suggests growing interest in Oklahoma's data center market."
+      "headline": "Google Secures Land for New Indiana Data Center Expansion Project",
+      "content": "Google has received approval for a significant data center development in Franklin Township, Indiana, signaling continued hyperscale infrastructure investment in the Midwest. The project represents another strategic move by the technology giant to expand its cloud computing and data storage footprint in a region known for attractive land costs and robust power infrastructure. While specific capacity details remain undisclosed, the approved facility is expected to contribute to Google's ongoing network of mission-critical data center assets."
     },
     {
-      "headline": "Fort Worth Advances Strategic Data Center Development in Texas Market",
-      "content": "A new data center project has been approved in Fort Worth, signaling continued growth in the region's expanding digital infrastructure landscape. The project represents another strategic investment in Texas's increasingly attractive data center ecosystem, which continues to draw interest from technology companies and cloud service providers seeking robust infrastructure and favorable business conditions."
+      "headline": "DC Intel Expands Custom Market Research Services for Investment Firms",
+      "content": "DC Intel provides specialized research and market analysis tailored specifically for institutional investors seeking comprehensive market insights. The firm's custom reports leverage deep industry expertise to deliver nuanced intelligence across multiple market sectors, enabling strategic decision-making for sophisticated investment professionals."
     }
   ]
 }
