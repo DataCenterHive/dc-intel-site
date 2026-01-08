@@ -1,15 +1,15 @@
 {
-  "generated_date": "2026-01-06T07:00:20.605521",
-  "day_of_week": "Tuesday",
-  "includes_services": true,
+  "generated_date": "2026-01-08T07:00:14.513048",
+  "day_of_week": "Thursday",
+  "includes_services": false,
   "articles": [
     {
-      "headline": "Google Secures Land for New Indiana Data Center Expansion Project",
-      "content": "Google has received approval for a significant data center development in Franklin Township, Indiana, signaling continued hyperscale infrastructure investment in the Midwest. The project represents another strategic move by the technology giant to expand its cloud computing and data storage footprint in a region known for attractive land costs and robust power infrastructure. While specific capacity details remain undisclosed, the approved facility is expected to contribute to Google's ongoing network of mission-critical data center assets."
+      "headline": "Amazon Web Services Expands Virginia Data Center Footprint in Louisa County",
+      "content": "Tech giant Amazon Web Services is advancing its hyperscale infrastructure strategy with a new data center project in Louisa County, Virginia. The facility represents another significant investment by AWS in the region's robust data center ecosystem, which has become a critical hub for cloud computing and enterprise infrastructure. While specific capacity details remain undisclosed, the project signals continued expansion of the company's substantial computing infrastructure in the mid-Atlantic region."
     },
     {
-      "headline": "DC Intel Expands Custom Market Research Services for Investment Firms",
-      "content": "DC Intel provides specialized research and market analysis tailored specifically for institutional investors seeking comprehensive market insights. The firm's custom reports leverage deep industry expertise to deliver nuanced intelligence across multiple market sectors, enabling strategic decision-making for sophisticated investment professionals."
+      "headline": "Proposed Washington Data Center Signals Growing Digital Infrastructure Demand",
+      "content": "A new data center project is taking shape in Port Washington, potentially expanding the region's digital infrastructure footprint. While specific details about the facility's operator and total capacity remain unconfirmed, the proposed development suggests continued investment in the area's technology ecosystem. Industry analysts note that such projects are increasingly critical as demand for cloud computing and hyperscale infrastructure continues to grow nationwide."
     }
   ]
 }

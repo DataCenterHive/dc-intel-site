@@ -892,29 +892,103 @@
         .ticker {
             background: var(--brand-primary);
             color: #fff;
-            padding: 10px;
-            font-size: 11px;
-            font-family: 'Courier New', monospace;
+            padding: 12px 20px;
+            font-size: 13px;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            overflow: hidden;
-            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .ticker-label {
+            font-weight: bold;
+            font-size: 14px;
+            letter-spacing: 1px;
+            flex-shrink: 0;
         }
 
         .ticker-content {
-            display: inline-block;
-            padding-left: 100%;
-            animation: ticker 30s linear infinite;
-            will-change: transform;
-            transform: translateZ(0);
-            backface-visibility: hidden;
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            height: 1.4em; /* Stable height tied to line-height */
         }
 
-        @keyframes ticker {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
+        .ticker-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.4;
+        }
+
+        .ticker-item.active {
+            opacity: 1;
+        }
+
+        .ticker-dots {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .ticker-dot {
+            appearance: none;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.4);
+            background-clip: padding-box;
+            width: 6px;
+            height: 6px;
+            border-radius: 999px;
+            border: 0;
+            padding: 0;
+            margin: 0;
+            line-height: 0;
+            font-size: 0;
+            outline: none;
+            transition: background 0.3s ease;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .ticker-dot::-moz-focus-inner {
+            border: 0;
+            padding: 0;
+        }
+
+        .ticker-dot:hover {
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        .ticker-dot:focus {
+            outline: 2px solid rgba(255, 255, 255, 0.8);
+            outline-offset: 2px;
+        }
+
+        .ticker-dot.active {
+            background: #fff;
+        }
+
+        /* Prevent ticker from hiding bottom content (only when ticker exists) */
+        body.has-ticker {
+            padding-bottom: 52px;
+        }
+
+        /* Respect reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            .ticker-item {
+                transition: none;
+            }
         }
 
         .weather-box {
@@ -2117,6 +2191,21 @@
                 border-radius: 0;
             }
 
+            /* Ticker: Compact on mobile */
+            .ticker {
+                padding: 10px 12px;
+                font-size: 11px;
+                gap: 10px;
+            }
+
+            .ticker-label {
+                font-size: 12px;
+            }
+
+            .ticker-dots {
+                display: none; /* Hide dots on very small screens */
+            }
+
             /* Search box: Full width */
             .search-box-container input {
                 width: 100%;
@@ -2367,7 +2456,7 @@
                                 </ul>
                                 <button style="width: 100%; padding: 10px; background: var(--brand-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 13px; font-weight: bold; cursor: pointer; border-radius: 6px;"
                                         onclick="openStudyGuideModal()">
-                                    FREE DOWNLOAD (Email Required)
+                                    UNLOCK After Registering for Free
                                 </button>
                             </div>
                         </div>
@@ -3243,8 +3332,12 @@
     </div>
 
     <div class="ticker">
+        <div class="ticker-label">LATEST:</div>
         <div class="ticker-content" id="tickerContent">
-            LATEST: Google announces Virginia expansion       AWS Dallas project valued at $500M       Equinix opens new Ashburn facility       Microsoft Azure capacity doubles in Phoenix       QTS reports record quarter       Switch announces Nevada mega-campus       Approximately 700,000 permits tracked nationwide       Over 1,000 confirmed data center projects       Real-time intelligence via DC Intel API
+            <!-- Headlines will be populated by JavaScript -->
+        </div>
+        <div class="ticker-dots" id="tickerDots">
+            <!-- Dots will be populated by JavaScript -->
         </div>
     </div>
 
@@ -3257,6 +3350,160 @@
 
         // Public Data API Configuration (tier-based access via JWT)
         const PUBLIC_API_BASE = 'https://dc-intel-api.onrender.com';
+
+        // ===================================================================
+        // ROTATING TICKER HEADLINES (Production-Hardened)
+        // ===================================================================
+        const tickerHeadlines = [
+            'Google announces Virginia expansion',
+            'AWS Dallas project valued at $500M',
+            'Equinix opens new Ashburn facility',
+            'Microsoft Azure capacity doubles in Phoenix',
+            'QTS reports record quarter',
+            'Switch announces Nevada mega-campus',
+            'Approximately 700,000 permits tracked nationwide',
+            'Over 1,000 confirmed data center projects',
+            'Real-time intelligence via DC Intel API'
+        ];
+
+        let currentTickerIndex = 0;
+        let tickerIntervalId = null;
+        let tickerInitialized = false;
+
+        function initTicker() {
+            if (tickerInitialized) return; // Prevent double initialization
+            tickerInitialized = true;
+
+            const contentEl = document.getElementById('tickerContent');
+            const dotsEl = document.getElementById('tickerDots');
+            const tickerEl = document.querySelector('.ticker');
+
+            if (!contentEl || !dotsEl) return;
+
+            // Add class to body for conditional bottom padding
+            document.body.classList.add('has-ticker');
+
+            // Clear any existing content (prevents duplicates)
+            contentEl.innerHTML = '';
+            dotsEl.innerHTML = '';
+            currentTickerIndex = 0;
+
+            // Build DOM once
+            tickerHeadlines.forEach((headline, index) => {
+                // Create headline item
+                const item = document.createElement('div');
+                item.className = 'ticker-item' + (index === 0 ? ' active' : '');
+                item.textContent = headline;
+                item.title = headline; // Tooltip for full text
+                contentEl.appendChild(item);
+
+                // Create dot indicator (using button for accessibility)
+                const dot = document.createElement('button');
+                dot.type = 'button';
+                dot.className = 'ticker-dot' + (index === 0 ? ' active' : '');
+                dot.setAttribute('aria-label', `Show headline ${index + 1}`);
+                dot.onclick = () => showTickerItem(index);
+                dotsEl.appendChild(dot);
+            });
+
+            // Start interval using centralized function (single source of truth)
+            restartTickerInterval();
+
+            // Pause rotation on hover
+            if (tickerEl) {
+                tickerEl.addEventListener('mouseenter', () => {
+                    if (tickerIntervalId) {
+                        clearInterval(tickerIntervalId);
+                        tickerIntervalId = null;
+                    }
+                });
+                tickerEl.addEventListener('mouseleave', () => {
+                    restartTickerInterval();
+                });
+
+                // Pause on focus for keyboard accessibility
+                tickerEl.addEventListener('focusin', () => {
+                    if (tickerIntervalId) {
+                        clearInterval(tickerIntervalId);
+                        tickerIntervalId = null;
+                    }
+                });
+                tickerEl.addEventListener('focusout', () => {
+                    restartTickerInterval();
+                });
+            }
+        }
+
+        function restartTickerInterval() {
+            const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // Always clear existing interval first (even if reducedMotion is true)
+            if (tickerIntervalId) {
+                clearInterval(tickerIntervalId);
+                tickerIntervalId = null;
+            }
+
+            // Only start new interval if motion is allowed
+            if (reducedMotion) return;
+
+            tickerIntervalId = setInterval(rotateTickerHeadline, 5000);
+        }
+
+        function rotateTickerHeadline() {
+            const items = document.querySelectorAll('.ticker-item');
+            const dots = document.querySelectorAll('.ticker-dot');
+            if (!items.length) return;
+
+            items[currentTickerIndex].classList.remove('active');
+            if (dots[currentTickerIndex]) dots[currentTickerIndex].classList.remove('active');
+
+            currentTickerIndex = (currentTickerIndex + 1) % items.length;
+
+            items[currentTickerIndex].classList.add('active');
+            if (dots[currentTickerIndex]) dots[currentTickerIndex].classList.add('active');
+        }
+
+        function showTickerItem(index) {
+            const items = document.querySelectorAll('.ticker-item');
+            const dots = document.querySelectorAll('.ticker-dot');
+            if (!items.length) return;
+            if (index < 0 || index >= items.length) return; // Validate index
+
+            items[currentTickerIndex].classList.remove('active');
+            if (dots[currentTickerIndex]) dots[currentTickerIndex].classList.remove('active');
+
+            currentTickerIndex = index;
+
+            items[currentTickerIndex].classList.add('active');
+            if (dots[currentTickerIndex]) dots[currentTickerIndex].classList.add('active');
+
+            // Restart interval to prevent immediate rotation after manual click
+            restartTickerInterval();
+        }
+
+        // Refinement #5: Allow dynamic ticker updates without reload
+        function resetTicker(headlines) {
+            if (Array.isArray(headlines) && headlines.length) {
+                tickerHeadlines.length = 0;
+                tickerHeadlines.push(...headlines);
+            }
+            tickerInitialized = false;
+            if (tickerIntervalId) {
+                clearInterval(tickerIntervalId);
+                tickerIntervalId = null;
+            }
+            initTicker();
+        }
+
+        // Initialize ticker when page loads
+        document.addEventListener('DOMContentLoaded', initTicker);
+
+        // Refinement #6: Respond to prefers-reduced-motion changes
+        const motionMQ = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+        motionMQ?.addEventListener?.('change', () => {
+            // Re-evaluate and stop/start interval safely
+            restartTickerInterval();
+        });
 
         // ===================================================================
         // PRICING CONFIGURATION (Single Source of Truth)
@@ -6625,6 +6872,10 @@
                 tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\'status\')">Status</th>';
                 tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\'firstSeen\')">First Seen</th>';
                 tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\'source\')">Source</th>';
+                // Save column for logged-in users
+                if (isLoggedIn()) {
+                    tableHTML += '<th style="padding: 8px; text-align: center;">Save</th>';
+                }
                 // BASIC tier columns (+lat/long) - note we don't have lat/long in CSV yet, placeholder for now
                 if (hasTierAccess('basic')) {
                     tableHTML += '<th style="padding: 8px; text-align: left; background: #4a5568;">Lat/Long</th>';
@@ -6687,6 +6938,21 @@
                                 ${sourceLabel}
                             </span>
                         </td>`;
+
+                    // Save button for logged-in users
+                    if (isLoggedIn()) {
+                        // Create unique ID for upcoming DC project
+                        const projectId = `upcoming-${city.replace(/[^a-zA-Z0-9]/g, '-')}-${state}-${firstSeen.replace(/[^a-zA-Z0-9]/g, '-')}`.toLowerCase();
+                        const projectName = `${city}, ${state} - ${sourceLabel} Project`;
+                        const projectLocation = project.address_raw || `${city}, ${state}`;
+
+                        tableHTML += `<td style="padding: 8px; text-align: center;">
+                            <button id="save-btn-${projectId}" onclick="toggleWatchlist('${projectId}', '${projectName.replace(/'/g, "\\'")}', '${projectLocation.replace(/'/g, "\\'")}'); return false;"
+                                style="padding: 4px 10px; background: #0284c7; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
+                                ★ Save
+                            </button>
+                        </td>`;
+                    }
 
                     // BASIC tier column (lat/long)
                     if (hasTierAccess('basic')) {
