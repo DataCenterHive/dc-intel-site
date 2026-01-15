@@ -2454,8 +2454,18 @@
                                     <li>Top 10 DC markets in US</li>
                                     <li>Key industry players</li>
                                 </ul>
-                                <button style="width: 100%; padding: 10px; background: var(--brand-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 13px; font-weight: bold; cursor: pointer; border-radius: 6px;"
-                                        onclick="openStudyGuideModal()">
+
+                                <!-- Conditional rendering: Logged in users see content, non-logged in see unlock button -->
+                                <div id="freeStudyGuideContent" style="display: none;">
+                                    <div style="font-size: 12px; line-height: 1.8; margin: 15px 0;">
+                                        <div style="margin-bottom: 8px;">           <a class="study-link" href="https://datacenterhive.com/dc-market-overview-2025.pdf" target="_blank">Deep-Dive Study (PDF)</a></div>
+                                        <div style="margin-bottom: 8px;">          <a class="study-link" href="knowledge/sources/Handbook - Part A - Executive Summary/Overview.png" target="_blank">Infographic (PNG)</a></div>
+                                        <div style="margin-bottom: 8px;">           <a class="study-link" href="knowledge/sources/Markets and Drivers/Markets & Drivers Source Pack (U.S. Data Center Hubs 2020–2025).pdf">Research Paper (PDF)</a></div>
+                                    </div>
+                                </div>
+
+                                <button id="freeStudyGuideUnlock" style="width: 100%; padding: 10px; background: var(--brand-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 13px; font-weight: bold; cursor: pointer; border-radius: 6px; display: none;"
+                                        onclick="openModal('registerModal')">
                                     UNLOCK After Registering for Free
                                 </button>
                             </div>
@@ -4578,6 +4588,9 @@
                     localStorage.setItem('dc_intel_user', JSON.stringify(data.user));
                     userTier = data.user.tier;  // Update global tier variable
                     updateAuthUI(data.user);
+                    if (typeof updateTierVisibility === 'function') {
+                        updateTierVisibility();
+                    }
                     closeModal('registerModal');
                     form.reset();  // Clear the form
                     showToast('Registration successful! Welcome to DC Intel.', 'success');
@@ -5580,6 +5593,22 @@
                 document.querySelectorAll('.tier-enterprise-only').forEach(el => {
                     el.style.display = 'block';
                 });
+            }
+
+            // Handle free study guide (DC Market Overview 2025) visibility
+            const freeStudyGuideContent = document.getElementById('freeStudyGuideContent');
+            const freeStudyGuideUnlock = document.getElementById('freeStudyGuideUnlock');
+
+            if (freeStudyGuideContent && freeStudyGuideUnlock) {
+                if (isLoggedIn()) {
+                    // Logged in users (any tier including free) see content
+                    freeStudyGuideContent.style.display = 'block';
+                    freeStudyGuideUnlock.style.display = 'none';
+                } else {
+                    // Not logged in: show unlock button
+                    freeStudyGuideContent.style.display = 'none';
+                    freeStudyGuideUnlock.style.display = 'block';
+                }
             }
 
             // Apply locked overlays to sections user doesn't have access to
