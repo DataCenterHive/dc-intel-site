@@ -4,4 +4,4 @@ services:
     env: static
     branch: main
     buildCommand: ""
-    staticPublishPath: site
+    staticPublishPath: docs
