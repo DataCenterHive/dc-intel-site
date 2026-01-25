@@ -2279,6 +2279,8 @@
     <script src="https://d3js.org/topojson.v3.min.js"></script>
     <!-- SheetJS library for Excel export -->
     <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+    <!-- Stripe.js for payment processing -->
+    <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
     <div class="loading-overlay" id="loadingOverlay">
@@ -2731,7 +2733,7 @@
                         <li>-  Email support (48-hour response time)</li>
                         <li class="feature-divider"><strong>-  Study Guide Access: Core Fundamentals</strong></li>
                     </ul>
-                    <a href="mailto:sales@datacenterhive.com?subject=Basic%20Tier%20Inquiry" class="btn-primary btn-block mt-20">CONTACT SALES</a>
+                    <button onclick="handleSubscribe('basic')" class="btn-primary btn-block mt-20">SUBSCRIBE NOW</button>
                 </div>
 
                 <!-- PREMIUM TIER -->
@@ -2759,10 +2761,9 @@
                         <li>-  <strong>Deal alert notifications</strong> (M&A, leases, announcements)</li>
                         <li class="feature-divider"><strong>-  Study Guide Access: Essential Infrastructure + Core Fundamentals</strong></li>
                     </ul>
-                    <a href="mailto:sales@datacenterhive.com?subject=Premium%20Tier%20Inquiry"
-                       class="btn-primary btn-block mt-20">
-                        CONTACT SALES
-                    </a>
+                    <button onclick="handleSubscribe('premium')" class="btn-primary btn-block mt-20">
+                        SUBSCRIBE NOW
+                    </button>
                 </div>
 
                 <!-- ENTERPRISE TIER -->
@@ -2793,10 +2794,9 @@
                         <li class="feature-divider"><strong>-  Study Guide Access: Complete Library (all guides)</strong></li>
                         <li class="feature-note">+ Success fees: 5-10% of first year contract value</li>
                     </ul>
-                    <a href="mailto:sales@datacenterhive.com?subject=Enterprise%20Tier%20Inquiry"
-                       class="btn-primary btn-block mt-20">
-                        CONTACT SALES
-                    </a>
+                    <button onclick="handleSubscribe('enterprise')" class="btn-primary btn-block mt-20">
+                        SUBSCRIBE NOW
+                    </button>
                 </div>
 
             </div>
@@ -8108,6 +8108,118 @@
         }
 
         </script>
+
+    <!-- Stripe Payment Integration -->
+    <script>
+        // Initialize Stripe with publishable key
+        const stripe = Stripe('pk_test_51SsxhIGdwDHUz4VLXxQw74Slupt6VCjD2E0bBeN0hBnot2f3X8dxdqVlwc0y4qJDN5l68ytOKO4gFmOG0yTCLUVO00jw4BV7JK');
+
+        // Stripe Price IDs for each tier
+        const STRIPE_PRICES = {
+            basic: 'price_1SsyuhGdwDHUz4VLAqerBPEY',
+            premium: 'price_1SsyvNGdwDHUz4VLGT44yf80',
+            enterprise: 'price_1SsyvgGdwDHUz4VL6tmwEGoy'
+        };
+
+        // Handle subscription checkout
+        async function handleSubscribe(tier) {
+            try {
+                // Check if user is logged in
+                const token = localStorage.getItem('access_token');
+                if (!token) {
+                    showToast('Please sign in or create an account to subscribe', 'error');
+                    setTimeout(() => showLogin(), 1000);
+                    return;
+                }
+
+                // Get the price ID for the tier
+                const priceId = STRIPE_PRICES[tier];
+                if (!priceId) {
+                    showToast('Invalid subscription tier', 'error');
+                    return;
+                }
+
+                // Show loading state
+                showToast('Redirecting to secure checkout...', 'info');
+
+                // Call backend to create checkout session
+                const response = await fetch('https://dc-intel-api.onrender.com/api/stripe/create-checkout-session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ price_id: priceId })
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Failed to create checkout session');
+                }
+
+                const data = await response.json();
+
+                // Redirect to Stripe Checkout
+                window.location.href = data.checkout_url;
+
+            } catch (error) {
+                console.error('Subscription error:', error);
+                showToast(error.message || 'Failed to start checkout process', 'error');
+            }
+        }
+
+        // Handle customer portal (manage subscription)
+        async function handleManageSubscription() {
+            try {
+                const token = localStorage.getItem('access_token');
+                if (!token) {
+                    showToast('Please sign in to manage your subscription', 'error');
+                    setTimeout(() => showLogin(), 1000);
+                    return;
+                }
+
+                showToast('Opening subscription portal...', 'info');
+
+                const response = await fetch('https://dc-intel-api.onrender.com/api/stripe/create-portal-session', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Failed to open subscription portal');
+                }
+
+                const data = await response.json();
+                window.location.href = data.portal_url;
+
+            } catch (error) {
+                console.error('Portal error:', error);
+                showToast(error.message || 'Failed to open subscription portal', 'error');
+            }
+        }
+
+        // Handle payment success (from URL parameter)
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const hash = window.location.hash;
+
+            if (hash.includes('payment-success')) {
+                showToast('Payment successful! Your subscription is now active.', 'success');
+                // Clear the hash after 2 seconds
+                setTimeout(() => {
+                    window.location.hash = '';
+                }, 2000);
+            } else if (hash.includes('payment-canceled')) {
+                showToast('Payment was canceled. You can try again anytime.', 'info');
+                setTimeout(() => {
+                    window.location.hash = '';
+                }, 2000);
+            }
+        });
+    </script>
 
 
     <!-- Study Guide Modal -->
