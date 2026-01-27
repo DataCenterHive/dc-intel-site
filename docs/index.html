@@ -196,21 +196,92 @@
         }
 
         .user-info {
+            position: relative;
+            align-self: flex-end;
+            font-size: 11px;
+            margin: 12px 10px 5px 10px;
+        }
+
+        .user-info-trigger {
             display: flex;
             align-items: center;
             gap: 8px;
-            align-self: flex-end;
-            font-size: 11px;
             padding: 6px 12px;
-            margin: 12px 10px 5px 10px;
             background: #fafafa;
             border: 1px solid #e0e0e0;
             border-radius: 4px;
             opacity: 0.9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .user-info-trigger:hover {
+            background: #f5f5f5;
+            border-color: #d0d0d0;
+            opacity: 1;
         }
 
         .user-info strong {
             font-weight: bold;
+        }
+
+        .dropdown-arrow {
+            font-size: 8px;
+            margin-left: 4px;
+            transition: transform 0.2s ease;
+            color: #666;
+        }
+
+        .user-info-trigger:hover .dropdown-arrow {
+            color: #333;
+        }
+
+        .user-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 5px);
+            right: 0;
+            min-width: 200px;
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 10002;
+            overflow: hidden;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 10px 14px;
+            background: none;
+            border: none;
+            text-align: left;
+            font-size: 12px;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: background 0.15s ease;
+        }
+
+        .dropdown-item:hover {
+            background: #f8f9fa;
+        }
+
+        .dropdown-item-icon {
+            font-size: 14px;
+            width: 18px;
+            text-align: center;
+        }
+
+        .dropdown-item-text {
+            flex: 1;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: #e9ecef;
+            margin: 4px 0;
         }
 
         .logout-btn {
@@ -2090,9 +2161,13 @@
 
             .user-info {
                 align-self: center;
-                flex-wrap: wrap;
-                justify-content: center;
-                text-align: center;
+                margin: 10px auto 5px;
+            }
+
+            .user-dropdown-menu {
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%);
             }
 
             /* Tables: Enable horizontal scroll */
@@ -2304,10 +2379,26 @@
                 <button class="auth-btn secondary" id="logoutFallback" style="display: none;" onclick="logout(); return false;">Logout</button>
             </div>
             <div class="user-info" id="userInfo" style="display: none;">
-                <strong id="userName">User</strong>
-                <span id="userTierBadge" style="display: inline-block; margin-left: 0; padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: bold; text-transform: uppercase; background: #e0e0e0; color: #616161;">Free</span>
-                <button class="logout-btn" id="subscriptionActionBtn" onclick="handleSubscriptionAction()">Manage Subscription</button>
-                <button class="logout-btn" onclick="logout()">Logout</button>
+                <div class="user-info-trigger" onclick="toggleUserDropdown(event)">
+                    <strong id="userName">User</strong>
+                    <span id="userTierBadge" style="display: inline-block; margin-left: 0; padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: bold; text-transform: uppercase; background: #e0e0e0; color: #616161;">Free</span>
+                    <span class="dropdown-arrow">▼</span>
+                </div>
+                <div class="user-dropdown-menu" id="userDropdownMenu" style="display: none;">
+                    <button class="dropdown-item" id="subscriptionActionBtn" onclick="handleSubscriptionAction(); closeUserDropdown();">
+                        <span class="dropdown-item-icon">💳</span>
+                        <span class="dropdown-item-text">Manage Subscription</span>
+                    </button>
+                    <button class="dropdown-item" onclick="alert('Account settings coming soon!'); closeUserDropdown();">
+                        <span class="dropdown-item-icon">⚙️</span>
+                        <span class="dropdown-item-text">Account Settings</span>
+                    </button>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item" onclick="logout();">
+                        <span class="dropdown-item-icon">🚪</span>
+                        <span class="dropdown-item-text">Logout</span>
+                    </button>
+                </div>
             </div>
             <div class="masthead-header">
                 <a href="#" onclick="switchSection('home'); window.scrollTo(0,0); return false;" aria-label="Go to Home">
@@ -4614,6 +4705,45 @@
                 isRegistering = false;  // Unlock the form
             }
         }
+
+        // User dropdown menu functions
+        function toggleUserDropdown(event) {
+            event.stopPropagation();
+            const menu = document.getElementById('userDropdownMenu');
+            const arrow = document.querySelector('.dropdown-arrow');
+
+            if (menu.style.display === 'none' || !menu.style.display) {
+                menu.style.display = 'block';
+                if (arrow) arrow.style.transform = 'rotate(180deg)';
+            } else {
+                menu.style.display = 'none';
+                if (arrow) arrow.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        function closeUserDropdown() {
+            const menu = document.getElementById('userDropdownMenu');
+            const arrow = document.querySelector('.dropdown-arrow');
+            if (menu) menu.style.display = 'none';
+            if (arrow) arrow.style.transform = 'rotate(0deg)';
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const userInfo = document.getElementById('userInfo');
+            const menu = document.getElementById('userDropdownMenu');
+
+            if (userInfo && menu && !userInfo.contains(event.target)) {
+                closeUserDropdown();
+            }
+        });
+
+        // Close dropdown on ESC key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeUserDropdown();
+            }
+        });
 
         function logout() {
             // Clear ALL stored data on logout
