@@ -92,354 +92,446 @@
             padding-bottom: calc(var(--spacing-unit) * 1);
         }
 
-        .dashboard-grid {
+        /* Two-column layout */
+        .account-layout {
             display: grid;
             grid-template-columns: 2fr 1fr;
-            gap: 30px;
-            margin-bottom: 30px;
+            gap: calc(var(--spacing-unit) * 4);
+            align-items: start;
         }
 
-        .card {
-            background: var(--bg-primary);
-            border: 1px solid var(--border-default);
-            border-radius: 8px;
-            padding: calc(var(--spacing-unit) * 3);
-            margin-bottom: calc(var(--spacing-unit) * 2);
+        .main-column {
+            display: flex;
+            flex-direction: column;
+            gap: calc(var(--spacing-unit) * 3);
         }
 
-        .card h2 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: calc(var(--spacing-unit) * 2);
+        .sidebar {
+            position: sticky;
+            top: calc(var(--spacing-unit) * 3);
+        }
+
+        /* Form elements */
+        .form-group {
+            margin-bottom: calc(var(--spacing-unit) * 2.5);
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
             color: var(--text-primary);
+            margin-bottom: calc(var(--spacing-unit) * 1);
+            letter-spacing: 0.2px;
         }
 
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
+        .form-input {
+            width: 100%;
+            padding: calc(var(--spacing-unit) * 1.5);
+            border: 1px solid var(--border-default);
+            border-radius: 4px;
+            font-size: 14px;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            transition: border-color 0.2s;
         }
 
-        .info-item {
-            padding: 10px 0;
+        .form-input:focus {
+            outline: none;
+            border-color: var(--brand-primary);
         }
 
-        .info-label {
+        .form-input:disabled {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            cursor: not-allowed;
+        }
+
+        .form-hint {
             font-size: 12px;
             color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 5px;
-            font-weight: 500;
+            margin-top: calc(var(--spacing-unit) * 0.5);
         }
 
-        .info-value {
-            font-size: 15px;
+        /* Buttons */
+        .btn {
+            padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 3);
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--brand-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--brand-hover);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
             color: var(--text-primary);
-            font-weight: 500;
+            border: 1px solid var(--border-default);
         }
 
-        .account-type-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .btn-secondary:hover {
+            border-color: var(--border-emphasis);
         }
 
-        .account-type-individual {
-            background: #e3f2fd;
-            color: #1976d2;
+        .btn-danger {
+            background: var(--danger);
+            color: white;
         }
 
-        .account-type-firm {
-            background: #f3e5f5;
-            color: #7b1fa2;
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        /* Subscription box */
+        .subscription-box {
+            background: var(--bg-primary);
+            border: 2px solid var(--border-emphasis);
+            border-radius: 6px;
+            padding: calc(var(--spacing-unit) * 3);
+        }
+
+        .subscription-tier-display {
+            text-align: center;
+            margin-bottom: calc(var(--spacing-unit) * 2.5);
         }
 
         .tier-badge {
             display: inline-block;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
+            padding: 6px 16px;
+            border-radius: 4px;
+            font-size: 11px;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
+            margin-bottom: calc(var(--spacing-unit) * 1);
         }
 
         .tier-free {
-            background: #e0e0e0;
-            color: #616161;
+            background: #f1f5f9;
+            color: #64748b;
+            border: 1px solid #cbd5e1;
         }
 
         .tier-basic {
-            background: #e3f2fd;
-            color: #1976d2;
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #93c5fd;
         }
 
         .tier-premium {
-            background: #f3e5f5;
-            color: #7b1fa2;
+            background: #fce7f3;
+            color: #9f1239;
+            border: 1px solid #f9a8d4;
         }
 
         .tier-enterprise {
-            background: #fff3e0;
-            color: #e65100;
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fcd34d;
         }
 
-        .status-past_due {
-            background: #ff9800;
+        .subscription-details {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: calc(var(--spacing-unit) * 2.5);
         }
 
-        .status-canceled {
-            background: #e74c3c;
+        .subscription-details-row {
+            display: flex;
+            justify-content: space-between;
+            padding: calc(var(--spacing-unit) * 1) 0;
+            border-bottom: 1px solid var(--border-default);
         }
 
-        .quick-actions {
+        .subscription-details-row:last-child {
+            border-bottom: none;
+        }
+
+        .subscription-details-label {
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .subscription-details-value {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .status-active .status-dot {
+            background: var(--success);
+        }
+
+        .status-past_due .status-dot {
+            background: var(--warning);
+        }
+
+        .status-canceled .status-dot {
+            background: var(--danger);
+        }
+
+        /* Settings list */
+        .settings-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: calc(var(--spacing-unit) * 2);
         }
 
-        .action-btn {
+        .settings-item {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             padding: calc(var(--spacing-unit) * 2);
-            background: var(--bg-secondary);
             border: 1px solid var(--border-default);
-            border-radius: 6px;
-            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .settings-item-label {
+            font-size: 14px;
+            font-weight: 500;
             color: var(--text-primary);
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-
-        .action-btn:hover {
-            border-color: var(--brand-primary);
-            background: var(--bg-primary);
-            box-shadow: 0 1px 3px rgba(37, 99, 235, 0.1);
-        }
-
-        .action-btn-icon {
-            font-size: 24px;
-            margin-right: 15px;
-        }
-
-        .action-btn-text {
-            flex: 1;
-        }
-
-        .action-btn-title {
-            font-weight: 600;
-            font-size: 16px;
             margin-bottom: 2px;
         }
 
-        .action-btn-desc {
+        .settings-item-desc {
             font-size: 12px;
-            color: #7f8c8d;
+            color: var(--text-secondary);
         }
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+        /* Toggle switch */
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
         }
 
-        .feature-card {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.3s;
-            display: block;
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
         }
 
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e1;
+            transition: 0.3s;
+            border-radius: 24px;
         }
 
-        .feature-icon {
-            font-size: 36px;
-            margin-bottom: 15px;
-        }
-
-        .feature-card h3 {
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: #2c3e50;
-        }
-
-        .feature-card p {
-            font-size: 14px;
-            color: #7f8c8d;
-            line-height: 1.5;
-        }
-
-        .status-indicator {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
             border-radius: 50%;
-            margin-right: 6px;
         }
 
-        .status-active {
-            background: #27ae60;
+        input:checked + .toggle-slider {
+            background-color: var(--brand-primary);
         }
 
-        .status-inactive {
-            background: #e74c3c;
+        input:checked + .toggle-slider:before {
+            transform: translateX(20px);
         }
 
         @media (max-width: 992px) {
-            .dashboard-grid {
+            .account-layout {
                 grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+
+            .newspaper-container {
+                padding: calc(var(--spacing-unit) * 3);
             }
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 20px 15px;
+            body {
+                padding: calc(var(--spacing-unit) * 1.5);
             }
 
-            .welcome-section h1 {
+            .newspaper-container {
+                padding: calc(var(--spacing-unit) * 2);
+            }
+
+            .masthead h1 {
                 font-size: 24px;
             }
 
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
+            .masthead {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: calc(var(--spacing-unit) * 1.5);
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">DataCenter Hive</div>
-            <div class="user-menu">
-                <span class="user-name" id="userName">Loading...</span>
-                <button class="logout-btn" onclick="logout()">Logout</button>
-            </div>
-        </nav>
-    </header>
-
-    <div class="container">
-        <div class="welcome-section">
-            <h1 id="welcomeMessage">Welcome back!</h1>
-            <p>Access your data center intelligence dashboard and manage your account</p>
+    <div class="newspaper-container">
+        <!-- Masthead -->
+        <div class="masthead">
+            <h1>Account Settings</h1>
+            <a href="#" onclick="goBackToDashboard(); return false;" class="back-link">← Back to Dashboard</a>
         </div>
 
-        <div class="dashboard-grid">
-            <!-- Account Information Card -->
-            <div class="card">
-                <h2>Account Information</h2>
-                <div class="info-grid">
-                    <div class="info-item">
-                        <div class="info-label">Full Name</div>
-                        <div class="info-value" id="fullName">-</div>
+        <!-- Two-column layout -->
+        <div class="account-layout">
+            <!-- Main column: Profile, Security, Notifications -->
+            <div class="main-column">
+                <!-- Profile Section -->
+                <section class="section">
+                    <h2 class="section-header">Profile</h2>
+                    <form id="profileForm" onsubmit="saveProfile(event)">
+                        <div class="form-group">
+                            <label class="form-label" for="profileEmail">Email Address</label>
+                            <input type="email" id="profileEmail" class="form-input" disabled>
+                            <div class="form-hint">Email cannot be changed. Contact support if needed.</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="profileFullName">Display Name</label>
+                            <input type="text" id="profileFullName" class="form-input" placeholder="Your full name">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="profileCompany">Company</label>
+                            <input type="text" id="profileCompany" class="form-input" placeholder="Company name">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="profileJobTitle">Job Title</label>
+                            <input type="text" id="profileJobTitle" class="form-input" placeholder="Your role">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </section>
+
+                <!-- Security Section -->
+                <section class="section">
+                    <h2 class="section-header">Security</h2>
+
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <button type="button" class="btn btn-secondary" onclick="changePassword()">Change Password</button>
+                        <div class="form-hint">Last changed: Never</div>
                     </div>
-                    <div class="info-item">
-                        <div class="info-label">Email Address</div>
-                        <div class="info-value" id="email">-</div>
+
+                    <div class="form-group">
+                        <label class="form-label">Account Actions</label>
+                        <button type="button" class="btn btn-secondary" onclick="logout()">Log Out</button>
                     </div>
-                    <div class="info-item">
-                        <div class="info-label">Company</div>
-                        <div class="info-value" id="company">-</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Job Title</div>
-                        <div class="info-value" id="jobTitle">-</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Account Type</div>
-                        <div class="info-value"><span id="accountType"></span></div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Subscription Tier</div>
-                        <div class="info-value"><span id="subscriptionTier">-</span></div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Subscription Status</div>
-                        <div class="info-value" id="subscriptionStatus">
-                            <span class="status-indicator status-active"></span>
-                            Active
+                </section>
+
+                <!-- Notifications Section -->
+                <section class="section">
+                    <h2 class="section-header">Notifications</h2>
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: calc(var(--spacing-unit) * 2);">
+                        Manage your email notification preferences
+                    </p>
+
+                    <div class="settings-list">
+                        <div class="settings-item">
+                            <div>
+                                <div class="settings-item-label">Product Updates</div>
+                                <div class="settings-item-desc">News about new features and improvements</div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="settings-item">
+                            <div>
+                                <div class="settings-item-label">Billing Notifications</div>
+                                <div class="settings-item-desc">Payment receipts and subscription updates</div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="settings-item">
+                            <div>
+                                <div class="settings-item-label">Data Alerts</div>
+                                <div class="settings-item-desc">Updates about new data center projects</div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
                         </div>
                     </div>
-                </div>
+                </section>
             </div>
 
-            <!-- Quick Actions Card -->
-            <div class="card">
-                <h2>Quick Actions</h2>
-                <div class="quick-actions">
-                    <a href="/dashboard_v2.html" class="action-btn">
-                        <div class="action-btn-icon">🗺️</div>
-                        <div class="action-btn-text">
-                            <div class="action-btn-title">View Map</div>
-                            <div class="action-btn-desc">Browse construction sites</div>
+            <!-- Sidebar: Subscription -->
+            <div class="sidebar">
+                <div class="subscription-box">
+                    <div class="subscription-tier-display">
+                        <div class="tier-badge tier-free" id="tierBadge">FREE</div>
+                        <div style="font-size: 14px; color: var(--text-secondary); margin-top: 8px;">Current Plan</div>
+                    </div>
+
+                    <div class="subscription-details">
+                        <div class="subscription-details-row">
+                            <span class="subscription-details-label">Status</span>
+                            <span class="subscription-details-value">
+                                <span class="status-badge status-active" id="subscriptionStatus">
+                                    <span class="status-dot"></span>
+                                    Active
+                                </span>
+                            </span>
                         </div>
-                    </a>
-                    <a href="/services/basic.html" class="action-btn">
-                        <div class="action-btn-icon">📊</div>
-                        <div class="action-btn-text">
-                            <div class="action-btn-title">Upgrade Plan</div>
-                            <div class="action-btn-desc">Explore premium features</div>
+                        <div class="subscription-details-row" id="renewalRow" style="display: none;">
+                            <span class="subscription-details-label">Renews</span>
+                            <span class="subscription-details-value" id="renewalDate">—</span>
                         </div>
-                    </a>
-                    <button onclick="manageSubscription()" class="action-btn" style="border: none; text-align: left; width: 100%;">
-                        <div class="action-btn-icon">💳</div>
-                        <div class="action-btn-text">
-                            <div class="action-btn-title">Manage Subscription</div>
-                            <div class="action-btn-desc">Update billing, cancel, or change plan</div>
-                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-primary" onclick="manageSubscription()" style="width: 100%;" id="manageSubscriptionBtn">
+                        Manage Subscription
                     </button>
-                    <a href="#" onclick="alert('Profile settings coming soon!'); return false;" class="action-btn">
-                        <div class="action-btn-icon">⚙️</div>
-                        <div class="action-btn-text">
-                            <div class="action-btn-title">Account Settings</div>
-                            <div class="action-btn-desc">Update your preferences</div>
-                        </div>
-                    </a>
                 </div>
             </div>
-        </div>
-
-        <!-- Platform Features -->
-        <h2 style="margin-bottom: 20px; color: #2c3e50;">Explore Features</h2>
-        <div class="features-grid">
-            <a href="/dashboard_v2.html" class="feature-card">
-                <div class="feature-icon">🏗️</div>
-                <h3>Interactive Map</h3>
-                <p>Explore 776+ data center construction sites across 16 U.S. cities with our interactive map viewer.</p>
-            </a>
-
-            <a href="/services/api-access.html" class="feature-card">
-                <div class="feature-icon">🔌</div>
-                <h3>API Access</h3>
-                <p>Integrate our data into your applications with RESTful API access and real-time updates.</p>
-            </a>
-
-            <a href="/services/reports.html" class="feature-card">
-                <div class="feature-icon">📈</div>
-                <h3>Market Reports</h3>
-                <p>Access comprehensive market intelligence reports and analysis for strategic decision making.</p>
-            </a>
-
-            <a href="/services/advisory.html" class="feature-card">
-                <div class="feature-icon">💼</div>
-                <h3>Advisory Services</h3>
-                <p>Get expert consulting on site selection, market entry strategy, and investment analysis.</p>
-            </a>
         </div>
     </div>
 
@@ -480,51 +572,104 @@
         }
 
         function displayUserInfo(user) {
-            // Update welcome message
-            document.getElementById('welcomeMessage').textContent = `Welcome back, ${user.full_name}!`;
-            document.getElementById('userName').textContent = user.full_name;
+            // Populate profile form
+            document.getElementById('profileEmail').value = user.email || '';
+            document.getElementById('profileFullName').value = user.full_name || '';
+            document.getElementById('profileCompany').value = user.company || '';
+            document.getElementById('profileJobTitle').value = user.job_title || '';
 
-            // Update account information
-            document.getElementById('fullName').textContent = user.full_name || '-';
-            document.getElementById('email').textContent = user.email || '-';
-            document.getElementById('company').textContent = user.company || '-';
-            document.getElementById('jobTitle').textContent = user.job_title || 'Not specified';
-
-            // Update account type badge
-            const accountTypeEl = document.getElementById('accountType');
-            const accountType = user.account_type || 'individual';
-            const badgeClass = accountType === 'firm' ? 'account-type-firm' : 'account-type-individual';
-            accountTypeEl.innerHTML = `<span class="account-type-badge ${badgeClass}">${accountType}</span>`;
-
-            // Update subscription tier
+            // Update subscription tier badge
             const tier = user.tier || 'free';
-            const tierEl = document.getElementById('subscriptionTier');
-            tierEl.innerHTML = `<span class="tier-badge tier-${tier}">${tier}</span>`;
+            const tierBadge = document.getElementById('tierBadge');
+            tierBadge.textContent = tier.toUpperCase();
+            tierBadge.className = 'tier-badge tier-' + tier;
 
             // Update subscription status
             const status = user.subscription_status || 'active';
             const statusEl = document.getElementById('subscriptionStatus');
 
-            let statusIndicatorClass = 'status-active';
+            let statusClass = 'status-active';
             let statusText = 'Active';
 
             if (status === 'past_due') {
-                statusIndicatorClass = 'status-past_due';
+                statusClass = 'status-past_due';
                 statusText = 'Past Due';
             } else if (status === 'canceled' || status === 'cancelled') {
-                statusIndicatorClass = 'status-canceled';
+                statusClass = 'status-canceled';
                 statusText = 'Canceled';
+            } else if (status === 'trialing') {
+                statusClass = 'status-active';
+                statusText = 'Trial';
             } else if (status === 'active') {
-                statusIndicatorClass = 'status-active';
+                statusClass = 'status-active';
                 statusText = 'Active';
             }
 
-            statusEl.innerHTML = `<span class="status-indicator ${statusIndicatorClass}"></span>${statusText}`;
+            statusEl.className = 'status-badge ' + statusClass;
+            statusEl.innerHTML = `<span class="status-dot"></span>${statusText}`;
+
+            // Show renewal date if available
+            if (user.subscription_end_date && tier !== 'free') {
+                document.getElementById('renewalRow').style.display = 'flex';
+                const endDate = new Date(user.subscription_end_date);
+                document.getElementById('renewalDate').textContent = endDate.toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric'
+                });
+            } else {
+                document.getElementById('renewalRow').style.display = 'none';
+            }
+
+            // Update button text based on tier
+            const manageBtn = document.getElementById('manageSubscriptionBtn');
+            if (tier === 'free') {
+                manageBtn.textContent = 'Upgrade Plan';
+            } else {
+                manageBtn.textContent = 'Manage Subscription';
+            }
+        }
+
+        function goBackToDashboard() {
+            window.location.href = getBasePath();
+        }
+
+        function saveProfile(event) {
+            event.preventDefault();
+
+            // TODO: Implement API call to save profile
+            // For now, just update localStorage
+            const userStr = localStorage.getItem('dc_intel_user') || sessionStorage.getItem('dc_intel_user');
+            if (userStr) {
+                try {
+                    const user = JSON.parse(userStr);
+                    user.full_name = document.getElementById('profileFullName').value;
+                    user.company = document.getElementById('profileCompany').value;
+                    user.job_title = document.getElementById('profileJobTitle').value;
+
+                    // Save back to storage
+                    if (localStorage.getItem('dc_intel_user')) {
+                        localStorage.setItem('dc_intel_user', JSON.stringify(user));
+                    } else {
+                        sessionStorage.setItem('dc_intel_user', JSON.stringify(user));
+                    }
+
+                    alert('Profile updated successfully!');
+                } catch (error) {
+                    console.error('Error saving profile:', error);
+                    alert('Failed to save profile. Please try again.');
+                }
+            }
+        }
+
+        function changePassword() {
+            // TODO: Implement password change flow
+            alert('Password change feature coming soon. For now, please use the "Forgot Password" option on the login page.');
         }
 
         async function manageSubscription() {
             try {
-                // Get the access token (match index.html token keys)
+                // Get the access token
                 const token = localStorage.getItem('dc_intel_token') || sessionStorage.getItem('dc_intel_token');
 
                 if (!token) {
@@ -533,12 +678,31 @@
                     return;
                 }
 
-                // Show loading state
-                const originalText = event.target.innerHTML;
-                event.target.disabled = true;
-                event.target.innerHTML = '<div class="action-btn-icon">⏳</div><div class="action-btn-text"><div class="action-btn-title">Loading...</div><div class="action-btn-desc">Opening subscription portal</div></div>';
+                // Get user data to check tier
+                const userStr = localStorage.getItem('dc_intel_user') || sessionStorage.getItem('dc_intel_user');
+                let tier = 'free';
+                if (userStr) {
+                    try {
+                        const user = JSON.parse(userStr);
+                        tier = user.tier || 'free';
+                    } catch (e) {
+                        console.error('Error parsing user data:', e);
+                    }
+                }
 
-                // Call the API to create a portal session
+                // Show loading state
+                const btn = document.getElementById('manageSubscriptionBtn');
+                const originalText = btn.textContent;
+                btn.disabled = true;
+                btn.textContent = 'Loading...';
+
+                // If free tier, redirect to pricing page instead of portal
+                if (tier === 'free') {
+                    window.location.href = getBasePath() + 'services/basic.html';
+                    return;
+                }
+
+                // For paid users, open Stripe portal
                 const response = await fetch('https://dc-intel-api.onrender.com/api/stripe/create-portal-session', {
                     method: 'POST',
                     headers: {
@@ -562,9 +726,18 @@
                 alert('Error: ' + error.message);
 
                 // Restore button state
-                if (event && event.target) {
-                    event.target.disabled = false;
-                    event.target.innerHTML = '<div class="action-btn-icon">💳</div><div class="action-btn-text"><div class="action-btn-title">Manage Subscription</div><div class="action-btn-desc">Update billing, cancel, or change plan</div></div>';
+                const btn = document.getElementById('manageSubscriptionBtn');
+                if (btn) {
+                    btn.disabled = false;
+                    const userStr = localStorage.getItem('dc_intel_user') || sessionStorage.getItem('dc_intel_user');
+                    let tier = 'free';
+                    if (userStr) {
+                        try {
+                            const user = JSON.parse(userStr);
+                            tier = user.tier || 'free';
+                        } catch (e) {}
+                    }
+                    btn.textContent = tier === 'free' ? 'Upgrade Plan' : 'Manage Subscription';
                 }
             }
         }
