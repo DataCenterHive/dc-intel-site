@@ -456,8 +456,9 @@
 
         function checkAuthentication() {
             // Try to get user data from localStorage or sessionStorage
-            const userStr = localStorage.getItem('user') || sessionStorage.getItem('user');
-            const token = localStorage.getItem('access_token') || sessionStorage.getItem('access_token');
+            // Match the token keys used in index.html
+            const userStr = localStorage.getItem('dc_intel_user') || sessionStorage.getItem('dc_intel_user');
+            const token = localStorage.getItem('dc_intel_token') || sessionStorage.getItem('dc_intel_token');
 
             if (!userStr || !token) {
                 // No authentication found, redirect to login
@@ -519,8 +520,8 @@
 
         async function manageSubscription() {
             try {
-                // Get the access token
-                const token = localStorage.getItem('access_token') || sessionStorage.getItem('access_token');
+                // Get the access token (match index.html token keys)
+                const token = localStorage.getItem('dc_intel_token') || sessionStorage.getItem('dc_intel_token');
 
                 if (!token) {
                     alert('Please log in to manage your subscription');
@@ -570,16 +571,12 @@
                 return;
             }
 
-            // Clear all authentication data
-            localStorage.removeItem('access_token');
-            localStorage.removeItem('token_type');
-            localStorage.removeItem('user');
-            sessionStorage.removeItem('access_token');
-            sessionStorage.removeItem('token_type');
-            sessionStorage.removeItem('user');
+            // Clear all authentication data (match index.html token keys)
+            localStorage.clear(); // Clear everything to be safe
+            sessionStorage.clear();
 
-            // Redirect to login page
-            window.location.href = getBasePath() + 'auth/login.html';
+            // Redirect to home page (not login - user can click Sign In if needed)
+            window.location.href = getBasePath();
         }
     </script>
 </body>
