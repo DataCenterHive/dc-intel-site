@@ -341,6 +341,10 @@
             background: var(--danger);
         }
 
+        .status-warning .status-dot {
+            background: var(--warning);
+        }
+
         /* Settings list */
         .settings-list {
             display: flex;
@@ -590,7 +594,7 @@
                                 <div class="settings-item-desc">News about new features and improvements</div>
                             </div>
                             <label class="toggle-switch">
-                                <input type="checkbox" checked>
+                                <input type="checkbox" id="notifyProductUpdates" onchange="saveNotificationPreferences()" checked>
                                 <span class="toggle-slider"></span>
                             </label>
                         </div>
@@ -601,7 +605,7 @@
                                 <div class="settings-item-desc">Payment receipts and subscription updates</div>
                             </div>
                             <label class="toggle-switch">
-                                <input type="checkbox" checked>
+                                <input type="checkbox" id="notifyBilling" onchange="saveNotificationPreferences()" checked>
                                 <span class="toggle-slider"></span>
                             </label>
                         </div>
@@ -612,7 +616,7 @@
                                 <div class="settings-item-desc">Updates about new data center projects</div>
                             </div>
                             <label class="toggle-switch">
-                                <input type="checkbox">
+                                <input type="checkbox" id="notifyDataAlerts" onchange="saveNotificationPreferences()">
                                 <span class="toggle-slider"></span>
                             </label>
                         </div>
@@ -751,6 +755,9 @@
             document.getElementById('profileCompany').value = user.company || '';
             document.getElementById('profileJobTitle').value = user.job_title || '';
 
+            // Load notification preferences from localStorage
+            loadNotificationPreferences();
+
             // Update subscription tier badge
             const tier = user.tier || 'free';
             const tierBadge = document.getElementById('tierBadge');
@@ -888,6 +895,9 @@
                 const storageType = localStorage.getItem('dc_intel_token') ? localStorage : sessionStorage;
                 storageType.setItem('dc_intel_user', JSON.stringify(updatedUser));
 
+                // Refresh display with server data (in case backend modified anything)
+                displayUserInfo(updatedUser);
+
                 // Show success banner
                 showBanner('success', '<strong>Profile Updated!</strong> Your changes have been saved successfully.');
 
@@ -982,6 +992,37 @@
                     btn.textContent = tier === 'free' ? 'Upgrade Plan' : 'Manage Subscription';
                 }
             }
+        }
+
+        function loadNotificationPreferences() {
+            // Load from localStorage (or use defaults)
+            const prefs = JSON.parse(localStorage.getItem('notification_preferences') || '{}');
+
+            // Set checkbox states
+            document.getElementById('notifyProductUpdates').checked = prefs.product_updates !== false; // default true
+            document.getElementById('notifyBilling').checked = prefs.billing !== false; // default true
+            document.getElementById('notifyDataAlerts').checked = prefs.data_alerts === true; // default false
+        }
+
+        function saveNotificationPreferences() {
+            // Get current checkbox states
+            const prefs = {
+                product_updates: document.getElementById('notifyProductUpdates').checked,
+                billing: document.getElementById('notifyBilling').checked,
+                data_alerts: document.getElementById('notifyDataAlerts').checked
+            };
+
+            // Save to localStorage
+            localStorage.setItem('notification_preferences', JSON.stringify(prefs));
+
+            // TODO: In future, send to backend API
+            // fetch(`${API_BASE}/api/auth/notification-preferences`, {
+            //     method: 'PATCH',
+            //     headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(prefs)
+            // });
+
+            console.log('Notification preferences saved:', prefs);
         }
 
         function logout() {
