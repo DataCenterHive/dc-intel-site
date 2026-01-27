@@ -155,6 +155,44 @@
             color: #7b1fa2;
         }
 
+        .tier-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tier-free {
+            background: #e0e0e0;
+            color: #616161;
+        }
+
+        .tier-basic {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .tier-premium {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .tier-enterprise {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        .status-past_due {
+            background: #ff9800;
+        }
+
+        .status-canceled {
+            background: #e74c3c;
+        }
+
         .quick-actions {
             display: flex;
             flex-direction: column;
@@ -323,8 +361,12 @@
                         <div class="info-value"><span id="accountType"></span></div>
                     </div>
                     <div class="info-item">
-                        <div class="info-label">Account Status</div>
-                        <div class="info-value">
+                        <div class="info-label">Subscription Tier</div>
+                        <div class="info-value"><span id="subscriptionTier">-</span></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Subscription Status</div>
+                        <div class="info-value" id="subscriptionStatus">
                             <span class="status-indicator status-active"></span>
                             Active
                         </div>
@@ -350,6 +392,13 @@
                             <div class="action-btn-desc">Explore premium features</div>
                         </div>
                     </a>
+                    <button onclick="manageSubscription()" class="action-btn" style="border: none; text-align: left; width: 100%;">
+                        <div class="action-btn-icon">💳</div>
+                        <div class="action-btn-text">
+                            <div class="action-btn-title">Manage Subscription</div>
+                            <div class="action-btn-desc">Update billing, cancel, or change plan</div>
+                        </div>
+                    </button>
                     <a href="#" onclick="alert('Profile settings coming soon!'); return false;" class="action-btn">
                         <div class="action-btn-icon">⚙️</div>
                         <div class="action-btn-text">
@@ -432,6 +481,78 @@
             const accountType = user.account_type || 'individual';
             const badgeClass = accountType === 'firm' ? 'account-type-firm' : 'account-type-individual';
             accountTypeEl.innerHTML = `<span class="account-type-badge ${badgeClass}">${accountType}</span>`;
+
+            // Update subscription tier
+            const tier = user.tier || 'free';
+            const tierEl = document.getElementById('subscriptionTier');
+            tierEl.innerHTML = `<span class="tier-badge tier-${tier}">${tier}</span>`;
+
+            // Update subscription status
+            const status = user.subscription_status || 'active';
+            const statusEl = document.getElementById('subscriptionStatus');
+
+            let statusIndicatorClass = 'status-active';
+            let statusText = 'Active';
+
+            if (status === 'past_due') {
+                statusIndicatorClass = 'status-past_due';
+                statusText = 'Past Due';
+            } else if (status === 'canceled' || status === 'cancelled') {
+                statusIndicatorClass = 'status-canceled';
+                statusText = 'Canceled';
+            } else if (status === 'active') {
+                statusIndicatorClass = 'status-active';
+                statusText = 'Active';
+            }
+
+            statusEl.innerHTML = `<span class="status-indicator ${statusIndicatorClass}"></span>${statusText}`;
+        }
+
+        async function manageSubscription() {
+            try {
+                // Get the access token
+                const token = localStorage.getItem('access_token') || sessionStorage.getItem('access_token');
+
+                if (!token) {
+                    alert('Please log in to manage your subscription');
+                    window.location.href = '/auth/login.html';
+                    return;
+                }
+
+                // Show loading state
+                const originalText = event.target.innerHTML;
+                event.target.disabled = true;
+                event.target.innerHTML = '<div class="action-btn-icon">⏳</div><div class="action-btn-text"><div class="action-btn-title">Loading...</div><div class="action-btn-desc">Opening subscription portal</div></div>';
+
+                // Call the API to create a portal session
+                const response = await fetch('https://dc-intel-api.onrender.com/api/stripe/create-portal-session', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Failed to create portal session');
+                }
+
+                const data = await response.json();
+
+                // Redirect to Stripe Customer Portal
+                window.location.href = data.portal_url;
+
+            } catch (error) {
+                console.error('Error opening subscription portal:', error);
+                alert('Error: ' + error.message);
+
+                // Restore button state
+                if (event && event.target) {
+                    event.target.disabled = false;
+                    event.target.innerHTML = '<div class="action-btn-icon">💳</div><div class="action-btn-text"><div class="action-btn-title">Manage Subscription</div><div class="action-btn-desc">Update billing, cancel, or change plan</div></div>';
+                }
+            }
         }
 
         function logout() {
