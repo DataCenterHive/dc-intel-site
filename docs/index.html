@@ -2389,7 +2389,7 @@
                         <span class="dropdown-item-icon">💳</span>
                         <span class="dropdown-item-text">Manage Subscription</span>
                     </button>
-                    <button class="dropdown-item" onclick="window.location.href='/dashboard/user.html'; closeUserDropdown();">
+                    <button class="dropdown-item" onclick="window.location.href='dashboard/user.html'; closeUserDropdown();">
                         <span class="dropdown-item-icon">⚙️</span>
                         <span class="dropdown-item-text">Account Settings</span>
                     </button>
@@ -4878,13 +4878,17 @@
                 const subscriptionBtn = document.getElementById('subscriptionActionBtn');
                 const token = localStorage.getItem('dc_intel_token');
                 if (subscriptionBtn) {
-                    // Test accounts always show "View Pricing"
-                    if (token && token.startsWith('test_token_')) {
-                        subscriptionBtn.textContent = 'View Pricing';
-                    } else if (tier === 'free') {
-                        subscriptionBtn.textContent = 'Upgrade Plan';
-                    } else {
-                        subscriptionBtn.textContent = 'Manage Subscription';
+                    // Find the text span inside the dropdown button
+                    const textSpan = subscriptionBtn.querySelector('.dropdown-item-text');
+                    if (textSpan) {
+                        // Test accounts always show "View Pricing"
+                        if (token && token.startsWith('test_token_')) {
+                            textSpan.textContent = 'View Pricing';
+                        } else if (tier === 'free') {
+                            textSpan.textContent = 'Upgrade Plan';
+                        } else {
+                            textSpan.textContent = 'Manage Subscription';
+                        }
                     }
                 }
 
