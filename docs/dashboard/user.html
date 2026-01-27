@@ -440,6 +440,15 @@
     </div>
 
     <script>
+        // Base path helper - works on both GitHub Pages and custom domains
+        function getBasePath() {
+            // If hosted on GitHub Pages project site: /dc-intel-site/
+            // If hosted at root (custom domain / local): /
+            return location.hostname.endsWith('github.io') && location.pathname.includes('/dc-intel-site/')
+                ? '/dc-intel-site/'
+                : '/';
+        }
+
         // Check authentication on page load
         window.addEventListener('DOMContentLoaded', function() {
             checkAuthentication();
@@ -452,7 +461,7 @@
 
             if (!userStr || !token) {
                 // No authentication found, redirect to login
-                window.location.href = '/auth/login.html';
+                window.location.href = getBasePath() + 'auth/login.html';
                 return;
             }
 
@@ -461,7 +470,7 @@
                 displayUserInfo(user);
             } catch (error) {
                 console.error('Error parsing user data:', error);
-                window.location.href = '/auth/login.html';
+                window.location.href = getBasePath() + 'auth/login.html';
             }
         }
 
@@ -515,7 +524,7 @@
 
                 if (!token) {
                     alert('Please log in to manage your subscription');
-                    window.location.href = '/auth/login.html';
+                    window.location.href = getBasePath() + 'auth/login.html';
                     return;
                 }
 
@@ -570,7 +579,7 @@
             sessionStorage.removeItem('user');
 
             // Redirect to login page
-            window.location.href = '/auth/login.html';
+            window.location.href = getBasePath() + 'auth/login.html';
         }
     </script>
 </body>

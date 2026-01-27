@@ -2389,7 +2389,7 @@
                         <span class="dropdown-item-icon">💳</span>
                         <span class="dropdown-item-text">Manage Subscription</span>
                     </button>
-                    <button class="dropdown-item" onclick="window.location.href='/dc-intel-site/dashboard/user.html'; closeUserDropdown();">
+                    <button class="dropdown-item" onclick="goAccountSettings(); closeUserDropdown();">
                         <span class="dropdown-item-icon">⚙️</span>
                         <span class="dropdown-item-text">Account Settings</span>
                     </button>
@@ -4704,6 +4704,19 @@
             } finally {
                 isRegistering = false;  // Unlock the form
             }
+        }
+
+        // Base path helper - works on both GitHub Pages and custom domains
+        function getBasePath() {
+            // If hosted on GitHub Pages project site: /dc-intel-site/
+            // If hosted at root (custom domain / local): /
+            return location.hostname.endsWith('github.io') && location.pathname.includes('/dc-intel-site/')
+                ? '/dc-intel-site/'
+                : '/';
+        }
+
+        function goAccountSettings() {
+            window.location.href = getBasePath() + 'dashboard/user.html';
         }
 
         // User dropdown menu functions
