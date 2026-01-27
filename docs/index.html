@@ -4735,10 +4735,14 @@
                     tierBadge.style.color = colors.color;
                 }
 
-                // Update subscription action button text based on tier
+                // Update subscription action button text based on tier and account type
                 const subscriptionBtn = document.getElementById('subscriptionActionBtn');
+                const token = localStorage.getItem('dc_intel_token');
                 if (subscriptionBtn) {
-                    if (tier === 'free') {
+                    // Test accounts always show "View Pricing"
+                    if (token && token.startsWith('test_token_')) {
+                        subscriptionBtn.textContent = 'View Pricing';
+                    } else if (tier === 'free') {
                         subscriptionBtn.textContent = 'Upgrade Plan';
                     } else {
                         subscriptionBtn.textContent = 'Manage Subscription';
@@ -8202,6 +8206,8 @@
         async function handleSubscriptionAction() {
             try {
                 const userStr = localStorage.getItem('dc_intel_user');
+                const token = localStorage.getItem('dc_intel_token');
+
                 if (!userStr) {
                     showToast('Please sign in first', 'error');
                     setTimeout(() => showLogin(), 1000);
@@ -8210,6 +8216,16 @@
 
                 const user = JSON.parse(userStr);
                 const tier = user.tier || 'free';
+
+                // Check if this is a test account
+                if (token && token.startsWith('test_token_')) {
+                    showToast('Test accounts cannot manage subscriptions. Please create a real account to subscribe.', 'info');
+                    setTimeout(() => {
+                        switchSection('pricing');
+                        window.scrollTo(0, 0);
+                    }, 2000);
+                    return;
+                }
 
                 // If free tier, redirect to pricing page
                 if (tier === 'free') {
