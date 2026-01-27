@@ -2297,7 +2297,7 @@
             <div class="user-info" id="userInfo" style="display: none;">
                 Welcome, <strong id="userName">User</strong>
                 <span id="userTierBadge" style="display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; text-transform: uppercase; background: #e0e0e0; color: #616161;">Free</span>
-                <button class="logout-btn" onclick="handleManageSubscription()">Manage Subscription</button>
+                <button class="logout-btn" id="subscriptionActionBtn" onclick="handleSubscriptionAction()">Manage Subscription</button>
                 <button class="logout-btn" onclick="logout()">Logout</button>
             </div>
             <div class="masthead-header">
@@ -4733,6 +4733,16 @@
                     const colors = tierColors[tier] || tierColors['free'];
                     tierBadge.style.background = colors.bg;
                     tierBadge.style.color = colors.color;
+                }
+
+                // Update subscription action button text based on tier
+                const subscriptionBtn = document.getElementById('subscriptionActionBtn');
+                if (subscriptionBtn) {
+                    if (tier === 'free') {
+                        subscriptionBtn.textContent = 'Upgrade Plan';
+                    } else {
+                        subscriptionBtn.textContent = 'Manage Subscription';
+                    }
                 }
 
                 if (logoutFallback) logoutFallback.style.display = 'inline-block';
@@ -8185,6 +8195,34 @@
             } catch (error) {
                 console.error('Subscription error:', error);
                 showToast(error.message || 'Failed to start checkout process', 'error');
+            }
+        }
+
+        // Handle subscription action (upgrade or manage based on tier)
+        async function handleSubscriptionAction() {
+            try {
+                const userStr = localStorage.getItem('dc_intel_user');
+                if (!userStr) {
+                    showToast('Please sign in first', 'error');
+                    setTimeout(() => showLogin(), 1000);
+                    return;
+                }
+
+                const user = JSON.parse(userStr);
+                const tier = user.tier || 'free';
+
+                // If free tier, redirect to pricing page
+                if (tier === 'free') {
+                    switchSection('pricing');
+                    window.scrollTo(0, 0);
+                    showToast('Choose a plan to upgrade', 'info');
+                } else {
+                    // If paid tier, open Stripe Customer Portal
+                    await handleManageSubscription();
+                }
+            } catch (error) {
+                console.error('Subscription action error:', error);
+                showToast('Error accessing subscription', 'error');
             }
         }
 
