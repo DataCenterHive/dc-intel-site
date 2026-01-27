@@ -2296,6 +2296,8 @@
             </div>
             <div class="user-info" id="userInfo" style="display: none;">
                 Welcome, <strong id="userName">User</strong>
+                <span id="userTierBadge" style="display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; text-transform: uppercase; background: #e0e0e0; color: #616161;">Free</span>
+                <button class="logout-btn" onclick="handleManageSubscription()">Manage Subscription</button>
                 <button class="logout-btn" onclick="logout()">Logout</button>
             </div>
             <div class="masthead-header">
@@ -4715,6 +4717,24 @@
                 authButtons.style.display = 'none';
                 userInfo.style.display = 'block';
                 document.getElementById('userName').textContent = user.name || user.email;
+
+                // Update tier badge
+                const tier = user.tier || 'free';
+                const tierBadge = document.getElementById('userTierBadge');
+                if (tierBadge) {
+                    tierBadge.textContent = tier.toUpperCase();
+                    // Set color based on tier
+                    const tierColors = {
+                        'free': { bg: '#e0e0e0', color: '#616161' },
+                        'basic': { bg: '#e3f2fd', color: '#1976d2' },
+                        'premium': { bg: '#f3e5f5', color: '#7b1fa2' },
+                        'enterprise': { bg: '#fff3e0', color: '#e65100' }
+                    };
+                    const colors = tierColors[tier] || tierColors['free'];
+                    tierBadge.style.background = colors.bg;
+                    tierBadge.style.color = colors.color;
+                }
+
                 if (logoutFallback) logoutFallback.style.display = 'inline-block';
                 if (navWatchlist) navWatchlist.style.display = 'inline';
             } else {
