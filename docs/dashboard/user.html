@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" href="../9e224nbi.png">
     <style>
         :root {
-            /* Design Tokens - Match main site */
+            /* Design Tokens - Match main site EXACTLY */
             --bg-primary: #ffffff;
             --bg-secondary: #f8fafc;
             --text-primary: #0f172a;
@@ -21,6 +21,41 @@
             --warning: #d97706;
             --danger: #ef4444;
             --spacing-unit: 8px;
+            --shadow-sm: 0 1px 2px rgba(15,23,42,.06);
+            --shadow-md: 0 8px 24px rgba(15,23,42,.10);
+
+            /* Aliases for consistency */
+            --bg: var(--bg-primary);
+            --text: var(--text-primary);
+            --muted: var(--text-secondary);
+            --border: var(--border-default);
+            --border-strong: var(--divider-strong);
+            --surface: var(--bg-secondary);
+            --brand: var(--brand-primary);
+
+            /* Tier Colors */
+            --tier-free: #6b7280;
+            --tier-basic: #0284c7;
+            --tier-premium: #d97706;
+            --tier-enterprise: #7c3aed;
+
+            /* Tier Borders */
+            --tier-free-border: #4b5563;
+            --tier-basic-border: #0369a1;
+            --tier-premium-border: #b45309;
+            --tier-enterprise-border: #6d28d9;
+
+            /* Tier backgrounds */
+            --tier-basic-bg: #dbeafe;
+            --tier-basic-text: #1e3a8a;
+            --tier-premium-bg: #fef3c7;
+            --tier-premium-text: #92400e;
+            --tier-enterprise-bg: #ede9fe;
+            --tier-enterprise-text: #5b21b6;
+
+            /* Radius */
+            --r-sm: 6px;
+            --r-pill: 999px;
         }
 
         * {
@@ -153,43 +188,55 @@
             margin-top: calc(var(--spacing-unit) * 0.5);
         }
 
-        /* Buttons */
+        /* Buttons - Match main site EXACTLY */
         .btn {
             padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 3);
-            border: none;
-            border-radius: 4px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
+            text-decoration: none;
+            border-radius: var(--r-sm);
+            transition: all 0.2s ease;
+            display: inline-block;
         }
 
         .btn-primary {
             background: var(--brand-primary);
-            color: white;
+            color: #ffffff;
+            border: 2px solid var(--brand-primary);
         }
 
         .btn-primary:hover {
             background: var(--brand-hover);
+            border-color: var(--brand-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
         }
 
         .btn-secondary {
-            background: var(--bg-secondary);
+            background: #ffffff;
             color: var(--text-primary);
-            border: 1px solid var(--border-default);
+            border: 2px solid var(--border-default);
         }
 
         .btn-secondary:hover {
-            border-color: var(--border-emphasis);
+            border-color: var(--brand-primary);
+            color: var(--brand-primary);
+            transform: translateY(-1px);
         }
 
         .btn-danger {
             background: var(--danger);
             color: white;
+            border: 2px solid var(--danger);
         }
 
         .btn-danger:hover {
             background: #dc2626;
+            border-color: #dc2626;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(239, 68, 68, 0.2);
         }
 
         /* Subscription box */
@@ -218,26 +265,26 @@
 
         .tier-free {
             background: #f1f5f9;
-            color: #64748b;
-            border: 1px solid #cbd5e1;
+            color: var(--tier-free);
+            border: 1px solid var(--tier-free-border);
         }
 
         .tier-basic {
-            background: #dbeafe;
-            color: #1e40af;
-            border: 1px solid #93c5fd;
+            background: var(--tier-basic-bg);
+            color: var(--tier-basic-text);
+            border: 1px solid var(--tier-basic-border);
         }
 
         .tier-premium {
-            background: #fce7f3;
-            color: #9f1239;
-            border: 1px solid #f9a8d4;
+            background: var(--tier-premium-bg);
+            color: var(--tier-premium-text);
+            border: 1px solid var(--tier-premium-border);
         }
 
         .tier-enterprise {
-            background: #fef3c7;
-            color: #92400e;
-            border: 1px solid #fcd34d;
+            background: var(--tier-enterprise-bg);
+            color: var(--tier-enterprise-text);
+            border: 1px solid var(--tier-enterprise-border);
         }
 
         .subscription-details {
@@ -367,6 +414,68 @@
             transform: translateX(20px);
         }
 
+        /* Error & Info Banners */
+        .banner {
+            padding: calc(var(--spacing-unit) * 2);
+            border-radius: var(--r-sm);
+            margin-bottom: calc(var(--spacing-unit) * 3);
+            font-size: 14px;
+            line-height: 1.6;
+            border-width: 2px;
+            border-style: solid;
+        }
+
+        .banner-error {
+            background: #fef2f2;
+            border-color: var(--danger);
+            color: #7f1d1d;
+        }
+
+        .banner-warning {
+            background: #fffbeb;
+            border-color: var(--warning);
+            color: #78350f;
+        }
+
+        .banner-info {
+            background: #eff6ff;
+            border-color: var(--brand-primary);
+            color: #1e3a8a;
+        }
+
+        .banner-success {
+            background: #f0fdf4;
+            border-color: var(--success);
+            color: #14532d;
+        }
+
+        .banner strong {
+            font-weight: 600;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            font-size: 24px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
         @media (max-width: 992px) {
             .account-layout {
                 grid-template-columns: 1fr;
@@ -403,12 +512,20 @@
     </style>
 </head>
 <body>
+    <!-- Loading overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner">⏳</div>
+    </div>
+
     <div class="newspaper-container">
         <!-- Masthead -->
         <div class="masthead">
             <h1>Account Settings</h1>
             <a href="#" onclick="goBackToDashboard(); return false;" class="back-link">← Back to Dashboard</a>
         </div>
+
+        <!-- Error/Info Banner Container -->
+        <div id="bannerContainer"></div>
 
         <!-- Two-column layout -->
         <div class="account-layout">
@@ -536,38 +653,94 @@
     </div>
 
     <script>
+        // API Base URL
+        const API_BASE = 'https://dc-intel-api.onrender.com';
+
         // Base path helper - works on both GitHub Pages and custom domains
         function getBasePath() {
-            // If hosted on GitHub Pages project site: /dc-intel-site/
-            // If hosted at root (custom domain / local): /
             return location.hostname.endsWith('github.io') && location.pathname.includes('/dc-intel-site/')
                 ? '/dc-intel-site/'
                 : '/';
         }
 
-        // Check authentication on page load
+        // Banner helper functions
+        function showBanner(type, message) {
+            const container = document.getElementById('bannerContainer');
+            const banner = document.createElement('div');
+            banner.className = `banner banner-${type}`;
+            banner.innerHTML = message;
+            container.innerHTML = ''; // Clear existing banners
+            container.appendChild(banner);
+        }
+
+        function clearBanner() {
+            document.getElementById('bannerContainer').innerHTML = '';
+        }
+
+        function showLoading() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+
+        // Load user data from API on page load
         window.addEventListener('DOMContentLoaded', function() {
-            checkAuthentication();
+            loadUserFromAPI();
         });
 
-        function checkAuthentication() {
-            // Try to get user data from localStorage or sessionStorage
-            // Match the token keys used in index.html
-            const userStr = localStorage.getItem('dc_intel_user') || sessionStorage.getItem('dc_intel_user');
+        async function loadUserFromAPI() {
+            // Get token
             const token = localStorage.getItem('dc_intel_token') || sessionStorage.getItem('dc_intel_token');
 
-            if (!userStr || !token) {
-                // No authentication found, redirect to login
-                window.location.href = getBasePath() + 'auth/login.html';
+            if (!token) {
+                showBanner('error', '<strong>Not Authenticated:</strong> Please log in to access account settings.');
+                setTimeout(() => {
+                    window.location.href = getBasePath();
+                }, 2000);
                 return;
             }
 
+            showLoading();
+
             try {
-                const user = JSON.parse(userStr);
+                // Call /api/auth/me to get fresh user data
+                const response = await fetch(`${API_BASE}/api/auth/me`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        throw new Error('Session expired. Please log in again.');
+                    }
+                    throw new Error('Failed to load account data');
+                }
+
+                const user = await response.json();
+
+                // Cache user data in localStorage (optional cache)
+                const storageType = localStorage.getItem('dc_intel_token') ? localStorage : sessionStorage;
+                storageType.setItem('dc_intel_user', JSON.stringify(user));
+
+                // Display user info
                 displayUserInfo(user);
+                hideLoading();
+
             } catch (error) {
-                console.error('Error parsing user data:', error);
-                window.location.href = getBasePath() + 'auth/login.html';
+                hideLoading();
+                console.error('Error loading user data:', error);
+                showBanner('error', `<strong>Error Loading Account:</strong> ${error.message}`);
+
+                if (error.message.includes('Session expired')) {
+                    setTimeout(() => {
+                        window.location.href = getBasePath();
+                    }, 2000);
+                }
             }
         }
 
@@ -586,14 +759,19 @@
 
             // Update subscription status
             const status = user.subscription_status || 'active';
+            const cancelAtPeriodEnd = user.cancel_at_period_end || false;
             const statusEl = document.getElementById('subscriptionStatus');
 
             let statusClass = 'status-active';
             let statusText = 'Active';
 
+            // Handle different subscription states
             if (status === 'past_due') {
                 statusClass = 'status-past_due';
                 statusText = 'Past Due';
+
+                // Show warning banner for past due
+                showBanner('warning', '<strong>Payment Past Due:</strong> Your subscription payment is overdue. Please update your payment method to avoid service interruption. You have a 7-day grace period.');
             } else if (status === 'canceled' || status === 'cancelled') {
                 statusClass = 'status-canceled';
                 statusText = 'Canceled';
@@ -601,24 +779,47 @@
                 statusClass = 'status-active';
                 statusText = 'Trial';
             } else if (status === 'active') {
-                statusClass = 'status-active';
-                statusText = 'Active';
+                if (cancelAtPeriodEnd) {
+                    // User has canceled but subscription is still active until period end
+                    statusClass = 'status-warning';
+                    statusText = 'Ending Soon';
+
+                    // Show info banner
+                    const endDate = user.subscription_end_date ? new Date(user.subscription_end_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'end of period';
+                    showBanner('info', `<strong>Subscription Ending:</strong> Your subscription will end on ${endDate}. You can reactivate anytime before then.`);
+                } else {
+                    statusClass = 'status-active';
+                    statusText = 'Active';
+                }
             }
 
             statusEl.className = 'status-badge ' + statusClass;
             statusEl.innerHTML = `<span class="status-dot"></span>${statusText}`;
 
-            // Show renewal date if available
+            // Show renewal/end date
+            const renewalRow = document.getElementById('renewalRow');
+            const renewalLabel = renewalRow.querySelector('.subscription-details-label');
+            const renewalValue = document.getElementById('renewalDate');
+
             if (user.subscription_end_date && tier !== 'free') {
-                document.getElementById('renewalRow').style.display = 'flex';
+                renewalRow.style.display = 'flex';
                 const endDate = new Date(user.subscription_end_date);
-                document.getElementById('renewalDate').textContent = endDate.toLocaleDateString('en-US', {
+                const dateStr = endDate.toLocaleDateString('en-US', {
                     month: 'short',
                     day: 'numeric',
                     year: 'numeric'
                 });
+
+                // Change label based on cancel_at_period_end
+                if (cancelAtPeriodEnd) {
+                    renewalLabel.textContent = 'Ends on';
+                } else {
+                    renewalLabel.textContent = 'Renews';
+                }
+
+                renewalValue.textContent = dateStr;
             } else {
-                document.getElementById('renewalRow').style.display = 'none';
+                renewalRow.style.display = 'none';
             }
 
             // Update button text based on tier
@@ -634,31 +835,72 @@
             window.location.href = getBasePath();
         }
 
-        function saveProfile(event) {
+        async function saveProfile(event) {
             event.preventDefault();
 
-            // TODO: Implement API call to save profile
-            // For now, just update localStorage
-            const userStr = localStorage.getItem('dc_intel_user') || sessionStorage.getItem('dc_intel_user');
-            if (userStr) {
-                try {
-                    const user = JSON.parse(userStr);
-                    user.full_name = document.getElementById('profileFullName').value;
-                    user.company = document.getElementById('profileCompany').value;
-                    user.job_title = document.getElementById('profileJobTitle').value;
+            const token = localStorage.getItem('dc_intel_token') || sessionStorage.getItem('dc_intel_token');
 
-                    // Save back to storage
-                    if (localStorage.getItem('dc_intel_user')) {
-                        localStorage.setItem('dc_intel_user', JSON.stringify(user));
-                    } else {
-                        sessionStorage.setItem('dc_intel_user', JSON.stringify(user));
-                    }
+            if (!token) {
+                showBanner('error', '<strong>Not Authenticated:</strong> Please log in again.');
+                return;
+            }
 
-                    alert('Profile updated successfully!');
-                } catch (error) {
-                    console.error('Error saving profile:', error);
-                    alert('Failed to save profile. Please try again.');
+            // Get form values
+            const profileData = {
+                full_name: document.getElementById('profileFullName').value.trim(),
+                company: document.getElementById('profileCompany').value.trim(),
+                job_title: document.getElementById('profileJobTitle').value.trim()
+            };
+
+            // Validate
+            if (!profileData.full_name) {
+                showBanner('error', '<strong>Validation Error:</strong> Display name is required.');
+                return;
+            }
+
+            // Disable save button during request
+            const saveBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = saveBtn.textContent;
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'Saving...';
+
+            clearBanner();
+
+            try {
+                // Call PATCH /api/auth/profile
+                const response = await fetch(`${API_BASE}/api/auth/profile`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(profileData)
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Failed to update profile');
                 }
+
+                const updatedUser = await response.json();
+
+                // Update cached user data
+                const storageType = localStorage.getItem('dc_intel_token') ? localStorage : sessionStorage;
+                storageType.setItem('dc_intel_user', JSON.stringify(updatedUser));
+
+                // Show success banner
+                showBanner('success', '<strong>Profile Updated!</strong> Your changes have been saved successfully.');
+
+                // NOTE: Email notification will be sent by backend
+                // Backend should send email to user.email notifying of profile changes
+                // Including: what changed, when, from what IP address
+
+            } catch (error) {
+                console.error('Error saving profile:', error);
+                showBanner('error', `<strong>Save Failed:</strong> ${error.message}`);
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = originalText;
             }
         }
 
