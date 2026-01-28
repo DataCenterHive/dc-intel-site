@@ -251,7 +251,14 @@ async def forgot_password(data: ForgotPasswordRequest, background_tasks: Backgro
         db.commit()
 
         # Send email with reset link
-        reset_link = f"https://datacenterhive.github.io/dc-intel-site/auth/reset-password.html?token={token}"
+        # ⚠️ CRITICAL: Must include /dc-intel-site/ base path for GitHub Pages
+        # ⚠️ CRITICAL: Must URL-encode the token
+        from urllib.parse import quote
+        FRONTEND_BASE_URL = "https://datacenterhive.github.io/dc-intel-site"  # No trailing slash
+        reset_link = f"{FRONTEND_BASE_URL}/auth/reset-password.html?token={quote(token)}"
+
+        # Example result:
+        # https://datacenterhive.github.io/dc-intel-site/auth/reset-password.html?token=abc123xyz
 
         background_tasks.add_task(
             send_password_reset_email,
@@ -405,6 +412,112 @@ CREATE TABLE password_reset_tokens (
 5. ✅ Always return generic success message (no email enumeration)
 6. ✅ Delete or mark old tokens as expired (cleanup job)
 7. ✅ Send confirmation email after password change
+
+---
+
+### 🐛 Troubleshooting Common Issues
+
+#### Issue: "Reset link just takes me back to the website"
+
+**Cause #1:** Email link is missing `/dc-intel-site/` base path
+
+❌ **Wrong:**
+```
+https://datacenterhive.github.io/auth/reset-password.html?token=abc123
+```
+
+✅ **Correct:**
+```
+https://datacenterhive.github.io/dc-intel-site/auth/reset-password.html?token=abc123
+```
+
+**Fix:** Use the `FRONTEND_BASE_URL` constant shown in the code above.
+
+**Cause #2:** Token is not URL-encoded
+
+Some tokens contain special characters that break URLs (`+`, `/`, `=`). Always use `urllib.parse.quote()` (Python) or `encodeURIComponent()` (JavaScript).
+
+**Cause #3:** Email client stripped the token
+
+Some email security systems rewrite links and strip query parameters. The improved frontend now shows a detailed error message explaining what went wrong.
+
+#### Issue: "Token expired" error immediately
+
+**Cause:** Server time is wrong or token was created long ago
+
+**Fix:**
+- Ensure server uses UTC time
+- Set reasonable expiry (15-60 minutes)
+- Check token `created_at` vs `expires_at` in database
+
+#### Issue: "Token already used" error
+
+**Cause:** User clicked the link twice
+
+**Fix:** This is working as intended (security). User should request a new reset link.
+
+---
+
+### 📧 Email Template Example
+
+**Subject:** Password Reset Request - DataCenter Hive
+
+**Body:**
+```html
+<html>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+    <h2>Password Reset Request</h2>
+
+    <p>Hi {full_name},</p>
+
+    <p>We received a request to reset your password for DataCenter Hive.</p>
+
+    <p>Click the button below to reset your password:</p>
+
+    <p style="text-align: center; margin: 30px 0;">
+        <a href="{reset_link}"
+           style="background: #2563eb;
+                  color: white;
+                  padding: 12px 24px;
+                  text-decoration: none;
+                  border-radius: 6px;
+                  display: inline-block;">
+            Reset Password
+        </a>
+    </p>
+
+    <p style="font-size: 12px; color: #666;">
+        Or copy and paste this link into your browser:<br>
+        <a href="{reset_link}">{reset_link}</a>
+    </p>
+
+    <p><strong>This link will expire in 15 minutes.</strong></p>
+
+    <p>If you didn't request this, please ignore this email. Your password will remain unchanged.</p>
+
+    <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+
+    <p style="font-size: 12px; color: #666;">
+        <strong>Request Details:</strong><br>
+        Date/Time: {datetime} UTC<br>
+        IP Address: {ip_address}
+    </p>
+
+    <p style="font-size: 12px; color: #666;">
+        Best regards,<br>
+        The DataCenter Hive Team<br>
+        <a href="https://datacenterhive.github.io/dc-intel-site/">datacenterhive.github.io/dc-intel-site</a>
+    </p>
+</body>
+</html>
+```
+
+**⚠️ CRITICAL:** The `{reset_link}` must be the FULL URL including:
+- Protocol: `https://`
+- Domain: `datacenterhive.github.io`
+- Base path: `/dc-intel-site`
+- Page: `/auth/reset-password.html`
+- Token parameter: `?token={url_encoded_token}`
 
 ---
 
