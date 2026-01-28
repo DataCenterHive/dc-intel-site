@@ -885,6 +885,26 @@
                 });
 
                 if (!response.ok) {
+                    // Handle endpoint not implemented (404, 501)
+                    if (response.status === 404 || response.status === 501) {
+                        // Fallback: save to localStorage only
+                        const userStr = localStorage.getItem('dc_intel_user') || sessionStorage.getItem('dc_intel_user');
+                        if (userStr) {
+                            const user = JSON.parse(userStr);
+                            user.full_name = profileData.full_name;
+                            user.company = profileData.company;
+                            user.job_title = profileData.job_title;
+
+                            const storageType = localStorage.getItem('dc_intel_token') ? localStorage : sessionStorage;
+                            storageType.setItem('dc_intel_user', JSON.stringify(user));
+
+                            displayUserInfo(user);
+                        }
+
+                        showBanner('info', '<strong>Profile Saved Locally:</strong> Profile saving to server isn\'t enabled yet. Your changes are saved on this device only.');
+                        return;
+                    }
+
                     const error = await response.json();
                     throw new Error(error.detail || 'Failed to update profile');
                 }
@@ -915,8 +935,8 @@
         }
 
         function changePassword() {
-            // TODO: Implement password change flow
-            alert('Password change feature coming soon. For now, please use the "Forgot Password" option on the login page.');
+            // Redirect to forgot password page
+            window.location.href = getBasePath() + 'auth/forgot-password.html';
         }
 
         async function manageSubscription() {
@@ -955,7 +975,7 @@
                 }
 
                 // For paid users, open Stripe portal
-                const response = await fetch('https://dc-intel-api.onrender.com/api/stripe/create-portal-session', {
+                const response = await fetch(`${API_BASE}/api/stripe/create-portal-session`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${token}`,

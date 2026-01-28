@@ -193,13 +193,236 @@ CREATE TABLE user_profile_changes (
 - [ ] Unauthorized requests return 401
 - [ ] Email template renders correctly in major email clients
 
+---
+
+## Password Reset Flow
+
+### 1. POST /api/auth/forgot-password
+
+**Purpose**: Initiate password reset process
+
+**Request:**
+```json
+POST /api/auth/forgot-password
+Content-Type: application/json
+
+{
+  "email": "user@example.com"
+}
+```
+
+**Response:**
+```json
+HTTP 200 OK (always, don't leak email existence)
+
+{
+  "message": "If an account exists with that email, we've sent password reset instructions."
+}
+```
+
+**Backend Implementation:**
+```python
+@router.post("/api/auth/forgot-password")
+async def forgot_password(data: ForgotPasswordRequest, background_tasks: BackgroundTasks):
+    email = data.email.lower().strip()
+
+    # Rate limiting: max 3 requests per email per hour
+    # Rate limiting: max 10 requests per IP per hour
+
+    # Check if user exists (don't leak this in response)
+    user = db.query(User).filter(User.email == email).first()
+
+    if user:
+        # Generate secure token (use secrets.token_urlsafe(32))
+        token = secrets.token_urlsafe(32)
+        token_hash = hashlib.sha256(token.encode()).hexdigest()
+
+        # Store hashed token with expiry (15 minutes)
+        expires_at = datetime.utcnow() + timedelta(minutes=15)
+
+        # Save to database
+        reset_token = PasswordResetToken(
+            user_id=user.id,
+            token_hash=token_hash,
+            expires_at=expires_at,
+            used=False
+        )
+        db.add(reset_token)
+        db.commit()
+
+        # Send email with reset link
+        reset_link = f"https://datacenterhive.github.io/dc-intel-site/auth/reset-password.html?token={token}"
+
+        background_tasks.add_task(
+            send_password_reset_email,
+            to=user.email,
+            reset_link=reset_link,
+            expires_minutes=15
+        )
+
+    # Always return success (security best practice)
+    return {"message": "If an account exists with that email, we've sent password reset instructions."}
+```
+
+**Email Template:**
+```
+Subject: Password Reset Request - DataCenter Hive
+
+Hi {full_name},
+
+We received a request to reset your password for DataCenter Hive.
+
+Click the link below to reset your password:
+{reset_link}
+
+This link will expire in 15 minutes.
+
+If you didn't request this, please ignore this email. Your password will remain unchanged.
+
+Request Details:
+- Date/Time: {datetime} UTC
+- IP Address: {ip_address}
+
+Best regards,
+The DataCenter Hive Team
+```
+
+---
+
+### 2. POST /api/auth/reset-password
+
+**Purpose**: Complete password reset with token
+
+**Request:**
+```json
+POST /api/auth/reset-password
+Content-Type: application/json
+
+{
+  "token": "abc123...",
+  "new_password": "NewSecureP@ss123"
+}
+```
+
+**Response (Success):**
+```json
+HTTP 200 OK
+
+{
+  "message": "Password has been reset successfully"
+}
+```
+
+**Response (Error):**
+```json
+HTTP 400 Bad Request
+
+{
+  "detail": "Reset token has expired"
+}
+```
+
+**Backend Implementation:**
+```python
+@router.post("/api/auth/reset-password")
+async def reset_password(data: ResetPasswordRequest, background_tasks: BackgroundTasks, request: Request):
+    token = data.token
+    new_password = data.new_password
+
+    # Hash the token to find it
+    token_hash = hashlib.sha256(token.encode()).hexdigest()
+
+    # Find token in database
+    reset_token = db.query(PasswordResetToken)\
+        .filter(PasswordResetToken.token_hash == token_hash)\
+        .filter(PasswordResetToken.used == False)\
+        .first()
+
+    if not reset_token:
+        raise HTTPException(status_code=404, detail="Invalid reset token")
+
+    # Check if expired
+    if datetime.utcnow() > reset_token.expires_at:
+        raise HTTPException(status_code=400, detail="Reset token has expired")
+
+    # Check if already used
+    if reset_token.used:
+        raise HTTPException(status_code=400, detail="Reset token has already been used")
+
+    # Validate password strength
+    if len(new_password) < 8:
+        raise HTTPException(status_code=400, detail="Password must be at least 8 characters")
+    if not any(c.isupper() for c in new_password):
+        raise HTTPException(status_code=400, detail="Password must include uppercase letter")
+    if not any(c.isdigit() for c in new_password):
+        raise HTTPException(status_code=400, detail="Password must include a number")
+
+    # Get user
+    user = db.query(User).filter(User.id == reset_token.user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Update password (hash it properly with bcrypt/argon2)
+    user.password_hash = hash_password(new_password)
+
+    # Mark token as used
+    reset_token.used = True
+    reset_token.used_at = datetime.utcnow()
+
+    db.commit()
+
+    # Send confirmation email
+    background_tasks.add_task(
+        send_password_changed_email,
+        to=user.email,
+        ip_address=request.client.host if request else "Unknown",
+        datetime=datetime.utcnow()
+    )
+
+    return {"message": "Password has been reset successfully"}
+```
+
+**Database Schema:**
+```sql
+CREATE TABLE password_reset_tokens (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    token_hash VARCHAR(64) NOT NULL,  -- SHA256 hash of token
+    expires_at TIMESTAMP NOT NULL,
+    used BOOLEAN DEFAULT FALSE,
+    used_at TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_token_hash (token_hash),
+    INDEX idx_user_expires (user_id, expires_at)
+);
+```
+
+**Security Requirements:**
+1. ✅ Store hashed tokens (SHA256), never plain text
+2. ✅ Tokens expire after 15 minutes
+3. ✅ One-time use only (mark as `used`)
+4. ✅ Rate limiting on forgot-password (3/hour per email, 10/hour per IP)
+5. ✅ Always return generic success message (no email enumeration)
+6. ✅ Delete or mark old tokens as expired (cleanup job)
+7. ✅ Send confirmation email after password change
+
+---
+
 ## Current Status
 
-**Frontend**: ✅ Complete - Account settings page calls `PATCH /api/auth/profile`
+**Frontend**: ✅ Complete
+- Account settings page calls `PATCH /api/auth/profile`
+- Forgot password page: `/auth/forgot-password.html`
+- Reset password page: `/auth/reset-password.html`
+- Change Password button redirects to forgot password flow
 
 **Backend**: ⚠️  Requires Implementation
 - Add `PATCH /api/auth/profile` endpoint (if not exists)
+- Add `POST /api/auth/forgot-password` endpoint
+- Add `POST /api/auth/reset-password` endpoint
+- Add `password_reset_tokens` table
 - Add email notification on profile update
+- Add password reset email templates
 - Add audit logging
 - Add rate limiting
 
