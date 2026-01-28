@@ -253,12 +253,18 @@ async def forgot_password(data: ForgotPasswordRequest, background_tasks: Backgro
         # Send email with reset link
         # ⚠️ CRITICAL: Must include /dc-intel-site/ base path for GitHub Pages
         # ⚠️ CRITICAL: Must URL-encode the token
+        # ⚠️ CRITICAL: Must use /auth/reset-password.html (NOT #reset-password)
         from urllib.parse import quote
-        FRONTEND_BASE_URL = "https://datacenterhive.github.io/dc-intel-site"  # No trailing slash
-        reset_link = f"{FRONTEND_BASE_URL}/auth/reset-password.html?token={quote(token)}"
 
-        # Example result:
-        # https://datacenterhive.github.io/dc-intel-site/auth/reset-password.html?token=abc123xyz
+        FRONTEND_BASE_URL = "https://datacenterhive.github.io/dc-intel-site"  # No trailing slash
+
+        # ✅ CORRECT:
+        reset_link = f"{FRONTEND_BASE_URL}/auth/reset-password.html?token={quote(token)}"
+        # Example: https://datacenterhive.github.io/dc-intel-site/auth/reset-password.html?token=abc123xyz
+
+        # ❌ WRONG - Do NOT use hash routes:
+        # reset_link = f"{FRONTEND_BASE_URL}/#reset-password?token={token}"  # WRONG!
+        # This will just load the home page and ignore the token!
 
         background_tasks.add_task(
             send_password_reset_email,

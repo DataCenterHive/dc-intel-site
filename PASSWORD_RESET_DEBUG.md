@@ -70,7 +70,40 @@ Compare your link to this checklist:
 
 ### Step 4: Identify the Issue
 
-#### Issue A: Missing `/dc-intel-site/` base path
+#### Issue A: Using Hash Route Instead of Real Path (COMMON!)
+
+**Symptom:** Link looks like:
+```
+https://datacenterhive.github.io/dc-intel-site/#reset-password?token=...
+                                               ^
+                                               Hash route - WRONG!
+```
+
+**What happens:**
+- Browser loads the home page
+- Tries to find anchor `#reset-password` (doesn't exist)
+- Token gets ignored (it's after the hash)
+- You just see the home page
+
+**Fix:** Tell your backend developer:
+```python
+# ❌ WRONG - Using hash route:
+reset_link = f"https://datacenterhive.github.io/dc-intel-site/#reset-password?token={token}"
+
+# ✅ CORRECT - Using real file path:
+FRONTEND_BASE_URL = "https://datacenterhive.github.io/dc-intel-site"
+reset_link = f"{FRONTEND_BASE_URL}/auth/reset-password.html?token={token}"
+```
+
+**Temporary workaround:**
+If you get a link like `.../#reset-password?token=...`, manually change it to:
+```
+https://datacenterhive.github.io/dc-intel-site/auth/reset-password.html?token=YOUR_TOKEN_HERE
+```
+
+---
+
+#### Issue B: Missing `/dc-intel-site/` base path
 
 **Symptom:** Link looks like:
 ```
@@ -90,7 +123,7 @@ reset_link = f"{FRONTEND_BASE_URL}/auth/reset-password.html?token={token}"
 
 ---
 
-#### Issue B: Missing token parameter
+#### Issue C: Missing token parameter
 
 **Symptom:** Link looks like:
 ```
@@ -108,7 +141,7 @@ https://datacenterhive.github.io/dc-intel-site/auth/reset-password.html
 
 ---
 
-#### Issue C: Token is there but page redirects anyway
+#### Issue D: Token is there but page redirects anyway
 
 **Symptom:**
 - Link has `/dc-intel-site/` ✅
