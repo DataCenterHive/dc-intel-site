@@ -2174,7 +2174,7 @@
         // Session persistence enabled - users stay signed in across pages
         // Storage is only cleared on explicit logout or browser close
 
-        const API_BASE = 'http://127.0.0.1:8010';
+        const API_BASE = 'https://dc-intel-api.onrender.com';
         const PUBLIC_API_BASE = 'https://dc-intel-api.onrender.com';
         const API_KEY = 'keepongoing';
 
@@ -4509,7 +4509,7 @@
 
             } catch (error) {
                 hideLoading();
-                alert('API Error: ' + error.message + '\n\nMake sure server is running on http://127.0.0.1:8010');
+                alert('API Error: ' + error.message + '\n\nMake sure server is running on https://dc-intel-api.onrender.com');
                 document.getElementById('apiStatus').textContent = 'OFFLINE';
                 document.getElementById('apiStatus').style.color = 'red';
             }
