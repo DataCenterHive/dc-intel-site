@@ -519,6 +519,53 @@ Some email security systems rewrite links and strip query parameters. The improv
 - Page: `/auth/reset-password.html`
 - Token parameter: `?token={url_encoded_token}`
 
+**🚨 CRITICAL: Disable Link Tracking for Security**
+
+Many email services (SendGrid, Mailchimp, etc.) wrap links in tracking redirects:
+```
+❌ http://url2349.datacenterhive.com/ls/click?upn=...encoded...
+```
+
+This BREAKS password reset links! **You MUST disable click tracking for security emails.**
+
+**SendGrid Example:**
+```python
+from sendgrid.helpers.mail import Mail, TrackingSettings, ClickTracking
+
+message = Mail(
+    from_email='noreply@datacenterhive.com',
+    to_emails=user.email,
+    subject='Password Reset Request',
+    html_content=email_html
+)
+
+# Disable click tracking (CRITICAL for security emails)
+tracking = TrackingSettings()
+tracking.click_tracking = ClickTracking(enable=False, enable_text=False)
+message.tracking_settings = tracking
+
+sg = SendGridAPIClient(api_key=SENDGRID_API_KEY)
+response = sg.send(message)
+```
+
+**Why disable tracking?**
+1. Security: Tracking redirects can leak reset tokens in server logs
+2. Reliability: Tracking domains can be misconfigured or blocked
+3. Privacy: Password resets shouldn't be tracked
+4. Performance: Direct links are faster
+
+**Alternative:** Include both a button AND plain text link:
+```html
+<p style="text-align: center;">
+    <a href="{reset_link}" style="...">Reset Password</a>
+</p>
+
+<p style="font-size: 12px;">
+    <strong>Link not working?</strong> Copy this URL:<br>
+    <code>{reset_link}</code>
+</p>
+```
+
 ---
 
 ## Current Status
