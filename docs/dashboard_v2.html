@@ -2174,8 +2174,8 @@
         // Session persistence enabled - users stay signed in across pages
         // Storage is only cleared on explicit logout or browser close
 
-        const API_BASE = 'https://dc-intel-api.onrender.com';
-        const PUBLIC_API_BASE = 'https://dc-intel-api.onrender.com';
+        const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://127.0.0.1:8010' : 'https://dc-intel-api.onrender.com';
+        const PUBLIC_API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://127.0.0.1:8010' : 'https://dc-intel-api.onrender.com';
         const API_KEY = 'keepongoing';
 
         // User subscription tier management

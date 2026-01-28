@@ -258,7 +258,7 @@ pre.code{white-space:pre-wrap;word-break:break-word;max-height:32rem;overflow:au
 </footer>
 
 <script>
-const API_BASE = "https://dc-intel-api.onrender.com";
+const API_BASE = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") ? "http://127.0.0.1:8010" : "https://dc-intel-api.onrender.com";
 const state = {
   limit: 10,
   rollups: { offset: 0, kind: "explicit" },

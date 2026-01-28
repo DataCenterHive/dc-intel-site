@@ -690,7 +690,7 @@
     </div>
 
     <script>
-        const API_BASE = 'https://dc-intel-api.onrender.com/api';
+        const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://127.0.0.1:8010/api' : 'https://dc-intel-api.onrender.com/api';
 
         document.getElementById('alertsForm').addEventListener('submit', async function(e) {
             e.preventDefault();

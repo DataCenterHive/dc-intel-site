@@ -72,7 +72,7 @@
 </main>
 
 <script>
-const API_BASE = localStorage.getItem("dcintel_api") || "https://dc-intel-api.onrender.com";
+const API_BASE = localStorage.getItem("dcintel_api") || ((window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") ? "http://127.0.0.1:8010" : "https://dc-intel-api.onrender.com");
 document.getElementById("apiBase").textContent = API_BASE;
 
 const el = (q) => document.querySelector(q);
