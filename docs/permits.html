@@ -63,7 +63,7 @@
   <div class="topbar">
     <div class="counts" id="counts">—</div>
     <div class="right">
-      <span class="small">API: <span id="apiBase">http://127.0.0.1:8010</span></span>
+      <span class="small">API: <span id="apiBase">https://dc-intel-api.onrender.com</span></span>
       <span class="small"><a class="linklike" href="index.html">News</a> · <span class="linklike" onclick="gotoSites()">Known Sites</span></span>
     </div>
   </div>
@@ -72,7 +72,7 @@
 </main>
 
 <script>
-const API_BASE = localStorage.getItem("dcintel_api") || "http://127.0.0.1:8010";
+const API_BASE = localStorage.getItem("dcintel_api") || "https://dc-intel-api.onrender.com";
 document.getElementById("apiBase").textContent = API_BASE;
 
 const el = (q) => document.querySelector(q);

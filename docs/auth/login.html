@@ -314,7 +314,7 @@
         // Handle forgot password link
         function handleForgotPassword(e) {
             e.preventDefault();
-            alert('Password reset functionality coming soon!\n\nFor now, please contact support at:\nsupport@dc-intelligence.com');
+            window.location.href = 'forgot-password.html';
         }
 
         // Form submission
@@ -374,7 +374,7 @@
 
                     // Redirect to dashboard after 1.5 seconds
                     setTimeout(() => {
-                        window.location.href = '/dashboard/user.html';
+                        window.location.href = '../dashboard/user.html';
                     }, 1500);
                 } else {
                     // Show error message from server
