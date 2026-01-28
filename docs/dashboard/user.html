@@ -571,7 +571,7 @@
                     <div class="form-group">
                         <label class="form-label">Password</label>
                         <button type="button" class="btn btn-secondary" onclick="changePassword()">Change Password</button>
-                        <div class="form-hint">Last changed: Never</div>
+                        <div class="form-hint" id="passwordLastChanged">Last changed: Never</div>
                     </div>
 
                     <div class="form-group">
@@ -832,6 +832,14 @@
 
             // Populate session info
             document.getElementById('sessionEmail').textContent = user.email || '—';
+
+            // Update password last changed timestamp
+            const pwdHint = document.getElementById('passwordLastChanged');
+            if (user.password_changed_at) {
+                pwdHint.textContent = 'Last changed: ' + user.password_changed_at;
+            } else {
+                pwdHint.textContent = 'Last changed: Never';
+            }
 
             // Load notification preferences from localStorage
             loadNotificationPreferences();
