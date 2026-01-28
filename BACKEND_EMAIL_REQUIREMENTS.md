@@ -384,12 +384,27 @@ async def reset_password(data: ResetPasswordRequest, background_tasks: Backgroun
 
     db.commit()
 
-    # Send confirmation email
+    # CRITICAL: Invalidate all existing JWT tokens/sessions for this user
+    # This ensures the new password is required everywhere immediately
+    invalidate_all_user_sessions(user.id)
+
+    # Send confirmation email to user
     background_tasks.add_task(
         send_password_changed_email,
         to=user.email,
         ip_address=request.client.host if request else "Unknown",
         datetime=datetime.utcnow()
+    )
+
+    # CRITICAL: Send admin notification email
+    background_tasks.add_task(
+        send_admin_notification_email,
+        to="admin@datacenterhive.com",
+        subject="Password Reset Completed",
+        user_email=user.email,
+        ip_address=request.client.host if request else "Unknown",
+        datetime=datetime.utcnow(),
+        method="Password reset link"
     )
 
     return {"message": "Password has been reset successfully"}
@@ -418,6 +433,216 @@ CREATE TABLE password_reset_tokens (
 5. ✅ Always return generic success message (no email enumeration)
 6. ✅ Delete or mark old tokens as expired (cleanup job)
 7. ✅ Send confirmation email after password change
+8. ✅ **CRITICAL:** Invalidate all JWT tokens/sessions when password changes
+9. ✅ **CRITICAL:** Send admin notification to admin@datacenterhive.com
+
+---
+
+### 3. Session Invalidation (CRITICAL)
+
+**Purpose**: Ensure new password is required universally across all devices/browsers
+
+When a user's password is reset, **all existing JWT tokens must be invalidated**. This prevents:
+- Old sessions from continuing to work
+- Security breach if password was compromised
+- Confusion about which password is active
+
+**Implementation Option A: Token Blacklist**
+```python
+# Add to database schema
+CREATE TABLE token_blacklist (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    jti VARCHAR(255) NOT NULL,  -- JWT ID (unique identifier for each token)
+    blacklisted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    expires_at TIMESTAMP NOT NULL,  -- When token would have naturally expired
+    INDEX idx_jti (jti),
+    INDEX idx_user (user_id)
+);
+
+def invalidate_all_user_sessions(user_id: int):
+    """
+    Invalidate all JWT tokens for a user.
+    This requires that all JWTs have a unique 'jti' claim.
+    """
+    # Get all active tokens for this user
+    active_tokens = get_user_active_tokens(user_id)
+
+    for token in active_tokens:
+        # Add token JTI to blacklist
+        db.add(TokenBlacklist(
+            user_id=user_id,
+            jti=token.jti,
+            expires_at=token.exp
+        ))
+
+    db.commit()
+
+# In JWT verification middleware
+def verify_jwt(token: str):
+    payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+
+    # Check if token is blacklisted
+    blacklisted = db.query(TokenBlacklist)\
+        .filter(TokenBlacklist.jti == payload.get('jti'))\
+        .filter(TokenBlacklist.expires_at > datetime.utcnow())\
+        .first()
+
+    if blacklisted:
+        raise HTTPException(status_code=401, detail="Token has been revoked")
+
+    return payload
+```
+
+**Implementation Option B: Password Hash Version**
+```python
+# Add to users table
+ALTER TABLE users ADD COLUMN password_version INTEGER DEFAULT 1;
+
+# When creating JWT
+def create_access_token(user: User):
+    payload = {
+        "sub": user.email,
+        "user_id": user.id,
+        "pwd_ver": user.password_version,  # Include password version
+        "exp": datetime.utcnow() + timedelta(hours=24)
+    }
+    return jwt.encode(payload, SECRET_KEY, algorithm="HS256")
+
+# When password changes
+def invalidate_all_user_sessions(user_id: int):
+    """
+    Increment password version to invalidate all existing tokens.
+    Simpler than blacklist, but all tokens become invalid.
+    """
+    user = db.query(User).filter(User.id == user_id).first()
+    user.password_version += 1
+    db.commit()
+
+# In JWT verification middleware
+def verify_jwt(token: str):
+    payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+    user = db.query(User).filter(User.id == payload['user_id']).first()
+
+    # Check if password version matches
+    if payload.get('pwd_ver') != user.password_version:
+        raise HTTPException(status_code=401, detail="Session expired. Please log in again.")
+
+    return payload
+```
+
+**Recommended**: Option B (password version) is simpler and doesn't require a blacklist table.
+
+---
+
+### 4. Admin Notification Email
+
+**Purpose**: Security audit trail for password resets
+
+**When to Send**: Every successful password reset (both via reset link AND authenticated change)
+
+**Recipient**: `admin@datacenterhive.com`
+
+**Template**:
+```
+Subject: Password Reset Completed - {user_email}
+
+SECURITY ALERT: Password Reset
+
+User: {user_email}
+Time: {datetime} UTC
+IP Address: {ip_address}
+User Agent: {user_agent}
+Method: {method}  # "Password reset link" or "Authenticated change"
+
+This is an automated security notification.
+```
+
+**Implementation**:
+```python
+async def send_admin_notification_email(
+    to: str,
+    subject: str,
+    user_email: str,
+    ip_address: str,
+    datetime: datetime,
+    method: str
+):
+    """
+    Send admin notification for password reset.
+    """
+    html_content = f"""
+    <h2>SECURITY ALERT: Password Reset</h2>
+    <p><strong>User:</strong> {user_email}</p>
+    <p><strong>Time:</strong> {datetime.strftime('%Y-%m-%d %H:%M:%S')} UTC</p>
+    <p><strong>IP Address:</strong> {ip_address}</p>
+    <p><strong>Method:</strong> {method}</p>
+    <hr>
+    <p style="color: #666; font-size: 12px;">
+        This is an automated security notification from DataCenter Hive.
+    </p>
+    """
+
+    # Send via SendGrid, AWS SES, or similar
+    await send_email(
+        to=to,
+        subject=subject,
+        html_content=html_content
+    )
+```
+
+**Benefits**:
+- Security audit trail
+- Early detection of unauthorized access
+- Compliance with enterprise security requirements
+- Helps with customer support (can verify reset requests)
+
+---
+
+### 5. Important Clarification: Stripe & Password Changes
+
+**Question**: "Do I need to sync password changes to Stripe?"
+
+**Answer**: ❌ **NO - Stripe does NOT use or store your user passwords.**
+
+**Why:**
+- Stripe authentication is email-based (magic links)
+- Stripe Customer Portal uses OAuth-style sessions
+- Stripe doesn't have a "password" field for customers
+
+**What DOES need to stay in sync with Stripe:**
+- ✅ Email address (Stripe customer email)
+- ✅ User's name (Stripe customer name)
+- ✅ Subscription status (synced via webhooks)
+- ✅ Payment method (managed in Stripe Customer Portal)
+
+**What does NOT need to sync:**
+- ❌ Password (Stripe doesn't store it)
+- ❌ Company name (optional metadata only)
+- ❌ Job title (not used by Stripe)
+
+**When email changes:**
+```python
+# Update Stripe customer email when user changes email
+import stripe
+
+stripe.api_key = STRIPE_SECRET_KEY
+
+@router.patch("/api/auth/email")
+async def update_email(new_email: str, current_user: User = Depends(get_current_user)):
+    # Update in your database
+    current_user.email = new_email
+    db.commit()
+
+    # Update in Stripe (if user has a Stripe customer ID)
+    if current_user.stripe_customer_id:
+        stripe.Customer.modify(
+            current_user.stripe_customer_id,
+            email=new_email
+        )
+
+    return {"message": "Email updated successfully"}
+```
 
 ---
 

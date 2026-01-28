@@ -4851,10 +4851,12 @@
             if (hash.startsWith('#reset-password?token=')) {
                 const token = hash.split('token=')[1];
                 if (token) {
-                    document.getElementById('resetToken').value = token;
-                    openModal('resetPasswordModal');
-                    // Clear the hash
-                    history.replaceState(null, null, ' ');
+                    // Redirect to dedicated reset password page
+                    // This handles old-style hash route links from emails
+                    const basePath = location.hostname.endsWith('github.io') && location.pathname.includes('/dc-intel-site/')
+                        ? '/dc-intel-site/'
+                        : '/';
+                    window.location.href = `${basePath}auth/reset-password.html?token=${token}`;
                 }
             }
         })();
