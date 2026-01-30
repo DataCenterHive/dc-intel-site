@@ -6521,7 +6521,6 @@
                         const getVal = (item) => {
                             if (key === 'provider') return (item.provider || '').toLowerCase();
                             if (key === 'title') return (item.name || '').toLowerCase();
-                            if (key === 'address') return (item.address_line_raw || '').toLowerCase();
                             return '';
                         };
                         const va = getVal(a);
@@ -6545,7 +6544,7 @@
                     `;
                 }
                 let html = filterStatus + `<h3 class="h3-centered-sm">Operational Data Centers</h3>`;
-                html += '<div style="text-align: center; font-size: 16px; font-weight: bold; color: #d97706; background: #fef3c7; padding: 12px; border: 2px solid #f59e0b; border-radius: 5px; margin-bottom: 15px;">Columns by tier: Free (Provider/Title/Address/Certifications)  ·  Basic (+Sqft/Lat & Long)  ·  Premium (+Contact/Specs)  ·  Enterprise (+API Access)</div>';
+                html += '<div style="text-align: center; font-size: 16px; font-weight: bold; color: #d97706; background: #fef3c7; padding: 12px; border: 2px solid #f59e0b; border-radius: 5px; margin-bottom: 15px;">Columns by tier: Free (Provider/Title/Certifications)  ·  Basic (+Sqft/Lat & Long)  ·  Premium (+Contact/Specs)  ·  Enterprise (+Full Address/API Access)</div>';
                 html += '<div class="table-wrapper">';
                 html += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
                 html += '<thead>';
@@ -6555,7 +6554,6 @@
                 // FREE tier columns
                 html += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setExistingSort(\'provider\')">Provider</th>';
                 html += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setExistingSort(\'title\')">Title</th>';
-                html += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setExistingSort(\'address\')">Address</th>';
 
                 // Save button for logged-in users
                 if (isLoggedIn()) {
@@ -6605,7 +6603,6 @@
                     // FREE tier columns
                     html += `<td style="padding: 8px;">${provider}</td>`;
                     html += `<td style="padding: 8px;">${title}</td>`;
-                    html += `<td style="padding: 8px;">${address}</td>`;
 
                     // Save button for logged-in users
                     if (isLoggedIn()) {
@@ -6733,10 +6730,10 @@
         // CSV Export Functions
         function getExportColumns(tier, dataType) {
             const EXISTING_DCS_COLUMNS = {
-                "free": ["provider", "title", "name", "address_line_raw", "latitude", "longitude"],
-                "basic": ["total_sqft"],
+                "free": ["provider", "title", "name"],
+                "basic": ["total_sqft", "latitude", "longitude"],
                 "premium": ["contact", "contact_email", "contact_phone", "power_capacity_mw"],
-                "enterprise": ["street_full_guess", "city", "state", "zip", "country"]
+                "enterprise": ["street_full_guess", "address_line_raw", "city", "state", "zip", "country"]
             };
 
             const UPCOMING_DCS_COLUMNS = {
