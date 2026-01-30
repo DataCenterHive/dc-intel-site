@@ -6553,39 +6553,39 @@
                 // Table header with tiered columns
                 html += '<tr style="background: var(--brand-primary); color: #fff;">';
                 // FREE tier columns
-                html += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setExistingSort(\'provider\')">Provider</th>';
-                html += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setExistingSort(\'title\')">Title</th>';
-                html += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setExistingSort(\'address\')">Address</th>';
+                html += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setExistingSort(\'provider\')">Provider</th>';
+                html += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setExistingSort(\'title\')">Title</th>';
+                html += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setExistingSort(\'address\')">Address</th>';
 
                 // Save button for logged-in users
                 if (isLoggedIn()) {
-                    html += '<th style="padding: 8px; text-align: center; background: #0284c7;">Save</th>';
+                    html += '<th style="padding: 8px; text-align: center; background: #0284c7; color: #fff;">Save</th>';
                 }
 
                 // EMAIL GATE columns (certifications)
                 if (hasEmailGateAccess()) {
-                    html += '<th style="padding: 8px; text-align: center; background: #10b981;">SOC2</th>';
-                    html += '<th style="padding: 8px; text-align: center; background: #10b981;">HIPAA</th>';
-                    html += '<th style="padding: 8px; text-align: center; background: #10b981;">PCI-DSS</th>';
-                    html += '<th style="padding: 8px; text-align: center; background: #10b981;">ISO27001</th>';
+                    html += '<th style="padding: 8px; text-align: center; background: #10b981; color: #fff;">SOC2</th>';
+                    html += '<th style="padding: 8px; text-align: center; background: #10b981; color: #fff;">HIPAA</th>';
+                    html += '<th style="padding: 8px; text-align: center; background: #10b981; color: #fff;">PCI-DSS</th>';
+                    html += '<th style="padding: 8px; text-align: center; background: #10b981; color: #fff;">ISO27001</th>';
                 }
 
                 // BASIC tier columns
                 if (hasTierAccess('basic')) {
-                    html += '<th style="padding: 8px; text-align: right; background: #4a5568;">Sq Ft</th>';
-                    html += '<th style="padding: 8px; text-align: center; background: #4a5568;">Latitude</th>';
-                    html += '<th style="padding: 8px; text-align: center; background: #4a5568;">Longitude</th>';
+                    html += '<th style="padding: 8px; text-align: right; background: #4a5568; color: #fff;">Sq Ft</th>';
+                    html += '<th style="padding: 8px; text-align: center; background: #4a5568; color: #fff;">Latitude</th>';
+                    html += '<th style="padding: 8px; text-align: center; background: #4a5568; color: #fff;">Longitude</th>';
                 }
 
                 // PREMIUM tier columns
                 if (hasTierAccess('premium')) {
-                    html += '<th style="padding: 8px; text-align: left; background: #6b46c1;">Contact</th>';
-                    html += '<th style="padding: 8px; text-align: left; background: #6b46c1;">Specs</th>';
+                    html += '<th style="padding: 8px; text-align: left; background: #6b46c1; color: #fff;">Contact</th>';
+                    html += '<th style="padding: 8px; text-align: left; background: #6b46c1; color: #fff;">Specs</th>';
                 }
 
                 // ENTERPRISE tier columns
                 if (hasTierAccess('enterprise')) {
-                    html += '<th style="padding: 8px; text-align: left; background: #d97706;">Full Address</th>';
+                    html += '<th style="padding: 8px; text-align: left; background: #d97706; color: #fff;">Full Address</th>';
                 }
 
                 html += '</tr>';
@@ -7090,27 +7090,27 @@
                 tableHTML += '<thead>';
                 tableHTML += '<tr style="background: var(--brand-primary); color: #fff;">';
                 // FREE tier columns
-                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\'location\')">Location</th>';
-                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\'address\')">Address</th>';
-                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\'status\')">Status</th>';
-                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\'firstSeen\')">First Seen</th>';
-                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\'source\')">Source</th>';
+                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setUpcomingSort(\'location\')">Location</th>';
+                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setUpcomingSort(\'address\')">Address</th>';
+                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setUpcomingSort(\'status\')">Status</th>';
+                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setUpcomingSort(\'firstSeen\')">First Seen</th>';
+                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setUpcomingSort(\'source\')">Source</th>';
                 // Save column for logged-in users
                 if (isLoggedIn()) {
-                    tableHTML += '<th style="padding: 8px; text-align: center;">Save</th>';
+                    tableHTML += '<th style="padding: 8px; text-align: center; background: #0284c7; color: #fff;">Save</th>';
                 }
                 // BASIC tier columns (+lat/long) - note we don't have lat/long in CSV yet, placeholder for now
                 if (hasTierAccess('basic')) {
-                    tableHTML += '<th style="padding: 8px; text-align: left; background: #4a5568;">Lat/Long</th>';
+                    tableHTML += '<th style="padding: 8px; text-align: left; background: #4a5568; color: #fff;">Lat/Long</th>';
                 }
                 // PREMIUM tier columns (+description)
                 if (hasTierAccess('premium')) {
-                    tableHTML += '<th style="padding: 8px; text-align: left; background: #6b46c1;">Description</th>';
+                    tableHTML += '<th style="padding: 8px; text-align: left; background: #6b46c1; color: #fff;">Description</th>';
                 }
                 // ENTERPRISE tier columns (+valuation)
                 if (hasTierAccess('enterprise')) {
-                    tableHTML += '<th style="padding: 8px; text-align: right; background: #d97706;">Valuation</th>';
-                    tableHTML += '<th style="padding: 8px; text-align: center; background: #d97706;">Details</th>';
+                    tableHTML += '<th style="padding: 8px; text-align: right; background: #d97706; color: #fff;">Valuation</th>';
+                    tableHTML += '<th style="padding: 8px; text-align: center; background: #d97706; color: #fff;">Details</th>';
                 }
                 tableHTML += '</tr>';
                 tableHTML += '</thead>';
