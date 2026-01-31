@@ -4287,16 +4287,46 @@
             return !!token;
         }
 
-        // Helper function to build tier-filtered row snapshot
-        // Uses getExportColumns as single source of truth to ensure Save/Export/UI consistency
-        function buildTierSnapshot(item, tier, dataType) {
-            // Normalize tier to lowercase and validate
-            const normalizedTier = String(tier || 'free').toLowerCase();
-            const allowedTiers = new Set(["free", "basic", "premium", "enterprise"]);
-            const safeTier = allowedTiers.has(normalizedTier) ? normalizedTier : "free";
+        // ===================================================================
+        // TIER-BASED COLUMN MANAGEMENT (Single Source of Truth)
+        // ===================================================================
 
-            // Get columns from the same function used for exports
-            const columns = getExportColumns(safeTier, dataType);
+        const TIER_ORDER = ["free", "basic", "premium", "enterprise"];
+
+        const EXISTING_COLS_BY_TIER = {
+            free: ["provider", "name", "soc2", "hipaa", "pci_dss", "iso27001"],
+            basic: ["total_sqft", "latitude", "longitude"],
+            premium: ["contact", "power_capacity_mw"],
+            enterprise: ["street_full_guess", "city", "state", "zip"]
+        };
+
+        const UPCOMING_COLS_BY_TIER = {
+            free: ["city", "state", "address_raw", "latest_status", "first_seen_applied_date", "source", "latitude", "longitude"],
+            basic: [],
+            premium: ["latest_description"],
+            enterprise: ["latest_valuation_usd", "latest_contractor", "latest_owner", "latest_permit_type", "permits_count"]
+        };
+
+        function normalizeTier(t) {
+            const x = String(t || "free").toLowerCase();
+            return TIER_ORDER.includes(x) ? x : "free";
+        }
+
+        function getTierColumnsCumulative(tier, dataType) {
+            const colsByTier = dataType === "upcoming" ? UPCOMING_COLS_BY_TIER : EXISTING_COLS_BY_TIER;
+            const idx = TIER_ORDER.indexOf(normalizeTier(tier));
+            const out = [];
+            for (let i = 0; i <= idx; i++) {
+                for (const c of (colsByTier[TIER_ORDER[i]] || [])) {
+                    if (!out.includes(c)) out.push(c);
+                }
+            }
+            return out;
+        }
+
+        // Helper function to build tier-filtered row snapshot
+        function buildTierSnapshot(item, tier, dataType) {
+            const columns = getTierColumnsCumulative(tier, dataType);
 
             // Build snapshot with only the allowed columns
             const snapshot = {};
@@ -4397,6 +4427,39 @@
             }
         }
 
+        // Helper: Compute stable union of columns across all items in a section
+        function getSectionColumns(items, dataType) {
+            let columns = [];
+            const seen = new Set();
+
+            for (const item of items) {
+                const tier = item.tier_at_save ? normalizeTier(item.tier_at_save) : null;
+                // Prefer saved tier; otherwise fallback to current session tier
+                const useTier = tier || normalizeTier(userTier);
+
+                for (const col of getTierColumnsCumulative(useTier, dataType)) {
+                    if (!seen.has(col)) {
+                        seen.add(col);
+                        columns.push(col);
+                    }
+                }
+            }
+
+            return columns;
+        }
+
+        // Helper: Get cell value with fallback chain
+        function getCellValue(item, col) {
+            // 1) row_snapshot
+            if (item.row_snapshot && item.row_snapshot[col] != null) return item.row_snapshot[col];
+
+            // 2) rehydrate from loaded map
+            const full = window.dcItemsMap && window.dcItemsMap[item.dc_id];
+            if (full && full[col] != null) return full[col];
+
+            return "N/A";
+        }
+
         async function loadWatchlist() {
             const container = document.getElementById('watchlistSection');
             setLoading(container, true);
@@ -4457,24 +4520,8 @@
                     html += '<div class="table-wrapper">';
                     html += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 30px;">';
 
-                    // Get columns from first item's row_snapshot (or rehydrate from dcItemsMap)
-                    const firstItem = existingDCs[0];
-                    let snapshotColumns = [];
-
-                    if (firstItem.row_snapshot && Object.keys(firstItem.row_snapshot).length > 0) {
-                        // Use row_snapshot columns from backend
-                        snapshotColumns = Object.keys(firstItem.row_snapshot);
-                    } else {
-                        // Fallback: rehydrate from window.dcItemsMap using current user tier
-                        const fullItem = window.dcItemsMap && window.dcItemsMap[firstItem.dc_id];
-                        if (fullItem) {
-                            const tier = userTier || 'free';
-                            snapshotColumns = getExportColumns(tier.toLowerCase(), 'existing');
-                        } else {
-                            // Ultimate fallback: show basic columns
-                            snapshotColumns = ['provider', 'name'];
-                        }
-                    }
+                    // Get stable union of columns across all items in this section
+                    const snapshotColumns = getSectionColumns(existingDCs, 'existing');
 
                     // Build table headers
                     html += '<thead><tr style="background: var(--brand-primary); color: #fff;">';
@@ -4495,18 +4542,7 @@
 
                         // Render snapshot columns
                         snapshotColumns.forEach(col => {
-                            let value = 'N/A';
-
-                            // Try row_snapshot first
-                            if (item.row_snapshot && item.row_snapshot[col] !== undefined && item.row_snapshot[col] !== null) {
-                                value = item.row_snapshot[col];
-                            } else {
-                                // Fallback: rehydrate from window.dcItemsMap
-                                const fullItem = window.dcItemsMap && window.dcItemsMap[item.dc_id];
-                                if (fullItem && fullItem[col] !== undefined && fullItem[col] !== null) {
-                                    value = fullItem[col];
-                                }
-                            }
+                            let value = getCellValue(item, col);
 
                             // Format special columns
                             if (col === 'total_sqft' && value !== 'N/A') {
@@ -4515,6 +4551,9 @@
                                 value = parseFloat(value).toFixed(4);
                             } else if (col === 'power_capacity_mw' && value !== 'N/A') {
                                 value = `${value} MW`;
+                            } else if (col.startsWith('soc') || col.startsWith('hipaa') || col.startsWith('pci') || col.startsWith('iso')) {
+                                // Certification flags - convert to checkmark/X
+                                value = (value === true || value === '1' || String(value).toLowerCase() === 'yes') ? '✓' : 'X';
                             }
 
                             html += `<td style="padding: 8px;">${value}</td>`;
@@ -4540,24 +4579,8 @@
                     html += '<div class="table-wrapper">';
                     html += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
 
-                    // Get columns from first item's row_snapshot (or rehydrate from dcItemsMap)
-                    const firstUpcoming = upcomingDCs[0];
-                    let upcomingColumns = [];
-
-                    if (firstUpcoming.row_snapshot && Object.keys(firstUpcoming.row_snapshot).length > 0) {
-                        // Use row_snapshot columns from backend
-                        upcomingColumns = Object.keys(firstUpcoming.row_snapshot);
-                    } else {
-                        // Fallback: rehydrate from window.dcItemsMap using current user tier
-                        const fullItem = window.dcItemsMap && window.dcItemsMap[firstUpcoming.dc_id];
-                        if (fullItem) {
-                            const tier = userTier || 'free';
-                            upcomingColumns = getExportColumns(tier.toLowerCase(), 'upcoming');
-                        } else {
-                            // Ultimate fallback: show basic columns
-                            upcomingColumns = ['city', 'state', 'address_raw'];
-                        }
-                    }
+                    // Get stable union of columns across all items in this section
+                    const upcomingColumns = getSectionColumns(upcomingDCs, 'upcoming');
 
                     // Build table headers
                     html += '<thead><tr style="background: #d97706; color: #fff;">';
@@ -4578,18 +4601,7 @@
 
                         // Render snapshot columns
                         upcomingColumns.forEach(col => {
-                            let value = 'N/A';
-
-                            // Try row_snapshot first
-                            if (item.row_snapshot && item.row_snapshot[col] !== undefined && item.row_snapshot[col] !== null) {
-                                value = item.row_snapshot[col];
-                            } else {
-                                // Fallback: rehydrate from window.dcItemsMap
-                                const fullItem = window.dcItemsMap && window.dcItemsMap[item.dc_id];
-                                if (fullItem && fullItem[col] !== undefined && fullItem[col] !== null) {
-                                    value = fullItem[col];
-                                }
-                            }
+                            let value = getCellValue(item, col);
 
                             // Format special columns
                             if ((col === 'latitude' || col === 'longitude') && value !== 'N/A') {
@@ -6998,35 +7010,9 @@
             return rows;
         }
 
-        // CSV Export Functions
+        // CSV Export Functions (wrapper for backward compatibility)
         function getExportColumns(tier, dataType) {
-            const EXISTING_DCS_COLUMNS = {
-                "free": ["provider", "name", "certifications"],
-                "basic": ["total_sqft", "latitude", "longitude"],
-                "premium": ["contact", "power_capacity_mw"],
-                "enterprise": ["street_full_guess", "city", "state", "zip"]
-            };
-
-            const UPCOMING_DCS_COLUMNS = {
-                "free": ["city", "state", "address_raw", "latest_status", "first_seen_applied_date", "source", "latitude", "longitude"],
-                "basic": [],
-                "premium": ["latest_description"],
-                "enterprise": ["latest_valuation_usd", "record_ids_sample", "statuses_sample", "latest_contractor", "latest_owner", "latest_permit_type", "permits_count"]
-            };
-
-            const TIER_HIERARCHY = ["free", "basic", "premium", "enterprise"];
-            const columnMap = dataType === 'existing' ? EXISTING_DCS_COLUMNS : UPCOMING_DCS_COLUMNS;
-            const tierIndex = TIER_HIERARCHY.indexOf(tier);
-            let allowedColumns = [];
-
-            for (let i = 0; i <= tierIndex; i++) {
-                const tierName = TIER_HIERARCHY[i];
-                if (columnMap[tierName]) {
-                    allowedColumns = allowedColumns.concat(columnMap[tierName]);
-                }
-            }
-
-            return allowedColumns;
+            return getTierColumnsCumulative(tier, dataType);
         }
 
         function convertToCSV(data, columns) {
