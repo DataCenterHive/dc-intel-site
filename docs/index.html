@@ -2319,7 +2319,7 @@
         .table-sticky thead th {
             position: sticky;
             top: 0;
-            background: var(--surface);
+            /* background removed to allow tier-specific inline backgrounds */
             z-index: 10;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
@@ -4346,6 +4346,20 @@
                     const allowedTiers = new Set(["free", "basic", "premium", "enterprise"]);
                     const safeTier = allowedTiers.has(normalizedTier) ? normalizedTier : "free";
 
+                    // Build display-friendly name and location for backward compatibility
+                    let dc_name, dc_location;
+                    if (dataType === 'existing') {
+                        const provider = item.provider || 'Unknown';
+                        const title = item.name || 'N/A';
+                        dc_name = `${provider} - ${title}`;
+                        dc_location = item.address_line_raw || item.city || 'N/A';
+                    } else if (dataType === 'upcoming') {
+                        const city = item.city || 'TBD';
+                        const state = item.state || 'TBD';
+                        dc_name = `${city}, ${state} Project`;
+                        dc_location = item.address_raw || `${city}, ${state}`;
+                    }
+
                     // Add to watchlist with tier-filtered snapshot
                     const response = await fetch(`${PUBLIC_API_BASE}/api/watchlist/add`, {
                         method: 'POST',
@@ -4355,6 +4369,8 @@
                         },
                         body: JSON.stringify({
                             dc_id: dcId,
+                            dc_name: dc_name,
+                            dc_location: dc_location,
                             data_type: dataType,
                             tier_at_save: safeTier,
                             row_snapshot: rowSnapshot,
@@ -4409,36 +4425,85 @@
                     return;
                 }
 
+                // Separate items by data_type
+                const existingDCs = watchlist.filter(item => item.data_type === 'existing');
+                const upcomingDCs = watchlist.filter(item => item.data_type === 'upcoming');
+
                 let html = `<h3 class="h3-centered">My Saved Data Centers (${watchlist.length})</h3>`;
-                html += '<div class="table-wrapper">';
-                html += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
-                html += '<thead>';
-                html += '<tr style="background: var(--brand-primary); color: #fff;">';
-                html += '<th style="padding: 8px; text-align: left;">Name</th>';
-                html += '<th style="padding: 8px; text-align: left;">Location</th>';
-                html += '<th style="padding: 8px; text-align: center;">Date Saved</th>';
-                html += '<th style="padding: 8px; text-align: center;">Action</th>';
-                html += '</tr>';
-                html += '</thead>';
-                html += '<tbody>';
 
-                watchlist.forEach((item, idx) => {
-                    const bg = idx % 2 === 0 ? '#fff' : '#f9f9f9';
-                    const savedDate = new Date(item.added_at).toLocaleDateString();
-                    html += `<tr style="background: ${bg}; border-bottom: 1px solid #ccc;">`;
-                    html += `<td style="padding: 8px;">${item.dc_name || 'N/A'}</td>`;
-                    html += `<td style="padding: 8px;">${item.dc_location || 'N/A'}</td>`;
-                    html += `<td style="padding: 8px; text-align: center;">${savedDate}</td>`;
-                    html += `<td style="padding: 8px; text-align: center;">
-                        <button onclick="removeFromWatchlist('${item.dc_id}'); return false;"
-                            style="padding: 4px 10px; background: #dc2626; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
-                            Remove
-                        </button>
-                    </td>`;
+                // Render Existing DCs table
+                if (existingDCs.length > 0) {
+                    html += '<h4 style="margin-top: 20px; font-size: 16px; color: var(--text-primary); border-bottom: 2px solid var(--brand-primary); padding-bottom: 8px;">Operational Data Centers (${existingDCs.length})</h4>';
+                    html += '<div class="table-wrapper">';
+                    html += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 30px;">';
+                    html += '<thead>';
+                    html += '<tr style="background: var(--brand-primary); color: #fff;">';
+                    html += '<th style="padding: 8px; text-align: left;">Name</th>';
+                    html += '<th style="padding: 8px; text-align: left;">Location</th>';
+                    html += '<th style="padding: 8px; text-align: center;">Tier at Save</th>';
+                    html += '<th style="padding: 8px; text-align: center;">Date Saved</th>';
+                    html += '<th style="padding: 8px; text-align: center;">Action</th>';
                     html += '</tr>';
-                });
+                    html += '</thead>';
+                    html += '<tbody>';
 
-                html += '</tbody></table></div>';
+                    existingDCs.forEach((item, idx) => {
+                        const bg = idx % 2 === 0 ? '#fff' : '#f9f9f9';
+                        const savedDate = new Date(item.added_at).toLocaleDateString();
+                        const tier = item.tier_at_save || 'free';
+                        html += `<tr style="background: ${bg}; border-bottom: 1px solid #ccc;">`;
+                        html += `<td style="padding: 8px;">${item.dc_name || 'N/A'}</td>`;
+                        html += `<td style="padding: 8px;">${item.dc_location || 'N/A'}</td>`;
+                        html += `<td style="padding: 8px; text-align: center; text-transform: uppercase; color: #667eea; font-weight: bold;">${tier}</td>`;
+                        html += `<td style="padding: 8px; text-align: center;">${savedDate}</td>`;
+                        html += `<td style="padding: 8px; text-align: center;">
+                            <button onclick="removeFromWatchlist('${item.dc_id}'); return false;"
+                                style="padding: 4px 10px; background: #dc2626; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
+                                Remove
+                            </button>
+                        </td>`;
+                        html += '</tr>';
+                    });
+
+                    html += '</tbody></table></div>';
+                }
+
+                // Render Upcoming DCs table
+                if (upcomingDCs.length > 0) {
+                    html += '<h4 style="margin-top: 20px; font-size: 16px; color: var(--text-primary); border-bottom: 2px solid #d97706; padding-bottom: 8px;">Upcoming Projects (${upcomingDCs.length})</h4>';
+                    html += '<div class="table-wrapper">';
+                    html += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
+                    html += '<thead>';
+                    html += '<tr style="background: #d97706; color: #fff;">';
+                    html += '<th style="padding: 8px; text-align: left;">Project Name</th>';
+                    html += '<th style="padding: 8px; text-align: left;">Location</th>';
+                    html += '<th style="padding: 8px; text-align: center;">Tier at Save</th>';
+                    html += '<th style="padding: 8px; text-align: center;">Date Saved</th>';
+                    html += '<th style="padding: 8px; text-align: center;">Action</th>';
+                    html += '</tr>';
+                    html += '</thead>';
+                    html += '<tbody>';
+
+                    upcomingDCs.forEach((item, idx) => {
+                        const bg = idx % 2 === 0 ? '#fff' : '#f9f9f9';
+                        const savedDate = new Date(item.added_at).toLocaleDateString();
+                        const tier = item.tier_at_save || 'free';
+                        html += `<tr style="background: ${bg}; border-bottom: 1px solid #ccc;">`;
+                        html += `<td style="padding: 8px;">${item.dc_name || 'N/A'}</td>`;
+                        html += `<td style="padding: 8px;">${item.dc_location || 'N/A'}</td>`;
+                        html += `<td style="padding: 8px; text-align: center; text-transform: uppercase; color: #667eea; font-weight: bold;">${tier}</td>`;
+                        html += `<td style="padding: 8px; text-align: center;">${savedDate}</td>`;
+                        html += `<td style="padding: 8px; text-align: center;">
+                            <button onclick="removeFromWatchlist('${item.dc_id}'); return false;"
+                                style="padding: 4px 10px; background: #dc2626; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
+                                Remove
+                            </button>
+                        </td>`;
+                        html += '</tr>';
+                    });
+
+                    html += '</tbody></table></div>';
+                }
 
                 document.getElementById('watchlistContent').innerHTML = html;
 
