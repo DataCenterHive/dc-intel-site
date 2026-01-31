@@ -7026,6 +7026,43 @@
             }
         }
 
+        // ===================================================================
+        // CERTIFICATION HELPER (for exports and data extraction)
+        // ===================================================================
+
+        function hasCertification(item, certKey) {
+            // 1) Direct boolean/flag fields (if they exist)
+            const direct = item?.[certKey];
+            if (direct === true) return true;
+            if (direct === false) return false;
+            if (direct === 1 || direct === "1") return true;
+            if (typeof direct === "string" && ["yes","true","y"].includes(direct.toLowerCase())) return true;
+
+            // 2) Combined string field
+            const certStr = item?.certifications || item?.certifications_raw || item?.certs || "";
+            const s = String(certStr).toLowerCase();
+
+            // 3) Array/list field (if exists)
+            const certArr = item?.certifications_list || item?.certifications_array || item?.certs_list || null;
+            const list = Array.isArray(certArr) ? certArr.map(x => String(x).toLowerCase()) : null;
+
+            // 4) Certification patterns
+            const patterns = {
+                soc2: ["soc2", "soc 2", "soc-2"],
+                hipaa: ["hipaa"],
+                pci_dss: ["pci dss", "pci-dss", "pcidss", "pci"],
+                iso27001: ["iso27001", "iso 27001", "iso-27001"]
+            };
+
+            const needles = patterns[certKey] || [certKey];
+
+            // Check in array first
+            if (list) return needles.some(n => list.includes(n) || list.some(v => v.includes(n)));
+
+            // Otherwise check in string
+            return needles.some(n => s.includes(n));
+        }
+
         // Load Upcoming DCs
         // Simple CSV parser function
         function parseCSV(text) {
@@ -7076,7 +7113,16 @@
             // CSV rows
             const rows = data.map(item => {
                 return columns.map(col => {
-                    let value = item[col] || '';
+                    let value;
+
+                    // Special handling for certification columns
+                    if (["soc2","hipaa","pci_dss","iso27001"].includes(col)) {
+                        const hasCert = hasCertification(item, col);
+                        value = hasCert ? "YES" : "NO";
+                    } else {
+                        value = item[col] || '';
+                    }
+
                     // Escape quotes and wrap in quotes if contains comma, quote, or newline
                     if (typeof value === 'string') {
                         value = value.replace(/"/g, '""');
@@ -7177,7 +7223,13 @@
             const filteredData = window.existingDCsData.map(item => {
                 const filtered = {};
                 columns.forEach(col => {
-                    filtered[col] = item[col] || '';
+                    // Special handling for certification columns
+                    if (["soc2","hipaa","pci_dss","iso27001"].includes(col)) {
+                        const hasCert = hasCertification(item, col);
+                        filtered[col] = hasCert ? "YES" : "NO";
+                    } else {
+                        filtered[col] = item[col] || '';
+                    }
                 });
                 return filtered;
             });
@@ -7225,7 +7277,13 @@
             const filteredData = window.upcomingDCsData.map(item => {
                 const filtered = {};
                 columns.forEach(col => {
-                    filtered[col] = item[col] || '';
+                    // Special handling for certification columns (if they exist in upcoming data)
+                    if (["soc2","hipaa","pci_dss","iso27001"].includes(col)) {
+                        const hasCert = hasCertification(item, col);
+                        filtered[col] = hasCert ? "YES" : "NO";
+                    } else {
+                        filtered[col] = item[col] || '';
+                    }
                 });
                 return filtered;
             });
