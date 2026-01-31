@@ -4456,41 +4456,71 @@
                     html += `<h4 style="margin-top: 20px; font-size: 16px; color: var(--text-primary); border-bottom: 2px solid var(--brand-primary); padding-bottom: 8px;">Operational Data Centers (${existingDCs.length})</h4>`;
                     html += '<div class="table-wrapper">';
                     html += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 30px;">';
-                    html += '<thead>';
-                    html += '<tr style="background: var(--brand-primary); color: #fff;">';
-                    html += '<th style="padding: 8px; text-align: left;">Name</th>';
-                    html += '<th style="padding: 8px; text-align: left;">Location</th>';
-                    html += '<th style="padding: 8px; text-align: center;">Tier at Save</th>';
+
+                    // Get columns from first item's row_snapshot (or rehydrate from dcItemsMap)
+                    const firstItem = existingDCs[0];
+                    let snapshotColumns = [];
+
+                    if (firstItem.row_snapshot && Object.keys(firstItem.row_snapshot).length > 0) {
+                        // Use row_snapshot columns from backend
+                        snapshotColumns = Object.keys(firstItem.row_snapshot);
+                    } else {
+                        // Fallback: rehydrate from window.dcItemsMap using current user tier
+                        const fullItem = window.dcItemsMap && window.dcItemsMap[firstItem.dc_id];
+                        if (fullItem) {
+                            const tier = userTier || 'free';
+                            snapshotColumns = getExportColumns(tier.toLowerCase(), 'existing');
+                        } else {
+                            // Ultimate fallback: show basic columns
+                            snapshotColumns = ['provider', 'name'];
+                        }
+                    }
+
+                    // Build table headers
+                    html += '<thead><tr style="background: var(--brand-primary); color: #fff;">';
+                    snapshotColumns.forEach(col => {
+                        const displayName = col.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                        html += `<th style="padding: 8px; text-align: left;">${displayName}</th>`;
+                    });
                     html += '<th style="padding: 8px; text-align: center;">Date Saved</th>';
                     html += '<th style="padding: 8px; text-align: center;">Action</th>';
-                    html += '</tr>';
-                    html += '</thead>';
-                    html += '<tbody>';
+                    html += '</tr></thead><tbody>';
 
+                    // Build table rows
                     existingDCs.forEach((item, idx) => {
                         const bg = idx % 2 === 0 ? '#fff' : '#f9f9f9';
                         const savedDate = new Date(item.added_at).toLocaleDateString();
 
-                        // Try to rehydrate from loaded data (window.dcItemsMap)
-                        let displayName = item.dc_name || 'N/A';
-                        let displayLocation = item.dc_location || 'N/A';
-                        const fullItem = window.dcItemsMap && window.dcItemsMap[item.dc_id];
-
-                        if (fullItem) {
-                            // Rehydrate from loaded data
-                            const provider = fullItem.provider || 'Unknown';
-                            const title = fullItem.name || 'N/A';
-                            displayName = `${provider} - ${title}`;
-                            displayLocation = fullItem.address_line_raw || fullItem.city || 'N/A';
-                        }
-
-                        // Show LEGACY if tier_at_save missing (backend doesn't store it yet)
-                        const tier = item.tier_at_save ? String(item.tier_at_save).toUpperCase() : 'LEGACY';
-
                         html += `<tr style="background: ${bg}; border-bottom: 1px solid #ccc;">`;
-                        html += `<td style="padding: 8px;">${displayName}</td>`;
-                        html += `<td style="padding: 8px;">${displayLocation}</td>`;
-                        html += `<td style="padding: 8px; text-align: center; text-transform: uppercase; color: #667eea; font-weight: bold;">${tier}</td>`;
+
+                        // Render snapshot columns
+                        snapshotColumns.forEach(col => {
+                            let value = 'N/A';
+
+                            // Try row_snapshot first
+                            if (item.row_snapshot && item.row_snapshot[col] !== undefined && item.row_snapshot[col] !== null) {
+                                value = item.row_snapshot[col];
+                            } else {
+                                // Fallback: rehydrate from window.dcItemsMap
+                                const fullItem = window.dcItemsMap && window.dcItemsMap[item.dc_id];
+                                if (fullItem && fullItem[col] !== undefined && fullItem[col] !== null) {
+                                    value = fullItem[col];
+                                }
+                            }
+
+                            // Format special columns
+                            if (col === 'total_sqft' && value !== 'N/A') {
+                                value = `${parseInt(value).toLocaleString()} sf`;
+                            } else if ((col === 'latitude' || col === 'longitude') && value !== 'N/A') {
+                                value = parseFloat(value).toFixed(4);
+                            } else if (col === 'power_capacity_mw' && value !== 'N/A') {
+                                value = `${value} MW`;
+                            }
+
+                            html += `<td style="padding: 8px;">${value}</td>`;
+                        });
+
+                        // Date Saved and Action columns
                         html += `<td style="padding: 8px; text-align: center;">${savedDate}</td>`;
                         html += `<td style="padding: 8px; text-align: center;">
                             <button onclick="removeFromWatchlist('${item.dc_id}'); return false;"
@@ -4509,41 +4539,71 @@
                     html += `<h4 style="margin-top: 20px; font-size: 16px; color: var(--text-primary); border-bottom: 2px solid #d97706; padding-bottom: 8px;">Upcoming Projects (${upcomingDCs.length})</h4>`;
                     html += '<div class="table-wrapper">';
                     html += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
-                    html += '<thead>';
-                    html += '<tr style="background: #d97706; color: #fff;">';
-                    html += '<th style="padding: 8px; text-align: left;">Project Name</th>';
-                    html += '<th style="padding: 8px; text-align: left;">Location</th>';
-                    html += '<th style="padding: 8px; text-align: center;">Tier at Save</th>';
+
+                    // Get columns from first item's row_snapshot (or rehydrate from dcItemsMap)
+                    const firstUpcoming = upcomingDCs[0];
+                    let upcomingColumns = [];
+
+                    if (firstUpcoming.row_snapshot && Object.keys(firstUpcoming.row_snapshot).length > 0) {
+                        // Use row_snapshot columns from backend
+                        upcomingColumns = Object.keys(firstUpcoming.row_snapshot);
+                    } else {
+                        // Fallback: rehydrate from window.dcItemsMap using current user tier
+                        const fullItem = window.dcItemsMap && window.dcItemsMap[firstUpcoming.dc_id];
+                        if (fullItem) {
+                            const tier = userTier || 'free';
+                            upcomingColumns = getExportColumns(tier.toLowerCase(), 'upcoming');
+                        } else {
+                            // Ultimate fallback: show basic columns
+                            upcomingColumns = ['city', 'state', 'address_raw'];
+                        }
+                    }
+
+                    // Build table headers
+                    html += '<thead><tr style="background: #d97706; color: #fff;">';
+                    upcomingColumns.forEach(col => {
+                        const displayName = col.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                        html += `<th style="padding: 8px; text-align: left;">${displayName}</th>`;
+                    });
                     html += '<th style="padding: 8px; text-align: center;">Date Saved</th>';
                     html += '<th style="padding: 8px; text-align: center;">Action</th>';
-                    html += '</tr>';
-                    html += '</thead>';
-                    html += '<tbody>';
+                    html += '</tr></thead><tbody>';
 
+                    // Build table rows
                     upcomingDCs.forEach((item, idx) => {
                         const bg = idx % 2 === 0 ? '#fff' : '#f9f9f9';
                         const savedDate = new Date(item.added_at).toLocaleDateString();
 
-                        // Try to rehydrate from loaded data
-                        let displayName = item.dc_name || 'N/A';
-                        let displayLocation = item.dc_location || 'N/A';
-                        const fullItem = window.dcItemsMap && window.dcItemsMap[item.dc_id];
-
-                        if (fullItem) {
-                            // Rehydrate from loaded data
-                            const city = fullItem.city || 'TBD';
-                            const state = fullItem.state || 'TBD';
-                            displayName = `${city}, ${state} Project`;
-                            displayLocation = fullItem.address_raw || `${city}, ${state}`;
-                        }
-
-                        // Show LEGACY if tier_at_save missing
-                        const tier = item.tier_at_save ? String(item.tier_at_save).toUpperCase() : 'LEGACY';
-
                         html += `<tr style="background: ${bg}; border-bottom: 1px solid #ccc;">`;
-                        html += `<td style="padding: 8px;">${displayName}</td>`;
-                        html += `<td style="padding: 8px;">${displayLocation}</td>`;
-                        html += `<td style="padding: 8px; text-align: center; text-transform: uppercase; color: #667eea; font-weight: bold;">${tier}</td>`;
+
+                        // Render snapshot columns
+                        upcomingColumns.forEach(col => {
+                            let value = 'N/A';
+
+                            // Try row_snapshot first
+                            if (item.row_snapshot && item.row_snapshot[col] !== undefined && item.row_snapshot[col] !== null) {
+                                value = item.row_snapshot[col];
+                            } else {
+                                // Fallback: rehydrate from window.dcItemsMap
+                                const fullItem = window.dcItemsMap && window.dcItemsMap[item.dc_id];
+                                if (fullItem && fullItem[col] !== undefined && fullItem[col] !== null) {
+                                    value = fullItem[col];
+                                }
+                            }
+
+                            // Format special columns
+                            if ((col === 'latitude' || col === 'longitude') && value !== 'N/A') {
+                                value = parseFloat(value).toFixed(4);
+                            } else if (col === 'latest_valuation_usd' && value !== 'N/A') {
+                                value = `$${parseInt(value).toLocaleString()}`;
+                            } else if (col === 'permits_count' && value !== 'N/A') {
+                                value = `${value} permits`;
+                            }
+
+                            html += `<td style="padding: 8px;">${value}</td>`;
+                        });
+
+                        // Date Saved and Action columns
                         html += `<td style="padding: 8px; text-align: center;">${savedDate}</td>`;
                         html += `<td style="padding: 8px; text-align: center;">
                             <button onclick="removeFromWatchlist('${item.dc_id}'); return false;"
