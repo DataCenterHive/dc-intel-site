@@ -4425,9 +4425,26 @@
                     return;
                 }
 
-                // Separate items by data_type
-                const existingDCs = watchlist.filter(item => item.data_type === 'existing');
-                const upcomingDCs = watchlist.filter(item => item.data_type === 'upcoming');
+                // Helper to infer type when data_type is missing (backward compatibility)
+                function inferWatchlistType(item) {
+                    const t = (item.data_type || '').toLowerCase();
+                    if (t === 'existing' || t === 'upcoming') return t;
+
+                    // Infer from dc_id pattern if data_type missing
+                    const id = String(item.dc_id || '');
+                    if (id.startsWith('upcoming-')) return 'upcoming';
+                    return 'existing';
+                }
+
+                // Separate items by data_type (with fallback inference)
+                let existingDCs = watchlist.filter(item => inferWatchlistType(item) === 'existing');
+                let upcomingDCs = watchlist.filter(item => inferWatchlistType(item) === 'upcoming');
+
+                // Safety fallback: if both empty but watchlist has items, treat all as existing
+                if (watchlist.length > 0 && existingDCs.length === 0 && upcomingDCs.length === 0) {
+                    console.warn('Watchlist items have no data_type and could not be inferred - displaying all as existing');
+                    existingDCs = [...watchlist];
+                }
 
                 let html = `<h3 class="h3-centered">My Saved Data Centers (${watchlist.length})</h3>`;
 
