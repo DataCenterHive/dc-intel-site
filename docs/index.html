@@ -4285,42 +4285,29 @@
         }
 
         // Helper function to build tier-filtered row snapshot
+        // Uses getExportColumns as single source of truth to ensure Save/Export/UI consistency
         function buildTierSnapshot(item, tier, dataType) {
-            const EXISTING_DCS_COLUMNS = {
-                "free": ["provider", "name"],
-                "basic": ["total_sqft", "latitude", "longitude"],
-                "premium": ["contact", "contact_email", "contact_phone", "power_capacity_mw"],
-                "enterprise": ["street_full_guess", "address_line_raw", "city", "state", "zip", "country"]
-            };
+            // Normalize tier to lowercase and validate
+            const normalizedTier = String(tier || 'free').toLowerCase();
+            const allowedTiers = new Set(["free", "basic", "premium", "enterprise"]);
+            const safeTier = allowedTiers.has(normalizedTier) ? normalizedTier : "free";
 
-            const UPCOMING_DCS_COLUMNS = {
-                "free": ["city", "state", "address_raw", "latest_status", "first_seen_applied_date", "source", "latitude", "longitude"],
-                "basic": [],
-                "premium": ["latest_description"],
-                "enterprise": ["latest_valuation_usd", "record_ids_sample", "statuses_sample", "latest_contractor", "latest_owner", "latest_permit_type", "permits_count"]
-            };
+            // Get columns from the same function used for exports
+            const columns = getExportColumns(safeTier, dataType);
 
-            const TIER_HIERARCHY = ["free", "basic", "premium", "enterprise"];
-            const columnMap = dataType === 'existing' ? EXISTING_DCS_COLUMNS : UPCOMING_DCS_COLUMNS;
-            const tierIndex = TIER_HIERARCHY.indexOf(tier);
-
+            // Build snapshot with only the allowed columns
             const snapshot = {};
-            for (let i = 0; i <= tierIndex; i++) {
-                const tierName = TIER_HIERARCHY[i];
-                if (columnMap[tierName]) {
-                    columnMap[tierName].forEach(col => {
-                        if (item[col] !== undefined && item[col] !== null) {
-                            snapshot[col] = item[col];
-                        }
-                    });
+            columns.forEach(col => {
+                if (item[col] !== undefined && item[col] !== null) {
+                    snapshot[col] = item[col];
                 }
-            }
+            });
 
             return snapshot;
         }
 
         // Watchlist functions
-        async function toggleWatchlist(item, dataType) {
+        async function toggleWatchlist(dcId, item, dataType) {
             try {
                 const token = localStorage.getItem('dc_intel_token');
                 if (!token) {
@@ -4328,13 +4315,11 @@
                     return;
                 }
 
-                // Generate dcId from item
-                const provider = item.provider || 'Unknown';
-                const title = item.name || item.city || 'N/A';
-                const dcId = `${provider}-${title}`.replace(/[^a-zA-Z0-9-]/g, '_');
-
                 const button = document.getElementById(`save-btn-${dcId}`);
-                if (!button) return;
+                if (!button) {
+                    console.error(`Save button not found for dcId: ${dcId}`);
+                    return;
+                }
 
                 // Check if already in watchlist
                 const isSaved = button.textContent.includes('Saved');
@@ -4352,9 +4337,14 @@
                         console.log(`Removed ${dcId} from watchlist`);
                     }
                 } else {
-                    // Build tier-filtered snapshot
-                    const tier = userTier || 'free';
-                    const rowSnapshot = buildTierSnapshot(item, tier, dataType);
+                    // Get current tier and build tier-filtered snapshot
+                    const rawTier = userTier || 'free';
+                    const rowSnapshot = buildTierSnapshot(item, rawTier, dataType);
+
+                    // Normalize tier for saving (buildTierSnapshot already normalizes it internally)
+                    const normalizedTier = String(rawTier).toLowerCase();
+                    const allowedTiers = new Set(["free", "basic", "premium", "enterprise"]);
+                    const safeTier = allowedTiers.has(normalizedTier) ? normalizedTier : "free";
 
                     // Add to watchlist with tier-filtered snapshot
                     const response = await fetch(`${PUBLIC_API_BASE}/api/watchlist/add`, {
@@ -4366,7 +4356,7 @@
                         body: JSON.stringify({
                             dc_id: dcId,
                             data_type: dataType,
-                            tier_at_save: tier,
+                            tier_at_save: safeTier,
                             row_snapshot: rowSnapshot,
                             saved_at: new Date().toISOString()
                         })
@@ -4376,7 +4366,7 @@
                     if (result.ok) {
                         button.textContent = '✓ Saved';
                         button.classList.remove('btn-info'); button.classList.add('btn-success');
-                        console.log(`Added ${dcId} to watchlist`);
+                        console.log(`Added ${dcId} to watchlist with tier: ${safeTier}`);
                     } else if (!result.ok && result.message && result.message.includes('Already')) {
                         button.textContent = '✓ Saved';
                         button.classList.remove('btn-info'); button.classList.add('btn-success');
@@ -6715,7 +6705,7 @@
                     // Save button for logged-in users
                     if (isLoggedIn()) {
                         html += `<td style="padding: 8px; text-align: center;">
-                            <button id="save-btn-${dcId}" onclick="toggleWatchlist(window.dcItemsMap['${dcId}'], 'existing'); return false;"
+                            <button id="save-btn-${dcId}" onclick="toggleWatchlist('${dcId}', window.dcItemsMap['${dcId}'], 'existing'); return false;"
                                 style="padding: 4px 10px; background: #0284c7; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
                                 ★ Save
                             </button>
@@ -7275,7 +7265,7 @@
                         window.dcItemsMap[projectId] = project;
 
                         tableHTML += `<td style="padding: 8px; text-align: center;">
-                            <button id="save-btn-${projectId}" onclick="toggleWatchlist(window.dcItemsMap['${projectId}'], 'upcoming'); return false;"
+                            <button id="save-btn-${projectId}" onclick="toggleWatchlist('${projectId}', window.dcItemsMap['${projectId}'], 'upcoming'); return false;"
                                 style="padding: 4px 10px; background: #0284c7; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
                                 ★ Save
                             </button>
