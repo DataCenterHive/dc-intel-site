@@ -4450,7 +4450,7 @@
 
                 // Render Existing DCs table
                 if (existingDCs.length > 0) {
-                    html += '<h4 style="margin-top: 20px; font-size: 16px; color: var(--text-primary); border-bottom: 2px solid var(--brand-primary); padding-bottom: 8px;">Operational Data Centers (${existingDCs.length})</h4>';
+                    html += `<h4 style="margin-top: 20px; font-size: 16px; color: var(--text-primary); border-bottom: 2px solid var(--brand-primary); padding-bottom: 8px;">Operational Data Centers (${existingDCs.length})</h4>`;
                     html += '<div class="table-wrapper">';
                     html += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 30px;">';
                     html += '<thead>';
@@ -4467,10 +4467,26 @@
                     existingDCs.forEach((item, idx) => {
                         const bg = idx % 2 === 0 ? '#fff' : '#f9f9f9';
                         const savedDate = new Date(item.added_at).toLocaleDateString();
-                        const tier = item.tier_at_save || 'free';
+
+                        // Try to rehydrate from loaded data (window.dcItemsMap)
+                        let displayName = item.dc_name || 'N/A';
+                        let displayLocation = item.dc_location || 'N/A';
+                        const fullItem = window.dcItemsMap && window.dcItemsMap[item.dc_id];
+
+                        if (fullItem) {
+                            // Rehydrate from loaded data
+                            const provider = fullItem.provider || 'Unknown';
+                            const title = fullItem.name || 'N/A';
+                            displayName = `${provider} - ${title}`;
+                            displayLocation = fullItem.address_line_raw || fullItem.city || 'N/A';
+                        }
+
+                        // Show LEGACY if tier_at_save missing (backend doesn't store it yet)
+                        const tier = item.tier_at_save ? String(item.tier_at_save).toUpperCase() : 'LEGACY';
+
                         html += `<tr style="background: ${bg}; border-bottom: 1px solid #ccc;">`;
-                        html += `<td style="padding: 8px;">${item.dc_name || 'N/A'}</td>`;
-                        html += `<td style="padding: 8px;">${item.dc_location || 'N/A'}</td>`;
+                        html += `<td style="padding: 8px;">${displayName}</td>`;
+                        html += `<td style="padding: 8px;">${displayLocation}</td>`;
                         html += `<td style="padding: 8px; text-align: center; text-transform: uppercase; color: #667eea; font-weight: bold;">${tier}</td>`;
                         html += `<td style="padding: 8px; text-align: center;">${savedDate}</td>`;
                         html += `<td style="padding: 8px; text-align: center;">
@@ -4487,7 +4503,7 @@
 
                 // Render Upcoming DCs table
                 if (upcomingDCs.length > 0) {
-                    html += '<h4 style="margin-top: 20px; font-size: 16px; color: var(--text-primary); border-bottom: 2px solid #d97706; padding-bottom: 8px;">Upcoming Projects (${upcomingDCs.length})</h4>';
+                    html += `<h4 style="margin-top: 20px; font-size: 16px; color: var(--text-primary); border-bottom: 2px solid #d97706; padding-bottom: 8px;">Upcoming Projects (${upcomingDCs.length})</h4>`;
                     html += '<div class="table-wrapper">';
                     html += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
                     html += '<thead>';
@@ -4504,10 +4520,26 @@
                     upcomingDCs.forEach((item, idx) => {
                         const bg = idx % 2 === 0 ? '#fff' : '#f9f9f9';
                         const savedDate = new Date(item.added_at).toLocaleDateString();
-                        const tier = item.tier_at_save || 'free';
+
+                        // Try to rehydrate from loaded data
+                        let displayName = item.dc_name || 'N/A';
+                        let displayLocation = item.dc_location || 'N/A';
+                        const fullItem = window.dcItemsMap && window.dcItemsMap[item.dc_id];
+
+                        if (fullItem) {
+                            // Rehydrate from loaded data
+                            const city = fullItem.city || 'TBD';
+                            const state = fullItem.state || 'TBD';
+                            displayName = `${city}, ${state} Project`;
+                            displayLocation = fullItem.address_raw || `${city}, ${state}`;
+                        }
+
+                        // Show LEGACY if tier_at_save missing
+                        const tier = item.tier_at_save ? String(item.tier_at_save).toUpperCase() : 'LEGACY';
+
                         html += `<tr style="background: ${bg}; border-bottom: 1px solid #ccc;">`;
-                        html += `<td style="padding: 8px;">${item.dc_name || 'N/A'}</td>`;
-                        html += `<td style="padding: 8px;">${item.dc_location || 'N/A'}</td>`;
+                        html += `<td style="padding: 8px;">${displayName}</td>`;
+                        html += `<td style="padding: 8px;">${displayLocation}</td>`;
                         html += `<td style="padding: 8px; text-align: center; text-transform: uppercase; color: #667eea; font-weight: bold;">${tier}</td>`;
                         html += `<td style="padding: 8px; text-align: center;">${savedDate}</td>`;
                         html += `<td style="padding: 8px; text-align: center;">
