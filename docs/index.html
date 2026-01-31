@@ -2467,9 +2467,22 @@
                 </div>
             </div>
 
-            <div class="classifieds" id="classifiedsSection">
-                <h3>Professional Services Directory</h3>
-                <div class="classifieds-grid" id="classifiedsGrid"></div>
+            <!-- Professional Services Section (Static) -->
+            <div class="classifieds" id="professionalServicesSection" style="margin-bottom: 40px;">
+                <h3 style="border-bottom: 3px solid var(--brand-primary); padding-bottom: 10px; margin-bottom: 20px;">Professional Services</h3>
+                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px; font-style: italic;">
+                    Expert advisory services for data center site selection, due diligence, and market intelligence
+                </p>
+                <div class="classifieds-grid" id="servicesGrid"></div>
+            </div>
+
+            <!-- Market Intelligence & Updates Section (Dynamic) -->
+            <div class="classifieds" id="marketIntelSection" style="margin-bottom: 30px; background: linear-gradient(to bottom, #f8f9fa, #ffffff); padding: 25px; border-radius: 8px; border: 2px solid #e2e8f0;">
+                <h3 style="border-bottom: 3px solid #d97706; padding-bottom: 10px; margin-bottom: 20px;">Market Intelligence & Platform Updates</h3>
+                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px; font-style: italic;">
+                    Latest market insights and platform feature announcements (updates daily)
+                </p>
+                <div class="classifieds-grid" id="marketIntelGrid"></div>
             </div>
         </div>
 
@@ -2507,10 +2520,21 @@
                 <div class="knowledge-grid" id="knowledgeGrid"></div>
             </div>
 
-            <!-- Handbook View -->
+            <!-- Handbook View with ToC Sidebar -->
             <div id="handbookView" class="knowledge-view" style="display: none;">
-                <div id="handbookContent" style="background: var(--bg-primary); border: 3px double var(--divider-strong); padding: 30px; max-width: 900px; margin: 0 auto; line-height: 1.8; font-size: 14px; box-shadow: 3px 3px 8px rgba(0,0,0,0.3);">
-                    <p style="text-align: center; font-style: italic;">Loading handbook...</p>
+                <div style="display: flex; gap: 30px; max-width: 1400px; margin: 0 auto;">
+                    <!-- Table of Contents Sidebar -->
+                    <div id="handbookToC" style="flex: 0 0 280px; position: sticky; top: 20px; align-self: flex-start; background: var(--bg-secondary); border: 2px solid var(--border-emphasis); padding: 20px; border-radius: 6px; max-height: calc(100vh - 100px); overflow-y: auto;">
+                        <h4 style="margin: 0 0 15px 0; font-size: 14px; font-weight: bold; border-bottom: 2px solid var(--brand-primary); padding-bottom: 8px;">TABLE OF CONTENTS</h4>
+                        <div id="tocLinks" style="font-size: 12px;">
+                            <p style="text-align: center; font-style: italic; color: var(--text-secondary);">Loading...</p>
+                        </div>
+                    </div>
+
+                    <!-- Handbook Content -->
+                    <div id="handbookContent" style="flex: 1; background: var(--bg-primary); border: 3px double var(--divider-strong); padding: 30px; line-height: 1.8; font-size: 14px; box-shadow: 3px 3px 8px rgba(0,0,0,0.3);">
+                        <p style="text-align: center; font-style: italic;">Loading handbook...</p>
+                    </div>
                 </div>
             </div>
 
@@ -5701,11 +5725,11 @@
             }
         }
 
-        // Populate Professional Services Directory
+        // Populate Professional Services and Market Intelligence sections
         function populateClassifieds() {
             const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
 
-            // SERVICES (rotating 2 per day)
+            // SERVICES (all 4 services shown - static, no rotation)
             const services = [
                 {
                     type: "service",
@@ -5867,54 +5891,46 @@
                 }
             ];
 
-            // Daily rotation logic: 2 services + 1 insight + 1 update
-            const displayedContent = [];
-
-            // Pick 2 services (rotate through 4)
-            const serviceStart = (dayOfYear * 2) % services.length;
-            displayedContent.push(services[serviceStart % services.length]);
-            displayedContent.push(services[(serviceStart + 1) % services.length]);
-
-            // Pick 1 market insight (rotate through 6)
-            const insightIndex = dayOfYear % marketInsights.length;
-            displayedContent.push(marketInsights[insightIndex]);
-
-            // Pick 1 feature update (rotate through 6)
-            const updateIndex = dayOfYear % featureUpdates.length;
-            displayedContent.push(featureUpdates[updateIndex]);
-
-            // Generate HTML for all 4 boxes
-            const servicesHTML = displayedContent.map((item, index) => {
-                let clickHandler = '';
-                let subtitle = '';
-                let boxStyle = '';
-
-                if (item.type === 'service') {
-                    // Service boxes - navigate to services section
-                    clickHandler = `onclick="switchSection('services'); return false;"`;
-                    subtitle = '<div style="font-size: 10px; color: #0066cc; margin-top: 5px;">Click to learn more</div>';
-                } else if (item.type === 'insight') {
-                    // Market insight boxes - different styling (non-clickable for now)
-                    clickHandler = '';
-                    subtitle = '<div style="font-size: 10px; color: #d97706; margin-top: 5px; font-weight: bold;">Market Intelligence</div>';
-                    boxStyle = 'border-left: 4px solid #d97706; cursor: default;';
-                } else if (item.type === 'update') {
-                    // Feature update boxes - different styling (non-clickable for now)
-                    clickHandler = '';
-                    subtitle = '<div style="font-size: 10px; color: #059669; margin-top: 5px; font-weight: bold;">Platform Update</div>';
-                    boxStyle = 'border-left: 4px solid #059669; cursor: default;';
-                }
-
+            // ========================================
+            // SECTION 1: PROFESSIONAL SERVICES (Static - shows all 4)
+            // ========================================
+            const servicesHTML = services.map((item, index) => {
                 return `
-                    <div class="classified-item" ${clickHandler} style="${boxStyle}">
+                    <div class="classified-item" onclick="switchSection('services'); return false;" style="cursor: pointer; border-left: 4px solid var(--brand-primary);">
                         <div class="classified-title">${item.title}</div>
                         <div>${item.desc}</div>
-                        ${subtitle}
+                        <div style="font-size: 10px; color: #0066cc; margin-top: 5px; font-weight: 600;">→ Click to learn more</div>
                     </div>
                 `;
             }).join('');
 
-            document.getElementById('classifiedsGrid').innerHTML = servicesHTML;
+            // ========================================
+            // SECTION 2: MARKET INTELLIGENCE & UPDATES (Dynamic - rotates daily)
+            // ========================================
+            // Pick 1 market insight (rotate through 15)
+            const insightIndex = dayOfYear % marketInsights.length;
+            const selectedInsight = marketInsights[insightIndex];
+
+            // Pick 1 feature update (rotate through 6)
+            const updateIndex = dayOfYear % featureUpdates.length;
+            const selectedUpdate = featureUpdates[updateIndex];
+
+            const marketIntelHTML = `
+                <div class="classified-item" style="border-left: 4px solid #d97706; cursor: default;">
+                    <div class="classified-title">${selectedInsight.title}</div>
+                    <div>${selectedInsight.desc}</div>
+                    <div style="font-size: 10px; color: #d97706; margin-top: 5px; font-weight: bold;">📊 Market Intelligence</div>
+                </div>
+                <div class="classified-item" style="border-left: 4px solid #059669; cursor: default;">
+                    <div class="classified-title">${selectedUpdate.title}</div>
+                    <div>${selectedUpdate.desc}</div>
+                    <div style="font-size: 10px; color: #059669; margin-top: 5px; font-weight: bold;">🚀 Platform Update</div>
+                </div>
+            `;
+
+            // Populate both grids
+            document.getElementById('servicesGrid').innerHTML = servicesHTML;
+            document.getElementById('marketIntelGrid').innerHTML = marketIntelHTML;
         }
 
         // Modal control functions
@@ -6656,16 +6672,59 @@
             }
         }
 
-        // Load handbook from local markdown file
+        // Load handbook from local markdown file with ToC
         async function loadHandbook() {
             try {
                 const response = await fetch('knowledge/dc_handbook.md');
                 const markdown = await response.text();
 
-                // Convert markdown to HTML-like display
-                let content = markdown
+                // Extract sections for ToC (## level headings)
+                const sections = [];
+                const sectionRegex = /^## (.+)$/gm;
+                let match;
+                while ((match = sectionRegex.exec(markdown)) !== null) {
+                    sections.push({
+                        title: match[1].trim(),
+                        id: 'section-' + match[1].replace(/[^a-z0-9]/gi, '-').toLowerCase(),
+                        tier: 'free'  // All sections are free for now; update later for premium content
+                    });
+                }
+
+                // Build Table of Contents
+                const userTier = getUserTier();
+                let tocHTML = '<div style="line-height: 2;">';
+                sections.forEach((section, idx) => {
+                    const isLocked = !hasTierAccess(section.tier);
+                    const lockIcon = isLocked ? '🔒 ' : '';
+                    const style = isLocked
+                        ? 'color: #999; cursor: not-allowed; opacity: 0.6;'
+                        : 'color: var(--text-primary); cursor: pointer; text-decoration: none;';
+
+                    if (isLocked) {
+                        tocHTML += `<div style="${style}" title="Upgrade to ${section.tier.toUpperCase()} tier to access this section">
+                            ${lockIcon}${idx + 1}. ${section.title}
+                        </div>`;
+                    } else {
+                        tocHTML += `<a href="#${section.id}" style="${style}" onclick="scrollToSection('${section.id}'); return false;" class="toc-link" data-section="${section.id}">
+                            ${idx + 1}. ${section.title}
+                        </a><br>`;
+                    }
+                });
+                tocHTML += '</div>';
+                document.getElementById('tocLinks').innerHTML = tocHTML;
+
+                // Convert markdown to HTML with section IDs
+                let content = markdown;
+
+                // Add IDs to ## headings for navigation
+                content = content.replace(/^## (.+)$/gm, (match, heading) => {
+                    const id = 'section-' + heading.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+                    return `<h3 class="section-subheader handbook-section" id="${id}" style="scroll-margin-top: 80px;">${heading}</h3>`;
+                });
+
+                // Convert other markdown elements
+                content = content
                     .replace(/^# (.+)$/gm, '<h2 class="section-header">$1</h2>')
-                    .replace(/^## (.+)$/gm, '<h3 class="section-subheader">$1</h3>')
                     .replace(/^### (.+)$/gm, '<h4 style="font-size: 16px; margin: 15px 0 8px 0; font-weight: bold;">$1</h4>')
                     .replace(/^\*\*(.+?)\*\*/gm, '<strong>$1</strong>')
                     .replace(/^- (.+)$/gm, '<li style="margin: 5px 0;">$1</li>')
@@ -6673,10 +6732,52 @@
                     .replace(/\n/g, '<br>');
 
                 document.getElementById('handbookContent').innerHTML = content;
+
+                // Add scroll-spy to highlight current section
+                window.addEventListener('scroll', updateActiveToC);
                 window.handbookLoaded = true;
             } catch (error) {
                 console.error('Error loading handbook:', error);
                 document.getElementById('handbookContent').innerHTML = '<p style="text-align: center; color: #c00;">Failed to load handbook content.</p>';
+            }
+        }
+
+        // Scroll to specific section
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // Update active ToC link
+                document.querySelectorAll('.toc-link').forEach(link => link.style.fontWeight = 'normal');
+                const activeLink = document.querySelector(`.toc-link[data-section="${sectionId}"]`);
+                if (activeLink) activeLink.style.fontWeight = 'bold';
+            }
+        }
+
+        // Scroll-spy: highlight ToC link for current section
+        function updateActiveToC() {
+            if (!document.getElementById('handbookView') || document.getElementById('handbookView').style.display === 'none') return;
+
+            const sections = document.querySelectorAll('.handbook-section');
+            let currentSection = null;
+
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 120 && rect.bottom >= 0) {
+                    currentSection = section.id;
+                }
+            });
+
+            if (currentSection) {
+                document.querySelectorAll('.toc-link').forEach(link => {
+                    if (link.dataset.section === currentSection) {
+                        link.style.fontWeight = 'bold';
+                        link.style.color = 'var(--brand-primary)';
+                    } else {
+                        link.style.fontWeight = 'normal';
+                        link.style.color = 'var(--text-primary)';
+                    }
+                });
             }
         }
 
