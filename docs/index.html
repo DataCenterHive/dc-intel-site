@@ -3745,8 +3745,8 @@
         // TIER ACCESS CONTROL
         // ===================================================================
 
-        // Tier ordering for access checks
-        const TIER_ORDER = { free: 0, basic: 1, premium: 2, enterprise: 3 };
+        // Tier ordering for access checks (object for O(1) lookup)
+        const TIER_HIERARCHY_MAP = { free: 0, basic: 1, premium: 2, enterprise: 3 };
 
         function getCurrentTier() {
             // Prefer CURRENT_USER if loaded from /api/auth/me
@@ -3757,8 +3757,8 @@
         }
 
         function hasTierAccess(requiredTier) {
-            const current = TIER_ORDER[getCurrentTier()] ?? 0;
-            const required = TIER_ORDER[String(requiredTier).toLowerCase()] ?? 999;
+            const current = TIER_HIERARCHY_MAP[getCurrentTier()] ?? 0;
+            const required = TIER_HIERARCHY_MAP[String(requiredTier).toLowerCase()] ?? 999;
             return current >= required;
         }
 
