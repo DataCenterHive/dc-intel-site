@@ -4297,7 +4297,7 @@
             free: ["provider", "name", "soc2", "hipaa", "pci_dss", "iso27001"],
             basic: ["total_sqft", "latitude", "longitude"],
             premium: ["contact", "power_capacity_mw"],
-            enterprise: ["street_full_guess", "city", "state", "zip"]
+            enterprise: ["address_line_raw", "city", "state", "zip"]
         };
 
         const UPCOMING_COLS_BY_TIER = {
@@ -4305,6 +4305,25 @@
             basic: [],
             premium: ["latest_description"],
             enterprise: ["latest_valuation_usd", "latest_contractor", "latest_owner", "latest_permit_type", "permits_count"]
+        };
+
+        // Display name overrides for column headers
+        const COLUMN_LABELS = {
+            address_line_raw: "Full Address",
+            power_capacity_mw: "Power (MW)",
+            total_sqft: "Sq Ft",
+            pci_dss: "PCI-DSS",
+            iso27001: "ISO27001",
+            soc2: "SOC2",
+            hipaa: "HIPAA",
+            first_seen_applied_date: "First Seen",
+            latest_description: "Description",
+            latest_valuation_usd: "Valuation (USD)",
+            latest_contractor: "Contractor",
+            latest_owner: "Owner",
+            latest_permit_type: "Permit Type",
+            permits_count: "Permits",
+            latest_status: "Status"
         };
 
         function normalizeTier(t) {
@@ -4448,9 +4467,42 @@
             return columns;
         }
 
+        // Helper: Check if a value represents a truthy certification
+        function isTruthyCert(v) {
+            if (v === true) return true;
+            if (v === 1) return true;
+            const s = String(v || "").trim().toLowerCase();
+            return ["1", "true", "yes", "y", "✓", "✔", "check", "checked"].includes(s);
+        }
+
         // Helper: Get cell value with fallback chain
         function getCellValue(item, col) {
-            // 1) row_snapshot
+            // Special handling for individual certification columns
+            const certMap = {
+                soc2: "SOC 2",
+                hipaa: "HIPAA",
+                pci_dss: "PCI DSS",
+                iso27001: "ISO 27001"
+            };
+
+            if (certMap[col]) {
+                // Parse from certifications string
+                let certString = "";
+                if (item.row_snapshot && item.row_snapshot.certifications) {
+                    certString = item.row_snapshot.certifications;
+                } else {
+                    const full = window.dcItemsMap && window.dcItemsMap[item.dc_id];
+                    if (full && full.certifications) {
+                        certString = full.certifications;
+                    }
+                }
+
+                // Check if cert string contains this certification
+                const certValue = certMap[col];
+                return String(certString).toUpperCase().includes(certValue.toUpperCase());
+            }
+
+            // Normal field lookup: 1) row_snapshot
             if (item.row_snapshot && item.row_snapshot[col] != null) return item.row_snapshot[col];
 
             // 2) rehydrate from loaded map
@@ -4526,7 +4578,7 @@
                     // Build table headers
                     html += '<thead><tr style="background: var(--brand-primary); color: #fff;">';
                     snapshotColumns.forEach(col => {
-                        const displayName = col.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                        const displayName = COLUMN_LABELS[col] || col.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
                         html += `<th style="padding: 8px; text-align: left;">${displayName}</th>`;
                     });
                     html += '<th style="padding: 8px; text-align: center;">Date Saved</th>';
@@ -4552,8 +4604,8 @@
                             } else if (col === 'power_capacity_mw' && value !== 'N/A') {
                                 value = `${value} MW`;
                             } else if (col.startsWith('soc') || col.startsWith('hipaa') || col.startsWith('pci') || col.startsWith('iso')) {
-                                // Certification flags - convert to checkmark/X
-                                value = (value === true || value === '1' || String(value).toLowerCase() === 'yes') ? '✓' : 'X';
+                                // Certification flags - convert to checkmark/X (getCellValue already returns boolean for certs)
+                                value = value === true ? '✓' : 'X';
                             }
 
                             html += `<td style="padding: 8px;">${value}</td>`;
@@ -4585,7 +4637,7 @@
                     // Build table headers
                     html += '<thead><tr style="background: #d97706; color: #fff;">';
                     upcomingColumns.forEach(col => {
-                        const displayName = col.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                        const displayName = COLUMN_LABELS[col] || col.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
                         html += `<th style="padding: 8px; text-align: left;">${displayName}</th>`;
                     });
                     html += '<th style="padding: 8px; text-align: center;">Date Saved</th>';
