@@ -3518,6 +3518,9 @@
         // Public Data API Configuration (tier-based access via JWT)
         const PUBLIC_API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://127.0.0.1:8010' : 'https://api.datacenterhive.com';
 
+        // Global map for storing DC items (initialized once at top to prevent "Cannot set properties of undefined")
+        window.dcItemsMap = {};
+
         // ===================================================================
         // ROTATING TICKER HEADLINES (Production-Hardened)
         // ===================================================================
@@ -6797,9 +6800,6 @@
                 html += '<tbody>';
 
                 // Table rows
-                // Initialize global map for storing DC items
-                if (!window.dcItemsMap) window.dcItemsMap = {};
-
                 tableData.items.forEach((item, idx) => {
                     const bg = idx % 2 === 0 ? '#fff' : '#f9f9f9';
                     const provider = item.provider || 'Unknown';
@@ -6941,7 +6941,7 @@
         // CSV Export Functions
         function getExportColumns(tier, dataType) {
             const EXISTING_DCS_COLUMNS = {
-                "free": ["provider", "name"],
+                "free": ["provider", "name", "certifications"],
                 "basic": ["total_sqft", "latitude", "longitude"],
                 "premium": ["contact", "power_capacity_mw"],
                 "enterprise": ["street_full_guess", "city", "state", "zip"]
