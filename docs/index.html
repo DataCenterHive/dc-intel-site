@@ -2542,32 +2542,85 @@
                     <div style="margin-bottom: 40px;">
                         <h3 class="section-subheader h3-medium">FREE STUDY GUIDES</h3>
 
+                        <!-- Free Tier Header -->
+                        <div style="background: var(--brand-primary); color: #fff; padding: 8px 15px; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px; font-size: 14px;">
+                            FREE TIER (FREE) - MARKET OVERVIEW ESSENTIALS
+                        </div>
+
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-                            <!-- Free Guide 1: Market Overview -->
-                            <div style="border: 2px solid var(--border-emphasis); padding: 20px; background: var(--bg-primary);">
-                                <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px; border-bottom: 2px solid #ccc; padding-bottom: 8px;">
-                                    <h4 style="margin-top: 0; font-size: 16px;">DC Market Overview 2025</h4>
-                                    <span class="badge free">Free</span>
-                                </div>
-                                <p style="font-size: 13px; line-height: 1.6; margin: 15px 0;">
-                                    A comprehensive overview of the data center industry: key players, market trends, major markets, and growth forecasts. Perfect introduction for newcomers.
-                                </p>
-                                <ul style="font-size: 12px; line-height: 1.8; margin: 15px 0 20px; padding-left: 20px;">
-                                    <li>Market size & growth trends</li>
-                                    <li>Top 10 DC markets in US</li>
-                                    <li>Key industry players</li>
-                                </ul>
+                            <!-- Free Guide 1: DC Market Growth Trends -->
+                            <div style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff;">
+                                <h4 style="margin-top: 0; font-size: 15px; border-bottom: 2px solid #ccc; padding-bottom: 8px;">DC Market Growth Trends</h4>
+                                <p style="font-size: 12px; font-style: italic; margin: 10px 0;">Market Size & Growth Forecasts</p>
 
                                 <!-- Conditional rendering: Logged in users see content, non-logged in see unlock button -->
-                                <div id="freeStudyGuideContent" style="display: none;">
+                                <div id="freeStudyGuide1Content" style="display: none;">
                                     <div style="font-size: 12px; line-height: 1.8; margin: 15px 0;">
-                                        <div style="margin-bottom: 8px;">           <a class="study-link" href="https://datacenterhive.com/dc-market-overview-2025.pdf" target="_blank">Deep-Dive Study (PDF)</a></div>
-                                        <div style="margin-bottom: 8px;">          <a class="study-link" href="knowledge/sources/Handbook - Part A - Executive Summary/Overview.png" target="_blank">Infographic (PNG)</a></div>
-                                        <div style="margin-bottom: 8px;">           <a class="study-link" href="knowledge/sources/Markets and Drivers/Markets & Drivers Source Pack (U.S. Data Center Hubs 2020–2025).pdf">Research Paper (PDF)</a></div>
+                                        <div style="margin-bottom: 8px;">
+                                            <a class="study-link" href="https://datacenterhive.com/dc-market-overview-2025.pdf" target="_blank">Deep-Dive Study (PDF)</a>
+                                        </div>
+                                        <div style="margin-bottom: 8px;">
+                                            <a class="study-link" href="knowledge/sources/Handbook - Part A - Executive Summary/Overview.png" target="_blank">Infographic (PNG)</a>
+                                        </div>
+                                        <div style="margin-bottom: 8px;">
+                                            <a class="study-link" href="#" onclick="alert('Video coming soon!'); return false;">Watch Video</a>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <button id="freeStudyGuideUnlock" style="width: 100%; padding: 10px; background: var(--brand-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 13px; font-weight: bold; cursor: pointer; border-radius: 6px; display: none;"
+                                <button id="freeStudyGuide1Unlock" style="width: 100%; padding: 10px; background: var(--brand-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 13px; font-weight: bold; cursor: pointer; border-radius: 6px; display: none;"
+                                        onclick="openModal('registerModal')">
+                                    UNLOCK After Registering for Free
+                                </button>
+                            </div>
+
+                            <!-- Free Guide 2: Key Players in Data Center Industry -->
+                            <div style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff;">
+                                <h4 style="margin-top: 0; font-size: 15px; border-bottom: 2px solid #ccc; padding-bottom: 8px;">Key Players in Data Center Industry</h4>
+                                <p style="font-size: 12px; font-style: italic; margin: 10px 0;">Leading Providers & Operators</p>
+
+                                <!-- Conditional rendering: Logged in users see content, non-logged in see unlock button -->
+                                <div id="freeStudyGuide2Content" style="display: none;">
+                                    <div style="font-size: 12px; line-height: 1.8; margin: 15px 0;">
+                                        <div style="margin-bottom: 8px;">
+                                            <a class="study-link" href="https://datacenterhive.com/dc-market-overview-2025.pdf" target="_blank">Deep-Dive Study (PDF)</a>
+                                        </div>
+                                        <div style="margin-bottom: 8px;">
+                                            <a class="study-link" href="knowledge/sources/Handbook - Part A - Executive Summary/Overview.png" target="_blank">Infographic (PNG)</a>
+                                        </div>
+                                        <div style="margin-bottom: 8px;">
+                                            <a class="study-link" href="#" onclick="alert('Video coming soon!'); return false;">Watch Video</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button id="freeStudyGuide2Unlock" style="width: 100%; padding: 10px; background: var(--brand-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 13px; font-weight: bold; cursor: pointer; border-radius: 6px; display: none;"
+                                        onclick="openModal('registerModal')">
+                                    UNLOCK After Registering for Free
+                                </button>
+                            </div>
+
+                            <!-- Free Guide 3: Top 10 US Data Center Markets -->
+                            <div style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff;">
+                                <h4 style="margin-top: 0; font-size: 15px; border-bottom: 2px solid #ccc; padding-bottom: 8px;">Top 10 US Data Center Markets</h4>
+                                <p style="font-size: 12px; font-style: italic; margin: 10px 0;">Geographic Market Analysis</p>
+
+                                <!-- Conditional rendering: Logged in users see content, non-logged in see unlock button -->
+                                <div id="freeStudyGuide3Content" style="display: none;">
+                                    <div style="font-size: 12px; line-height: 1.8; margin: 15px 0;">
+                                        <div style="margin-bottom: 8px;">
+                                            <a class="study-link" href="knowledge/sources/Markets and Drivers/Markets & Drivers Source Pack (U.S. Data Center Hubs 2020–2025).pdf" target="_blank">Deep-Dive Study (PDF)</a>
+                                        </div>
+                                        <div style="margin-bottom: 8px;">
+                                            <a class="study-link" href="knowledge/sources/Handbook - Part A - Executive Summary/Overview.png" target="_blank">Infographic (PNG)</a>
+                                        </div>
+                                        <div style="margin-bottom: 8px;">
+                                            <a class="study-link" href="#" onclick="alert('Video coming soon!'); return false;">Watch Video</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button id="freeStudyGuide3Unlock" style="width: 100%; padding: 10px; background: var(--brand-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 13px; font-weight: bold; cursor: pointer; border-radius: 6px; display: none;"
                                         onclick="openModal('registerModal')">
                                     UNLOCK After Registering for Free
                                 </button>
@@ -4231,14 +4284,54 @@
             return !!token;
         }
 
+        // Helper function to build tier-filtered row snapshot
+        function buildTierSnapshot(item, tier, dataType) {
+            const EXISTING_DCS_COLUMNS = {
+                "free": ["provider", "name"],
+                "basic": ["total_sqft", "latitude", "longitude"],
+                "premium": ["contact", "contact_email", "contact_phone", "power_capacity_mw"],
+                "enterprise": ["street_full_guess", "address_line_raw", "city", "state", "zip", "country"]
+            };
+
+            const UPCOMING_DCS_COLUMNS = {
+                "free": ["city", "state", "address_raw", "latest_status", "first_seen_applied_date", "source", "latitude", "longitude"],
+                "basic": [],
+                "premium": ["latest_description"],
+                "enterprise": ["latest_valuation_usd", "record_ids_sample", "statuses_sample", "latest_contractor", "latest_owner", "latest_permit_type", "permits_count"]
+            };
+
+            const TIER_HIERARCHY = ["free", "basic", "premium", "enterprise"];
+            const columnMap = dataType === 'existing' ? EXISTING_DCS_COLUMNS : UPCOMING_DCS_COLUMNS;
+            const tierIndex = TIER_HIERARCHY.indexOf(tier);
+
+            const snapshot = {};
+            for (let i = 0; i <= tierIndex; i++) {
+                const tierName = TIER_HIERARCHY[i];
+                if (columnMap[tierName]) {
+                    columnMap[tierName].forEach(col => {
+                        if (item[col] !== undefined && item[col] !== null) {
+                            snapshot[col] = item[col];
+                        }
+                    });
+                }
+            }
+
+            return snapshot;
+        }
+
         // Watchlist functions
-        async function toggleWatchlist(dcId, dcName, dcLocation) {
+        async function toggleWatchlist(item, dataType) {
             try {
                 const token = localStorage.getItem('dc_intel_token');
                 if (!token) {
                     openModal('loginModal');
                     return;
                 }
+
+                // Generate dcId from item
+                const provider = item.provider || 'Unknown';
+                const title = item.name || item.city || 'N/A';
+                const dcId = `${provider}-${title}`.replace(/[^a-zA-Z0-9-]/g, '_');
 
                 const button = document.getElementById(`save-btn-${dcId}`);
                 if (!button) return;
@@ -4259,7 +4352,11 @@
                         console.log(`Removed ${dcId} from watchlist`);
                     }
                 } else {
-                    // Add to watchlist
+                    // Build tier-filtered snapshot
+                    const tier = userTier || 'free';
+                    const rowSnapshot = buildTierSnapshot(item, tier, dataType);
+
+                    // Add to watchlist with tier-filtered snapshot
                     const response = await fetch(`${PUBLIC_API_BASE}/api/watchlist/add`, {
                         method: 'POST',
                         headers: {
@@ -4268,8 +4365,10 @@
                         },
                         body: JSON.stringify({
                             dc_id: dcId,
-                            dc_name: dcName,
-                            dc_location: dcLocation
+                            data_type: dataType,
+                            tier_at_save: tier,
+                            row_snapshot: rowSnapshot,
+                            saved_at: new Date().toISOString()
                         })
                     });
 
@@ -5790,18 +5889,21 @@
             }
 
             // Handle free study guide (DC Market Overview 2025) visibility
-            const freeStudyGuideContent = document.getElementById('freeStudyGuideContent');
-            const freeStudyGuideUnlock = document.getElementById('freeStudyGuideUnlock');
+            // Handle all 3 FREE study guide cards
+            for (let i = 1; i <= 3; i++) {
+                const freeStudyGuideContent = document.getElementById(`freeStudyGuide${i}Content`);
+                const freeStudyGuideUnlock = document.getElementById(`freeStudyGuide${i}Unlock`);
 
-            if (freeStudyGuideContent && freeStudyGuideUnlock) {
-                if (isLoggedIn()) {
-                    // Logged in users (any tier including free) see content
-                    freeStudyGuideContent.style.display = 'block';
-                    freeStudyGuideUnlock.style.display = 'none';
-                } else {
-                    // Not logged in: show unlock button
-                    freeStudyGuideContent.style.display = 'none';
-                    freeStudyGuideUnlock.style.display = 'block';
+                if (freeStudyGuideContent && freeStudyGuideUnlock) {
+                    if (isLoggedIn()) {
+                        // Logged in users (any tier including free) see content
+                        freeStudyGuideContent.style.display = 'block';
+                        freeStudyGuideUnlock.style.display = 'none';
+                    } else {
+                        // Not logged in: show unlock button
+                        freeStudyGuideContent.style.display = 'none';
+                        freeStudyGuideUnlock.style.display = 'block';
+                    }
                 }
             }
 
@@ -6591,12 +6693,18 @@
                 html += '<tbody>';
 
                 // Table rows
+                // Initialize global map for storing DC items
+                if (!window.dcItemsMap) window.dcItemsMap = {};
+
                 tableData.items.forEach((item, idx) => {
                     const bg = idx % 2 === 0 ? '#fff' : '#f9f9f9';
                     const provider = item.provider || 'Unknown';
                     const title = item.name || 'N/A';
                     const address = item.address_line_raw || 'N/A';
                     const dcId = `${provider}-${title}-${idx}`.replace(/[^a-zA-Z0-9-]/g, '_');
+
+                    // Store item in global map
+                    window.dcItemsMap[dcId] = item;
 
                     html += `<tr style="background: ${bg}; border-bottom: 1px solid #ccc;">`;
 
@@ -6606,9 +6714,8 @@
 
                     // Save button for logged-in users
                     if (isLoggedIn()) {
-                        const fullName = `${provider} - ${title}`;
                         html += `<td style="padding: 8px; text-align: center;">
-                            <button id="save-btn-${dcId}" onclick="toggleWatchlist('${dcId}', '${fullName.replace(/'/g, "\\'")}', '${address.replace(/'/g, "\\'")}'); return false;"
+                            <button id="save-btn-${dcId}" onclick="toggleWatchlist(window.dcItemsMap['${dcId}'], 'existing'); return false;"
                                 style="padding: 4px 10px; background: #0284c7; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
                                 ★ Save
                             </button>
@@ -6730,10 +6837,10 @@
         // CSV Export Functions
         function getExportColumns(tier, dataType) {
             const EXISTING_DCS_COLUMNS = {
-                "free": ["provider", "title", "name"],
+                "free": ["provider", "name"],
                 "basic": ["total_sqft", "latitude", "longitude"],
-                "premium": ["contact", "contact_email", "contact_phone", "power_capacity_mw"],
-                "enterprise": ["street_full_guess", "address_line_raw", "city", "state", "zip", "country"]
+                "premium": ["contact", "power_capacity_mw"],
+                "enterprise": ["street_full_guess", "city", "state", "zip"]
             };
 
             const UPCOMING_DCS_COLUMNS = {
@@ -7163,11 +7270,12 @@
                     if (isLoggedIn()) {
                         // Create unique ID for upcoming DC project
                         const projectId = `upcoming-${city.replace(/[^a-zA-Z0-9]/g, '-')}-${state}-${firstSeen.replace(/[^a-zA-Z0-9]/g, '-')}`.toLowerCase();
-                        const projectName = `${city}, ${state} - ${sourceLabel} Project`;
-                        const projectLocation = project.address_raw || `${city}, ${state}`;
+
+                        // Store project in global map
+                        window.dcItemsMap[projectId] = project;
 
                         tableHTML += `<td style="padding: 8px; text-align: center;">
-                            <button id="save-btn-${projectId}" onclick="toggleWatchlist('${projectId}', '${projectName.replace(/'/g, "\\'")}', '${projectLocation.replace(/'/g, "\\'")}'); return false;"
+                            <button id="save-btn-${projectId}" onclick="toggleWatchlist(window.dcItemsMap['${projectId}'], 'upcoming'); return false;"
                                 style="padding: 4px 10px; background: #0284c7; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
                                 ★ Save
                             </button>
