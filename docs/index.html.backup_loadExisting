@@ -4338,23 +4338,6 @@
         function clearExistingFilters() {
             existingFilters.states = [];
             existingFilters.providers = [];
-
-            // Sync Choices.js UI to reflect cleared filters (without re-init)
-            if (choicesExistingStates) {
-                choicesExistingStates.removeActiveItems();
-            }
-            if (choicesExistingProviders) {
-                choicesExistingProviders.removeActiveItems();
-            }
-
-            // Re-render table rows only (not entire UI)
-            renderExistingTableRows();
-        }
-
-        function clearExistingQuickLink() {
-            window.activeQuickLinkCategory = null;
-            const input = document.getElementById('existingSearch');
-            if (input) input.value = '';
             loadExistingDCs();
         }
 
@@ -4385,7 +4368,7 @@
                 existingSort.key = key;
                 existingSort.dir = 1;
             }
-            renderExistingTableRows();
+            loadExistingDCs();
         }
 
         function updateExistingSortIndicators() {
@@ -7122,45 +7105,25 @@
             if (existingFetchInFlight) return existingFetchInFlight;
 
             existingFetchInFlight = (async () => {
-                try {
-                    const response = await fetch(`${PUBLIC_API_BASE}/existing-dcs`, {
-                        headers: authHeaders()
-                    });
-                    const data = await response.json();
-                    cachedExistingData = (data && data.items) ? data.items : [];
+                const response = await fetch(`${PUBLIC_API_BASE}/existing-dcs`, {
+                    headers: authHeaders()
+                });
+                const data = await response.json();
+                cachedExistingData = (data && data.items) ? data.items : [];
 
-                    // Store globally for export
-                    window.existingDCsData = cachedExistingData;
+                // Store globally for export
+                window.existingDCsData = cachedExistingData;
 
-                    // Show export buttons for BASIC tier and above
-                    const exportBtns = document.getElementById('existingExportBtns');
-                    if (exportBtns && userTier && ['basic', 'premium', 'enterprise'].includes(userTier)) {
-                        exportBtns.style.display = 'flex';
-                    }
-
-                    return cachedExistingData;
-                } catch (e) {
-                    throw e;
-                } finally {
-                    // Always clear in-flight semaphore (success or fail)
-                    existingFetchInFlight = null;
+                // Show export buttons for BASIC tier and above
+                const exportBtns = document.getElementById('existingExportBtns');
+                if (exportBtns && userTier && ['basic', 'premium', 'enterprise'].includes(userTier)) {
+                    exportBtns.style.display = 'flex';
                 }
+
+                return cachedExistingData;
             })();
 
             return existingFetchInFlight;
-        }
-
-        // Step 2.5: Wire search input listener (idempotent)
-        function wireExistingSearchOnce() {
-            const input = document.getElementById('existingSearch');
-            if (!input || input.dataset.wired === '1') return;
-            input.dataset.wired = '1';
-
-            let debounceTimer;
-            input.addEventListener('input', () => {
-                clearTimeout(debounceTimer);
-                debounceTimer = setTimeout(() => renderExistingTableRows(), 300);
-            });
         }
 
         // Step 3: Render filters once (init Choices.js once)
@@ -7228,7 +7191,8 @@
                     });
 
                     stateSelect.addEventListener('change', function() {
-                        existingFilters.states = choicesExistingStates.getValue(true);
+                        const selected = Array.from(this.selectedOptions).map(opt => opt.value);
+                        existingFilters.states = selected;
                         renderExistingTableRows(); // Only re-render rows
                     });
                 }
@@ -7242,7 +7206,8 @@
                     });
 
                     providerSelect.addEventListener('change', function() {
-                        existingFilters.providers = choicesExistingProviders.getValue(true);
+                        const selected = Array.from(this.selectedOptions).map(opt => opt.value);
+                        existingFilters.providers = selected;
                         renderExistingTableRows(); // Only re-render rows
                     });
                 }
@@ -7310,19 +7275,10 @@
         }
 
         // Step 5: Render table rows only (called on filter/sort changes)
-        function renderExistingTableRows() {
+        async function renderExistingTableRows() {
             try {
-                // Guard: Don't render if data not loaded yet
-                if (!cachedExistingData) {
-                    // Data not loaded yet; orchestrator will render when ready
-                    return;
-                }
-
-                // Ensure global map exists
-                window.dcItemsMap = window.dcItemsMap || {};
-
                 // Copy cached data (never mutate the original)
-                let facilities = [...cachedExistingData];
+                let facilities = cachedExistingData ? [...cachedExistingData] : [];
 
                 // Step 1: Apply quick link category filter if active
                 if (window.activeQuickLinkCategory) {
@@ -7331,19 +7287,6 @@
 
                 // Step 2: Apply enhanced filters (state, provider)
                 facilities = applyExistingFilters(facilities);
-
-                // Step 2.5: Apply text search filter
-                const searchQuery = (document.getElementById('existingSearch')?.value || '').trim().toLowerCase();
-                if (searchQuery) {
-                    facilities = facilities.filter(item => {
-                        const provider = (item.provider || '').toLowerCase();
-                        const name = (item.name || '').toLowerCase();
-                        const city = (item.city || '').toLowerCase();
-                        const state = (item.state || '').toLowerCase();
-                        const certs = (item.certifications || '').toLowerCase();
-                        return provider.includes(searchQuery) || name.includes(searchQuery) || city.includes(searchQuery) || state.includes(searchQuery) || certs.includes(searchQuery);
-                    });
-                }
 
                 // Step 3: Apply sort if set
                 if (existingSort.key) {
@@ -7425,7 +7368,7 @@
                             <td colspan="${colspan}" style="padding: 0;">
                                 <div class="notice notice-info" style="margin: 0 0 15px 0;">
                                     <strong>Filtered by:</strong> ${getCategoryDescription(window.activeQuickLinkCategory)}
-                                    <button onclick="clearExistingQuickLink();" style="margin-left: 10px; padding: 5px 15px; background: #dc2626; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
+                                    <button onclick="window.activeQuickLinkCategory = null; loadExistingDCs();" style="margin-left: 10px; padding: 5px 15px; background: #dc2626; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
                                         Clear Filter
                                     </button>
                                 </div>
@@ -7463,10 +7406,10 @@
                     // EMAIL GATE columns (certifications)
                     if (hasEmailGateAccess()) {
                         const certs = (item.certifications || '').toUpperCase();
-                        const soc2 = /SOC\s*2/.test(certs) ? '✓' : 'X';
-                        const hipaa = /HIPAA/.test(certs) ? '✓' : 'X';
-                        const pci = /PCI/.test(certs) ? '✓' : 'X';
-                        const iso = /ISO\s*27001|ISO27001/.test(certs) ? '✓' : 'X';
+                        const soc2 = certs.includes('SOC 2') ? '✓' : 'X';
+                        const hipaa = certs.includes('HIPAA') ? '✓' : 'X';
+                        const pci = certs.includes('PCI') ? '✓' : 'X';
+                        const iso = certs.includes('ISO') ? '✓' : 'X';
                         tbodyHTML += `<td style="padding: 8px; text-align: center;">${soc2}</td>`;
                         tbodyHTML += `<td style="padding: 8px; text-align: center;">${hipaa}</td>`;
                         tbodyHTML += `<td style="padding: 8px; text-align: center;">${pci}</td>`;
@@ -7537,65 +7480,335 @@
         }
 
         // Existing DCs with heatmap visualization
-        // Step 6: Orchestrator - coordinates all mount-point functions
         async function loadExistingDCs() {
             const container = document.getElementById('existingDCsSection');
             setLoading(container, true);
 
             try {
-                // Step 1: Create mount points (idempotent - only creates once)
-                ensureExistingMountPoints();
+                // Load from API
+                const response = await fetch(`${PUBLIC_API_BASE}/existing-dcs`, {
+                    headers: authHeaders()
+                });
+                const data = await response.json();
+                const allDCs = data.items || [];
 
-                // Step 1.5: Wire search input listener (idempotent)
-                wireExistingSearchOnce();
-
-                // Step 2: Ensure data is loaded (fetches once, caches)
-                await ensureExistingDataLoaded();
-
-                if (!cachedExistingData || cachedExistingData.length === 0) {
-                    const tbodyMount = document.getElementById('existingTbodyMount');
-                    if (tbodyMount) {
-                        tbodyMount.innerHTML = '<tr><td colspan="10" style="text-align: center; padding: 20px;">Unable to load data centers.</td></tr>';
-                    }
+                if (!allDCs || allDCs.length === 0) {
+                    document.getElementById('existingDCsTableView').innerHTML = '<p style="text-align: center;">Unable to load data centers.</p>';
                     return;
                 }
 
-                // Step 3: Compute unique states and providers for filter dropdowns
-                // (Apply quick link category filter BEFORE extracting dropdown options)
-                let facilitiesForOptions = cachedExistingData;
-                if (window.activeQuickLinkCategory) {
-                    facilitiesForOptions = cachedExistingData.filter(dc => matchesQuickLinkCategory(dc, window.activeQuickLinkCategory));
+                // Store data globally for export
+                window.existingDCsData = allDCs;
+
+                // Show export buttons for BASIC tier and above
+                const exportBtns = document.getElementById('existingExportBtns');
+                if (exportBtns && userTier && ['basic', 'premium', 'enterprise'].includes(userTier)) {
+                    exportBtns.style.display = 'flex';
                 }
 
-                const allStates = [...new Set(facilitiesForOptions
-                    .map(dc => (dc.state || '').toUpperCase().trim())
-                    .filter(s => s))].sort();
+                // Apply quick link category filter if active
+                let filteredDCs = allDCs;
+                if (window.activeQuickLinkCategory) {
+                    filteredDCs = allDCs.filter(dc => matchesQuickLinkCategory(dc, window.activeQuickLinkCategory));
+                }
 
-                const allProviders = [...new Set(facilitiesForOptions
-                    .map(dc => (dc.provider || '').trim())
-                    .filter(p => p))].sort();
+                // Extract unique states and providers BEFORE enhanced filtering (for dropdown options)
+                const allStates = [...new Set(filteredDCs.map(dc => (dc.state || '').toUpperCase().trim()).filter(s => s))].sort();
+                const allProviders = [...new Set(filteredDCs.map(dc => (dc.provider || '').trim()).filter(p => p))].sort();
 
-                // Step 4: Render filter panel once (idempotent - checks if already rendered)
-                renderExistingFiltersOnce(allStates, allProviders);
+                // Apply enhanced filters (state, provider)
+                filteredDCs = applyExistingFilters(filteredDCs);
 
-                // Step 5: Render table header once (idempotent - checks if already rendered for this state)
-                renderExistingTableHeaderOnce();
+                const tableData = { items: filteredDCs, total: filteredDCs.length };
 
-                // Step 6: Render table rows (applies filters, sorting, builds tbody)
-                renderExistingTableRows();
-
-                // Step 7: Render hexbin heatmap (only in orchestrator, not in renderTableRows)
+                // Generate hexbin heatmap visualization
                 await renderHexbinHeatmap('heatmapViz');
 
-                // Store data globally for export
-                window.existingDCsData = cachedExistingData;
+                // Email gate and tier upgrade banners
+                let bannerHTML = '';
+
+                // Email gate banner (if user hasn't provided email and isn't on paid tier)
+                if (!hasEmailGateAccess()) {
+                    bannerHTML += `
+                        <div style="margin-bottom: 15px; padding: 15px; background: #f5f1e8; border: 3px solid #10b981; border-radius: 5px; color: var(--text-primary);">
+                            <h4 style="margin: 0 0 10px 0; font-size: 16px; color: #059669;">          Certification Data Locked</h4>
+                            <p style="margin: 0 0 10px 0; font-size: 13px;">Unlock <strong>SOC2, HIPAA, PCI-DSS, and ISO27001</strong> certification columns for all 4,436+ facilities.</p>
+                            <button onclick="showEmailCaptureModal()" style="padding: 8px 20px; background: var(--brand-primary); color: #fff; border: 3px solid #10b981; border-radius: 3px; font-weight: bold; cursor: pointer;">
+                                Register for free to unlock the Certifications
+                            </button>
+                        </div>
+                    `;
+                }
+
+                // Tier upgrade banner (for free users, even if they have email)
+                if (userTier === 'free') {
+                    bannerHTML += `
+                        <div style="margin-bottom: 15px; padding: 15px; background: #f5f1e8; border: 3px solid #9333ea; border-radius: 5px; color: var(--text-primary);">
+                            <h4 style="margin: 0 0 10px 0; font-size: 16px; color: #7e22ce;">          Get More Data with Paid Tiers</h4>
+                            <p style="margin: 0 0 10px 0; font-size: 13px;">Unlock additional columns and features:</p>
+                            <ul style="margin: 0 0 10px 0; padding-left: 20px; font-size: 12px;">
+                                <li><strong>Basic ($299/mo):</strong> + Sqft, Lat & Long</li>
+                                <li><strong>Premium ($999/mo):</strong> + Contact, Specs</li>
+                                <li><strong>Enterprise ($2,499/mo):</strong> + API Access</li>
+                            </ul>
+                            <button onclick="switchSection('pricing')" style="padding: 8px 20px; background: var(--brand-primary); color: #fff; border: 3px solid #9333ea; border-radius: 3px; font-weight: bold; cursor: pointer;">
+                                View Pricing Plans
+                            </button>
+                        </div>
+                    `;
+                }
+
+                // Apply sort if set
+                if (existingSort.key) {
+                    const key = existingSort.key;
+                    const dir = existingSort.dir;
+                    tableData.items.sort((a, b) => {
+                        const getVal = (item) => {
+                            if (key === 'provider') return (item.provider || '').toLowerCase();
+                            if (key === 'title') return (item.name || '').toLowerCase();
+                            return '';
+                        };
+                        const va = getVal(a);
+                        const vb = getVal(b);
+                        if (va < vb) return -1 * dir;
+                        if (va > vb) return 1 * dir;
+                        return 0;
+                    });
+                }
+
+                // Generate table with tiered columns
+                let filterStatus = '';
+                if (window.activeQuickLinkCategory) {
+                    filterStatus = `
+                        <div class="notice notice-info">
+                            <strong>Filtered by:</strong> ${getCategoryDescription(window.activeQuickLinkCategory)}
+                            <button onclick="window.activeQuickLinkCategory = null; loadExistingDCs();" style="margin-left: 10px; padding: 5px 15px; background: #dc2626; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
+                                Clear Filter
+                            </button>
+                        </div>
+                    `;
+                }
+                let html = filterStatus + `<h3 class="h3-centered-sm">Operational Data Centers</h3>`;
+                html += '<div style="text-align: center; font-size: 16px; font-weight: bold; color: #d97706; background: #fef3c7; padding: 12px; border: 2px solid #f59e0b; border-radius: 5px; margin-bottom: 15px;">Columns by tier: Free (Provider/Title/Certifications)  ·  Basic (+Sqft/Lat & Long)  ·  Premium (+Contact/Specs)  ·  Enterprise (+Full Address/API Access)</div>';
+
+                // Add enhanced filter controls (state, provider)
+                html += '<div id="existingEnhancedFilters" style="margin-bottom: 20px; padding: 20px; background: #f0f9ff; border: 2px solid #0284c7; border-radius: 6px;">';
+                html += '<h4 style="margin: 0 0 15px 0; font-size: 16px; color: #0369a1;">🔍 Advanced Filters</h4>';
+                html += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin-bottom: 15px;">';
+
+                // State filter
+                html += '<div style="display: flex; flex-direction: column;">';
+                html += '<label style="font-size: 13px; font-weight: 600; margin-bottom: 5px; color: var(--text-primary);">Filter by State(s)</label>';
+                html += '<select id="existingStateFilter" multiple style="width: 100%; padding: 8px; border: 2px solid var(--border-default); border-radius: 4px; font-size: 13px;">';
+                allStates.forEach(state => {
+                    const selected = existingFilters.states.includes(state) ? 'selected' : '';
+                    html += `<option value="${state}" ${selected}>${state}</option>`;
+                });
+                html += '</select>';
+                html += '</div>';
+
+                // Provider filter
+                html += '<div style="display: flex; flex-direction: column;">';
+                html += '<label style="font-size: 13px; font-weight: 600; margin-bottom: 5px; color: var(--text-primary);">Filter by Provider(s)</label>';
+                html += '<select id="existingProviderFilter" multiple style="width: 100%; padding: 8px; border: 2px solid var(--border-default); border-radius: 4px; font-size: 13px;">';
+                allProviders.forEach(provider => {
+                    const selected = existingFilters.providers.includes(provider) ? 'selected' : '';
+                    html += `<option value="${provider}" ${selected}>${provider}</option>`;
+                });
+                html += '</select>';
+                html += '</div>';
+
+                html += '</div>'; // End grid
+
+                // Filter action buttons
+                html += '<div style="display: flex; gap: 10px; justify-content: center;">';
+                html += '<button onclick="clearExistingFilters()" style="padding: 8px 20px; background: #dc2626; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 600;">Clear Filters</button>';
+                const activeFiltersCount = existingFilters.states.length + existingFilters.providers.length;
+                if (activeFiltersCount > 0) {
+                    html += `<span style="padding: 8px 15px; background: #10b981; color: #fff; border-radius: 4px; font-size: 13px; font-weight: 600;">${activeFiltersCount} Filter(s) Active</span>`;
+                }
+                html += '</div>';
+                html += '</div>'; // End enhanced filters panel
+
+                html += '<div class="table-wrapper">';
+                html += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
+                html += '<thead>';
+
+                // Table header with tiered columns
+                html += '<tr style="background: var(--brand-primary); color: #fff;">';
+                // FREE tier columns
+                html += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setExistingSort(\'provider\')">Provider</th>';
+                html += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setExistingSort(\'title\')">Title</th>';
+
+                // Save button for logged-in users
+                if (isLoggedIn()) {
+                    html += '<th style="padding: 8px; text-align: center; background: #0284c7; color: #fff;">Save</th>';
+                }
+
+                // EMAIL GATE columns (certifications)
+                if (hasEmailGateAccess()) {
+                    html += '<th style="padding: 8px; text-align: center; background: #10b981; color: #fff;">SOC2</th>';
+                    html += '<th style="padding: 8px; text-align: center; background: #10b981; color: #fff;">HIPAA</th>';
+                    html += '<th style="padding: 8px; text-align: center; background: #10b981; color: #fff;">PCI-DSS</th>';
+                    html += '<th style="padding: 8px; text-align: center; background: #10b981; color: #fff;">ISO27001</th>';
+                }
+
+                // BASIC tier columns
+                if (hasTierAccess('basic')) {
+                    html += '<th style="padding: 8px; text-align: right; background: #4a5568; color: #fff;">Sq Ft</th>';
+                    html += '<th style="padding: 8px; text-align: center; background: #4a5568; color: #fff;">Latitude</th>';
+                    html += '<th style="padding: 8px; text-align: center; background: #4a5568; color: #fff;">Longitude</th>';
+                }
+
+                // PREMIUM tier columns
+                if (hasTierAccess('premium')) {
+                    html += '<th style="padding: 8px; text-align: left; background: #6b46c1; color: #fff;">Contact</th>';
+                    html += '<th style="padding: 8px; text-align: left; background: #6b46c1; color: #fff;">Specs</th>';
+                }
+
+                // ENTERPRISE tier columns
+                if (hasTierAccess('enterprise')) {
+                    html += '<th style="padding: 8px; text-align: left; background: #d97706; color: #fff;">Full Address</th>';
+                }
+
+                html += '</tr>';
+                html += '</thead>';
+                html += '<tbody>';
+
+                // Table rows
+                tableData.items.forEach((item, idx) => {
+                    const bg = idx % 2 === 0 ? '#fff' : '#f9f9f9';
+                    const provider = item.provider || 'Unknown';
+                    const title = item.name || 'N/A';
+                    const address = item.address_line_raw || 'N/A';
+                    const dcId = `${provider}-${title}-${idx}`.replace(/[^a-zA-Z0-9-]/g, '_');
+
+                    // Store item in global map
+                    window.dcItemsMap[dcId] = item;
+
+                    html += `<tr style="background: ${bg}; border-bottom: 1px solid #ccc;">`;
+
+                    // FREE tier columns
+                    html += `<td style="padding: 8px;">${provider}</td>`;
+                    html += `<td style="padding: 8px;">${title}</td>`;
+
+                    // Save button for logged-in users
+                    if (isLoggedIn()) {
+                        html += `<td style="padding: 8px; text-align: center;">
+                            <button id="save-btn-${dcId}" onclick="toggleWatchlist('${dcId}', window.dcItemsMap['${dcId}'], 'existing'); return false;"
+                                style="padding: 4px 10px; background: #0284c7; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
+                                ★ Save
+                            </button>
+                        </td>`;
+                    }
+
+                    // EMAIL GATE columns (certifications)
+                    if (hasEmailGateAccess()) {
+                        const certs = (item.certifications || '').toUpperCase();
+                        const soc2 = certs.includes('SOC 2') ? '✓' : 'X';
+                        const hipaa = certs.includes('HIPAA') ? '✓' : 'X';
+                        const pci = certs.includes('PCI') ? '✓' : 'X';
+                        const iso = certs.includes('ISO 27001') ? '✓' : 'X';
+
+                        const soc2Color = certs.includes('SOC 2') ? '#10b981' : '#dc2626';
+                        const hipaaColor = certs.includes('HIPAA') ? '#10b981' : '#dc2626';
+                        const pciColor = certs.includes('PCI') ? '#10b981' : '#dc2626';
+                        const isoColor = certs.includes('ISO 27001') ? '#10b981' : '#dc2626';
+
+                        html += `<td style="padding: 8px; text-align: center; background: #f0fdf4; color: ${soc2Color}; font-weight: bold;">${soc2}</td>`;
+                        html += `<td style="padding: 8px; text-align: center; background: #f0fdf4; color: ${hipaaColor}; font-weight: bold;">${hipaa}</td>`;
+                        html += `<td style="padding: 8px; text-align: center; background: #f0fdf4; color: ${pciColor}; font-weight: bold;">${pci}</td>`;
+                        html += `<td style="padding: 8px; text-align: center; background: #f0fdf4; color: ${isoColor}; font-weight: bold;">${iso}</td>`;
+                    }
+
+                    // BASIC tier columns
+                    if (hasTierAccess('basic')) {
+                        const sqft = item.total_sqft ? `${parseInt(item.total_sqft).toLocaleString()} sf` : 'N/A';
+                        const lat = item.latitude ? parseFloat(item.latitude).toFixed(4) : 'N/A';
+                        const lon = item.longitude ? parseFloat(item.longitude).toFixed(4) : 'N/A';
+
+                        html += `<td style="padding: 8px; text-align: right; background: #f7fafc; color: #4a5568; font-size: 11px;">${sqft}</td>`;
+                        html += `<td style="padding: 8px; text-align: center; background: #f7fafc; color: #4a5568; font-size: 11px;">${lat}</td>`;
+                        html += `<td style="padding: 8px; text-align: center; background: #f7fafc; color: #4a5568; font-size: 11px;">${lon}</td>`;
+                    }
+
+                    // PREMIUM tier columns
+                    if (hasTierAccess('premium')) {
+                        const contact = item.contact || item.contact_email || item.contact_phone || 'N/A';
+                        const specs = item.power_capacity_mw ? `${item.power_capacity_mw} MW` : 'N/A';
+
+                        html += `<td style="padding: 8px; background: #faf5ff; color: #6b46c1; font-size: 11px;">${contact}</td>`;
+                        html += `<td style="padding: 8px; background: #faf5ff; color: #6b46c1; font-size: 11px;">${specs}</td>`;
+                    }
+
+                    // ENTERPRISE tier columns
+                    if (hasTierAccess('enterprise')) {
+                        const fullAddress = item.street_full_guess || item.address_line_raw || 'N/A';
+                        html += `<td style="padding: 8px; background: #fffbeb; color: #d97706; font-size: 11px;">${fullAddress}</td>`;
+                    }
+
+                    html += '</tr>';
+                });
+
+                html += '</tbody></table></div>';
+
+                // Summary bar
+                const summaryHTML = `
+                    <div style="margin-top: 10px; padding: 10px; background: #f0f0f0; border: 2px solid var(--divider-strong); font-size: 12px;">
+                        <strong>Total Facilities: ${data.total}</strong>
+                        <span style="float: right; font-size: 11px;">
+                            Tier: <strong style="text-transform: uppercase; color: #667eea;">${userTier}</strong>
+                            ${hasEmailAccess ? ' | Email: <strong style="color: #10b981;">-  Unlocked</strong>' : ''}
+                        </span>
+                    </div>
+                `;
+
+                // Populate the table view tab
+                document.getElementById('existingDCsTableView').innerHTML = bannerHTML + html + summaryHTML;
+
+                // Update sort indicators
+                updateExistingSortIndicators();
+
+                // Initialize Choices.js for multi-select dropdowns
+                setTimeout(() => {
+                    const stateSelect = document.getElementById('existingStateFilter');
+                    const providerSelect = document.getElementById('existingProviderFilter');
+
+                    if (stateSelect && typeof Choices !== 'undefined') {
+                        const stateChoices = new Choices(stateSelect, {
+                            removeItemButton: true,
+                            searchEnabled: true,
+                            placeholderValue: 'Select states...',
+                            searchPlaceholderValue: 'Search states...'
+                        });
+
+                        stateSelect.addEventListener('change', function() {
+                            const selected = Array.from(this.selectedOptions).map(opt => opt.value);
+                            existingFilters.states = selected;
+                            loadExistingDCs();
+                        });
+                    }
+
+                    if (providerSelect && typeof Choices !== 'undefined') {
+                        const providerChoices = new Choices(providerSelect, {
+                            removeItemButton: true,
+                            searchEnabled: true,
+                            placeholderValue: 'Select providers...',
+                            searchPlaceholderValue: 'Search providers...'
+                        });
+
+                        providerSelect.addEventListener('change', function() {
+                            const selected = Array.from(this.selectedOptions).map(opt => opt.value);
+                            existingFilters.providers = selected;
+                            loadExistingDCs();
+                        });
+                    }
+                }, 100); // Small delay to ensure DOM is ready
 
             } catch (error) {
-                console.error('Error loading existing DCs:', error);
-                const tbodyMount = document.getElementById('existingTbodyMount');
-                if (tbodyMount) {
-                    tbodyMount.innerHTML = '<tr><td colspan="10" style="text-align: center; padding: 20px;">Error loading data.</td></tr>';
-                }
+                console.error('Error loading DCs:', error);
+                const errorMsg = '<p style="text-align: center;">Error loading data. Please check API connection.</p>';
+                document.getElementById('existingDCsTableView').innerHTML = errorMsg;
             } finally {
                 setLoading(container, false);
             }
@@ -8782,7 +8995,7 @@
         function clearExistingFilter() {
             const input = document.getElementById('existingSearch');
             if (input) input.value = '';
-            renderExistingTableRows();
+            loadExistingDCs();
         }
 
         // Table filters - Upcoming DCs
