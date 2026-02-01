@@ -1282,6 +1282,12 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
+        /* Cap diagram width on desktop for better readability */
+        .taxonomy-card figure img.taxonomy-diagram {
+            max-width: 900px;
+            width: 100%;
+        }
+
         /* Lightbox for diagram zoom */
         #diagramLightbox {
             display: none;
@@ -2623,7 +2629,7 @@
                         <h3>Tier Hierarchy</h3>
                         <p>This diagram illustrates the four Uptime Institute data center tiers (I through IV) with their availability targets, redundancy requirements, and expected annual downtime.</p>
                         <figure style="margin: 20px 0; text-align: center;">
-                            <img src="knowledge/diagrams/tier_hierarchy.png"
+                            <img src="knowledge/diagrams/tier_hierarchy.png?v=20260201"
                                  alt="Uptime Institute tier hierarchy showing Tier I-IV classifications"
                                  loading="lazy"
                                  class="taxonomy-diagram"
@@ -2637,7 +2643,7 @@
                         <h3>Redundancy Topologies</h3>
                         <p>This chart shows how N, N+1, 2N, and 2(N+1) redundancy configurations differ in architecture, fault tolerance, and operational resilience for critical power and cooling systems.</p>
                         <figure style="margin: 20px 0; text-align: center;">
-                            <img src="knowledge/diagrams/redundancy_topologies.png"
+                            <img src="knowledge/diagrams/redundancy_topologies.png?v=20260201"
                                  alt="Redundancy topology comparison: N, N+1, 2N, and 2(N+1) configurations"
                                  loading="lazy"
                                  class="taxonomy-diagram"
@@ -2651,7 +2657,7 @@
                         <h3>Cooling Matrix</h3>
                         <p>This matrix pairs cooling methods (air-cooled, liquid-cooled, immersion) with rack power densities, showing which cooling technologies are suitable for different heat load scenarios.</p>
                         <figure style="margin: 20px 0; text-align: center;">
-                            <img src="knowledge/diagrams/cooling_matrix.png"
+                            <img src="knowledge/diagrams/cooling_matrix.png?v=20260201"
                                  alt="Data center cooling methods matched to rack power density requirements"
                                  loading="lazy"
                                  class="taxonomy-diagram"
@@ -2665,7 +2671,7 @@
                         <h3>Lifecycle Timeline</h3>
                         <p>This timeline outlines the major phases of a data center project from initial site selection through design, construction, commissioning, and ongoing operations.</p>
                         <figure style="margin: 20px 0; text-align: center;">
-                            <img src="knowledge/diagrams/lifecycle_timeline.png"
+                            <img src="knowledge/diagrams/lifecycle_timeline.png?v=20260201"
                                  alt="Data center project lifecycle from site selection to operations"
                                  loading="lazy"
                                  class="taxonomy-diagram"
@@ -2679,7 +2685,7 @@
                         <h3>Stakeholder Network</h3>
                         <p>This network map shows the key roles and relationships among data center operators, developers, investors, utilities, vendors, and regulatory bodies throughout the industry value chain.</p>
                         <figure style="margin: 20px 0; text-align: center;">
-                            <img src="knowledge/diagrams/stakeholder_network.png"
+                            <img src="knowledge/diagrams/stakeholder_network.png?v=20260201"
                                  alt="Data center industry stakeholder network and relationships"
                                  loading="lazy"
                                  class="taxonomy-diagram"
@@ -7015,6 +7021,11 @@
             }
         }
 
+        // Load taxonomy view (diagrams already in HTML, just mark as loaded)
+        function loadTaxonomy() {
+            window.taxonomyLoaded = true;
+        }
+
         // Load handbook from local markdown file with ToC
         async function loadHandbook() {
             try {
@@ -7121,46 +7132,6 @@
                         link.style.color = 'var(--text-primary)';
                     }
                 });
-            }
-        }
-
-        // Load taxonomy from local CSV-exported JSON
-        async function loadTaxonomy() {
-            try {
-                const response = await fetch('taxonomy.json');
-                if (!response.ok) throw new Error('taxonomy.json not found');
-                const data = await response.json();
-                if (data.sheets && Array.isArray(data.sheets) && data.data) {
-                    const taxonomyHTML = data.sheets.map((sheetName, idx) => {
-                        const sheetData = data.data[sheetName] || [];
-                        const rows = sheetData.slice(0, 10).map(row => {
-                            const keys = Object.keys(row || {});
-                            const term = keys.length > 0 ? (row[keys[0]] || '') : '';
-                            const definition = keys.length > 1 ? (row[keys[1]] || '') : '';
-                            const extras = keys.slice(2).map(k => `${k}: ${row[k] || ''}`).filter(Boolean).join('<br>');
-                            return `
-                                <div class="taxonomy-row">
-                                    <div class="taxonomy-term">${term}</div>
-                                    <div class="taxonomy-def">${definition}</div>
-                                    ${extras ? `<div class="taxonomy-extra">${extras}</div>` : ''}
-                                </div>
-                            `;
-                        }).join('') || '<p class="taxonomy-def" style="text-align:center;">No entries found.</p>';
-
-                        return `
-                            <div class="taxonomy-card" style="transform: rotate(${idx % 2 === 0 ? '-' : ''}0.5deg);">
-                                <h3>${sheetName.replace(/_/g, ' ')}</h3>
-                                ${rows}
-                            </div>
-                        `;
-                    }).join('');
-
-                    document.getElementById('taxonomyContent').innerHTML = taxonomyHTML;
-                    taxonomyLoaded = true;
-                }
-            } catch (error) {
-                console.error('Error loading taxonomy:', error);
-                document.getElementById('taxonomyContent').innerHTML = '<p style="text-align: center; color: #c00; grid-column: 1 / -1;">Failed to load taxonomy content.</p>';
             }
         }
 
@@ -9875,8 +9846,8 @@
 
     <!-- Diagram Lightbox Modal -->
     <div id="diagramLightbox" onclick="closeDiagramLightbox()">
-        <span class="close-lightbox" onclick="closeDiagramLightbox()">&times;</span>
-        <img id="lightboxImage" src="" alt="Full-size diagram">
+        <span class="close-lightbox" onclick="event.stopPropagation(); closeDiagramLightbox()">&times;</span>
+        <img id="lightboxImage" src="" alt="Full-size diagram" onclick="event.stopPropagation()">
     </div>
 
     <script>
@@ -9894,10 +9865,11 @@
 
         function closeDiagramLightbox() {
             const lightbox = document.getElementById('diagramLightbox');
+            if (!lightbox) return;
             lightbox.style.display = 'none';
 
-            // Restore body scroll
-            document.body.style.overflow = 'auto';
+            // Restore body scroll (empty string restores CSS default)
+            document.body.style.overflow = '';
         }
 
         // Close lightbox on Escape key
