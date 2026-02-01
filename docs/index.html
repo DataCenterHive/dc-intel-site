@@ -1267,6 +1267,67 @@
             line-height: 1.6;
         }
 
+        .taxonomy-diagram {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border: 2px solid var(--border-default);
+            border-radius: 4px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .taxonomy-diagram:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        /* Lightbox for diagram zoom */
+        #diagramLightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 10000;
+            overflow: auto;
+            padding: 40px 20px;
+        }
+
+        #diagramLightbox img {
+            max-width: 95%;
+            max-height: 90vh;
+            display: block;
+            margin: 0 auto;
+            border: 3px solid #fff;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+        }
+
+        #diagramLightbox .close-lightbox {
+            position: fixed;
+            top: 20px;
+            right: 40px;
+            font-size: 40px;
+            color: #fff;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 10001;
+            background: rgba(0,0,0,0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        }
+
+        #diagramLightbox .close-lightbox:hover {
+            background: rgba(220,38,38,0.8);
+        }
+
         .taxonomy-item:last-child {
             border-bottom: none;
         }
@@ -2552,8 +2613,81 @@
 
             <!-- Taxonomy View -->
             <div id="taxonomyView" class="knowledge-view" style="display: none;">
-                <h3 class="section-subheader mb-12">Taxonomy</h3>
-                <div id="taxonomyContent" class="taxonomy-wrapper"></div>
+                <h3 class="section-subheader mb-12">Data Center Taxonomy</h3>
+                <p style="max-width: 900px; margin: 0 auto 30px auto; font-size: 14px; line-height: 1.7; text-align: center; color: var(--text-secondary);">
+                    Essential visual guides to understanding data center architecture, operations, and industry structure. Click any diagram to view full-size.
+                </p>
+                <div id="taxonomyContent" class="taxonomy-wrapper">
+                    <!-- Diagram 1: Tier Hierarchy -->
+                    <div class="taxonomy-card">
+                        <h3>Tier Hierarchy</h3>
+                        <p>This diagram illustrates the four Uptime Institute data center tiers (I through IV) with their availability targets, redundancy requirements, and expected annual downtime.</p>
+                        <figure style="margin: 20px 0; text-align: center;">
+                            <img src="knowledge/diagrams/tier_hierarchy.png"
+                                 alt="Uptime Institute tier hierarchy showing Tier I-IV classifications"
+                                 loading="lazy"
+                                 class="taxonomy-diagram"
+                                 onclick="openDiagramLightbox(this)"
+                                 style="cursor: zoom-in;">
+                        </figure>
+                    </div>
+
+                    <!-- Diagram 2: Redundancy Topologies -->
+                    <div class="taxonomy-card">
+                        <h3>Redundancy Topologies</h3>
+                        <p>This chart shows how N, N+1, 2N, and 2(N+1) redundancy configurations differ in architecture, fault tolerance, and operational resilience for critical power and cooling systems.</p>
+                        <figure style="margin: 20px 0; text-align: center;">
+                            <img src="knowledge/diagrams/redundancy_topologies.png"
+                                 alt="Redundancy topology comparison: N, N+1, 2N, and 2(N+1) configurations"
+                                 loading="lazy"
+                                 class="taxonomy-diagram"
+                                 onclick="openDiagramLightbox(this)"
+                                 style="cursor: zoom-in;">
+                        </figure>
+                    </div>
+
+                    <!-- Diagram 3: Cooling Matrix -->
+                    <div class="taxonomy-card">
+                        <h3>Cooling Matrix</h3>
+                        <p>This matrix pairs cooling methods (air-cooled, liquid-cooled, immersion) with rack power densities, showing which cooling technologies are suitable for different heat load scenarios.</p>
+                        <figure style="margin: 20px 0; text-align: center;">
+                            <img src="knowledge/diagrams/cooling_matrix.png"
+                                 alt="Data center cooling methods matched to rack power density requirements"
+                                 loading="lazy"
+                                 class="taxonomy-diagram"
+                                 onclick="openDiagramLightbox(this)"
+                                 style="cursor: zoom-in;">
+                        </figure>
+                    </div>
+
+                    <!-- Diagram 4: Lifecycle Timeline -->
+                    <div class="taxonomy-card">
+                        <h3>Lifecycle Timeline</h3>
+                        <p>This timeline outlines the major phases of a data center project from initial site selection through design, construction, commissioning, and ongoing operations.</p>
+                        <figure style="margin: 20px 0; text-align: center;">
+                            <img src="knowledge/diagrams/lifecycle_timeline.png"
+                                 alt="Data center project lifecycle from site selection to operations"
+                                 loading="lazy"
+                                 class="taxonomy-diagram"
+                                 onclick="openDiagramLightbox(this)"
+                                 style="cursor: zoom-in;">
+                        </figure>
+                    </div>
+
+                    <!-- Diagram 5: Stakeholder Network -->
+                    <div class="taxonomy-card">
+                        <h3>Stakeholder Network</h3>
+                        <p>This network map shows the key roles and relationships among data center operators, developers, investors, utilities, vendors, and regulatory bodies throughout the industry value chain.</p>
+                        <figure style="margin: 20px 0; text-align: center;">
+                            <img src="knowledge/diagrams/stakeholder_network.png"
+                                 alt="Data center industry stakeholder network and relationships"
+                                 loading="lazy"
+                                 class="taxonomy-diagram"
+                                 onclick="openDiagramLightbox(this)"
+                                 style="cursor: zoom-in;">
+                        </figure>
+                    </div>
+                </div>
             </div>
 
             <!-- Study Guides View -->
@@ -9739,6 +9873,40 @@
     </div>
     <div id="toast-container"></div>
 
+    <!-- Diagram Lightbox Modal -->
+    <div id="diagramLightbox" onclick="closeDiagramLightbox()">
+        <span class="close-lightbox" onclick="closeDiagramLightbox()">&times;</span>
+        <img id="lightboxImage" src="" alt="Full-size diagram">
+    </div>
+
+    <script>
+        function openDiagramLightbox(imgElement) {
+            const lightbox = document.getElementById('diagramLightbox');
+            const lightboxImg = document.getElementById('lightboxImage');
+
+            lightboxImg.src = imgElement.src;
+            lightboxImg.alt = imgElement.alt;
+            lightbox.style.display = 'block';
+
+            // Prevent body scroll when lightbox is open
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDiagramLightbox() {
+            const lightbox = document.getElementById('diagramLightbox');
+            lightbox.style.display = 'none';
+
+            // Restore body scroll
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close lightbox on Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeDiagramLightbox();
+            }
+        });
+    </script>
 
     </body>
 </html>
