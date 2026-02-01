@@ -2365,6 +2365,14 @@
     <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
     <!-- Stripe.js for payment processing -->
     <script src="https://js.stripe.com/v3/"></script>
+
+    <!-- Choices.js for multi-select dropdowns -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js@10.2.0/public/assets/styles/choices.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/choices.js@10.2.0/public/assets/scripts/choices.min.js"></script>
+
+    <!-- flatpickr for date range pickers -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
 </head>
 <body>
     <div class="loading-overlay" id="loadingOverlay">
@@ -2406,7 +2414,7 @@
                 </a>
                 <div class="masthead-title-group">
                     <h1>DATACENTER HIVE</h1>
-                    <div class="tagline">"Expert Advisory & Market Intelligence for Data Centers"</div>
+                    <div class="tagline">"Independent Data Center Market Intelligence & Advisory"</div>
                 </div>
             </div>
         </div>
@@ -2516,6 +2524,10 @@
 
             <!-- Glossary View -->
             <div id="glossaryView" class="knowledge-view">
+                <div style="background: #f0f9ff; border: 2px solid #0284c7; border-radius: 6px; padding: 15px; margin-bottom: 20px; font-size: 13px; line-height: 1.6;">
+                    <strong>📚 Glossary Preview:</strong> This is a sample of our data center glossary.
+                    <span id="glossaryPreviewText">Register for free to unlock additional terms and expand your DC knowledge base.</span>
+                </div>
                 <input type="text" id="knowledgeSearch" placeholder="Search glossary terms..." style="width: 100%; padding: 12px; margin-bottom: 20px; border: 2px solid var(--divider-strong); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
                 <div class="knowledge-grid" id="knowledgeGrid"></div>
             </div>
@@ -2547,10 +2559,17 @@
             <!-- Study Guides View -->
             <div id="studyguidesView" class="knowledge-view" style="display: none;">
                 <div style="max-width: 1000px; margin: 0 auto;">
-                    <p style="text-align: center; font-size: 15px; margin-bottom: 30px; line-height: 1.7;">
-                        Professional study guides and educational resources for data center professionals, students, and job seekers.
-                        <strong>Business customers:</strong> See our <a href="#" onclick="switchSection('pricing'); return false;" style="color: var(--text-primary); text-decoration: underline;">subscription plans</a> for full access.
-                    </p>
+                    <div style="background: #f0fdf4; border: 2px solid #059669; border-radius: 6px; padding: 20px; margin-bottom: 30px; text-align: center;">
+                        <h4 style="margin: 0 0 10px 0; font-size: 16px; color: #047857;">📖 Study Guide Library</h4>
+                        <p style="font-size: 14px; margin-bottom: 15px; line-height: 1.7;">
+                            Professional study guides and educational resources for data center professionals, students, and job seekers.
+                        </p>
+                        <p style="font-size: 13px; margin: 0; line-height: 1.6;">
+                            <strong>What you see below:</strong> 3 FREE study guides available after registration.<br>
+                            <strong>What's behind subscriptions:</strong> Additional study guides on Core Fundamentals ($49), Essential Infrastructure ($99), and our complete Enterprise Library (custom pricing).<br>
+                            <strong>Business customers:</strong> See our <a href="#" onclick="switchSection('pricing'); return false;" style="color: var(--brand-primary); text-decoration: underline; font-weight: 600;">subscription plans</a> for full access to all guides + market intelligence platform.
+                        </p>
+                    </div>
 
                     <!-- A la carte paid guides -->
                     <div style="margin-bottom: 16px; border: 2px solid var(--divider-strong); padding: 10px; background: #fff;">
@@ -4170,10 +4189,175 @@
         let upcomingSort = { key: 'firstSeen', dir: -1 }; // Default: sort by newest dates first
         let upcomingSourceFilter = 'all'; // Filter by data source: 'all', 'news', or 'permit'
 
+        // Enhanced filter state for Upcoming DCs
+        let upcomingFilters = {
+            states: [],
+            statuses: [],
+            dateFrom: null,
+            dateTo: null
+        };
+
+        // Enhanced filter state for Existing DCs
+        let existingFilters = {
+            states: [],
+            providers: []
+        };
+
+        // Cached datasets (to avoid re-fetching on every filter change)
+        let cachedUpcomingData = null;
+        let cachedExistingData = null;
+
+        // Global Choices.js and flatpickr instances (to prevent re-initialization)
+        let choicesUpcomingStates = null;
+        let choicesUpcomingStatuses = null;
+        let choicesExistingStates = null;
+        let choicesExistingProviders = null;
+        let fpUpcomingFrom = null;
+        let fpUpcomingTo = null;
+
         // Helper function to check tier access
         function hasTierAccess(requiredTier) {
             const tierLevels = { 'free': 0, 'basic': 1, 'premium': 2, 'enterprise': 3 };
             return tierLevels[userTier] >= tierLevels[requiredTier];
+        }
+
+        // Helper: Normalize string for exact matching
+        function normalizeString(str) {
+            return (str || '').toLowerCase().trim().replace(/\s+/g, ' ');
+        }
+
+        // Helper: Parse date as UTC midnight (avoid timezone issues)
+        function parseUTCDate(dateStr) {
+            if (!dateStr) return null;
+            try {
+                // Add T00:00:00Z to ensure UTC parsing
+                const utcStr = dateStr.includes('T') ? dateStr : dateStr + 'T00:00:00Z';
+                const date = new Date(utcStr);
+                return isNaN(date) ? null : date;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // Enhanced filter functions
+        function applyUpcomingFilters(projects) {
+            let filtered = projects;
+
+            // Filter by states (exact match)
+            if (upcomingFilters.states.length > 0) {
+                filtered = filtered.filter(p => {
+                    const state = (p.state || '').toUpperCase().trim();
+                    return upcomingFilters.states.includes(state);
+                });
+            }
+
+            // Filter by statuses (exact match after normalization)
+            if (upcomingFilters.statuses.length > 0) {
+                filtered = filtered.filter(p => {
+                    const status = normalizeString(p.latest_status);
+                    return upcomingFilters.statuses.some(s => normalizeString(s) === status);
+                });
+            }
+
+            // Filter by date range (UTC-aware)
+            if (upcomingFilters.dateFrom || upcomingFilters.dateTo) {
+                filtered = filtered.filter(p => {
+                    const dateStr = p.first_seen_applied_date || '';
+                    const projectDate = parseUTCDate(dateStr);
+                    if (!projectDate) return false;
+
+                    if (upcomingFilters.dateFrom) {
+                        const fromDate = parseUTCDate(upcomingFilters.dateFrom);
+                        if (fromDate && projectDate < fromDate) return false;
+                    }
+
+                    if (upcomingFilters.dateTo) {
+                        // Include end of day for "to" date
+                        const toDateStr = upcomingFilters.dateTo + 'T23:59:59Z';
+                        const toDate = new Date(toDateStr);
+                        if (!isNaN(toDate) && projectDate > toDate) return false;
+                    }
+
+                    return true;
+                });
+            }
+
+            return filtered;
+        }
+
+        function applyExistingFilters(facilities) {
+            let filtered = facilities;
+
+            // Filter by states (exact match)
+            if (existingFilters.states.length > 0) {
+                filtered = filtered.filter(f => {
+                    const state = (f.state || '').toUpperCase().trim();
+                    return existingFilters.states.includes(state);
+                });
+            }
+
+            // Filter by providers (exact match after normalization)
+            if (existingFilters.providers.length > 0) {
+                filtered = filtered.filter(f => {
+                    const provider = normalizeString(f.provider);
+                    return existingFilters.providers.some(p => normalizeString(p) === provider);
+                });
+            }
+
+            return filtered;
+        }
+
+        function clearUpcomingFilters() {
+            // Reset filter state
+            upcomingFilters.states = [];
+            upcomingFilters.statuses = [];
+            upcomingFilters.dateFrom = null;
+            upcomingFilters.dateTo = null;
+
+            // Sync Choices.js UI (remove selected items without re-initializing)
+            if (choicesUpcomingStates) {
+                choicesUpcomingStates.removeActiveItems();
+            }
+            if (choicesUpcomingStatuses) {
+                choicesUpcomingStatuses.removeActiveItems();
+            }
+
+            // Sync flatpickr UI (clear dates without re-initializing)
+            if (fpUpcomingFrom) {
+                fpUpcomingFrom.clear();
+            }
+            if (fpUpcomingTo) {
+                fpUpcomingTo.clear();
+            }
+
+            // Re-render table rows only (don't reload data or rebuild filters)
+            renderUpcomingTableRows();
+        }
+
+        function clearExistingFilters() {
+            existingFilters.states = [];
+            existingFilters.providers = [];
+            loadExistingDCs();
+        }
+
+        // Type-aware comparison function for sorting
+        function compareValues(a, b, type) {
+            // Handle nulls/undefined
+            if (a == null && b == null) return 0;
+            if (a == null) return 1;
+            if (b == null) return -1;
+
+            switch (type) {
+                case 'number':
+                    return Number(a) - Number(b);
+                case 'date':
+                    const dateA = new Date(a);
+                    const dateB = new Date(b);
+                    return dateA - dateB;
+                case 'string':
+                default:
+                    return String(a).localeCompare(String(b), undefined, { sensitivity: 'base' });
+            }
         }
 
         function setExistingSort(key) {
@@ -4236,12 +4420,17 @@
                     upcomingSort.dir = 1;
                 }
             } else {
-                // Standard 2-state toggle for other columns
+                // Standard 2-state toggle for all other columns (location, address, status, firstSeen, description, valuation)
                 if (upcomingSort.key === key) {
                     upcomingSort.dir *= -1;
                 } else {
                     upcomingSort.key = key;
-                    upcomingSort.dir = 1;
+                    // Default sort direction based on column type
+                    if (key === 'firstSeen' || key === 'valuation') {
+                        upcomingSort.dir = -1; // Descending for dates and numbers (newest/highest first)
+                    } else {
+                        upcomingSort.dir = 1; // Ascending for strings (A-Z)
+                    }
                 }
             }
             loadUpcomingDCs();
@@ -4260,7 +4449,9 @@
                 'address': 'Address',
                 'status': 'Status',
                 'firstSeen': 'First Seen',
-                'source': 'Source'
+                'source': 'Source',
+                'description': 'Description',
+                'valuation': 'Valuation'
             };
 
             const columnText = keyToColumnText[upcomingSort.key];
@@ -6726,7 +6917,7 @@
                 content = content
                     .replace(/^# (.+)$/gm, '<h2 class="section-header">$1</h2>')
                     .replace(/^### (.+)$/gm, '<h4 style="font-size: 16px; margin: 15px 0 8px 0; font-weight: bold;">$1</h4>')
-                    .replace(/^\*\*(.+?)\*\*/gm, '<strong>$1</strong>')
+                    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')  // Fixed: removed ^ to match inline bold
                     .replace(/^- (.+)$/gm, '<li style="margin: 5px 0;">$1</li>')
                     .replace(/\n\n/g, '<p style="margin: 12px 0;"></p>')
                     .replace(/\n/g, '<br>');
@@ -6912,6 +7103,13 @@
                     filteredDCs = allDCs.filter(dc => matchesQuickLinkCategory(dc, window.activeQuickLinkCategory));
                 }
 
+                // Extract unique states and providers BEFORE enhanced filtering (for dropdown options)
+                const allStates = [...new Set(filteredDCs.map(dc => (dc.state || '').toUpperCase().trim()).filter(s => s))].sort();
+                const allProviders = [...new Set(filteredDCs.map(dc => (dc.provider || '').trim()).filter(p => p))].sort();
+
+                // Apply enhanced filters (state, provider)
+                filteredDCs = applyExistingFilters(filteredDCs);
+
                 const tableData = { items: filteredDCs, total: filteredDCs.length };
 
                 // Generate hexbin heatmap visualization
@@ -6983,6 +7181,46 @@
                 }
                 let html = filterStatus + `<h3 class="h3-centered-sm">Operational Data Centers</h3>`;
                 html += '<div style="text-align: center; font-size: 16px; font-weight: bold; color: #d97706; background: #fef3c7; padding: 12px; border: 2px solid #f59e0b; border-radius: 5px; margin-bottom: 15px;">Columns by tier: Free (Provider/Title/Certifications)  ·  Basic (+Sqft/Lat & Long)  ·  Premium (+Contact/Specs)  ·  Enterprise (+Full Address/API Access)</div>';
+
+                // Add enhanced filter controls (state, provider)
+                html += '<div id="existingEnhancedFilters" style="margin-bottom: 20px; padding: 20px; background: #f0f9ff; border: 2px solid #0284c7; border-radius: 6px;">';
+                html += '<h4 style="margin: 0 0 15px 0; font-size: 16px; color: #0369a1;">🔍 Advanced Filters</h4>';
+                html += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin-bottom: 15px;">';
+
+                // State filter
+                html += '<div style="display: flex; flex-direction: column;">';
+                html += '<label style="font-size: 13px; font-weight: 600; margin-bottom: 5px; color: var(--text-primary);">Filter by State(s)</label>';
+                html += '<select id="existingStateFilter" multiple style="width: 100%; padding: 8px; border: 2px solid var(--border-default); border-radius: 4px; font-size: 13px;">';
+                allStates.forEach(state => {
+                    const selected = existingFilters.states.includes(state) ? 'selected' : '';
+                    html += `<option value="${state}" ${selected}>${state}</option>`;
+                });
+                html += '</select>';
+                html += '</div>';
+
+                // Provider filter
+                html += '<div style="display: flex; flex-direction: column;">';
+                html += '<label style="font-size: 13px; font-weight: 600; margin-bottom: 5px; color: var(--text-primary);">Filter by Provider(s)</label>';
+                html += '<select id="existingProviderFilter" multiple style="width: 100%; padding: 8px; border: 2px solid var(--border-default); border-radius: 4px; font-size: 13px;">';
+                allProviders.forEach(provider => {
+                    const selected = existingFilters.providers.includes(provider) ? 'selected' : '';
+                    html += `<option value="${provider}" ${selected}>${provider}</option>`;
+                });
+                html += '</select>';
+                html += '</div>';
+
+                html += '</div>'; // End grid
+
+                // Filter action buttons
+                html += '<div style="display: flex; gap: 10px; justify-content: center;">';
+                html += '<button onclick="clearExistingFilters()" style="padding: 8px 20px; background: #dc2626; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 600;">Clear Filters</button>';
+                const activeFiltersCount = existingFilters.states.length + existingFilters.providers.length;
+                if (activeFiltersCount > 0) {
+                    html += `<span style="padding: 8px 15px; background: #10b981; color: #fff; border-radius: 4px; font-size: 13px; font-weight: 600;">${activeFiltersCount} Filter(s) Active</span>`;
+                }
+                html += '</div>';
+                html += '</div>'; // End enhanced filters panel
+
                 html += '<div class="table-wrapper">';
                 html += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
                 html += '<thead>';
@@ -7121,6 +7359,42 @@
 
                 // Update sort indicators
                 updateExistingSortIndicators();
+
+                // Initialize Choices.js for multi-select dropdowns
+                setTimeout(() => {
+                    const stateSelect = document.getElementById('existingStateFilter');
+                    const providerSelect = document.getElementById('existingProviderFilter');
+
+                    if (stateSelect && typeof Choices !== 'undefined') {
+                        const stateChoices = new Choices(stateSelect, {
+                            removeItemButton: true,
+                            searchEnabled: true,
+                            placeholderValue: 'Select states...',
+                            searchPlaceholderValue: 'Search states...'
+                        });
+
+                        stateSelect.addEventListener('change', function() {
+                            const selected = Array.from(this.selectedOptions).map(opt => opt.value);
+                            existingFilters.states = selected;
+                            loadExistingDCs();
+                        });
+                    }
+
+                    if (providerSelect && typeof Choices !== 'undefined') {
+                        const providerChoices = new Choices(providerSelect, {
+                            removeItemButton: true,
+                            searchEnabled: true,
+                            placeholderValue: 'Select providers...',
+                            searchPlaceholderValue: 'Search providers...'
+                        });
+
+                        providerSelect.addEventListener('change', function() {
+                            const selected = Array.from(this.selectedOptions).map(opt => opt.value);
+                            existingFilters.providers = selected;
+                            loadExistingDCs();
+                        });
+                    }
+                }, 100); // Small delay to ensure DOM is ready
 
             } catch (error) {
                 console.error('Error loading DCs:', error);
@@ -7413,47 +7687,330 @@
             XLSX.writeFile(wb, filename);
         }
 
-        async function loadUpcomingDCs() {
-            const container = document.getElementById('upcomingDCsSection');
-            setLoading(container, true);
+        // ===================================================================
+        // REFACTORED: Upcoming DCs Mount-Point Pattern (Prevents Re-initialization)
+        // ===================================================================
 
-            try {
-                // Load from API
-                const response = await fetch(`${PUBLIC_API_BASE}/upcoming-dcs?limit=5000`, {
-                    headers: authHeaders()
-                });
+        // 1) Fetch data once and cache it
+        async function ensureUpcomingDataLoaded() {
+            if (cachedUpcomingData) {
+                return cachedUpcomingData; // Already loaded
+            }
 
-                if (!response.ok) {
-                    document.getElementById('upcomingDCsTable').innerHTML = '<p style="text-align: center;">Unable to load upcoming DC projects.</p>';
-                    return;
+            const response = await fetch(`${PUBLIC_API_BASE}/upcoming-dcs?limit=5000`, {
+                headers: authHeaders()
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch upcoming DCs');
+            }
+
+            const apiData = await response.json();
+            cachedUpcomingData = apiData.items || [];
+
+            // Store globally for export
+            window.upcomingDCsData = cachedUpcomingData;
+
+            return cachedUpcomingData;
+        }
+
+        // 2) Create fixed mount points once (never rebuild these)
+        function ensureUpcomingMountPoints() {
+            const container = document.getElementById('upcomingDCsTable');
+            if (!container) return;
+
+            // Check if mount points already exist
+            if (document.getElementById('upcomingFiltersMount')) {
+                return; // Already created
+            }
+
+            // Create stable mount point structure
+            container.innerHTML = `
+                <div id="upcomingFiltersMount"></div>
+                <div id="upcomingLegendMount"></div>
+                <div id="upcomingUpgradeBannerMount"></div>
+                <div id="upcomingSummaryMount"></div>
+                <div class="table-wrapper">
+                    <table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                        <thead id="upcomingTheadMount"></thead>
+                        <tbody id="upcomingTbodyMount"></tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        // 3) Render filter UI ONCE into mount point
+        function renderUpcomingFiltersOnce(allStates, allStatuses) {
+            const filtersMount = document.getElementById('upcomingFiltersMount');
+            if (!filtersMount) return;
+
+            // Check if already rendered
+            if (document.getElementById('enhancedFilters')) {
+                return; // Already rendered
+            }
+
+            // Create filter panel HTML
+            let filterHTML = '<div id="enhancedFilters" style="margin-bottom: 20px; padding: 20px; background: #f0f9ff; border: 2px solid #0284c7; border-radius: 6px;">';
+            filterHTML += '<h4 style="margin: 0 0 15px 0; font-size: 16px; color: #0369a1;">🔍 Advanced Filters</h4>';
+            filterHTML += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 15px;">';
+
+            // State filter
+            filterHTML += '<div style="display: flex; flex-direction: column;">';
+            filterHTML += '<label style="font-size: 13px; font-weight: 600; margin-bottom: 5px; color: var(--text-primary);">Filter by State(s)</label>';
+            filterHTML += '<select id="upcomingStateFilter" multiple style="width: 100%; padding: 8px; border: 2px solid var(--border-default); border-radius: 4px; font-size: 13px;">';
+            allStates.forEach(state => {
+                const selected = upcomingFilters.states.includes(state) ? 'selected' : '';
+                filterHTML += `<option value="${state}" ${selected}>${state}</option>`;
+            });
+            filterHTML += '</select>';
+            filterHTML += '</div>';
+
+            // Status filter
+            filterHTML += '<div style="display: flex; flex-direction: column;">';
+            filterHTML += '<label style="font-size: 13px; font-weight: 600; margin-bottom: 5px; color: var(--text-primary);">Filter by Status(es)</label>';
+            filterHTML += '<select id="upcomingStatusFilter" multiple style="width: 100%; padding: 8px; border: 2px solid var(--border-default); border-radius: 4px; font-size: 13px;">';
+            allStatuses.forEach(status => {
+                const selected = upcomingFilters.statuses.includes(status) ? 'selected' : '';
+                filterHTML += `<option value="${status}" ${selected}>${status}</option>`;
+            });
+            filterHTML += '</select>';
+            filterHTML += '</div>';
+
+            // Date range filter
+            filterHTML += '<div style="display: flex; flex-direction: column;">';
+            filterHTML += '<label style="font-size: 13px; font-weight: 600; margin-bottom: 5px; color: var(--text-primary);">Date Range (First Seen)</label>';
+            filterHTML += '<div style="display: flex; gap: 8px;">';
+            filterHTML += `<input type="text" id="upcomingDateFrom" placeholder="From" style="flex: 1; padding: 8px; border: 2px solid var(--border-default); border-radius: 4px; font-size: 13px;" value="${upcomingFilters.dateFrom || ''}">`;
+            filterHTML += `<input type="text" id="upcomingDateTo" placeholder="To" style="flex: 1; padding: 8px; border: 2px solid var(--border-default); border-radius: 4px; font-size: 13px;" value="${upcomingFilters.dateTo || ''}">`;
+            filterHTML += '</div>';
+            filterHTML += '</div>';
+
+            filterHTML += '</div>'; // End grid
+
+            // Filter action buttons
+            filterHTML += '<div style="display: flex; gap: 10px; justify-content: center;">';
+            filterHTML += '<button onclick="clearUpcomingFilters()" style="padding: 8px 20px; background: #dc2626; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 600;">Clear Filters</button>';
+            const activeFiltersCount = upcomingFilters.states.length + upcomingFilters.statuses.length + (upcomingFilters.dateFrom ? 1 : 0) + (upcomingFilters.dateTo ? 1 : 0);
+            if (activeFiltersCount > 0) {
+                filterHTML += `<span style="padding: 8px 15px; background: #10b981; color: #fff; border-radius: 4px; font-size: 13px; font-weight: 600;">${activeFiltersCount} Filter(s) Active</span>`;
+            }
+            filterHTML += '</div>';
+            filterHTML += '</div>'; // End enhanced filters panel
+
+            // Insert into mount point (NEVER rebuild this again)
+            filtersMount.innerHTML = filterHTML;
+
+            // Initialize Choices.js and flatpickr ONCE
+            setTimeout(() => {
+                const stateSelect = document.getElementById('upcomingStateFilter');
+                const statusSelect = document.getElementById('upcomingStatusFilter');
+
+                if (stateSelect && typeof Choices !== 'undefined' && !choicesUpcomingStates) {
+                    choicesUpcomingStates = new Choices(stateSelect, {
+                        removeItemButton: true,
+                        searchEnabled: true,
+                        placeholderValue: 'Select states...',
+                        searchPlaceholderValue: 'Search states...'
+                    });
+
+                    stateSelect.addEventListener('change', function() {
+                        const selected = Array.from(this.selectedOptions).map(opt => opt.value);
+                        upcomingFilters.states = selected;
+                        renderUpcomingTableRows(); // Only re-render tbody/summary
+                    });
                 }
 
-                const apiData = await response.json();
-                let projects = apiData.items || [];
+                if (statusSelect && typeof Choices !== 'undefined' && !choicesUpcomingStatuses) {
+                    choicesUpcomingStatuses = new Choices(statusSelect, {
+                        removeItemButton: true,
+                        searchEnabled: true,
+                        placeholderValue: 'Select statuses...',
+                        searchPlaceholderValue: 'Search statuses...'
+                    });
 
-                // Filter out TBD,TBD entries (news articles without verified locations)
+                    statusSelect.addEventListener('change', function() {
+                        const selected = Array.from(this.selectedOptions).map(opt => opt.value);
+                        upcomingFilters.statuses = selected;
+                        renderUpcomingTableRows(); // Only re-render table, not entire UI
+                    });
+                }
+
+                // Initialize flatpickr for date pickers
+                const dateFromInput = document.getElementById('upcomingDateFrom');
+                const dateToInput = document.getElementById('upcomingDateTo');
+
+                if (dateFromInput && typeof flatpickr !== 'undefined' && !fpUpcomingFrom) {
+                    fpUpcomingFrom = flatpickr(dateFromInput, {
+                        dateFormat: 'Y-m-d',
+                        onChange: function(selectedDates, dateStr) {
+                            upcomingFilters.dateFrom = dateStr;
+                            renderUpcomingTableRows(); // Only re-render table, not entire UI
+                        }
+                    });
+                }
+
+                if (dateToInput && typeof flatpickr !== 'undefined' && !fpUpcomingTo) {
+                    fpUpcomingTo = flatpickr(dateToInput, {
+                        dateFormat: 'Y-m-d',
+                        onChange: function(selectedDates, dateStr) {
+                            upcomingFilters.dateTo = dateStr;
+                            renderUpcomingTableRows(); // Only re-render table, not entire UI
+                        }
+                    });
+                }
+            }, 100);
+        }
+
+        // 4) Render table header ONCE (or when tier changes)
+        let lastUpcomingHeaderTier = null;
+        function renderUpcomingTableHeaderOnce() {
+            const theadMount = document.getElementById('upcomingTheadMount');
+            if (!theadMount) return;
+
+            // Only re-render if tier changed
+            if (lastUpcomingHeaderTier === userTier && theadMount.innerHTML) {
+                return; // Already rendered for this tier
+            }
+
+            lastUpcomingHeaderTier = userTier;
+
+            // Build header HTML with tier-specific columns
+            let headerHTML = '<tr style="background: var(--brand-primary); color: #fff;">';
+
+            // FREE tier columns
+            headerHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setUpcomingSort(\'location\')">Location</th>';
+            headerHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setUpcomingSort(\'address\')">Address</th>';
+            headerHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setUpcomingSort(\'status\')">Status</th>';
+            headerHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setUpcomingSort(\'firstSeen\')">First Seen</th>';
+            headerHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setUpcomingSort(\'source\')">Source</th>';
+
+            // Save column for logged-in users
+            if (isLoggedIn()) {
+                headerHTML += '<th style="padding: 8px; text-align: center; background: #0284c7; color: #fff;">Save</th>';
+            }
+
+            // BASIC tier columns
+            if (hasTierAccess('basic')) {
+                headerHTML += '<th style="padding: 8px; text-align: left; background: #4a5568; color: #fff;">Lat/Long</th>';
+            }
+
+            // PREMIUM tier columns
+            if (hasTierAccess('premium')) {
+                headerHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #6b46c1; color: #fff;" onclick="setUpcomingSort(\'description\')">Description</th>';
+            }
+
+            // ENTERPRISE tier columns
+            if (hasTierAccess('enterprise')) {
+                headerHTML += '<th style="padding: 8px; text-align: right; cursor: pointer; background: #d97706; color: #fff;" onclick="setUpcomingSort(\'valuation\')">Valuation</th>';
+                headerHTML += '<th style="padding: 8px; text-align: center; background: #d97706; color: #fff;">Details</th>';
+            }
+
+            headerHTML += '</tr>';
+
+            // Write to mount point ONCE (or when tier changes)
+            theadMount.innerHTML = headerHTML;
+        }
+
+        // 5) Render table rows only (called on filter/sort changes)
+        async function renderUpcomingTableRows() {
+            try {
+                // Copy cached data (never mutate the original)
+                let projects = cachedUpcomingData ? [...cachedUpcomingData] : [];
+
+                // Step 1: Filter out TBD,TBD entries
                 projects = projects.filter(p => {
                     const city = (p.city || '').toUpperCase().trim();
                     const state = (p.state || '').toUpperCase().trim();
-                    // Remove if both city AND state are TBD
                     return !(city === 'TBD' && state === 'TBD');
                 });
 
-                // Apply quick link category filter if active
+                // Step 2: Apply quick link category filter if active
                 if (window.activeQuickLinkCategory) {
                     projects = projects.filter(p => matchesQuickLinkCategory(p, window.activeQuickLinkCategory));
                 }
 
-                // Apply source filter
+                // Step 3: Apply source filter
                 if (upcomingSourceFilter === 'news') {
                     projects = projects.filter(p => p.source === 'news');
                 } else if (upcomingSourceFilter === 'permit') {
                     projects = projects.filter(p => p.source === 'permit');
                 }
-                // If 'all', don't filter
 
-                // Store data globally for export (before filtering)
-                window.upcomingDCsData = apiData.items || [];
+                // Step 4: Apply enhanced filters (state, status, date range)
+                projects = applyUpcomingFilters(projects);
+
+                // Step 5: Sort with SINGLE comparator (priority group → user sort → tie-breaker)
+                const getGroup = (p) => {
+                    const isNews = p.source === 'news';
+                    if (!isNews) return 0; // permits = group 0
+
+                    const city = (p.city || '').toUpperCase().trim();
+                    const state = (p.state || '').toUpperCase().trim();
+                    const hasLocation = city && state && city !== 'TBD' && state !== 'TBD' && city !== '' && state !== '';
+
+                    return hasLocation ? 1 : 2; // news with location = 1, news without = 2
+                };
+
+                projects.sort((a, b) => {
+                    // 1. Compare priority group
+                    const groupDiff = getGroup(a) - getGroup(b);
+                    if (groupDiff !== 0) return groupDiff;
+
+                    // 2. Apply user sort if active
+                    if (upcomingSort.key) {
+                        const key = upcomingSort.key;
+                        const dir = upcomingSort.dir;
+                        let valA, valB, compareType;
+
+                        switch (key) {
+                            case 'location':
+                                valA = `${a.city || ''} ${a.state || ''}`;
+                                valB = `${b.city || ''} ${b.state || ''}`;
+                                compareType = 'string';
+                                break;
+                            case 'address':
+                                valA = a.address_raw || '';
+                                valB = b.address_raw || '';
+                                compareType = 'string';
+                                break;
+                            case 'status':
+                                valA = a.latest_status || '';
+                                valB = b.latest_status || '';
+                                compareType = 'string';
+                                break;
+                            case 'firstSeen':
+                                valA = a.first_seen_applied_date || '';
+                                valB = b.first_seen_applied_date || '';
+                                compareType = 'date';
+                                break;
+                            case 'source':
+                                valA = a.source || '';
+                                valB = b.source || '';
+                                compareType = 'string';
+                                break;
+                            case 'description':
+                                valA = a.latest_description || '';
+                                valB = b.latest_description || '';
+                                compareType = 'string';
+                                break;
+                            case 'valuation':
+                                valA = parseFloat(a.latest_valuation_usd) || 0;
+                                valB = parseFloat(b.latest_valuation_usd) || 0;
+                                compareType = 'number';
+                                break;
+                            default:
+                                valA = '';
+                                valB = '';
+                                compareType = 'string';
+                        }
+
+                        const sortResult = compareValues(valA, valB, compareType) * dir;
+                        if (sortResult !== 0) return sortResult;
+                    }
+
+                    // 3. Tie-break by date (newest first)
+                    return (b.first_seen_applied_date || '').localeCompare(a.first_seen_applied_date || '');
+                });
 
                 // Show export buttons for BASIC tier and above
                 const exportBtns = document.getElementById('upcomingExportBtns');
@@ -7461,148 +8018,101 @@
                     exportBtns.style.display = 'flex';
                 }
 
-                if (!projects || projects.length === 0) {
-                    document.getElementById('upcomingDCsTable').innerHTML = '<p style="text-align: center;">No upcoming DC projects found.</p>';
-                    return;
-                }
+                // Build legend HTML
+                const legendHTML = '<div style="text-align: center; font-size: 16px; font-weight: bold; color: #d97706; background: #fef3c7; padding: 12px; border: 2px solid #f59e0b; border-radius: 5px; margin-bottom: 15px;">Columns by tier: Free (Location/Address/Status/First Seen/Source)  ·  Basic (+Lat/Long)  ·  Premium (+Most Recent Description)  ·  Enterprise (+Total Permit Quantity per permit address/All previous Details)</div>';
 
-                console.log(`Loaded ${projects.length} upcoming DC projects (TBD,TBD entries filtered)`);
-
-                // Generate hexbin heatmap visualization for upcoming projects
-                await renderUpcomingHexbinHeatmap('upcomingHeatmap');
-
-                // Sort projects: permits first, then news with location, then news without location
-                projects.sort((a, b) => {
-                    const aIsNews = a.source === 'news';
-                    const bIsNews = b.source === 'news';
-
-                    // Check if news has valid city and state (not TBD)
-                    const aHasLocation = aIsNews &&
-                        (a.city || '').toUpperCase().trim() !== 'TBD' &&
-                        (a.state || '').toUpperCase().trim() !== 'TBD' &&
-                        (a.city || '').trim() !== '' &&
-                        (a.state || '').trim() !== '';
-                    const bHasLocation = bIsNews &&
-                        (b.city || '').toUpperCase().trim() !== 'TBD' &&
-                        (b.state || '').toUpperCase().trim() !== 'TBD' &&
-                        (b.city || '').trim() !== '' &&
-                        (b.state || '').trim() !== '';
-
-                    // Sorting priority: Permits -> News with location -> News without location
-                    if (!aIsNews && bIsNews) return -1;  // Permits before all news
-                    if (aIsNews && !bIsNews) return 1;
-
-                    // Both are news: prioritize those with location
-                    if (aIsNews && bIsNews) {
-                        if (aHasLocation && !bHasLocation) return -1;
-                        if (!aHasLocation && bHasLocation) return 1;
-                    }
-
-                    // Within same category, sort by date (newest first)
-                    return (b.first_seen_applied_date || '').localeCompare(a.first_seen_applied_date || '');
-                });
-
-                // Apply user sort (after priority sort)
-                if (upcomingSort.key) {
-                    const key = upcomingSort.key;
-                    const dir = upcomingSort.dir;
-                    projects.sort((a, b) => {
-                        const getVal = (item) => {
-                            if (key === 'location') return `${item.city || ''} ${item.state || ''}`.toLowerCase();
-                            if (key === 'status') return (item.latest_status || '').toLowerCase();
-                            if (key === 'firstSeen') return (item.first_seen_applied_date || '');
-                            if (key === 'source') return (item.source || '').toLowerCase();
-                            return '';
-                        };
-                        const va = getVal(a);
-                        const vb = getVal(b);
-                        if (va < vb) return -1 * dir;
-                        if (va > vb) return 1 * dir;
-                        return 0;
-                    });
-                }
-
-                // Generate filter status banner
-                let filterStatus = '';
-                if (window.activeQuickLinkCategory) {
-                    filterStatus = `
-                        <div class="notice notice-info">
-                            <strong>Filtered by:</strong> ${getCategoryDescription(window.activeQuickLinkCategory)}
-                            <button onclick="window.activeQuickLinkCategory = null; loadUpcomingDCs();" style="margin-left: 10px; padding: 5px 15px; background: #dc2626; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
-                                Clear Filter
+                // Build upgrade banner (only for free tier)
+                let upgradeBannerHTML = '';
+                if (userTier === 'free') {
+                    upgradeBannerHTML = `
+                        <div style="margin-bottom: 15px; padding: 15px; background: #f5f1e8; border: 3px solid #9333ea; border-radius: 5px; color: var(--text-primary);">
+                            <h4 style="margin: 0 0 10px 0; font-size: 16px; color: #7e22ce;">🚀 Unlock More Data with Paid Tiers</h4>
+                            <p style="margin: 0 0 10px 0; font-size: 13px;">You're seeing basic columns. Upgrade to access:</p>
+                            <ul style="margin: 0; padding-left: 20px; font-size: 12px;">
+                                <li><strong>Basic ($299/mo):</strong> + Lat/Long</li>
+                                <li><strong>Premium ($999/mo):</strong> + Most Recent Description</li>
+                                <li><strong>Enterprise ($2,499/mo):</strong> + Total Permit Quantity per permit address, All previous Details</li>
+                            </ul>
+                            <button onclick="switchSection('pricing')" style="margin-top: 10px; padding: 8px 20px; background: var(--brand-primary); color: #fff; border: 3px solid #9333ea; border-radius: 3px; font-weight: bold; cursor: pointer;">
+                                View Pricing Plans
                             </button>
                         </div>
                     `;
                 }
 
-                // Table Legend (displayed first)
-                const tableLegend = '<div style="text-align: center; font-size: 16px; font-weight: bold; color: #d97706; background: #fef3c7; padding: 12px; border: 2px solid #f59e0b; border-radius: 5px; margin-bottom: 15px;">Columns by tier: Free (Location/Address/Status/First Seen/Source)  ·  Basic (+Lat/Long)  ·  Premium (+Most Recent Description)  ·  Enterprise (+Total Permit Quantity per permit address/All previous Details)</div>';
+                // Build summary HTML
+                const newsCount = projects.filter(p => p.source === 'news').length;
+                const permitCount = projects.filter(p => p.source === 'permit').length;
+                const summaryHTML = `
+                    <div style="margin-top: 10px; padding: 10px; background: #f0f0f0; border: 2px solid var(--divider-strong); font-size: 12px;">
+                        <strong>Total Projects: ${projects.length}</strong>
+                        (<span style="color: #ffc107; font-weight: bold;">📰 ${newsCount} News Discoveries</span> +
+                        <span style="color: #198754; font-weight: bold;">📋 ${permitCount} Permitted</span>)
+                        <span style="float: right; font-size: 11px;">Current Tier: <strong style="text-transform: uppercase; color: #667eea;">${userTier}</strong></span>
+                    </div>
+                `;
 
-                // Generate project table with tiered access columns
-                                let tableHTML = filterStatus;
+                // Build tbody HTML only (rows + enterprise details rows)
+                // Compute colspan dynamically based on tier
+                let colspan = 5; // FREE: location, address, status, firstSeen, source
+                if (isLoggedIn()) colspan++; // +1 for Save column
+                if (hasTierAccess('basic')) colspan++; // +1 for Lat/Long
+                if (hasTierAccess('premium')) colspan++; // +1 for Description
+                if (hasTierAccess('enterprise')) colspan += 2; // +2 for Valuation and Details
 
-                // Add source filter controls
-                tableHTML += '<div style="text-align: center; margin-bottom: 15px; padding: 15px; background: #f9f9f9; border: 2px solid var(--divider-strong);">';
-                tableHTML += '<p style="font-size: 14px; margin-bottom: 10px; font-weight: bold;">Filter by Data Source:</p>';
-                tableHTML += '<p style="font-size: 12px; margin-bottom: 12px; color: #555;">';
-                tableHTML += '<strong>News:</strong> Projects discovered from news articles and industry announcements. ';
-                tableHTML += '<strong>Permits:</strong> Data center related permits tracking new facilities, construction and upgrades to existing facilities, data center hall expansions, infrastructure builds, and all project stages from initial permits through completion.';
-                tableHTML += '</p>';
-                tableHTML += '<div style="display: flex; gap: 10px; justify-content: center;">';
-                tableHTML += '<button onclick="filterUpcomingBySource(\'all\')" id="filterAll" style="padding: 8px 16px; cursor: pointer; background: var(--brand-primary); color: #fff; border: none; font-weight: bold; border-radius: 6px;">All Sources</button>';
-                tableHTML += '<button onclick="filterUpcomingBySource(\'news\')" id="filterNews" style="padding: 8px 16px; cursor: pointer; background: #fff; color: var(--text-primary); border: 2px solid var(--divider-strong); font-weight: bold; border-radius: 6px;">News Only</button>';
-                tableHTML += '<button onclick="filterUpcomingBySource(\'permit\')" id="filterPermit" style="padding: 8px 16px; cursor: pointer; background: #fff; color: var(--text-primary); border: 2px solid var(--divider-strong); font-weight: bold; border-radius: 6px;">Permits Only</button>';
-                tableHTML += '</div>';
-                tableHTML += '</div>';
-                tableHTML += '<div class="table-wrapper">';
-                tableHTML += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
-                tableHTML += '<thead>';
-                tableHTML += '<tr style="background: var(--brand-primary); color: #fff;">';
-                // FREE tier columns
-                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setUpcomingSort(\'location\')">Location</th>';
-                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setUpcomingSort(\'address\')">Address</th>';
-                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setUpcomingSort(\'status\')">Status</th>';
-                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setUpcomingSort(\'firstSeen\')">First Seen</th>';
-                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setUpcomingSort(\'source\')">Source</th>';
-                // Save column for logged-in users
-                if (isLoggedIn()) {
-                    tableHTML += '<th style="padding: 8px; text-align: center; background: #0284c7; color: #fff;">Save</th>';
+                let tbodyHTML = '';
+
+                // Add filter status banner (if quick link active)
+                if (window.activeQuickLinkCategory) {
+                    tbodyHTML += `
+                        <tr>
+                            <td colspan="${colspan}" style="padding: 0;">
+                                <div class="notice notice-info" style="margin: 0 0 15px 0;">
+                                    <strong>Filtered by:</strong> ${getCategoryDescription(window.activeQuickLinkCategory)}
+                                    <button onclick="window.activeQuickLinkCategory = null; loadUpcomingDCs();" style="margin-left: 10px; padding: 5px 15px; background: #dc2626; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
+                                        Clear Filter
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
                 }
-                // BASIC tier columns (+lat/long) - note we don't have lat/long in CSV yet, placeholder for now
-                if (hasTierAccess('basic')) {
-                    tableHTML += '<th style="padding: 8px; text-align: left; background: #4a5568; color: #fff;">Lat/Long</th>';
-                }
-                // PREMIUM tier columns (+description)
-                if (hasTierAccess('premium')) {
-                    tableHTML += '<th style="padding: 8px; text-align: left; background: #6b46c1; color: #fff;">Description</th>';
-                }
-                // ENTERPRISE tier columns (+valuation)
-                if (hasTierAccess('enterprise')) {
-                    tableHTML += '<th style="padding: 8px; text-align: right; background: #d97706; color: #fff;">Valuation</th>';
-                    tableHTML += '<th style="padding: 8px; text-align: center; background: #d97706; color: #fff;">Details</th>';
-                }
-                tableHTML += '</tr>';
-                tableHTML += '</thead>';
-                tableHTML += '<tbody>';
+
+                // Add source filter controls row
+                tbodyHTML += `
+                    <tr>
+                        <td colspan="${colspan}" style="padding: 0;">
+                            <div style="text-align: center; margin-bottom: 15px; padding: 15px; background: #f9f9f9; border: 2px solid var(--divider-strong);">
+                                <p style="font-size: 14px; margin-bottom: 10px; font-weight: bold;">Filter by Data Source:</p>
+                                <p style="font-size: 12px; margin-bottom: 12px; color: #555;">
+                                    <strong>News:</strong> Projects discovered from news articles and industry announcements.
+                                    <strong>Permits:</strong> Data center related permits tracking new facilities, construction and upgrades to existing facilities, data center hall expansions, infrastructure builds, and all project stages from initial permits through completion.
+                                </p>
+                                <div style="display: flex; gap: 10px; justify-content: center;">
+                                    <button onclick="filterUpcomingBySource('all')" id="filterAll" style="padding: 8px 16px; cursor: pointer; background: var(--brand-primary); color: #fff; border: none; font-weight: bold; border-radius: 6px;">All Sources</button>
+                                    <button onclick="filterUpcomingBySource('news')" id="filterNews" style="padding: 8px 16px; cursor: pointer; background: #fff; color: var(--text-primary); border: 2px solid var(--divider-strong); font-weight: bold; border-radius: 6px;">News Only</button>
+                                    <button onclick="filterUpcomingBySource('permit')" id="filterPermit" style="padding: 8px 16px; cursor: pointer; background: #fff; color: var(--text-primary); border: 2px solid var(--divider-strong); font-weight: bold; border-radius: 6px;">Permits Only</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+
+                // Build data rows
                 projects.forEach((project, idx) => {
                     const isNews = project.source === 'news';
-
-                    // Color coding: Yellow for news, Green for permits
                     const bgBase = isNews ? '#fff3cd' : '#d1e7dd';
                     const borderColor = isNews ? '#ffc107' : '#198754';
-                    const icon = isNews ? '    ' : '        ';
+                    const icon = isNews ? '📰' : '📋';
 
                     const city = project.city || 'TBD';
                     const state = project.state || 'TBD';
                     const location = `${icon} ${city}, ${state}`;
 
-                    // Address column: show link for news, address for permits
                     let addressDisplay;
                     if (isNews && project.source_url) {
-                        // For news: show clickable link
-                        addressDisplay = `<a href="${project.source_url}" target="_blank" style="color: #0066cc; text-decoration: underline;">View Article       </a>`;
+                        addressDisplay = `<a href="${project.source_url}" target="_blank" style="color: #0066cc; text-decoration: underline;">View Article 🔗</a>`;
                     } else if (project.address_raw && project.address_raw !== 'TBD') {
-                        // For permits: show actual address
                         addressDisplay = project.address_raw;
                     } else {
                         addressDisplay = '-';
@@ -7613,14 +8123,15 @@
                     const sourceLabel = isNews ? 'News' : 'Permit';
                     const description = project.latest_description || '-';
                     const valuation = project.latest_valuation_usd ? `$${parseFloat(project.latest_valuation_usd).toLocaleString()}` : '-';
+
                     const statusLower = status.toLowerCase();
                     let statusClass = 'draft';
                     if (statusLower.includes('active')) statusClass = 'active';
                     else if (statusLower.includes('permit')) statusClass = 'permit';
                     else if (statusLower.includes('review')) statusClass = 'review';
 
-                    // Start row
-                    tableHTML += `<tr style="background: ${bgBase}; border-left: 4px solid ${borderColor}; border-bottom: 1px solid #ccc;" data-project-idx="${idx}">
+                    // Build row
+                    tbodyHTML += `<tr style="background: ${bgBase}; border-left: 4px solid ${borderColor}; border-bottom: 1px solid #ccc;" data-project-idx="${idx}">
                         <td style="padding: 8px;">${location}</td>
                         <td style="padding: 8px;">${addressDisplay}</td>
                         <td style="padding: 8px;"><span class="chip ${statusClass}">${status}</span></td>
@@ -7631,15 +8142,10 @@
                             </span>
                         </td>`;
 
-                    // Save button for logged-in users
                     if (isLoggedIn()) {
-                        // Create unique ID for upcoming DC project
                         const projectId = `upcoming-${city.replace(/[^a-zA-Z0-9]/g, '-')}-${state}-${firstSeen.replace(/[^a-zA-Z0-9]/g, '-')}`.toLowerCase();
-
-                        // Store project in global map
                         window.dcItemsMap[projectId] = project;
-
-                        tableHTML += `<td style="padding: 8px; text-align: center;">
+                        tbodyHTML += `<td style="padding: 8px; text-align: center;">
                             <button id="save-btn-${projectId}" onclick="toggleWatchlist('${projectId}', window.dcItemsMap['${projectId}'], 'upcoming'); return false;"
                                 style="padding: 4px 10px; background: #0284c7; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
                                 ★ Save
@@ -7647,38 +8153,35 @@
                         </td>`;
                     }
 
-                    // BASIC tier column (lat/long)
                     if (hasTierAccess('basic')) {
                         const lat = project.latitude || '';
                         const lon = project.longitude || '';
                         const coords = (lat && lon) ? `${parseFloat(lat).toFixed(4)}, ${parseFloat(lon).toFixed(4)}` : '-';
-                        tableHTML += `<td style="padding: 8px; background: #f7fafc; color: #4a5568; font-size: 11px;">${coords}</td>`;
+                        tbodyHTML += `<td style="padding: 8px; background: #f7fafc; color: #4a5568; font-size: 11px;">${coords}</td>`;
                     }
 
-                    // PREMIUM tier column (description)
                     if (hasTierAccess('premium')) {
-                        tableHTML += `<td style="padding: 8px; background: #faf5ff; color: #6b46c1; font-size: 11px;">${description}</td>`;
+                        tbodyHTML += `<td style="padding: 8px; background: #faf5ff; color: #6b46c1; font-size: 11px;">${description}</td>`;
                     }
 
-                    // ENTERPRISE tier columns (valuation + details button)
                     if (hasTierAccess('enterprise')) {
-                        tableHTML += `<td style="padding: 8px; text-align: right; background: #fffbeb; color: #d97706; font-weight: bold; font-size: 11px;">${valuation}</td>`;
-                        tableHTML += `<td style="padding: 8px; text-align: center; background: #fffbeb;">
-                            <button onclick="toggleProjectDetails(${idx})" style="padding: 2px 8px; background: #d97706; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 10px;">
+                        tbodyHTML += `<td style="padding: 8px; text-align: right; background: #fffbeb; color: #d97706; font-weight: bold; font-size: 11px;">${valuation}</td>`;
+                        tbodyHTML += `<td style="padding: 8px; text-align: center; background: #fffbeb;">
+                            <button class="details-toggle" onclick="toggleProjectDetails(${idx})" style="padding: 2px 8px; background: #d97706; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 10px;">
                                 Expand
                             </button>
                         </td>`;
                     }
 
-                    tableHTML += `</tr>`;
+                    tbodyHTML += `</tr>`;
 
-                    // ENTERPRISE: Expandable row for permit details
+                    // ENTERPRISE: Expandable details row
                     if (hasTierAccess('enterprise')) {
                         const recordIds = (project.record_ids_sample || '').split(';').filter(id => id.trim());
                         const statuses = (project.statuses_sample || '').split(';').filter(s => s.trim());
 
-                        tableHTML += `<tr id="details-${idx}" style="display: none; background: #fffbeb; border-left: 4px solid #d97706;">
-                            <td colspan="${hasTierAccess('enterprise') ? 8 : hasTierAccess('premium') ? 7 : hasTierAccess('basic') ? 6 : 5}" style="padding: 15px;">
+                        tbodyHTML += `<tr id="details-${idx}" style="display: none; background: #fffbeb; border-left: 4px solid #d97706;">
+                            <td colspan="${colspan}" style="padding: 15px;">
                                 <div style="font-size: 12px;">
                                     <h4 style="margin: 0 0 10px 0; color: #d97706;">Full Project Details</h4>
                                     <p><strong>Description:</strong> ${description}</p>
@@ -7701,48 +8204,76 @@
                     }
                 });
 
-                tableHTML += '</tbody></table></div>';
+                // Update mount points (NEVER touch upcomingDCsTable.innerHTML)
+                const legendMount = document.getElementById('upcomingLegendMount');
+                const upgradeBannerMount = document.getElementById('upcomingUpgradeBannerMount');
+                const summaryMount = document.getElementById('upcomingSummaryMount');
+                const tbodyMount = document.getElementById('upcomingTbodyMount');
 
-                // Add summary
-                const newsCount = projects.filter(p => p.source === 'news').length;
-                const permitCount = projects.filter(p => p.source === 'permit').length;
-
-                // Tier upgrade banner
-                let upgradeBanner = '';
-                if (userTier === 'free') {
-                    upgradeBanner = `
-                        <div style="margin-bottom: 15px; padding: 15px; background: #f5f1e8; border: 3px solid #9333ea; border-radius: 5px; color: var(--text-primary);">
-                            <h4 style="margin: 0 0 10px 0; font-size: 16px; color: #7e22ce;">          Unlock More Data with Paid Tiers</h4>
-                            <p style="margin: 0 0 10px 0; font-size: 13px;">You're seeing basic columns. Upgrade to access:</p>
-                            <ul style="margin: 0; padding-left: 20px; font-size: 12px;">
-                                <li><strong>Basic ($299/mo):</strong> + Lat/Long</li>
-                                <li><strong>Premium ($999/mo):</strong> + Most Recent Description</li>
-                                <li><strong>Enterprise ($2,499/mo):</strong> + Total Permit Quantity per permit address, All previous Details</li>
-                            </ul>
-                            <button onclick="switchSection('pricing')" style="margin-top: 10px; padding: 8px 20px; background: var(--brand-primary); color: #fff; border: 3px solid #9333ea; border-radius: 3px; font-weight: bold; cursor: pointer;">
-                                View Pricing Plans
-                            </button>
-                        </div>
-                    `;
-                }
-
-                const summaryHTML = `
-                    <div style="margin-top: 10px; padding: 10px; background: #f0f0f0; border: 2px solid var(--divider-strong); font-size: 12px;">
-                        <strong>Total Projects: ${projects.length}</strong>
-                        (<span style="color: #ffc107; font-weight: bold;">     ${newsCount} News Discoveries</span> +
-                        <span style="color: #198754; font-weight: bold;">         ${permitCount} Permitted</span>)
-                        <span style="float: right; font-size: 11px;">Current Tier: <strong style="text-transform: uppercase; color: #667eea;">${userTier}</strong></span>
-                    </div>
-                `;
-
-                document.getElementById('upcomingDCsTable').innerHTML = tableLegend + upgradeBanner + summaryHTML + tableHTML;
+                if (legendMount) legendMount.innerHTML = legendHTML;
+                if (upgradeBannerMount) upgradeBannerMount.innerHTML = upgradeBannerHTML;
+                if (summaryMount) summaryMount.innerHTML = summaryHTML;
+                if (tbodyMount) tbodyMount.innerHTML = tbodyHTML;
 
                 // Update sort indicators
                 updateUpcomingSortIndicators();
 
             } catch (error) {
+                console.error('Error rendering upcoming table rows:', error);
+            }
+        }
+
+        // REFACTORED: Clean orchestrator - just coordinates the mount-point functions
+        async function loadUpcomingDCs() {
+            const container = document.getElementById('upcomingDCsSection');
+            setLoading(container, true);
+
+            try {
+                // Step 1: Create mount points (idempotent - only creates once)
+                ensureUpcomingMountPoints();
+
+                // Step 2: Ensure data is loaded (fetches once, caches)
+                await ensureUpcomingDataLoaded();
+
+                if (!cachedUpcomingData || cachedUpcomingData.length === 0) {
+                    const tbodyMount = document.getElementById('upcomingTbodyMount');
+                    if (tbodyMount) {
+                        tbodyMount.innerHTML = '<tr><td colspan="10" style="text-align: center; padding: 20px;">Unable to load upcoming DC projects.</td></tr>';
+                    }
+                    return;
+                }
+
+                // Step 3: Compute unique states and statuses for filter dropdowns
+                // (Use cached data, filter out TBD for cleaner options)
+                const allStates = [...new Set(cachedUpcomingData
+                    .map(p => (p.state || '').toUpperCase().trim())
+                    .filter(s => s && s !== 'TBD'))].sort();
+
+                const allStatuses = [...new Set(cachedUpcomingData
+                    .map(p => (p.latest_status || '').trim())
+                    .filter(s => s && s.toLowerCase() !== 'unknown'))].sort();
+
+                // Step 4: Render filter panel once (idempotent - checks if already rendered)
+                renderUpcomingFiltersOnce(allStates, allStatuses);
+
+                // Step 5: Render table header once (idempotent - checks if already rendered for this tier)
+                renderUpcomingTableHeaderOnce();
+
+                // Step 6: Render table rows (applies filters, sorting, builds tbody)
+                await renderUpcomingTableRows();
+
+                // Step 7: Render hexbin heatmap (only in orchestrator, not in renderTableRows)
+                await renderUpcomingHexbinHeatmap('upcomingHeatmap');
+
+                // Store data globally for export
+                window.upcomingDCsData = cachedUpcomingData;
+
+            } catch (error) {
                 console.error('Error loading upcoming DCs:', error);
-                document.getElementById('upcomingDCsTable').innerHTML = '<p style="text-align: center;">Error loading data. Please check CSV file location.</p>';
+                const tbodyMount = document.getElementById('upcomingTbodyMount');
+                if (tbodyMount) {
+                    tbodyMount.innerHTML = '<tr><td colspan="10" style="text-align: center; padding: 20px;">Error loading data.</td></tr>';
+                }
             } finally {
                 setLoading(container, false);
             }
@@ -7755,7 +8286,7 @@
                 const isVisible = detailsRow.style.display !== 'none';
                 detailsRow.style.display = isVisible ? 'none' : '';
                 // Update button text
-                const btn = document.querySelector(`tr[data-project-idx="${idx}"] button`);
+                const btn = document.querySelector(`tr[data-project-idx="${idx}"] .details-toggle`);
                 if (btn) {
                     btn.textContent = isVisible ? 'Expand' : 'Collapse';
                 }
@@ -7769,6 +8300,15 @@
 
         function hideLoading() {
             document.getElementById('loadingOverlay').classList.remove('active');
+        }
+
+        async function searchExistingDCs() {
+            const query = document.getElementById('searchInput')?.value?.trim();
+            if (!query) {
+                showToast('Please enter a search query', 'info');
+                return;
+            }
+            return doSearch(query);
         }
 
         async function doSearch(query) {
@@ -7812,74 +8352,45 @@
         }
 
         function displayResults(data, query) {
-            const contentArea = document.getElementById('contentArea');
-            let html = `<div class="headline-main">Search Results: "${query}"</div>`;
+            const contentArea = document.getElementById('homeContent');
+            let html = `<div style="margin-bottom: 20px;">
+                <h3 class="section-header">Search Results for "${query}"</h3>
+            </div>`;
 
-            // Service inquiry response
-            if (data.intent === 'SERVICE_INQUIRY' && data.response) {
-                html += `
-                    <div class="article">
-                        <div class="article-headline">DC Intel Services</div>
-                        <div class="article-byline">Intelligence Desk</div>
-                        <div class="article-content">${data.response}</div>
-                    </div>
-                `;
+            if (data.datacenters && data.datacenters.length > 0) {
+                html += `<h4 class="section-subheader">Data Centers (${data.datacenters.length})</h4>`;
+                html += '<div style="margin-bottom: 30px;">';
+                data.datacenters.forEach(dc => {
+                    html += `<div class="article">
+                        <h4>${dc.provider} - ${dc.name}</h4>
+                        <p><strong>Location:</strong> ${dc.city}, ${dc.state}</p>
+                        <p>${dc.about || ''}</p>
+                    </div>`;
+                });
+                html += '</div>';
             }
 
-            // Rollup/facility results
-            if (data.rollups && data.rollups.total > 0) {
-                const items = data.rollups.items.slice(0, 12);
-                items.forEach((item, idx) => {
-                    // Handle both field naming conventions
-                    const address = item.address_raw || item.Address || 'Unknown Location';
-                    const city = item.city || item.City || 'N/A';
-                    const state = item.state || item.State || 'N/A';
-                    const description = item.latest_description || item.Description || 'No description available';
-                    const valuation = item.latest_valuation_usd || item.TotalValuation || 0;
-                    const permitCount = item.permits_count || item.PermitCount || 0;
-                    const latestDate = item.last_seen_applied_date || item.LatestDate || 'N/A';
-
-                    html += `
-                        <div class="article">
-                            <div class="article-headline">${idx + 1}. ${address}</div>
-                            <div class="article-byline">${city}, ${state}       Valuation: $${valuation.toLocaleString()}</div>
-                            <div class="article-content">
-                                ${description.substring(0, 200)}...
-                                <br><strong>Permits:</strong> ${permitCount} |
-                                <strong>Latest:</strong> ${latestDate}
-                            </div>
+            if (data.articles && data.articles.length > 0) {
+                html += `<h4 class="section-subheader">News Articles (${data.articles.length})</h4>`;
+                data.articles.forEach(article => {
+                    html += `<div class="news-card">
+                        <div class="news-card__headline">${article.title}</div>
+                        <div class="news-card__summary">${article.summary || ''}</div>
+                        <div class="news-card__meta">
+                            <span>${article.source || 'Unknown'}</span>
+                            <span>${article.published_utc || ''}</span>
                         </div>
-                    `;
+                        ${article.url ? `<a href="${article.url}" target="_blank" style="color: var(--brand-primary); text-decoration: underline;">Read More</a>` : ''}
+                    </div>`;
                 });
             }
 
-            // News results
-            if (data.news && data.news.total > 0) {
-                const newsItems = data.news.items.slice(0, 6);
-                newsItems.forEach((item) => {
-                    html += `
-                        <div class="article">
-                            <div class="article-headline">${item.Title || item.Headline || 'News Article'}</div>
-                            <div class="article-byline">Published: ${item.PublishedDate || item.Date || 'Unknown'}</div>
-                            <div class="article-content">
-                                ${item.Summary || item.Snippet || 'No summary available.'}
-                            </div>
-                        </div>
-                    `;
-                });
-            }
-
-            // No results
-            if ((!data.rollups || data.rollups.total === 0) &&
-                (!data.news || data.news.total === 0) &&
-                data.intent !== 'SERVICE_INQUIRY') {
+            if ((!data.datacenters || data.datacenters.length === 0) &&
+                (!data.articles || data.articles.length === 0)) {
                 html += `
-                    <div class="article">
-                        <div class="article-headline">No Results Found</div>
-                        <div class="article-content">
-                            No matching facilities or news articles found for your query.
-                            Try refining your search terms or use one of the quick query links above.
-                        </div>
+                    <div class="notice notice-info">
+                        <p>No results found for "${query}"</p>
+                        <p>Try a different search term or browse our data center listings.</p>
                     </div>
                 `;
             }
@@ -7889,7 +8400,7 @@
         }
 
         // Load latest news articles from CSV
-        
+
         async function loadLatestNews() {
             switchSection('home');
             showLoading();
