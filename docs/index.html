@@ -7590,8 +7590,8 @@
 
                     // PREMIUM tier columns
                     if (hasTierAccess('premium')) {
-                        const contact = item.contact_raw || 'N/A';
-                        const specs = item.specifications_raw || 'N/A';
+                        const contact = item.contact || item.contact_email || item.contact_phone || item.contact_raw || 'N/A';
+                        const specs = (item.power_capacity_mw || item.capacity_mw || item.specifications_raw) ? `${item.power_capacity_mw || item.capacity_mw || item.specifications_raw} ${(item.power_capacity_mw || item.capacity_mw) ? 'MW' : ''}` : 'N/A';
                         tbodyHTML += `<td style="padding: 8px;">${contact}</td>`;
                         tbodyHTML += `<td style="padding: 8px;">${specs}</td>`;
                     }
