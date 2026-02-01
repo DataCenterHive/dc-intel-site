@@ -7580,7 +7580,7 @@
 
                     // BASIC tier columns
                     if (hasTierAccess('basic')) {
-                        const sqft = item.sqft_raw ? parseInt(item.sqft_raw).toLocaleString() : 'N/A';
+                        const sqft = (item.sqft_raw || item.total_sqft || item.square_feet) ? parseInt(item.sqft_raw || item.total_sqft || item.square_feet).toLocaleString() : 'N/A';
                         const lat = item.latitude || 'N/A';
                         const lon = item.longitude || 'N/A';
                         tbodyHTML += `<td style="padding: 8px; text-align: right;">${sqft}</td>`;
