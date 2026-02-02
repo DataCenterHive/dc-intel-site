@@ -4182,6 +4182,12 @@
 
         async function loadUpcomingDCs() {
             try {
+                // DEBUG: Log current tier
+                console.log('[DEBUG] loadUpcomingDCs starting. userTier:', userTier);
+                console.log('[DEBUG] hasTierAccess("basic"):', hasTierAccess('basic'));
+                console.log('[DEBUG] hasTierAccess("premium"):', hasTierAccess('premium'));
+                console.log('[DEBUG] hasTierAccess("enterprise"):', hasTierAccess('enterprise'));
+
                 // Load CSV file with aggressive cache-busting (version + timestamp + random)
                 const timestamp = new Date().getTime();
                 const random = Math.random().toString(36).substring(7);
@@ -4215,6 +4221,20 @@
                 }
 
                 console.log(`Loaded ${projects.length} upcoming DC projects (TBD,TBD entries filtered)`);
+
+                // DEBUG: Log first 3 projects to verify data structure
+                console.log('[DEBUG] Sample projects (first 3):');
+                projects.slice(0, 3).forEach((p, i) => {
+                    console.log(`[DEBUG] Project ${i}:`, {
+                        city: p.city,
+                        state: p.state,
+                        latitude: p.latitude,
+                        longitude: p.longitude,
+                        latest_description: p.latest_description,
+                        latest_valuation_usd: p.latest_valuation_usd,
+                        source: p.source
+                    });
+                });
 
                 // Generate hexbin heatmap visualization for upcoming projects
                 await renderUpcomingHexbinHeatmap('upcomingHeatmap');
