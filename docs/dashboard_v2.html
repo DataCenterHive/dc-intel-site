@@ -4182,9 +4182,11 @@
 
         async function loadUpcomingDCs() {
             try {
-                // Load CSV file with cache-busting
+                // Load CSV file with aggressive cache-busting (version + timestamp + random)
                 const timestamp = new Date().getTime();
-                const response = await fetch(`/masters/DC_Upcoming_Combined.csv?t=${timestamp}`);
+                const random = Math.random().toString(36).substring(7);
+                const version = '20260202'; // Update this when CSV structure changes
+                const response = await fetch(`/masters/DC_Upcoming_Combined.csv?v=${version}&t=${timestamp}&r=${random}`);
 
                 if (!response.ok) {
                     document.getElementById('upcomingDCsTable').innerHTML = '<p style="text-align: center;">Unable to load upcoming DC projects. CSV file may not be available.</p>';
