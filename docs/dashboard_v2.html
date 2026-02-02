@@ -2189,6 +2189,13 @@
         let existingSort = { key: null, dir: 1 };
         let upcomingSort = { key: null, dir: 1 };
 
+        // Upcoming DC data cache (loaded once, rendered many times based on tier)
+        let UPCOMING_PROJECTS = [];
+        let UPCOMING_LOADED = false;
+
+        // Guard for updateSavedItemsInUI function (prevents login crashes)
+        window.updateSavedItemsInUI = window.updateSavedItemsInUI || function () {};
+
         // Helper function to check tier access
         function hasTierAccess(requiredTier) {
             const tierLevels = { 'free': 0, 'basic': 1, 'premium': 2, 'enterprise': 3 };
@@ -2575,6 +2582,12 @@
                     }
                     console.log('Auth restored - User:', user.email, 'Tier:', userTier);
                     updateAuthUI(user);
+
+                    // CRITICAL FIX: Re-render upcoming table if already loaded with new tier
+                    if (UPCOMING_LOADED && UPCOMING_PROJECTS.length > 0) {
+                        console.log('[AUTH] Re-rendering upcoming table with tier:', userTier);
+                        renderUpcomingDCTable(UPCOMING_PROJECTS);
+                    }
                 } catch (e) {
                     console.error('checkAuth error:', e);
                     localStorage.removeItem('dc_intel_token');
