@@ -4193,10 +4193,264 @@
             return rows;
         }
 
+        // Render upcoming DC table using current tier (called after data load or tier change)
+        function renderUpcomingDCTable(projects) {
+            // Use CURRENT tier at render time (not cached tier from load time)
+            const currentTier = userTier || localStorage.getItem('dc_intel_tier') || 'free';
+            console.log('[RENDER] Rendering table with tier:', currentTier, 'projects:', projects.length);
+
+            // Helper to check tier access using current tier (not cached tier)
+            const hasTierAccessAtRenderTime = (requiredTier) => {
+                const tiers = ['free', 'basic', 'premium', 'enterprise'];
+                const currentIdx = tiers.indexOf(currentTier);
+                const requiredIdx = tiers.indexOf(requiredTier);
+                return currentIdx >= requiredIdx;
+            };
+
+            // Sort projects: permits first, then news with location, then news without location
+            const sortedProjects = [...projects];
+            sortedProjects.sort((a, b) => {
+                const aIsNews = a.source === 'news';
+                const bIsNews = b.source === 'news';
+
+                // Check if news has valid city and state (not TBD)
+                const aHasLocation = aIsNews &&
+                    (a.city || '').toUpperCase().trim() !== 'TBD' &&
+                    (a.state || '').toUpperCase().trim() !== 'TBD' &&
+                    (a.city || '').trim() !== '' &&
+                    (a.state || '').trim() !== '';
+                const bHasLocation = bIsNews &&
+                    (b.city || '').toUpperCase().trim() !== 'TBD' &&
+                    (b.state || '').toUpperCase().trim() !== 'TBD' &&
+                    (b.city || '').trim() !== '' &&
+                    (b.state || '').trim() !== '';
+
+                // Sorting priority: Permits -> News with location -> News without location
+                if (!aIsNews && bIsNews) return -1;  // Permits before all news
+                if (aIsNews && !bIsNews) return 1;
+
+                // Both are news: prioritize those with location
+                if (aIsNews && bIsNews) {
+                    if (aHasLocation && !bHasLocation) return -1;
+                    if (!aHasLocation && bHasLocation) return 1;
+                }
+
+                // Within same category, sort by date (newest first)
+                return (b.first_seen_applied_date || '').localeCompare(a.first_seen_applied_date || '');
+            });
+
+            // Apply user sort (after priority sort)
+            if (upcomingSort.key) {
+                const key = upcomingSort.key;
+                const dir = upcomingSort.dir;
+                sortedProjects.sort((a, b) => {
+                    const getVal = (item) => {
+                        if (key === 'location') return `${item.city || ''} ${item.state || ''}`.toLowerCase();
+                        if (key === 'status') return (item.latest_status || '').toLowerCase();
+                        if (key === 'firstSeen') return (item.first_seen_applied_date || '');
+                        if (key === 'source') return (item.source || '').toLowerCase();
+                        return '';
+                    };
+                    const va = getVal(a);
+                    const vb = getVal(b);
+                    if (va < vb) return -1 * dir;
+                    if (va > vb) return 1 * dir;
+                    return 0;
+                });
+            }
+
+            // Generate filter status banner
+            let filterStatus = '';
+            if (window.activeQuickLinkCategory) {
+                filterStatus = `
+                    <div style="text-align: center; margin-bottom: 10px; padding: 10px; background: #e0f2fe; border: 2px solid #0284c7; border-radius: 5px;">
+                        <strong>Filtered by:</strong> ${getCategoryDescription(window.activeQuickLinkCategory)}
+                        <button onclick="window.activeQuickLinkCategory = null; loadUpcomingDCs();" style="margin-left: 10px; padding: 5px 15px; background: #dc2626; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
+                            Clear Filter
+                        </button>
+                    </div>
+                `;
+            }
+
+            // Generate project table with tiered access columns
+            let tableHTML = filterStatus;
+            tableHTML += '<div class="table-legend">Columns by tier: Free (Location/Address/Status/First Seen/Source)    Basic (+Lat/Long)    Premium (+Description)    Enterprise (+Valuation/Details)</div>';
+            tableHTML += '<div class="table-wrapper">';
+            tableHTML += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
+            tableHTML += '<tr style="background: #000; color: #fff;">';
+            // FREE tier columns
+            tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\"location\")">Location</th>';
+            tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\"address\")">Address</th>';
+            tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\"status\")">Status</th>';
+            tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\"firstSeen\")">First Seen</th>';
+            tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\"source\")">Source</th>';
+            // BASIC tier columns (+lat/long)
+            if (hasTierAccessAtRenderTime('basic')) {
+                tableHTML += '<th style="padding: 8px; text-align: left; background: #4a5568;">Lat/Long</th>';
+            }
+            // PREMIUM tier columns (+description)
+            if (hasTierAccessAtRenderTime('premium')) {
+                tableHTML += '<th style="padding: 8px; text-align: left; background: #6b46c1;">Description</th>';
+            }
+            // ENTERPRISE tier columns (+valuation)
+            if (hasTierAccessAtRenderTime('enterprise')) {
+                tableHTML += '<th style="padding: 8px; text-align: right; background: #d97706;">Valuation</th>';
+                tableHTML += '<th style="padding: 8px; text-align: center; background: #d97706;">Details</th>';
+            }
+            tableHTML += '</tr>';
+
+            sortedProjects.forEach((project, idx) => {
+                const isNews = project.source === 'news';
+
+                // Color coding: Yellow for news, Green for permits
+                const bgBase = isNews ? '#fff3cd' : '#d1e7dd';
+                const borderColor = isNews ? '#ffc107' : '#198754';
+                const icon = isNews ? '📰' : '🏗️';
+
+                const city = project.city || 'TBD';
+                const state = project.state || 'TBD';
+                const location = `${icon} ${city}, ${state}`;
+
+                // Address column: show link for news, address for permits
+                let addressDisplay;
+                if (isNews && project.source_url) {
+                    // For news: show clickable link
+                    addressDisplay = `<a href="${project.source_url}" target="_blank" style="color: #0066cc; text-decoration: underline;">View Article 🔗</a>`;
+                } else if (project.address_raw && project.address_raw !== 'TBD') {
+                    // For permits: show actual address
+                    addressDisplay = project.address_raw;
+                } else {
+                    addressDisplay = '-';
+                }
+
+                const status = project.latest_status || 'Unknown';
+                const firstSeen = project.first_seen_applied_date || '-';
+                const sourceLabel = isNews ? 'News' : 'Permit';
+                const description = project.latest_description || '-';
+                const valuation = project.latest_valuation_usd ? `$${parseFloat(project.latest_valuation_usd).toLocaleString()}` : '-';
+                const statusLower = status.toLowerCase();
+                let statusClass = 'draft';
+                if (statusLower.includes('active')) statusClass = 'active';
+                else if (statusLower.includes('permit')) statusClass = 'permit';
+                else if (statusLower.includes('review')) statusClass = 'review';
+
+                // Start row
+                tableHTML += `<tr style="background: ${bgBase}; border-left: 4px solid ${borderColor}; border-bottom: 1px solid #ccc;" data-project-idx="${idx}">
+                    <td style="padding: 8px;">${location}</td>
+                    <td style="padding: 8px;">${addressDisplay}</td>
+                    <td style="padding: 8px;"><span class="chip ${statusClass}">${status}</span></td>
+                    <td style="padding: 8px;">${firstSeen}</td>
+                    <td style="padding: 8px;">
+                        <span style="background: ${isNews ? '#ffc107' : '#198754'}; color: ${isNews ? '#000' : '#fff'}; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: bold;">
+                            ${sourceLabel}
+                        </span>
+                    </td>`;
+
+                // BASIC tier column (lat/long) - CRITICAL: Use real data when tier allows
+                if (hasTierAccessAtRenderTime('basic')) {
+                    const lat = project.latitude || '';
+                    const lon = project.longitude || '';
+                    const coords = (lat && lon) ? `${parseFloat(lat).toFixed(4)}, ${parseFloat(lon).toFixed(4)}` : '-';
+                    tableHTML += `<td style="padding: 8px; background: #f7fafc; color: #4a5568; font-size: 11px;">${coords}</td>`;
+                }
+
+                // PREMIUM tier column (description) - CRITICAL: Use real data when tier allows
+                if (hasTierAccessAtRenderTime('premium')) {
+                    tableHTML += `<td style="padding: 8px; background: #faf5ff; color: #6b46c1; font-size: 11px;">${description}</td>`;
+                }
+
+                // ENTERPRISE tier columns (valuation + details button)
+                if (hasTierAccessAtRenderTime('enterprise')) {
+                    tableHTML += `<td style="padding: 8px; text-align: right; background: #fffbeb; color: #d97706; font-weight: bold; font-size: 11px;">${valuation}</td>`;
+                    tableHTML += `<td style="padding: 8px; text-align: center; background: #fffbeb;">
+                        <button onclick="toggleProjectDetails(${idx})" style="padding: 2px 8px; background: #d97706; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 10px;">
+                            Expand
+                        </button>
+                    </td>`;
+                }
+
+                tableHTML += `</tr>`;
+
+                // ENTERPRISE: Expandable row for permit details
+                if (hasTierAccessAtRenderTime('enterprise')) {
+                    const recordIds = (project.record_ids_sample || '').split(';').filter(id => id.trim());
+                    const statuses = (project.statuses_sample || '').split(';').filter(s => s.trim());
+
+                    tableHTML += `<tr id="details-${idx}" style="display: none; background: #fffbeb; border-left: 4px solid #d97706;">
+                        <td colspan="${hasTierAccessAtRenderTime('enterprise') ? 8 : hasTierAccessAtRenderTime('premium') ? 7 : hasTierAccessAtRenderTime('basic') ? 6 : 5}" style="padding: 15px;">
+                            <div style="font-size: 12px;">
+                                <h4 style="margin: 0 0 10px 0; color: #d97706;">Full Project Details</h4>
+                                <p><strong>Description:</strong> ${description}</p>
+                                <p><strong>Valuation:</strong> ${valuation}</p>
+                                <p><strong>Contractor:</strong> ${project.latest_contractor || 'N/A'}</p>
+                                <p><strong>Owner:</strong> ${project.latest_owner || 'N/A'}</p>
+                                <p><strong>Permit Type:</strong> ${project.latest_permit_type || 'N/A'}</p>
+                                <p><strong>Total Permits:</strong> ${project.permits_count || 0}</p>
+                                ${recordIds.length > 0 ? `
+                                <div style="margin-top: 10px;">
+                                    <strong>Sample Permit IDs:</strong>
+                                    <ul style="margin: 5px 0; padding-left: 20px;">
+                                        ${recordIds.slice(0, 5).map((id, i) => `<li>${id}${statuses[i] ? ` - ${statuses[i]}` : ''}</li>`).join('')}
+                                    </ul>
+                                </div>
+                                ` : ''}
+                            </div>
+                        </td>
+                    </tr>`;
+                }
+            });
+
+            tableHTML += '</table></div>';
+
+            // Add summary
+            const newsCount = sortedProjects.filter(p => p.source === 'news').length;
+            const permitCount = sortedProjects.filter(p => p.source === 'permit').length;
+
+            // Tier upgrade banner
+            let upgradeBanner = '';
+            if (currentTier === 'free') {
+                upgradeBanner = `
+                    <div style="margin-bottom: 15px; padding: 15px; background: #f5f1e8; border: 3px solid #9333ea; border-radius: 5px; color: #000;">
+                        <h4 style="margin: 0 0 10px 0; font-size: 16px; color: #7e22ce;">🔓 Unlock More Data with Paid Tiers</h4>
+                        <p style="margin: 0 0 10px 0; font-size: 13px;">You're seeing basic columns. Upgrade to access:</p>
+                        <ul style="margin: 0; padding-left: 20px; font-size: 12px;">
+                            <li><strong>Basic ($299/mo):</strong> + Latitude/Longitude coordinates</li>
+                            <li><strong>Premium ($999/mo):</strong> + Project descriptions</li>
+                            <li><strong>Enterprise ($2,499/mo):</strong> + Valuations & full permit details</li>
+                        </ul>
+                        <button onclick="switchSection('pricing')" style="margin-top: 10px; padding: 8px 20px; background: #000; color: #fff; border: 3px solid #9333ea; border-radius: 3px; font-weight: bold; cursor: pointer;">
+                            View Pricing Plans
+                        </button>
+                        <span style="margin-left: 10px; font-size: 11px; color: #666;">(Testing? Use console: setTier('basic'), setTier('premium'), setTier('enterprise'))</span>
+                    </div>
+                `;
+            }
+
+            const summaryHTML = `
+                <div style="margin-top: 10px; padding: 10px; background: #f0f0f0; border: 2px solid #000; font-size: 12px;">
+                    <strong>Total Projects: ${sortedProjects.length}</strong>
+                    (<span style="color: #ffc107; font-weight: bold;">📰 ${newsCount} News Discoveries</span> +
+                    <span style="color: #198754; font-weight: bold;">🏗️ ${permitCount} Permitted</span>)
+                    <span style="float: right; font-size: 11px;">Current Tier: <strong style="text-transform: uppercase; color: #667eea;">${currentTier}</strong></span>
+                </div>
+            `;
+
+            document.getElementById('upcomingDCsTable').innerHTML = upgradeBanner + summaryHTML + tableHTML;
+            console.log('[RENDER] Table updated. Tier:', currentTier, 'Total rows:', sortedProjects.length);
+        }
+
         async function loadUpcomingDCs() {
             try {
                 // DEBUG: Log current tier
                 console.log('[DEBUG] loadUpcomingDCs starting. userTier:', userTier);
+
+                // If already loaded, just re-render for current tier
+                if (UPCOMING_LOADED && UPCOMING_PROJECTS.length > 0) {
+                    console.log('[CACHE] Using cached data, re-rendering for tier:', userTier);
+                    renderUpcomingDCTable(UPCOMING_PROJECTS);
+                    return;
+                }
+
                 console.log('[DEBUG] hasTierAccess("basic"):', hasTierAccess('basic'));
                 console.log('[DEBUG] hasTierAccess("premium"):', hasTierAccess('premium'));
                 console.log('[DEBUG] hasTierAccess("enterprise"):', hasTierAccess('enterprise'));
@@ -4252,233 +4506,15 @@
                 // Generate hexbin heatmap visualization for upcoming projects
                 await renderUpcomingHexbinHeatmap('upcomingHeatmap');
 
-                // Sort projects: permits first, then news with location, then news without location
-                projects.sort((a, b) => {
-                    const aIsNews = a.source === 'news';
-                    const bIsNews = b.source === 'news';
 
-                    // Check if news has valid city and state (not TBD)
-                    const aHasLocation = aIsNews &&
-                        (a.city || '').toUpperCase().trim() !== 'TBD' &&
-                        (a.state || '').toUpperCase().trim() !== 'TBD' &&
-                        (a.city || '').trim() !== '' &&
-                        (a.state || '').trim() !== '';
-                    const bHasLocation = bIsNews &&
-                        (b.city || '').toUpperCase().trim() !== 'TBD' &&
-                        (b.state || '').toUpperCase().trim() !== 'TBD' &&
-                        (b.city || '').trim() !== '' &&
-                        (b.state || '').trim() !== '';
+                // Store in cache for future renders
+                UPCOMING_PROJECTS = projects;
+                UPCOMING_LOADED = true;
+                console.log('[CACHE] Stored', projects.length, 'projects in cache');
 
-                    // Sorting priority: Permits -> News with location -> News without location
-                    if (!aIsNews && bIsNews) return -1;  // Permits before all news
-                    if (aIsNews && !bIsNews) return 1;
+                // Render table using the new render function (reads tier at render-time)
+                renderUpcomingDCTable(projects);
 
-                    // Both are news: prioritize those with location
-                    if (aIsNews && bIsNews) {
-                        if (aHasLocation && !bHasLocation) return -1;
-                        if (!aHasLocation && bHasLocation) return 1;
-                    }
-
-                    // Within same category, sort by date (newest first)
-                    return (b.first_seen_applied_date || '').localeCompare(a.first_seen_applied_date || '');
-                });
-
-                // Apply user sort (after priority sort)
-                if (upcomingSort.key) {
-                    const key = upcomingSort.key;
-                    const dir = upcomingSort.dir;
-                    projects.sort((a, b) => {
-                        const getVal = (item) => {
-                            if (key === 'location') return `${item.city || ''} ${item.state || ''}`.toLowerCase();
-                            if (key === 'status') return (item.latest_status || '').toLowerCase();
-                            if (key === 'firstSeen') return (item.first_seen_applied_date || '');
-                            if (key === 'source') return (item.source || '').toLowerCase();
-                            return '';
-                        };
-                        const va = getVal(a);
-                        const vb = getVal(b);
-                        if (va < vb) return -1 * dir;
-                        if (va > vb) return 1 * dir;
-                        return 0;
-                    });
-                }
-
-                // Generate filter status banner
-                let filterStatus = '';
-                if (window.activeQuickLinkCategory) {
-                    filterStatus = `
-                        <div style="text-align: center; margin-bottom: 10px; padding: 10px; background: #e0f2fe; border: 2px solid #0284c7; border-radius: 5px;">
-                            <strong>Filtered by:</strong> ${getCategoryDescription(window.activeQuickLinkCategory)}
-                            <button onclick="window.activeQuickLinkCategory = null; loadUpcomingDCs();" style="margin-left: 10px; padding: 5px 15px; background: #dc2626; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">
-                                Clear Filter
-                            </button>
-                        </div>
-                    `;
-                }
-
-                // Generate project table with tiered access columns
-                                let tableHTML = filterStatus;
-                tableHTML += '<div class="table-legend">Columns by tier: Free (Location/Address/Status/First Seen/Source)    Basic (+Lat/Long)    Premium (+Description)    Enterprise (+Valuation/Details)</div>';
-                tableHTML += '<div class="table-wrapper">';
-                tableHTML += '<table class="table-sticky table-zebra" style="width: 100%; border-collapse: collapse; font-size: 12px;">';
-                tableHTML += '<tr style="background: #000; color: #fff;">';
-                // FREE tier columns
-                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\"location\")">Location</th>';
-                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\"address\")">Address</th>';
-                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\"status\")">Status</th>';
-                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\"firstSeen\")">First Seen</th>';
-                tableHTML += '<th style="padding: 8px; text-align: left; cursor: pointer;" onclick="setUpcomingSort(\"source\")">Source</th>';
-                // BASIC tier columns (+lat/long) - note we don't have lat/long in CSV yet, placeholder for now
-                if (hasTierAccess('basic')) {
-                    tableHTML += '<th style="padding: 8px; text-align: left; background: #4a5568;">Lat/Long</th>';
-                }
-                // PREMIUM tier columns (+description)
-                if (hasTierAccess('premium')) {
-                    tableHTML += '<th style="padding: 8px; text-align: left; background: #6b46c1;">Description</th>';
-                }
-                // ENTERPRISE tier columns (+valuation)
-                if (hasTierAccess('enterprise')) {
-                    tableHTML += '<th style="padding: 8px; text-align: right; background: #d97706;">Valuation</th>';
-                    tableHTML += '<th style="padding: 8px; text-align: center; background: #d97706;">Details</th>';
-                }
-                tableHTML += '</tr>';
-                projects.forEach((project, idx) => {
-                    const isNews = project.source === 'news';
-
-                    // Color coding: Yellow for news, Green for permits
-                    const bgBase = isNews ? '#fff3cd' : '#d1e7dd';
-                    const borderColor = isNews ? '#ffc107' : '#198754';
-                    const icon = isNews ? '    ' : '        ';
-
-                    const city = project.city || 'TBD';
-                    const state = project.state || 'TBD';
-                    const location = `${icon} ${city}, ${state}`;
-
-                    // Address column: show link for news, address for permits
-                    let addressDisplay;
-                    if (isNews && project.source_url) {
-                        // For news: show clickable link
-                        addressDisplay = `<a href="${project.source_url}" target="_blank" style="color: #0066cc; text-decoration: underline;">View Article       </a>`;
-                    } else if (project.address_raw && project.address_raw !== 'TBD') {
-                        // For permits: show actual address
-                        addressDisplay = project.address_raw;
-                    } else {
-                        addressDisplay = '-';
-                    }
-
-                    const status = project.latest_status || 'Unknown';
-                    const firstSeen = project.first_seen_applied_date || '-';
-                    const sourceLabel = isNews ? 'News' : 'Permit';
-                    const description = project.latest_description || '-';
-                    const valuation = project.latest_valuation_usd ? `$${parseFloat(project.latest_valuation_usd).toLocaleString()}` : '-';
-                    const statusLower = status.toLowerCase();
-                    let statusClass = 'draft';
-                    if (statusLower.includes('active')) statusClass = 'active';
-                    else if (statusLower.includes('permit')) statusClass = 'permit';
-                    else if (statusLower.includes('review')) statusClass = 'review';
-
-                    // Start row
-                    tableHTML += `<tr style="background: ${bgBase}; border-left: 4px solid ${borderColor}; border-bottom: 1px solid #ccc;" data-project-idx="${idx}">
-                        <td style="padding: 8px;">${location}</td>
-                        <td style="padding: 8px;">${addressDisplay}</td>
-                        <td style="padding: 8px;"><span class="chip ${statusClass}">${status}</span></td>
-                        <td style="padding: 8px;">${firstSeen}</td>
-                        <td style="padding: 8px;">
-                            <span style="background: ${isNews ? '#ffc107' : '#198754'}; color: ${isNews ? '#000' : '#fff'}; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: bold;">
-                                ${sourceLabel}
-                            </span>
-                        </td>`;
-
-                    // BASIC tier column (lat/long)
-                    if (hasTierAccess('basic')) {
-                        const lat = project.latitude || '';
-                        const lon = project.longitude || '';
-                        const coords = (lat && lon) ? `${parseFloat(lat).toFixed(4)}, ${parseFloat(lon).toFixed(4)}` : '-';
-                        tableHTML += `<td style="padding: 8px; background: #f7fafc; color: #4a5568; font-size: 11px;">${coords}</td>`;
-                    }
-
-                    // PREMIUM tier column (description)
-                    if (hasTierAccess('premium')) {
-                        tableHTML += `<td style="padding: 8px; background: #faf5ff; color: #6b46c1; font-size: 11px;">${description}</td>`;
-                    }
-
-                    // ENTERPRISE tier columns (valuation + details button)
-                    if (hasTierAccess('enterprise')) {
-                        tableHTML += `<td style="padding: 8px; text-align: right; background: #fffbeb; color: #d97706; font-weight: bold; font-size: 11px;">${valuation}</td>`;
-                        tableHTML += `<td style="padding: 8px; text-align: center; background: #fffbeb;">
-                            <button onclick="toggleProjectDetails(${idx})" style="padding: 2px 8px; background: #d97706; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 10px;">
-                                Expand
-                            </button>
-                        </td>`;
-                    }
-
-                    tableHTML += `</tr>`;
-
-                    // ENTERPRISE: Expandable row for permit details
-                    if (hasTierAccess('enterprise')) {
-                        const recordIds = (project.record_ids_sample || '').split(';').filter(id => id.trim());
-                        const statuses = (project.statuses_sample || '').split(';').filter(s => s.trim());
-
-                        tableHTML += `<tr id="details-${idx}" style="display: none; background: #fffbeb; border-left: 4px solid #d97706;">
-                            <td colspan="${hasTierAccess('enterprise') ? 8 : hasTierAccess('premium') ? 7 : hasTierAccess('basic') ? 6 : 5}" style="padding: 15px;">
-                                <div style="font-size: 12px;">
-                                    <h4 style="margin: 0 0 10px 0; color: #d97706;">Full Project Details</h4>
-                                    <p><strong>Description:</strong> ${description}</p>
-                                    <p><strong>Valuation:</strong> ${valuation}</p>
-                                    <p><strong>Contractor:</strong> ${project.latest_contractor || 'N/A'}</p>
-                                    <p><strong>Owner:</strong> ${project.latest_owner || 'N/A'}</p>
-                                    <p><strong>Permit Type:</strong> ${project.latest_permit_type || 'N/A'}</p>
-                                    <p><strong>Total Permits:</strong> ${project.permits_count || 0}</p>
-                                    ${recordIds.length > 0 ? `
-                                    <div style="margin-top: 10px;">
-                                        <strong>Sample Permit IDs:</strong>
-                                        <ul style="margin: 5px 0; padding-left: 20px;">
-                                            ${recordIds.slice(0, 5).map((id, i) => `<li>${id}${statuses[i] ? ` - ${statuses[i]}` : ''}</li>`).join('')}
-                                        </ul>
-                                    </div>
-                                    ` : ''}
-                                </div>
-                            </td>
-                        </tr>`;
-                    }
-                });
-
-                tableHTML += '</table></div>';
-
-                // Add summary
-                const newsCount = projects.filter(p => p.source === 'news').length;
-                const permitCount = projects.filter(p => p.source === 'permit').length;
-
-                // Tier upgrade banner
-                let upgradeBanner = '';
-                if (userTier === 'free') {
-                    upgradeBanner = `
-                        <div style="margin-bottom: 15px; padding: 15px; background: #f5f1e8; border: 3px solid #9333ea; border-radius: 5px; color: #000;">
-                            <h4 style="margin: 0 0 10px 0; font-size: 16px; color: #7e22ce;">          Unlock More Data with Paid Tiers</h4>
-                            <p style="margin: 0 0 10px 0; font-size: 13px;">You're seeing basic columns. Upgrade to access:</p>
-                            <ul style="margin: 0; padding-left: 20px; font-size: 12px;">
-                                <li><strong>Basic ($299/mo):</strong> + Latitude/Longitude coordinates</li>
-                                <li><strong>Premium ($999/mo):</strong> + Project descriptions</li>
-                                <li><strong>Enterprise ($2,499/mo):</strong> + Valuations & full permit details</li>
-                            </ul>
-                            <button onclick="switchSection('pricing')" style="margin-top: 10px; padding: 8px 20px; background: #000; color: #fff; border: 3px solid #9333ea; border-radius: 3px; font-weight: bold; cursor: pointer;">
-                                View Pricing Plans
-                            </button>
-                            <span style="margin-left: 10px; font-size: 11px; color: #666;">(Testing? Use console: setTier('basic'), setTier('premium'), setTier('enterprise'))</span>
-                        </div>
-                    `;
-                }
-
-                const summaryHTML = `
-                    <div style="margin-top: 10px; padding: 10px; background: #f0f0f0; border: 2px solid #000; font-size: 12px;">
-                        <strong>Total Projects: ${projects.length}</strong>
-                        (<span style="color: #ffc107; font-weight: bold;">     ${newsCount} News Discoveries</span> +
-                        <span style="color: #198754; font-weight: bold;">         ${permitCount} Permitted</span>)
-                        <span style="float: right; font-size: 11px;">Current Tier: <strong style="text-transform: uppercase; color: #667eea;">${userTier}</strong></span>
-                    </div>
-                `;
-
-                document.getElementById('upcomingDCsTable').innerHTML = upgradeBanner + summaryHTML + tableHTML;
 
             } catch (error) {
                 console.error('Error loading upcoming DCs:', error);
