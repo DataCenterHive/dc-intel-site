@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Intelligence: Real-Time Data -DataCenter Hive</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f5f5dc;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: #000;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 50px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 4px double #000;
+            padding-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .tagline {
+            font-size: 18px;
+            font-style: italic;
+            color: #666;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 20px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style: disc;
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        ul li {
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+
+        .highlight-box {
+            background: #fffef0;
+            border: 2px solid #000;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .highlight-box h3 {
+            margin-top: 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            border: 1px solid #ccc;
+            padding: 20px;
+            background: #f9f9f9;
+        }
+
+        .feature-card h4 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .cta-section {
+            background: #000;
+            color: #fff;
+            padding: 40px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .cta-section h2 {
+            color: #fff;
+            border-bottom: 2px solid #fff;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+        }
+
+        .cta-section p {
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+
+        .cta-btn {
+            background: #fff;
+            color: #000;
+            padding: 15px 40px;
+            border: 2px solid #fff;
+            font-family: Georgia, serif;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .cta-btn:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #000;
+            text-decoration: underline;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            color: #666;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .stat {
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Market Intelligence: Real-Time Data</h1>
+            <p class="tagline">Comprehensive Tracking of Data Center Construction & Development Activity</p>
+        </div>
+
+        <div class="section">
+            <h2>Overview</h2>
+            <p>
+                Our Market Intelligence platform provides real-time tracking of data center construction, permit activity, and operator movements across major U.S. markets. Built on proprietary data collection infrastructure, we monitor municipal permit databases daily to identify new projects, expansions, and development trends before they appear in industry reports.
+            </p>
+            <p>
+                Whether you're tracking competitive activity, evaluating market entry, or conducting investment research, our database delivers the construction-level detail required for informed decision-making. With coverage spanning 20+ markets and historical data back to 2020, we provide the most comprehensive view of U.S. data center development activity available.
+            </p>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number">1,000+</div>
+                <div class="stat-label">Projects Tracked</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">20+</div>
+                <div class="stat-label">U.S. Markets</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">Daily</div>
+                <div class="stat-label">Updates</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Data Coverage</h2>
+
+            <h3>Construction Permits</h3>
+            <ul>
+                <li><strong>Permit Applications:</strong> New filings, approvals, revisions, and status changes</li>
+                <li><strong>Project Details:</strong> Address, valuation, square footage, permit type, issue dates</li>
+                <li><strong>Contractor Information:</strong> General contractors, MEP firms, and trade partners</li>
+                <li><strong>Status Tracking:</strong> Application, review, approval, construction, completion phases</li>
+                <li><strong>Historical Data:</strong> Complete permit history back to 2020 for trend analysis</li>
+            </ul>
+
+            <h3>Operator Activity</h3>
+            <ul>
+                <li><strong>Operator Identification:</strong> Tracking of hyperscale, colocation, and enterprise operators</li>
+                <li><strong>Expansion Patterns:</strong> Geographic concentration, market entry strategies</li>
+                <li><strong>Capacity Trends:</strong> Project scale, density evolution, deployment timelines</li>
+                <li><strong>Competitive Intelligence:</strong> Operator positioning within each market</li>
+            </ul>
+
+            <h3>Market Coverage</h3>
+            <ul>
+                <li><strong>Primary Markets:</strong> Northern Virginia, Dallas-Fort Worth, Phoenix, Atlanta, Chicago</li>
+                <li><strong>Emerging Markets:</strong> San Antonio, El Paso, Columbus, Mesa, Chandler</li>
+                <li><strong>Custom Coverage:</strong> Add new cities on request with priority onboarding</li>
+            </ul>
+        </div>
+
+        <div class="highlight-box">
+            <h3>What You Receive</h3>
+            <ul>
+                <li><strong>CSV Exports:</strong> Raw data files with complete permit records, filterable by city, date, operator, or status</li>
+                <li><strong>API Access:</strong> RESTful endpoints for programmatic data integration (Enterprise tier)</li>
+                <li><strong>Custom Filtering:</strong> Query by market, project size, operator, or time period</li>
+                <li><strong>Historical Archives:</strong> Access to complete permit history for trend analysis and backtesting</li>
+                <li><strong>News Integration:</strong> AI-powered monitoring of industry announcements and project news</li>
+                <li><strong>Regular Updates:</strong> Daily, weekly, or monthly delivery based on subscription tier</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Subscription Tiers</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h4>Starter: $99/month</h4>
+                    <p><strong>Coverage:</strong> 1 market of your choice<br>
+                    <strong>Delivery:</strong> Monthly CSV exports<br>
+                    <strong>History:</strong> Rolling 12 months<br>
+                    <strong>Support:</strong> Email support</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Professional: $299/month</h4>
+                    <p><strong>Coverage:</strong> 5 markets<br>
+                    <strong>Delivery:</strong> Weekly CSV exports<br>
+                    <strong>History:</strong> Full historical data<br>
+                    <strong>Support:</strong> Priority email + phone</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Enterprise: $999/month</h4>
+                    <p><strong>Coverage:</strong> All 20+ markets<br>
+                    <strong>Delivery:</strong> Daily exports + API access<br>
+                    <strong>History:</strong> Complete archives<br>
+                    <strong>Support:</strong> Dedicated account manager</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Custom: Contact for Pricing</h4>
+                    <p><strong>Coverage:</strong> Tailored market selection<br>
+                    <strong>Delivery:</strong> Real-time alerts, webhooks<br>
+                    <strong>Features:</strong> White-label, custom fields<br>
+                    <strong>Support:</strong> SLA-backed service</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Use Cases</h2>
+
+            <h3>Investment Research</h3>
+            <p>Private equity firms and institutional investors use our data to track market supply, identify acquisition targets, and validate operator claims about development pipelines.</p>
+
+            <h3>Competitive Intelligence</h3>
+            <p>Data center operators monitor competitor activity, market entry strategies, and capacity expansion to inform their own development decisions.</p>
+
+            <h3>Market Analysis</h3>
+            <p>Consultants, brokers, and research analysts leverage our permit data to produce market reports, advise clients, and identify emerging trends.</p>
+
+            <h3>Business Development</h3>
+            <p>Equipment vendors, contractors, and service providers use permit alerts as sales leads to engage with projects early in the development cycle.</p>
+        </div>
+
+        <div class="section">
+            <h2>Data Quality & Methodology</h2>
+            <p>
+                Our platform automates data collection from municipal permit systems using purpose-built scrapers for each jurisdiction. Daily refresh cycles ensure you receive the latest filings, approvals, and status changes.
+            </p>
+            <p>
+                All data undergoes automated deduplication, standardization, and enrichment before delivery. We validate project addresses, normalize contractor names, and flag potential data center projects based on valuation thresholds, square footage, and permit descriptions.
+            </p>
+            <p>
+                Historical data is preserved with full audit trails, allowing trend analysis and year-over-year comparisons across markets.
+            </p>
+        </div>
+
+        <div class="cta-section">
+            <h2>Start Your Free Trial</h2>
+            <p>
+                Get 14-day access to our Market Intelligence platform.<br>
+                No credit card required. Cancel anytime.
+            </p>
+            <a href="#" class="cta-btn" onclick="alert('Trial signup coming soon!\n\nFor now, email: data@dc-intel.com\nPhone: (555) 123-4567'); return false;">Start Free Trial</a>
+        </div>
+
+        <a href="dashboard_v2.html" class="back-link">← Back to Dashboard</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Intelligence Request -DataCenter Hive</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f5f5dc;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: #000;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            border-bottom: 3px solid #000;
+            padding-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            font-style: italic;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ccc;
+            font-family: Georgia, serif;
+            font-size: 14px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #000;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .checkbox-group {
+            margin-bottom: 15px;
+        }
+
+        .checkbox-group label {
+            display: inline;
+            font-weight: normal;
+            margin-left: 8px;
+        }
+
+        .checkbox-group input {
+            width: auto;
+        }
+
+        .submit-btn {
+            background: #000;
+            color: #fff;
+            padding: 15px 40px;
+            border: 2px solid #000;
+            font-family: Georgia, serif;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #000;
+            text-decoration: underline;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            color: #666;
+        }
+
+        .feature-list {
+            background: #f9f9f9;
+            padding: 20px;
+            border-left: 4px solid #000;
+            margin-bottom: 30px;
+        }
+
+        .feature-list h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .feature-list ul {
+            list-style: disc;
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Market Intelligence Request</h1>
+        <p class="subtitle">Real-Time Data & Comprehensive Permit Tracking</p>
+
+        <div class="feature-list">
+            <h3>What You Get:</h3>
+            <ul>
+                <li><strong>1,000+ Confirmed DC Projects:</strong> Nationwide coverage with daily updates</li>
+                <li><strong>Permit Tracking:</strong> Real-time monitoring of construction applications and approvals</li>
+                <li><strong>API Access:</strong> Programmatic access to our data feeds</li>
+                <li><strong>Premium Analytics:</strong> Market trends, operator movements, and capacity forecasts</li>
+                <li><strong>Custom Coverage:</strong> Request any city/region - we'll add it to our monitoring</li>
+            </ul>
+        </div>
+
+        <form id="contactForm">
+            <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="company">Company *</label>
+                <input type="text" id="company" name="company" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone">
+            </div>
+
+            <div class="form-group">
+                <label for="interest">Primary Interest *</label>
+                <select id="interest" name="interest" required>
+                    <option value="">Select one...</option>
+                    <option value="api">API Access</option>
+                    <option value="reports">Custom Reports</option>
+                    <option value="tracking">Permit Tracking</option>
+                    <option value="analytics">Market Analytics</option>
+                    <option value="coverage">Request City Coverage</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Data Interests (check all that apply):</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="permits" name="permits" value="permits">
+                    <label for="permits">Permit Activity</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="operators" name="operators" value="operators">
+                    <label for="operators">Operator Tracking</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="capacity" name="capacity" value="capacity">
+                    <label for="capacity">Capacity Analysis</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="locations" name="locations" value="locations">
+                    <label for="locations">Location Intelligence</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="regions">Regions of Interest (optional)</label>
+                <input type="text" id="regions" name="regions" placeholder="e.g., Northern Virginia, Dallas, Silicon Valley">
+            </div>
+
+            <div class="form-group">
+                <label for="message">Additional Details</label>
+                <textarea id="message" name="message" placeholder="Tell us about your specific intelligence needs..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit Request</button>
+        </form>
+
+        <a href="dashboard_v2.html" class="back-link">← Back to Dashboard</a>
+    </div>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // For now, just show an alert (you can replace with actual form submission)
+            alert('Thank you for your interest! Your request has been received.\n\nOur team will contact you within 1 business day to discuss your market intelligence needs.\n\n(Note: In production, this would send to your backend/email)');
+
+            // Optionally reset form
+            // this.reset();
+        });
+    </script>
+</body>
+</html>

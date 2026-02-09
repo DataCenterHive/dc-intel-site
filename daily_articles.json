@@ -1,0 +1,15 @@
+{
+  "generated_date": "2026-02-02T07:00:13.394174",
+  "day_of_week": "Monday",
+  "includes_services": false,
+  "articles": [
+    {
+      "headline": "Fayetteville Data Center Expands Digital Infrastructure in Georgia Market",
+      "content": "A new operational data center has emerged in the Fayetteville market, signaling continued growth in Georgia's expanding digital ecosystem. The facility represents a strategic investment in regional technological infrastructure, potentially supporting enterprise and cloud computing needs for businesses in the Atlanta metropolitan area. While specific operational details remain limited, the deployment suggests ongoing momentum in the Southeast's data center landscape."
+    },
+    {
+      "headline": "Microsoft Expands Wyoming Data Center Footprint With Cheyenne Project",
+      "content": "Microsoft is advancing its hyperscale infrastructure strategy with a new data center development in Cheyenne, Wyoming, targeting approximately 3.0 MW of initial computing capacity. The project represents the tech giant's continued investment in regional data center expansion, leveraging Wyoming's favorable business climate and access to renewable energy resources. Construction is currently underway, signaling Microsoft's commitment to growing its enterprise cloud computing infrastructure across the Mountain West region."
+    }
+  ]
+}

@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings | DataCenter Hive</title>
+    <link rel="icon" type="image/png" href="../9e224nbi.png">
+    <style>
+        :root {
+            /* Design Tokens - Match main site EXACTLY */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --border-default: #e2e8f0;
+            --border-emphasis: #cbd5e1;
+            --divider-strong: #0f172a;
+            --brand-primary: #2563eb;
+            --brand-hover: #1d4ed8;
+            --success: #059669;
+            --warning: #d97706;
+            --danger: #ef4444;
+            --spacing-unit: 8px;
+            --shadow-sm: 0 1px 2px rgba(15,23,42,.06);
+            --shadow-md: 0 8px 24px rgba(15,23,42,.10);
+
+            /* Aliases for consistency */
+            --bg: var(--bg-primary);
+            --text: var(--text-primary);
+            --muted: var(--text-secondary);
+            --border: var(--border-default);
+            --border-strong: var(--divider-strong);
+            --surface: var(--bg-secondary);
+            --brand: var(--brand-primary);
+
+            /* Tier Colors */
+            --tier-free: #6b7280;
+            --tier-basic: #0284c7;
+            --tier-premium: #d97706;
+            --tier-enterprise: #7c3aed;
+
+            /* Tier Borders */
+            --tier-free-border: #4b5563;
+            --tier-basic-border: #0369a1;
+            --tier-premium-border: #b45309;
+            --tier-enterprise-border: #6d28d9;
+
+            /* Tier backgrounds */
+            --tier-basic-bg: #dbeafe;
+            --tier-basic-text: #1e3a8a;
+            --tier-premium-bg: #fef3c7;
+            --tier-premium-text: #92400e;
+            --tier-enterprise-bg: #ede9fe;
+            --tier-enterprise-text: #5b21b6;
+
+            /* Radius */
+            --r-sm: 6px;
+            --r-pill: 999px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+            color: var(--text-primary);
+            padding: calc(var(--spacing-unit) * 2.5);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .newspaper-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--bg-primary);
+            padding: calc(var(--spacing-unit) * 5);
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1), 0 1px 2px rgba(15, 23, 42, 0.06);
+            border-radius: calc(var(--spacing-unit) * 1);
+        }
+
+        .masthead {
+            border-bottom: 2px solid var(--border-emphasis);
+            padding-bottom: calc(var(--spacing-unit) * 2.5);
+            margin-bottom: calc(var(--spacing-unit) * 3);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .masthead h1 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--brand-primary);
+        }
+
+        .section {
+            margin-bottom: calc(var(--spacing-unit) * 4);
+        }
+
+        .section-header {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--border-emphasis);
+            padding-bottom: calc(var(--spacing-unit) * 1);
+        }
+
+        /* Two-column layout */
+        .account-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: calc(var(--spacing-unit) * 4);
+            align-items: start;
+        }
+
+        .main-column {
+            display: flex;
+            flex-direction: column;
+            gap: calc(var(--spacing-unit) * 3);
+        }
+
+        .sidebar {
+            position: sticky;
+            top: calc(var(--spacing-unit) * 3);
+        }
+
+        /* Form elements */
+        .form-group {
+            margin-bottom: calc(var(--spacing-unit) * 2.5);
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: calc(var(--spacing-unit) * 1);
+            letter-spacing: 0.2px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: calc(var(--spacing-unit) * 1.5);
+            border: 1px solid var(--border-default);
+            border-radius: 4px;
+            font-size: 14px;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--brand-primary);
+        }
+
+        .form-input:disabled {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            cursor: not-allowed;
+        }
+
+        .form-hint {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: calc(var(--spacing-unit) * 0.5);
+        }
+
+        /* Buttons - Match main site EXACTLY */
+        .btn {
+            padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 3);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            border-radius: var(--r-sm);
+            transition: all 0.2s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--brand-primary);
+            color: #ffffff;
+            border: 2px solid var(--brand-primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--brand-hover);
+            border-color: var(--brand-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn-secondary {
+            background: #ffffff;
+            color: var(--text-primary);
+            border: 2px solid var(--border-default);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--brand-primary);
+            color: var(--brand-primary);
+            transform: translateY(-1px);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+            border: 2px solid var(--danger);
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+            border-color: #dc2626;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(239, 68, 68, 0.2);
+        }
+
+        /* Subscription box */
+        .subscription-box {
+            background: var(--bg-primary);
+            border: 2px solid var(--border-emphasis);
+            border-radius: 6px;
+            padding: calc(var(--spacing-unit) * 3);
+        }
+
+        .subscription-tier-display {
+            text-align: center;
+            margin-bottom: calc(var(--spacing-unit) * 2.5);
+        }
+
+        .tier-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: calc(var(--spacing-unit) * 1);
+        }
+
+        .tier-free {
+            background: #f1f5f9;
+            color: var(--tier-free);
+            border: 1px solid var(--tier-free-border);
+        }
+
+        .tier-basic {
+            background: var(--tier-basic-bg);
+            color: var(--tier-basic-text);
+            border: 1px solid var(--tier-basic-border);
+        }
+
+        .tier-premium {
+            background: var(--tier-premium-bg);
+            color: var(--tier-premium-text);
+            border: 1px solid var(--tier-premium-border);
+        }
+
+        .tier-enterprise {
+            background: var(--tier-enterprise-bg);
+            color: var(--tier-enterprise-text);
+            border: 1px solid var(--tier-enterprise-border);
+        }
+
+        .subscription-details {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: calc(var(--spacing-unit) * 2.5);
+        }
+
+        .subscription-details-row {
+            display: flex;
+            justify-content: space-between;
+            padding: calc(var(--spacing-unit) * 1) 0;
+            border-bottom: 1px solid var(--border-default);
+        }
+
+        .subscription-details-row:last-child {
+            border-bottom: none;
+        }
+
+        .subscription-details-label {
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .subscription-details-value {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .status-active .status-dot {
+            background: var(--success);
+        }
+
+        .status-past_due .status-dot {
+            background: var(--warning);
+        }
+
+        .status-canceled .status-dot {
+            background: var(--danger);
+        }
+
+        .status-warning .status-dot {
+            background: var(--warning);
+        }
+
+        /* Settings list */
+        .settings-list {
+            display: flex;
+            flex-direction: column;
+            gap: calc(var(--spacing-unit) * 2);
+        }
+
+        .settings-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: calc(var(--spacing-unit) * 2);
+            border: 1px solid var(--border-default);
+            border-radius: 4px;
+        }
+
+        .settings-item-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .settings-item-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Toggle switch */
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e1;
+            transition: 0.3s;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--brand-primary);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Error & Info Banners */
+        .banner {
+            padding: calc(var(--spacing-unit) * 2);
+            border-radius: var(--r-sm);
+            margin-bottom: calc(var(--spacing-unit) * 3);
+            font-size: 14px;
+            line-height: 1.6;
+            border-width: 2px;
+            border-style: solid;
+        }
+
+        .banner-error {
+            background: #fef2f2;
+            border-color: var(--danger);
+            color: #7f1d1d;
+        }
+
+        .banner-warning {
+            background: #fffbeb;
+            border-color: var(--warning);
+            color: #78350f;
+        }
+
+        .banner-info {
+            background: #eff6ff;
+            border-color: var(--brand-primary);
+            color: #1e3a8a;
+        }
+
+        .banner-success {
+            background: #f0fdf4;
+            border-color: var(--success);
+            color: #14532d;
+        }
+
+        .banner strong {
+            font-weight: 600;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            font-size: 24px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 992px) {
+            .account-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+
+            .newspaper-container {
+                padding: calc(var(--spacing-unit) * 3);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: calc(var(--spacing-unit) * 1.5);
+            }
+
+            .newspaper-container {
+                padding: calc(var(--spacing-unit) * 2);
+            }
+
+            .masthead h1 {
+                font-size: 24px;
+            }
+
+            .masthead {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: calc(var(--spacing-unit) * 1.5);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner">⏳</div>
+    </div>
+
+    <div class="newspaper-container">
+        <!-- Masthead -->
+        <div class="masthead">
+            <h1>Account Settings</h1>
+            <a href="#" onclick="goBackToDashboard(); return false;" class="back-link">← Back to Dashboard</a>
+        </div>
+
+        <!-- Error/Info Banner Container -->
+        <div id="bannerContainer"></div>
+
+        <!-- Two-column layout -->
+        <div class="account-layout">
+            <!-- Main column: Profile, Security, Notifications -->
+            <div class="main-column">
+                <!-- Profile Section -->
+                <section class="section">
+                    <h2 class="section-header">Profile</h2>
+                    <form id="profileForm" onsubmit="saveProfile(event)">
+                        <div class="form-group">
+                            <label class="form-label" for="profileEmail">Email Address</label>
+                            <input type="email" id="profileEmail" class="form-input" disabled>
+                            <div class="form-hint">Email cannot be changed. Contact support if needed.</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="profileFullName">Display Name</label>
+                            <input type="text" id="profileFullName" class="form-input" placeholder="Your full name">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="profileCompany">Company</label>
+                            <input type="text" id="profileCompany" class="form-input" placeholder="Company name">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="profileJobTitle">Job Title</label>
+                            <input type="text" id="profileJobTitle" class="form-input" placeholder="Your role">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </section>
+
+                <!-- Security Section -->
+                <section class="section">
+                    <h2 class="section-header">Security</h2>
+
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <button type="button" class="btn btn-secondary" onclick="changePassword()">Change Password</button>
+                        <div class="form-hint" id="passwordLastChanged">Last changed: Never</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Account Actions</label>
+                        <button type="button" class="btn btn-secondary" onclick="logout()">Log Out</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Session Info</label>
+                        <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: calc(var(--spacing-unit) * 1);">
+                            <div style="margin-bottom: 6px;">
+                                <strong>Signed in as:</strong> <span id="sessionEmail">—</span>
+                            </div>
+                            <div style="margin-bottom: calc(var(--spacing-unit) * 1.5);">
+                                <strong>Last sign-in:</strong> <span id="lastSignIn">This session</span>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary" disabled title="Coming soon: Sign out of all devices">
+                            Sign Out All Devices
+                        </button>
+                        <div class="form-hint">Sign out from all browsers and devices (coming soon)</div>
+                    </div>
+                </section>
+
+                <!-- Notifications Section -->
+                <section class="section">
+                    <h2 class="section-header">Notifications</h2>
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: calc(var(--spacing-unit) * 2);">
+                        Manage your email notification preferences
+                    </p>
+
+                    <div class="settings-list">
+                        <div class="settings-item">
+                            <div>
+                                <div class="settings-item-label">Product Updates</div>
+                                <div class="settings-item-desc">News about new features and improvements</div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="notifyProductUpdates" onchange="saveNotificationPreferences()" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="settings-item">
+                            <div>
+                                <div class="settings-item-label">Billing Notifications</div>
+                                <div class="settings-item-desc">Payment receipts and subscription updates</div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="notifyBilling" onchange="saveNotificationPreferences()" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="settings-item">
+                            <div>
+                                <div class="settings-item-label">Data Alerts</div>
+                                <div class="settings-item-desc">Updates about new data center projects</div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="notifyDataAlerts" onchange="saveNotificationPreferences()">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- API Keys Section (Placeholder) -->
+                <section class="section" style="opacity: 0.6; position: relative;">
+                    <h2 class="section-header">API Access</h2>
+                    <div style="position: absolute; top: calc(var(--spacing-unit) * 2); right: calc(var(--spacing-unit) * 2); background: var(--tier-premium-bg); color: var(--tier-premium-text); padding: 4px 12px; border-radius: var(--r-pill); font-size: 11px; font-weight: 600; text-transform: uppercase;">
+                        Coming Soon
+                    </div>
+                    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: calc(var(--spacing-unit) * 2); line-height: 1.6;">
+                        Programmatic access to DataCenter Hive via API keys (Premium & Enterprise)
+                    </p>
+
+                    <div class="form-group">
+                        <label class="form-label">API Key</label>
+                        <input type="text" class="form-input" value="dc_live_••••••••••••••••" disabled style="font-family: monospace; font-size: 13px;">
+                        <div class="form-hint">API access is not yet available. Contact sales for early access.</div>
+                    </div>
+
+                    <div style="display: flex; gap: calc(var(--spacing-unit) * 1.5);">
+                        <button type="button" class="btn btn-secondary" disabled>Generate New Key</button>
+                        <button type="button" class="btn btn-secondary" disabled>Revoke Key</button>
+                    </div>
+                </section>
+
+                <!-- Support Section -->
+                <section class="section">
+                    <h2 class="section-header">Support</h2>
+                    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: calc(var(--spacing-unit) * 2); line-height: 1.6;">
+                        Need help? Our support team is here to assist you with any questions or issues.
+                    </p>
+
+                    <div class="settings-list">
+                        <div class="settings-item">
+                            <div>
+                                <div class="settings-item-label">Email Support</div>
+                                <div class="settings-item-desc">Get help via email (24-48 hour response)</div>
+                            </div>
+                            <a href="mailto:support@datacenterhive.com" class="btn btn-secondary" style="text-decoration: none;">
+                                Contact Support
+                            </a>
+                        </div>
+
+                        <div class="settings-item">
+                            <div>
+                                <div class="settings-item-label">Documentation</div>
+                                <div class="settings-item-desc">Browse guides and tutorials</div>
+                            </div>
+                            <a href="../docs.html" class="btn btn-secondary" style="text-decoration: none;" target="_blank">
+                                View Docs
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Sidebar: Subscription -->
+            <div class="sidebar">
+                <div class="subscription-box">
+                    <div class="subscription-tier-display">
+                        <div class="tier-badge tier-free" id="tierBadge">FREE</div>
+                        <div style="font-size: 14px; color: var(--text-secondary); margin-top: 8px;">Current Plan</div>
+                    </div>
+
+                    <div class="subscription-details">
+                        <div class="subscription-details-row">
+                            <span class="subscription-details-label">Status</span>
+                            <span class="subscription-details-value">
+                                <span class="status-badge status-active" id="subscriptionStatus">
+                                    <span class="status-dot"></span>
+                                    Active
+                                </span>
+                            </span>
+                        </div>
+                        <div class="subscription-details-row" id="renewalRow" style="display: none;">
+                            <span class="subscription-details-label">Renews</span>
+                            <span class="subscription-details-value" id="renewalDate">—</span>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-primary" onclick="manageSubscription()" style="width: 100%;" id="manageSubscriptionBtn">
+                        Manage Subscription
+                    </button>
+
+                    <div style="margin-top: calc(var(--spacing-unit) * 2); padding-top: calc(var(--spacing-unit) * 2); border-top: 1px solid var(--border-default);" id="invoicesSection">
+                        <a href="#" onclick="openInvoices(); return false;" style="display: flex; align-items: center; gap: 6px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: color 0.2s;">
+                            <span>📄</span>
+                            <span>View Invoices & Receipts</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API Base URL
+        const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://127.0.0.1:8010' : 'https://dc-intel-api.onrender.com';
+
+        // Base path helper - works on both GitHub Pages and custom domains
+        function getBasePath() {
+            return location.hostname.endsWith('github.io') && location.pathname.includes('/dc-intel-site/')
+                ? '/dc-intel-site/'
+                : '/';
+        }
+
+        // Banner helper functions
+        function showBanner(type, message) {
+            const container = document.getElementById('bannerContainer');
+            const banner = document.createElement('div');
+            banner.className = `banner banner-${type}`;
+            banner.innerHTML = message;
+            container.innerHTML = ''; // Clear existing banners
+            container.appendChild(banner);
+        }
+
+        function clearBanner() {
+            document.getElementById('bannerContainer').innerHTML = '';
+        }
+
+        function showLoading() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+
+        // Load user data from API on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            loadUserFromAPI();
+        });
+
+        async function loadUserFromAPI() {
+            // Get token
+            const token = localStorage.getItem('dc_intel_token') || sessionStorage.getItem('dc_intel_token');
+
+            if (!token) {
+                showBanner('error', '<strong>Not Authenticated:</strong> Please log in to access account settings.');
+                setTimeout(() => {
+                    window.location.href = getBasePath();
+                }, 2000);
+                return;
+            }
+
+            showLoading();
+
+            try {
+                // Call /api/auth/me to get fresh user data
+                const response = await fetch(`${API_BASE}/api/auth/me`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        throw new Error('Session expired. Please log in again.');
+                    }
+                    throw new Error('Failed to load account data');
+                }
+
+                const user = await response.json();
+
+                // Cache user data in localStorage (optional cache)
+                const storageType = localStorage.getItem('dc_intel_token') ? localStorage : sessionStorage;
+                storageType.setItem('dc_intel_user', JSON.stringify(user));
+
+                // Display user info
+                displayUserInfo(user);
+                hideLoading();
+
+            } catch (error) {
+                hideLoading();
+                console.error('Error loading user data:', error);
+                showBanner('error', `<strong>Error Loading Account:</strong> ${error.message}`);
+
+                if (error.message.includes('Session expired')) {
+                    setTimeout(() => {
+                        window.location.href = getBasePath();
+                    }, 2000);
+                }
+            }
+        }
+
+        function displayUserInfo(user) {
+            // Populate profile form
+            document.getElementById('profileEmail').value = user.email || '';
+            document.getElementById('profileFullName').value = user.full_name || '';
+            document.getElementById('profileCompany').value = user.company || '';
+            document.getElementById('profileJobTitle').value = user.job_title || '';
+
+            // Populate session info
+            document.getElementById('sessionEmail').textContent = user.email || '—';
+
+            // Update password last changed timestamp
+            const pwdHint = document.getElementById('passwordLastChanged');
+            if (user.password_changed_at) {
+                pwdHint.textContent = 'Last changed: ' + user.password_changed_at;
+            } else {
+                pwdHint.textContent = 'Last changed: Never';
+            }
+
+            // Load notification preferences from localStorage
+            loadNotificationPreferences();
+
+            // Update subscription tier badge
+            const tier = user.tier || 'free';
+            const tierBadge = document.getElementById('tierBadge');
+            tierBadge.textContent = tier.toUpperCase();
+            tierBadge.className = 'tier-badge tier-' + tier;
+
+            // Update subscription status
+            const status = user.subscription_status || 'active';
+            const cancelAtPeriodEnd = user.cancel_at_period_end || false;
+            const statusEl = document.getElementById('subscriptionStatus');
+
+            let statusClass = 'status-active';
+            let statusText = 'Active';
+
+            // Handle different subscription states
+            if (status === 'past_due') {
+                statusClass = 'status-past_due';
+                statusText = 'Past Due';
+
+                // Show warning banner for past due
+                showBanner('warning', '<strong>Payment Past Due:</strong> Your subscription payment is overdue. Please update your payment method to avoid service interruption. You have a 7-day grace period.');
+            } else if (status === 'canceled' || status === 'cancelled') {
+                statusClass = 'status-canceled';
+                statusText = 'Canceled';
+            } else if (status === 'trialing') {
+                statusClass = 'status-active';
+                statusText = 'Trial';
+            } else if (status === 'active') {
+                if (cancelAtPeriodEnd) {
+                    // User has canceled but subscription is still active until period end
+                    statusClass = 'status-warning';
+                    statusText = 'Ending Soon';
+
+                    // Show info banner
+                    const endDate = user.subscription_end_date ? new Date(user.subscription_end_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'end of period';
+                    showBanner('info', `<strong>Subscription Ending:</strong> Your subscription will end on ${endDate}. You can reactivate anytime before then.`);
+                } else {
+                    statusClass = 'status-active';
+                    statusText = 'Active';
+                }
+            }
+
+            statusEl.className = 'status-badge ' + statusClass;
+            statusEl.innerHTML = `<span class="status-dot"></span>${statusText}`;
+
+            // Show renewal/end date
+            const renewalRow = document.getElementById('renewalRow');
+            const renewalLabel = renewalRow.querySelector('.subscription-details-label');
+            const renewalValue = document.getElementById('renewalDate');
+
+            if (user.subscription_end_date && tier !== 'free') {
+                renewalRow.style.display = 'flex';
+                const endDate = new Date(user.subscription_end_date);
+                const dateStr = endDate.toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric'
+                });
+
+                // Change label based on cancel_at_period_end
+                if (cancelAtPeriodEnd) {
+                    renewalLabel.textContent = 'Ends on';
+                } else {
+                    renewalLabel.textContent = 'Renews';
+                }
+
+                renewalValue.textContent = dateStr;
+            } else {
+                renewalRow.style.display = 'none';
+            }
+
+            // Update button text based on tier
+            const manageBtn = document.getElementById('manageSubscriptionBtn');
+            const invoicesSection = document.getElementById('invoicesSection');
+            if (tier === 'free') {
+                manageBtn.textContent = 'Upgrade Plan';
+                // Hide invoices section for free users
+                if (invoicesSection) invoicesSection.style.display = 'none';
+            } else {
+                manageBtn.textContent = 'Manage Subscription';
+                // Show invoices section for paid users
+                if (invoicesSection) invoicesSection.style.display = 'block';
+            }
+        }
+
+        function goBackToDashboard() {
+            window.location.href = getBasePath();
+        }
+
+        async function saveProfile(event) {
+            event.preventDefault();
+
+            const token = localStorage.getItem('dc_intel_token') || sessionStorage.getItem('dc_intel_token');
+
+            if (!token) {
+                showBanner('error', '<strong>Not Authenticated:</strong> Please log in again.');
+                return;
+            }
+
+            // Get form values
+            const profileData = {
+                full_name: document.getElementById('profileFullName').value.trim(),
+                company: document.getElementById('profileCompany').value.trim(),
+                job_title: document.getElementById('profileJobTitle').value.trim()
+            };
+
+            // Validate
+            if (!profileData.full_name) {
+                showBanner('error', '<strong>Validation Error:</strong> Display name is required.');
+                return;
+            }
+
+            // Disable save button during request
+            const saveBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = saveBtn.textContent;
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'Saving...';
+
+            clearBanner();
+
+            try {
+                // Call PATCH /api/auth/profile
+                const response = await fetch(`${API_BASE}/api/auth/profile`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(profileData)
+                });
+
+                if (!response.ok) {
+                    // Handle endpoint not implemented (404, 501)
+                    if (response.status === 404 || response.status === 501) {
+                        // Fallback: save to localStorage only
+                        const userStr = localStorage.getItem('dc_intel_user') || sessionStorage.getItem('dc_intel_user');
+                        if (userStr) {
+                            const user = JSON.parse(userStr);
+                            user.full_name = profileData.full_name;
+                            user.company = profileData.company;
+                            user.job_title = profileData.job_title;
+
+                            const storageType = localStorage.getItem('dc_intel_token') ? localStorage : sessionStorage;
+                            storageType.setItem('dc_intel_user', JSON.stringify(user));
+
+                            displayUserInfo(user);
+                        }
+
+                        showBanner('info', '<strong>Profile Saved Locally:</strong> Profile saving to server isn\'t enabled yet. Your changes are saved on this device only.');
+                        return;
+                    }
+
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Failed to update profile');
+                }
+
+                const updatedUser = await response.json();
+
+                // Update cached user data
+                const storageType = localStorage.getItem('dc_intel_token') ? localStorage : sessionStorage;
+                storageType.setItem('dc_intel_user', JSON.stringify(updatedUser));
+
+                // Refresh display with server data (in case backend modified anything)
+                displayUserInfo(updatedUser);
+
+                // Show success banner
+                showBanner('success', '<strong>Profile Updated!</strong> Your changes have been saved successfully.');
+
+                // NOTE: Email notification will be sent by backend
+                // Backend should send email to user.email notifying of profile changes
+                // Including: what changed, when, from what IP address
+
+            } catch (error) {
+                console.error('Error saving profile:', error);
+                showBanner('error', `<strong>Save Failed:</strong> ${error.message}`);
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = originalText;
+            }
+        }
+
+        function changePassword() {
+            // Redirect to forgot password page
+            window.location.href = getBasePath() + 'auth/forgot-password.html';
+        }
+
+        async function manageSubscription() {
+            try {
+                // Get the access token
+                const token = localStorage.getItem('dc_intel_token') || sessionStorage.getItem('dc_intel_token');
+
+                if (!token) {
+                    alert('Please log in to manage your subscription');
+                    window.location.href = getBasePath() + 'auth/login.html';
+                    return;
+                }
+
+                // Get user data to check tier
+                const userStr = localStorage.getItem('dc_intel_user') || sessionStorage.getItem('dc_intel_user');
+                let tier = 'free';
+                if (userStr) {
+                    try {
+                        const user = JSON.parse(userStr);
+                        tier = user.tier || 'free';
+                    } catch (e) {
+                        console.error('Error parsing user data:', e);
+                    }
+                }
+
+                // Show loading state
+                const btn = document.getElementById('manageSubscriptionBtn');
+                const originalText = btn.textContent;
+                btn.disabled = true;
+                btn.textContent = 'Loading...';
+
+                // If free tier, redirect to pricing page instead of portal
+                if (tier === 'free') {
+                    window.location.href = getBasePath() + 'services/basic.html';
+                    return;
+                }
+
+                // For paid users, open Stripe portal
+                const response = await fetch(`${API_BASE}/api/stripe/create-portal-session`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Failed to create portal session');
+                }
+
+                const data = await response.json();
+
+                // Redirect to Stripe Customer Portal
+                window.location.href = data.portal_url;
+
+            } catch (error) {
+                console.error('Error opening subscription portal:', error);
+                alert('Error: ' + error.message);
+
+                // Restore button state
+                const btn = document.getElementById('manageSubscriptionBtn');
+                if (btn) {
+                    btn.disabled = false;
+                    const userStr = localStorage.getItem('dc_intel_user') || sessionStorage.getItem('dc_intel_user');
+                    let tier = 'free';
+                    if (userStr) {
+                        try {
+                            const user = JSON.parse(userStr);
+                            tier = user.tier || 'free';
+                        } catch (e) {}
+                    }
+                    btn.textContent = tier === 'free' ? 'Upgrade Plan' : 'Manage Subscription';
+                }
+            }
+        }
+
+        async function openInvoices() {
+            // Same as manageSubscription but goes to billing page
+            const token = localStorage.getItem('dc_intel_token') || sessionStorage.getItem('dc_intel_token');
+
+            if (!token) {
+                alert('Please log in to view invoices');
+                return;
+            }
+
+            try {
+                // Call backend to create Stripe portal session
+                const response = await fetch(`${API_BASE}/api/stripe/create-portal-session`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to open billing portal');
+                }
+
+                const data = await response.json();
+
+                // Redirect to Stripe Customer Portal billing history page
+                window.location.href = data.portal_url;
+
+            } catch (error) {
+                console.error('Error opening invoices:', error);
+                alert('Unable to open invoices. Please try again later.');
+            }
+        }
+
+        function loadNotificationPreferences() {
+            // Load from localStorage (or use defaults)
+            const prefs = JSON.parse(localStorage.getItem('notification_preferences') || '{}');
+
+            // Set checkbox states
+            document.getElementById('notifyProductUpdates').checked = prefs.product_updates !== false; // default true
+            document.getElementById('notifyBilling').checked = prefs.billing !== false; // default true
+            document.getElementById('notifyDataAlerts').checked = prefs.data_alerts === true; // default false
+        }
+
+        function saveNotificationPreferences() {
+            // Get current checkbox states
+            const prefs = {
+                product_updates: document.getElementById('notifyProductUpdates').checked,
+                billing: document.getElementById('notifyBilling').checked,
+                data_alerts: document.getElementById('notifyDataAlerts').checked
+            };
+
+            // Save to localStorage
+            localStorage.setItem('notification_preferences', JSON.stringify(prefs));
+
+            // TODO: In future, send to backend API
+            // fetch(`${API_BASE}/api/auth/notification-preferences`, {
+            //     method: 'PATCH',
+            //     headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(prefs)
+            // });
+
+            console.log('Notification preferences saved:', prefs);
+        }
+
+        function logout() {
+            // Confirm logout
+            if (!confirm('Are you sure you want to log out?')) {
+                return;
+            }
+
+            // Clear all authentication data (match index.html token keys)
+            localStorage.clear(); // Clear everything to be safe
+            sessionStorage.clear();
+
+            // Redirect to home page (not login - user can click Sign In if needed)
+            window.location.href = getBasePath();
+        }
+    </script>
+</body>
+</html>

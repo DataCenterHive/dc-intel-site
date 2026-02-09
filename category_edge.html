@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edge Data Centers -DataCenter Hive</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f5f5dc;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: #000;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 4px double #000;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .category-description {
+            font-size: 16px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #000;
+            text-decoration: underline;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            color: #666;
+        }
+
+        /* Expandable Section Styles */
+        .expandable-section {
+            margin-bottom: 25px;
+            border: 2px solid #000;
+            background: #fffef8;
+        }
+
+        .section-header {
+            padding: 15px 20px;
+            background: #000;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .section-header:hover {
+            background: #333;
+        }
+
+        .section-header h2 {
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .section-count {
+            font-size: 14px;
+            color: #fbbf24;
+            font-weight: normal;
+        }
+
+        .toggle-icon {
+            font-size: 24px;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+
+        .toggle-icon.expanded {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            padding: 20px;
+            display: none;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            margin-top: 15px;
+        }
+
+        th {
+            padding: 10px;
+            text-align: left;
+            background: #000;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background: #f9f9f9;
+        }
+
+        /* News Article Styles */
+        .article {
+            border: 2px solid #000;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #fffef8;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .article-headline {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .article-byline {
+            font-size: 11px;
+            font-style: italic;
+            color: #666;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+
+        .article-content {
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .article-link {
+            color: #000;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 30px;
+            font-size: 14px;
+            color: #999;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="dashboard_v2.html" class="back-link">← Back to Dashboard</a>
+
+        <div class="header">
+            <h1>Edge Data Centers</h1>
+            <p class="category-description">Smaller, distributed facilities closer to end-users for low-latency applications</p>
+        </div>
+
+        <!-- Existing DCs Section -->
+        <div class="expandable-section">
+            <div class="section-header" onclick="toggleSection('existing')">
+                <div>
+                    <h2>Existing Edge Facilities</h2>
+                    <span class="section-count" id="existingCount">Loading...</span>
+                </div>
+                <span class="toggle-icon" id="existingIcon">▼</span>
+            </div>
+            <div class="section-content" id="existingContent">
+                <div class="loading">Loading existing facilities...</div>
+            </div>
+        </div>
+
+        <!-- Upcoming DCs Section -->
+        <div class="expandable-section">
+            <div class="section-header" onclick="toggleSection('upcoming')">
+                <div>
+                    <h2>Upcoming Edge Projects</h2>
+                    <span class="section-count" id="upcomingCount">Loading...</span>
+                </div>
+                <span class="toggle-icon" id="upcomingIcon">▼</span>
+            </div>
+            <div class="section-content" id="upcomingContent">
+                <div class="loading">Loading upcoming projects...</div>
+            </div>
+        </div>
+
+        <!-- News Section -->
+        <div class="expandable-section">
+            <div class="section-header" onclick="toggleSection('news')">
+                <div>
+                    <h2>Related News Articles</h2>
+                    <span class="section-count" id="newsCount">Loading...</span>
+                </div>
+                <span class="toggle-icon" id="newsIcon">▼</span>
+            </div>
+            <div class="section-content" id="newsContent">
+                <div class="loading">Loading news articles...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const CATEGORY = 'edge';
+
+        // Toggle expandable sections
+        function toggleSection(section) {
+            const content = document.getElementById(section + 'Content');
+            const icon = document.getElementById(section + 'Icon');
+
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                icon.classList.remove('expanded');
+            } else {
+                content.classList.add('active');
+                icon.classList.add('expanded');
+            }
+        }
+
+        // Category filter logic
+        function matchesCategory(item, category) {
+            const searchText = (
+                (item.provider || '') + ' ' +
+                (item.name || '') + ' ' +
+                (item.services || '') + ' ' +
+                (item.about || '') + ' ' +
+                (item.latest_description || '') + ' ' +
+                (item.title || '') + ' ' +
+                (item.summary || '')
+            ).toLowerCase();
+
+            switch(category) {
+                case 'edge':
+                    return searchText.includes('edge') || searchText.includes('5g') ||
+                           searchText.includes('cdn') || searchText.includes('low latency') ||
+                           searchText.includes('distributed') || searchText.includes('regional') ||
+                           searchText.includes('small footprint') || searchText.includes('micro data center');
+                default:
+                    return false;
+            }
+        }
+
+        // Load Existing DCs
+        async function loadExistingDCs() {
+            try {
+                const response = await fetch('/details_enriched_geocoded.json');
+                const allDCs = await response.json();
+                const filtered = allDCs.filter(dc => matchesCategory(dc, CATEGORY));
+
+                document.getElementById('existingCount').textContent = `${filtered.length} facilities`;
+
+                if (filtered.length === 0) {
+                    document.getElementById('existingContent').innerHTML = '<div class="no-results">No existing facilities found in this category.</div>';
+                    return;
+                }
+
+                let html = '<table><thead><tr>';
+                html += '<th>Provider</th>';
+                html += '<th>Facility Name</th>';
+                html += '<th>City</th>';
+                html += '<th>State</th>';
+                html += '<th>Square Feet</th>';
+                html += '<th>Certifications</th>';
+                html += '</tr></thead><tbody>';
+
+                filtered.forEach(dc => {
+                    const certs = (dc.certifications || '').split(';').filter(c => c.trim()).join(', ');
+                    html += '<tr>';
+                    html += `<td><strong>${dc.provider || 'N/A'}</strong></td>`;
+                    html += `<td>${dc.name || 'N/A'}</td>`;
+                    html += `<td>${dc.city || 'N/A'}</td>`;
+                    html += `<td>${dc.state || 'N/A'}</td>`;
+                    html += `<td>${dc.total_sqft ? parseInt(dc.total_sqft).toLocaleString() : 'N/A'}</td>`;
+                    html += `<td>${certs || 'None listed'}</td>`;
+                    html += '</tr>';
+                });
+
+                html += '</tbody></table>';
+                document.getElementById('existingContent').innerHTML = html;
+            } catch (error) {
+                document.getElementById('existingContent').innerHTML = '<div class="no-results">Error loading existing facilities.</div>';
+                console.error('Error:', error);
+            }
+        }
+
+        // Load Upcoming DCs
+        async function loadUpcomingDCs() {
+            try {
+                const timestamp = new Date().getTime();
+                const response = await fetch(`/masters/DC_Upcoming_Combined.csv?t=${timestamp}`);
+                const csvText = await response.text();
+
+                // Simple CSV parser
+                const lines = csvText.split('\n').filter(line => line.trim());
+                const headers = lines[0].split(',');
+                const projects = [];
+
+                for (let i = 1; i < lines.length; i++) {
+                    const values = lines[i].split(',');
+                    const project = {};
+                    headers.forEach((header, idx) => {
+                        project[header.trim()] = values[idx] ? values[idx].trim() : '';
+                    });
+                    projects.push(project);
+                }
+
+                const filtered = projects.filter(p => {
+                    // Filter out TBD,TBD
+                    if ((p.city || '').toUpperCase() === 'TBD' && (p.state || '').toUpperCase() === 'TBD') {
+                        return false;
+                    }
+                    return matchesCategory(p, CATEGORY);
+                });
+
+                document.getElementById('upcomingCount').textContent = `${filtered.length} projects`;
+
+                if (filtered.length === 0) {
+                    document.getElementById('upcomingContent').innerHTML = '<div class="no-results">No upcoming projects found in this category.</div>';
+                    return;
+                }
+
+                let html = '<table><thead><tr>';
+                html += '<th>Location</th>';
+                html += '<th>Address</th>';
+                html += '<th>Description</th>';
+                html += '<th>First Seen</th>';
+                html += '<th>Source</th>';
+                html += '</tr></thead><tbody>';
+
+                filtered.forEach(p => {
+                    const location = `${p.city || 'TBD'}, ${p.state || 'TBD'}`;
+                    html += '<tr>';
+                    html += `<td><strong>${location}</strong></td>`;
+                    html += `<td>${p.address_raw || 'TBD'}</td>`;
+                    html += `<td>${(p.latest_description || '').substring(0, 100)}...</td>`;
+                    html += `<td>${p.first_seen_applied_date || 'N/A'}</td>`;
+                    html += `<td>${p.source || 'N/A'}</td>`;
+                    html += '</tr>';
+                });
+
+                html += '</tbody></table>';
+                document.getElementById('upcomingContent').innerHTML = html;
+            } catch (error) {
+                document.getElementById('upcomingContent').innerHTML = '<div class="no-results">Error loading upcoming projects.</div>';
+                console.error('Error:', error);
+            }
+        }
+
+        // Load News
+        async function loadNews() {
+            try {
+                const timestamp = new Date().getTime();
+                const response = await fetch(`/news/articles_history_dc_filtered.csv?t=${timestamp}`);
+                const csvText = await response.text();
+
+                const lines = csvText.split('\n').filter(line => line.trim());
+                const headers = lines[0].split(',');
+                const articles = [];
+
+                for (let i = 1; i < lines.length; i++) {
+                    // Handle quoted CSV fields
+                    const values = [];
+                    let current = '';
+                    let inQuotes = false;
+
+                    for (let j = 0; j < lines[i].length; j++) {
+                        const char = lines[i][j];
+                        if (char === '"') {
+                            inQuotes = !inQuotes;
+                        } else if (char === ',' && !inQuotes) {
+                            values.push(current.trim());
+                            current = '';
+                        } else {
+                            current += char;
+                        }
+                    }
+                    values.push(current.trim());
+
+                    const article = {};
+                    headers.forEach((header, idx) => {
+                        article[header.trim()] = values[idx] ? values[idx].replace(/^"|"$/g, '') : '';
+                    });
+                    articles.push(article);
+                }
+
+                const filtered = articles.filter(a => matchesCategory(a, CATEGORY));
+
+                document.getElementById('newsCount').textContent = `${filtered.length} articles`;
+
+                if (filtered.length === 0) {
+                    document.getElementById('newsContent').innerHTML = '<div class="no-results">No news articles found for this category.</div>';
+                    return;
+                }
+
+                let html = '';
+                filtered.forEach((article, idx) => {
+                    const dateMatch = (article.published_utc || '').match(/(\d{4}-\d{2}-\d{2})/);
+                    const displayDate = dateMatch ? dateMatch[1] : 'Unknown date';
+
+                    html += `
+                        <div class="article">
+                            <div class="article-headline">${idx + 1}. ${article.title || 'Untitled'}</div>
+                            <div class="article-byline">${article.source || 'Unknown'} • ${displayDate}</div>
+                            <div class="article-content">
+                                ${(article.summary || '').substring(0, 250)}...
+                                ${article.url ? `<br><br><a href="${article.url}" target="_blank" class="article-link">Read full article →</a>` : ''}
+                            </div>
+                        </div>
+                    `;
+                });
+
+                document.getElementById('newsContent').innerHTML = html;
+            } catch (error) {
+                document.getElementById('newsContent').innerHTML = '<div class="no-results">Error loading news articles.</div>';
+                console.error('Error:', error);
+            }
+        }
+
+        // Load all data on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadExistingDCs();
+            loadUpcomingDCs();
+            loadNews();
+
+            // Expand first section by default
+            toggleSection('existing');
+        });
+    </script>
+</body>
+</html>

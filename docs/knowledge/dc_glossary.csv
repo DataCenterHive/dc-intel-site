@@ -1,0 +1,6 @@
+term,definition,aliases
+N+1,"A redundancy configuration where the system has one additional (N+1) component beyond what is required for normal operation; allows maintenance or a single failure without downtime.","N + 1; N +1; N1+; N+1 redundancy; N plus 1"
+Standby Power,"Backup power capacity available to support critical loads during utility outage, typically supplied by diesel generators and UPS systems.","backup power; emergency power; generator backup; emergency generator; standby gen"
+UPS,"Uninterruptible Power Supply — power conditioning and short-term energy storage between utility and generator.","uninterruptible power supply; battery UPS; static UPS; rotary UPS"
+Cooling Tower,"Heat rejection device that dissipates waste heat from a water-cooled chiller system to the atmosphere.","cooling towers; CT; evaporative cooling tower"
+Data Center,"A specialized facility designed to house computer systems, IT infrastructure, servers, storage arrays, and networking equipment. Data centers provide controlled environments with redundant power, cooling, and security systems to ensure 24/7 operations.","datacenter; DC; data centre; server farm; colocation facility; colo"

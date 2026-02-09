@@ -1,0 +1,8 @@
+﻿metric,definition,unit,good_range,notes
+PUE,Total facility energy / IT energy,ratio,<=1.3 new‑build (climate‑dependent),Track trend; beware partial metering
+WUE,Annual water use / IT energy,L/kWh,As low as practical; policy‑driven,Adiabatic tradeoffs
+Rack density,Power allocated per rack,kW/rack,10–30 typical; 30–80+ for AI/HPC,Drives cooling choice
+Cross‑connect price,Monthly fee per L1 interconnect,USD/mo,Market‑dependent,Impacts ecosystem stickiness
+Time‑to‑power,Months from LOI to first MW usable,months,<=18 desired,Utility queue critical
+Generator run time,Fuel autonomy at full critical load,hours,>=24 baseline,Depends on refuel SLAs
+Fiber diversity,Count of physically diverse routes,count,>=2 preferred,Verify true path separation
