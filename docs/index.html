@@ -51,13 +51,15 @@
             /* Additional States */
             --danger: #ef4444;
 
-            /* Tier backgrounds (for modal headers) */
-            --tier-basic-bg: #dbeafe;
+            /* Tier backgrounds (for modal headers and demo tables) */
+            --tier-free-bg: #10b981;
+            --tier-basic-bg: #4a5568;
             --tier-basic-text: #1e3a8a;
-            --tier-premium-bg: #fef3c7;
+            --tier-premium-bg: #6b46c1;
             --tier-premium-text: #92400e;
-            --tier-enterprise-bg: #ede9fe;
+            --tier-enterprise-bg: #d97706;
             --tier-enterprise-text: #5b21b6;
+            --tier-locked-bg: #f9f9f9;
 
             /* Radius */
             --r-sm: 6px;
@@ -626,10 +628,10 @@
             animation: slideIn 0.3s ease;
         }
 
-        .toast.success { border-left: 4px solid var(--success); }
-        .toast.error { border-left: 4px solid #dc2626; }
-        .toast.info { border-left: 4px solid var(--brand-primary); }
-        .toast.warning { border-left: 4px solid var(--warning); }
+        .toast.success { border: 4px solid var(--success); }
+        .toast.error { border: 4px solid #dc2626; }
+        .toast.info { border: 4px solid var(--brand-primary); }
+        .toast.warning { border: 4px solid var(--warning); }
 
         .toast-message {
             flex: 1;
@@ -730,9 +732,33 @@
             color: var(--text-secondary);
         }
 
+        /* Featured pricing card (Solo Intelligence) */
+        .pricing-card--featured {
+            border: 3px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                        linear-gradient(135deg, #0284c7, #7c3aed, #0284c7) border-box;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15);
+            transform: scale(1.02);
+        }
+
+        .pricing-card__badge {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: linear-gradient(135deg, #7c3aed, #0284c7);
+            color: white;
+            padding: 6px 16px;
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3);
+            z-index: 10;
+        }
+
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: calc(var(--spacing-unit) * 3.75);
             max-width: 1100px;
             margin: 0 auto calc(var(--spacing-unit) * 5);
@@ -1414,7 +1440,7 @@
         }
 
         .service-item {
-            border-left: 4px solid var(--divider-strong);
+            border: 4px solid var(--divider-strong);
             padding-left: 20px;
         }
 
@@ -2546,7 +2572,7 @@
             <div class="classifieds" id="professionalServicesSection" style="margin-bottom: 40px;">
                 <h3 style="border-bottom: 3px solid var(--brand-primary); padding-bottom: 10px; margin-bottom: 20px;">Professional Services</h3>
                 <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px; font-style: italic;">
-                    Expert advisory services for data center site selection, due diligence, and market intelligence
+                    Expert advisory services spanning market intelligence, matchmaking, site selection, and due diligence
                 </p>
                 <div class="classifieds-grid" id="servicesGrid"></div>
             </div>
@@ -2584,24 +2610,15 @@
                 <div class="tier-pill">
                     Current tier: <span id="tierPillLabel" style="text-transform: uppercase;">FREE</span>
                 </div>
-                <div style="font-size: 12px;">
-                    Study guide access: <strong>Free</strong> (open)    <strong>Basic</strong> (Core Fundamentals)    <strong>Premium</strong> (Essential Infrastructure + Core)    <strong>Enterprise</strong> (Complete Library)
-                </div>
             </div>
 
             <!-- Glossary View -->
-            <div id="glossaryView" class="knowledge-view">
-                <div style="background: #f0f9ff; border: 2px solid #0284c7; border-radius: 6px; padding: 15px; margin-bottom: 20px; font-size: 13px; line-height: 1.6;">
-                    <strong>📚 Glossary Preview:</strong> This is a sample of our data center glossary.
-                    <span id="glossaryPreviewText">Register for free to unlock additional terms and expand your DC knowledge base.</span>
-                </div>
-                <input type="text" id="knowledgeSearch" placeholder="Search glossary terms..." style="width: 100%; padding: 12px; margin-bottom: 20px; border: 2px solid var(--divider-strong); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
+            <div id="glossaryView" class="knowledge-view">                <input type="text" id="knowledgeSearch" placeholder="Search glossary terms..." style="width: 100%; padding: 12px; margin-bottom: 20px; border: 2px solid var(--divider-strong); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
                 <div class="knowledge-grid" id="knowledgeGrid"></div>
             </div>
 
             <!-- Handbook View with ToC Sidebar -->
-            <div id="handbookView" class="knowledge-view" style="display: none;">
-                <div style="display: flex; gap: 30px; max-width: 1400px; margin: 0 auto;">
+            <div id="handbookView" class="knowledge-view" style="display: none;">                <div style="display: flex; gap: 30px; max-width: 1400px; margin: 0 auto;">
                     <!-- Table of Contents Sidebar -->
                     <div id="handbookToC" style="flex: 0 0 280px; position: sticky; top: 20px; align-self: flex-start; background: var(--bg-secondary); border: 2px solid var(--border-emphasis); padding: 20px; border-radius: 6px; max-height: calc(100vh - 100px); overflow-y: auto;">
                         <h4 style="margin: 0 0 15px 0; font-size: 14px; font-weight: bold; border-bottom: 2px solid var(--brand-primary); padding-bottom: 8px;">TABLE OF CONTENTS</h4>
@@ -2618,8 +2635,7 @@
             </div>
 
             <!-- Taxonomy View -->
-            <div id="taxonomyView" class="knowledge-view" style="display: none;">
-                <h3 class="section-subheader mb-12">Data Center Taxonomy</h3>
+            <div id="taxonomyView" class="knowledge-view" style="display: none;">                <h3 class="section-subheader mb-12">Data Center Taxonomy</h3>
                 <p style="max-width: 900px; margin: 0 auto 30px auto; font-size: 14px; line-height: 1.7; text-align: center; color: var(--text-secondary);">
                     Essential visual guides to understanding data center architecture, operations, and industry structure. Click any diagram to view full-size.
                 </p>
@@ -2697,8 +2713,7 @@
             </div>
 
             <!-- Study Guides View -->
-            <div id="studyguidesView" class="knowledge-view" style="display: none;">
-                <div style="max-width: 1000px; margin: 0 auto;">
+            <div id="studyguidesView" class="knowledge-view" style="display: none;">                <div style="max-width: 1000px; margin: 0 auto;">
                     <div style="background: #f0fdf4; border: 2px solid #059669; border-radius: 6px; padding: 20px; margin-bottom: 30px; text-align: center;">
                         <h4 style="margin: 0 0 10px 0; font-size: 16px; color: #047857;">📖 Study Guide Library</h4>
                         <p style="font-size: 14px; margin-bottom: 15px; line-height: 1.7;">
@@ -2823,7 +2838,7 @@
                         <!-- BASIC TIER CONTENT -->
                         <div class="tier-basic-only" style="margin-bottom: 35px; display: none;">
                             <div style="background: var(--brand-primary); color: #fff; padding: 8px 15px; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px; font-size: 14px;">
-                                BASIC TIER ($299/month) - CORE FUNDAMENTALS
+                                BASIC TIER ($99/month) - CORE FUNDAMENTALS
                             </div>
 
                             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
@@ -2867,7 +2882,7 @@
                         <!-- PREMIUM TIER CONTENT -->
                         <div class="tier-premium-only" style="margin-bottom: 35px; display: none;">
                             <div style="background: var(--brand-primary); color: #fff; padding: 8px 15px; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px; font-size: 14px;">
-                                PREMIUM TIER ($999/month) - ESSENTIAL INFRASTRUCTURE
+                                PREMIUM TIER ($199/month) - ESSENTIAL INFRASTRUCTURE
                                 <span style="font-weight: normal; font-size: 12px; margin-left: 10px;">(Includes all Basic content +)</span>
                             </div>
 
@@ -2932,7 +2947,7 @@
                         <!-- ENTERPRISE TIER CONTENT -->
                         <div class="tier-enterprise-only" style="margin-bottom: 20px; display: none;">
                             <div style="background: var(--brand-primary); color: #fff; padding: 8px 15px; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px; font-size: 14px;">
-                                ENTERPRISE TIER ($2,499/month) - COMPLETE LIBRARY
+                                ENTERPRISE TIER ($500/month) - COMPLETE LIBRARY
                                 <span style="font-weight: normal; font-size: 12px; margin-left: 10px;">(Includes all Premium content +)</span>
                             </div>
 
@@ -3048,13 +3063,40 @@
             <!-- Pricing Tiers Grid -->
             <div class="pricing-grid">
 
+                <!-- SOLO INTELLIGENCE TIER -->
+                <div class="pricing-card pricing-card--featured">
+                    <div class="pricing-card__badge">POPULAR</div>
+                    <div class="pricing-card__header">
+                        SOLO INTELLIGENCE
+                    </div>
+                    <div id="pricing-card-individual" class="pricing-card__price">
+                        $99<span>/month</span>
+                    </div>
+                    <p class="pricing-card__subtitle">
+                        Complete DC Data Access
+                    </p>
+                    <hr class="pricing-card__divider">
+                    <ul class="pricing-card__features">
+                        <li>-  <strong>Full list of Existing Data Centers</strong> (4,436+ facilities)</li>
+                        <li>-  <strong>Complete facility specs</strong> (certifications, sqft, lat/long, full address)</li>
+                        <li>-  <strong>Full permit history for upcoming DCs</strong> (descriptions + valuations)</li>
+                        <li>-  <strong>Upcoming projects database</strong> (coordinates + project details)</li>
+                        <li>-  <strong>Data export (CSV/Excel)</strong></li>
+                        <li>-  Email support (48-hour response time)</li>
+                        <li class="feature-divider"><strong>-  Study Guide Access: Core Fundamentals</strong></li>
+                        <li style="color: #999; font-style: italic;">-  No advisor calls</li>
+                        <li style="color: #999; font-style: italic;">-  No consulting services</li>
+                    </ul>
+                    <button onclick="handleSubscribe('individual')" class="btn-primary btn-block mt-20">SUBSCRIBE NOW</button>
+                </div>
+
                 <!-- BASIC TIER -->
                 <div class="pricing-card">
                     <div class="pricing-card__header">
                         BASIC TIER
                     </div>
                     <div id="pricing-card-basic" class="pricing-card__price">
-                        $299<span>/month</span>
+                        $99<span>/month</span>
                     </div>
                     <p class="pricing-card__subtitle">
                         Self-service intelligence
@@ -3080,7 +3122,7 @@
                         PREMIUM TIER
                     </div>
                     <div id="pricing-card-premium" class="pricing-card__price">
-                        $999<span>/month</span>
+                        $199<span>/month</span>
                     </div>
                     <p class="pricing-card__subtitle">
                         Guided advisory
@@ -3110,7 +3152,7 @@
                         ENTERPRISE TIER
                     </div>
                     <div id="pricing-card-enterprise" class="pricing-card__price">
-                        $2,499<span>/month</span>
+                        $500<span>/month</span>
                     </div>
                     <p class="pricing-card__subtitle">
                         Full-service advisory & brokerage
@@ -3168,8 +3210,8 @@
                 <div style="margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #ccc;">
                     <p style="font-weight: bold; margin-bottom: 8px; font-size: 14px;">What's included in advisory services?</p>
                     <p style="font-size: 13px; line-height: 1.6;">
-                        <strong>Premium tier ($999/month):</strong> Includes 1 quarterly advisor call (every 3 months) plus priority email support with 4-hour response times. Our experts help with site selection, market analysis, facility evaluation, and strategic planning.<br><br>
-                        <strong>Enterprise tier ($2,499/month):</strong> Includes 2 advisor calls per month (24 calls per year) plus a dedicated account manager via email/Slack. You get unlimited consultation time, full RFQ management, site visit coordination, and white-glove concierge service.<br><br>
+                        <strong>Premium tier ($199/month):</strong> Includes 1 quarterly advisor call (every 3 months) plus priority email support with 4-hour response times. Our experts help with site selection, market analysis, facility evaluation, and strategic planning.<br><br>
+                        <strong>Enterprise tier ($500/month):</strong> Includes 2 advisor calls per month (24 calls per year) plus a dedicated account manager via email/Slack. You get unlimited consultation time, full RFQ management, site visit coordination, and white-glove concierge service.<br><br>
                         All tiers emphasize email-first communication for efficiency, with scheduled calls for strategic discussions and complex decision-making.
                     </p>
                 </div>
@@ -3218,8 +3260,8 @@
 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
                     <!-- Service 1: Market Intelligence -->
-                    <div style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff;">
-                        <h4 style="margin-top: 0; font-size: 16px; border-bottom: 2px solid #ccc; padding-bottom: 10px;">          Market Intelligence</h4>
+                    <div id="services-intelligence" style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff; scroll-margin-top: 80px;">
+                        <h4 style="margin-top: 0; font-size: 16px; border-bottom: 2px solid #ccc; padding-bottom: 10px;">Market Intelligence</h4>
                         <ul style="font-size: 13px; line-height: 1.8; padding-left: 20px;">
                             <li>4,436+ data center facilities tracked</li>
                             <li>Certification data (SOC2, HIPAA, PCI-DSS, ISO27001)</li>
@@ -3232,14 +3274,29 @@
                         </p>
                     </div>
 
-                    <!-- Service 2: Advisory Services -->
-                    <div style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff;">
-                        <h4 style="margin-top: 0; font-size: 16px; border-bottom: 2px solid #ccc; padding-bottom: 10px;">         Advisory Services</h4>
+                    <!-- Service 2: DC Matchmaking -->
+                    <div id="services-matchmaking" style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff; scroll-margin-top: 80px;">
+                        <h4 style="margin-top: 0; font-size: 16px; border-bottom: 2px solid #ccc; padding-bottom: 10px;">DC Matchmaking</h4>
                         <ul style="font-size: 13px; line-height: 1.8; padding-left: 20px;">
-                            <li>DC matchmaking service (find facilities for you)</li>
-                            <li>Custom market reports (quarterly)</li>
+                            <li>We identify and qualify facilities matching your technical requirements</li>
+                            <li>Leverage our 4,436+ facility database with certification data</li>
+                            <li>Save weeks of research with curated shortlists</li>
                             <li>Warm introductions to operators</li>
                             <li>Deal alert notifications</li>
+                        </ul>
+                        <p style="font-size: 12px; margin-top: 15px; font-style: italic; color: #666;">
+                            Available in: Premium, Enterprise
+                        </p>
+                    </div>
+
+                    <!-- Service 3: Site Selection -->
+                    <div id="services-siteselection" style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff; scroll-margin-top: 80px;">
+                        <h4 style="margin-top: 0; font-size: 16px; border-bottom: 2px solid #ccc; padding-bottom: 10px;">Site Selection</h4>
+                        <ul style="font-size: 13px; line-height: 1.8; padding-left: 20px;">
+                            <li>Strategic market analysis for new DC locations</li>
+                            <li>Custom market reports (quarterly)</li>
+                            <li>Competitive landscape assessments</li>
+                            <li>Location scoring and recommendations</li>
                             <li>Priority email support</li>
                         </ul>
                         <p style="font-size: 12px; margin-top: 15px; font-style: italic; color: #666;">
@@ -3247,15 +3304,15 @@
                         </p>
                     </div>
 
-                    <!-- Service 3: Full-Service Support -->
-                    <div style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff;">
-                        <h4 style="margin-top: 0; font-size: 16px; border-bottom: 2px solid #ccc; padding-bottom: 10px;">         Full-Service Support</h4>
+                    <!-- Service 4: Due Diligence -->
+                    <div id="services-duediligence" style="border: 2px solid var(--border-emphasis); padding: 20px; background: #fff; scroll-margin-top: 80px;">
+                        <h4 style="margin-top: 0; font-size: 16px; border-bottom: 2px solid #ccc; padding-bottom: 10px;">Due Diligence</h4>
                         <ul style="font-size: 13px; line-height: 1.8; padding-left: 20px;">
-                            <li>RFQ/RFP management</li>
-                            <li>Site visits coordination</li>
-                            <li>Pricing negotiations assistance</li>
-                            <li>Contract review support</li>
-                            <li>White-glove concierge service</li>
+                            <li>Asset evaluation & market positioning analysis</li>
+                            <li>Risk assessment & compliance verification</li>
+                            <li>Power & network infrastructure readiness</li>
+                            <li>Operator background & financial health checks</li>
+                            <li>Competitive landscape & comparable analysis</li>
                         </ul>
                         <p style="font-size: 12px; margin-top: 15px; font-style: italic; color: #666;">
                             Available in: Enterprise tier only
@@ -3264,49 +3321,202 @@
                 </div>
             </div>
 
-            <!-- Pricing CTA -->
-            <div style="max-width: 900px; margin: 0 auto; padding: 30px; background: #f9f9f9; border: 3px double var(--divider-strong); text-align: center;">
-                <h3 class="h3-cta">Ready to Get Started?</h3>
-                <p style="font-size: 15px; line-height: 1.7; margin-bottom: 25px;">
-                    Choose from our <strong>Basic ($299/mo)</strong>, <strong>Premium ($999/mo)</strong>, or <strong>Enterprise ($2,499/mo)</strong> plans.
-                    Each tier is designed to match your level of need       from self-service data access to full white-glove advisory.
+            <!-- See the Data by Tier -->
+            <div style="max-width: 1100px; margin: 0 auto 40px;">
+                <h3 class="section-subheader h3-large mb-30">
+                    See the Data by Tier
+                </h3>
+                <p style="font-size: 14px; color: #666; margin-bottom: 25px; text-align: center;">
+                    See exactly what data unlocks at each subscription level. Locked columns are greyed out.
                 </p>
 
-                <!-- Study Guide Inclusions -->
-                <div style="background: #fff; padding: 20px; margin: 20px 0; border: 2px solid var(--divider-strong); text-align: left;">
-                    <h4 style="margin-top: 0; margin-bottom: 15px; font-size: 16px; text-align: center; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
-                        Study Guide Access Included with Each Tier
+                <!-- Existing DCs Demo -->
+                <div style="margin-bottom: 30px;">
+                    <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 8px; color: var(--text-primary);">
+                        Existing Data Centers (Enterprise View)
                     </h4>
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; font-size: 14px;">
-                        <!-- Basic -->
-                        <div style="padding: 15px; background: #f5f5f5; border: 1px solid #ddd;">
-                            <div style="font-weight: bold; margin-bottom: 8px; color: var(--text-primary);">Basic</div>
-                            <div style="font-size: 13px; color: #666; line-height: 1.6;">
-                                <strong>Core Fundamentals</strong><br>
-                                Essential foundational knowledge
-                            </div>
-                        </div>
-
-                        <!-- Premium -->
-                        <div style="padding: 15px; background: #f5f5f5; border: 1px solid #ddd;">
-                            <div style="font-weight: bold; margin-bottom: 8px; color: var(--text-primary);">Premium</div>
-                            <div style="font-size: 13px; color: #666; line-height: 1.6;">
-                                <strong>Essential Infrastructure</strong><br>
-                                + Core Fundamentals<br>
-                                <em style="color: #999;">(2 packages)</em>
-                            </div>
-                        </div>
-
-                        <!-- Enterprise -->
-                        <div style="padding: 15px; background: #f5f5f5; border: 1px solid #ddd;">
-                            <div style="font-weight: bold; margin-bottom: 8px; color: var(--text-primary);">Enterprise</div>
-                            <div style="font-size: 13px; color: #666; line-height: 1.6;">
-                                <strong>Complete Library</strong><br>
-                                All study guides included<br>
-                                <em style="color: #999;">(Full access)</em>
-                            </div>
-                        </div>
+                    <p style="font-size: 11px; color: #999; margin-bottom: 8px; font-style: italic;">
+                        Enterprise tier: Full access to all columns →
+                    </p>
+                    <div style="overflow-x: auto; border: 2px solid var(--border-emphasis);">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 12px; background: #fff;">
+                            <thead>
+                                <tr>
+                                    <th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;">PROVIDER</th>
+                                    <th style="padding: 8px; text-align: left; background: #10b981; color: #fff;">TITLE</th>
+                                    <th style="padding: 8px; text-align: center; background: #0284c7; color: #fff;">SAVE</th>
+                                    <th style="padding: 8px; text-align: center; background: #10b981; color: #fff;">SOC2</th>
+                                    <th style="padding: 8px; text-align: center; background: #10b981; color: #fff;">HIPAA</th>
+                                    <th style="padding: 8px; text-align: center; background: #10b981; color: #fff;">PCI-DSS</th>
+                                    <th style="padding: 8px; text-align: center; background: #10b981; color: #fff;">ISO27001</th>
+                                    <th style="padding: 8px; text-align: right; background: #4a5568; color: #fff;">SQ FT</th>
+                                    <th style="padding: 8px; text-align: center; background: #4a5568; color: #fff;">LATITUDE</th>
+                                    <th style="padding: 8px; text-align: center; background: #4a5568; color: #fff;">LONGITUDE</th>
+                                    <th style="padding: 8px; text-align: left; background: #6b46c1; color: #fff;">CONTACT</th>
+                                    <th style="padding: 8px; text-align: left; background: #6b46c1; color: #fff;">SPECS</th>
+                                    <th style="padding: 8px; text-align: left; background: #d97706; color: #fff;">FULL ADDRESS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid #eee;">
+                                    <td style="padding: 8px;">Tier 1 Provider</td>
+                                    <td style="padding: 8px;">CHI-01</td>
+                                    <td style="padding: 8px; text-align: center;">☆</td>
+                                    <td style="padding: 8px; text-align: center;">✓</td>
+                                    <td style="padding: 8px; text-align: center;"></td>
+                                    <td style="padding: 8px; text-align: center;">✓</td>
+                                    <td style="padding: 8px; text-align: center;"></td>
+                                    <td style="padding: 8px; text-align: right;">350,000</td>
+                                    <td style="padding: 8px; text-align: center;">41.8781</td>
+                                    <td style="padding: 8px; text-align: center;">-87.6298</td>
+                                    <td style="padding: 8px;">sales@example.com</td>
+                                    <td style="padding: 8px;">60MW, Carrier Neutral</td>
+                                    <td style="padding: 8px;">123 Main St, Chicago, IL 60601</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px;">Cloud Provider X</td>
+                                    <td style="padding: 8px;">DAL-03</td>
+                                    <td style="padding: 8px; text-align: center;">★</td>
+                                    <td style="padding: 8px; text-align: center;"></td>
+                                    <td style="padding: 8px; text-align: center;">✓</td>
+                                    <td style="padding: 8px; text-align: center;"></td>
+                                    <td style="padding: 8px; text-align: center;">✓</td>
+                                    <td style="padding: 8px; text-align: right;">500,000</td>
+                                    <td style="padding: 8px; text-align: center;">32.7767</td>
+                                    <td style="padding: 8px; text-align: center;">-96.7970</td>
+                                    <td style="padding: 8px;">info@example.com</td>
+                                    <td style="padding: 8px;">80MW, N+2 Redundancy</td>
+                                    <td style="padding: 8px;">456 Tech Blvd, Dallas, TX 75201</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
+                    <p style="font-size: 10px; color: #888; margin-top: 8px; text-align: center; font-style: italic;">
+                        Column background color indicates tier access level:
+                        <span style="display: inline-block; padding: 2px 8px; background: #10b981; color: #fff; margin: 0 4px;">Free</span>
+                        <span style="display: inline-block; padding: 2px 8px; background: #0284c7; color: #fff; margin: 0 4px;">Save</span>
+                        <span style="display: inline-block; padding: 2px 8px; background: #4a5568; color: #fff; margin: 0 4px;">Basic</span>
+                        <span style="display: inline-block; padding: 2px 8px; background: #6b46c1; color: #fff; margin: 0 4px;">Premium</span>
+                        <span style="display: inline-block; padding: 2px 8px; background: #d97706; color: #fff; margin: 0 4px;">Enterprise</span>
+                    </p>
+                </div>
+
+                <!-- Upcoming DCs Demo -->
+                <div>
+                    
+                <div>
+                    <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 8px; color: var(--text-primary);">
+                        Upcoming Projects (Enterprise View)
+                    </h4>
+                    <p style="font-size: 11px; color: #999; margin-bottom: 8px; font-style: italic;">
+                        Enterprise tier: Full access to all columns →
+                    </p>
+                    <div style="overflow-x: auto; border: 2px solid var(--border-emphasis);">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 12px; background: #fff;">
+                            <thead>
+                                <tr>
+                                    <th style="padding: 8px; text-align: left; background: #10b981; color: #fff;">LOCATION</th>
+                                    <th style="padding: 8px; text-align: left; background: #10b981; color: #fff;">ADDRESS</th>
+                                    <th style="padding: 8px; text-align: left; background: #10b981; color: #fff;">STATUS</th>
+                                    <th style="padding: 8px; text-align: left; background: #10b981; color: #fff;">FIRST SEEN</th>
+                                    <th style="padding: 8px; text-align: left; background: #10b981; color: #fff;">SOURCE</th>
+                                    <th style="padding: 8px; text-align: center; background: #0284c7; color: #fff;">SAVE</th>
+                                    <th style="padding: 8px; text-align: left; background: #4a5568; color: #fff;">LAT/LONG</th>
+                                    <th style="padding: 8px; text-align: left; background: #6b46c1; color: #fff;">DESCRIPTION</th>
+                                    <th style="padding: 8px; text-align: right; background: #d97706; color: #fff;">VALUATION</th>
+                                    <th style="padding: 8px; text-align: center; background: #d97706; color: #fff;">DETAILS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid #eee;">
+                                    <td style="padding: 8px;">Phoenix, AZ</td>
+                                    <td style="padding: 8px;">W Buckeye Rd</td>
+                                    <td style="padding: 8px;">Proposed</td>
+                                    <td style="padding: 8px;">Jan 2026</td>
+                                    <td style="padding: 8px;">News</td>
+                                    <td style="padding: 8px; text-align: center;">★</td>
+                                    <td style="padding: 8px;">33.4484, -112.0740</td>
+                                    <td style="padding: 8px;">150MW hyperscale data center campus</td>
+                                    <td style="padding: 8px; text-align: right;">$800M</td>
+                                    <td style="padding: 8px; text-align: center;"><button onclick="toggleDemoDetails(0)" id="demoBtn0" style="padding: 2px 8px; background: #d97706; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 10px;">Expand</button></td>
+                                </tr>
+                                <tr id="demoDetails0" style="display: none; background: #fffbeb; border: 4px solid #d97706;">
+                                    <td colspan="10" style="padding: 15px;">
+                                        <div style="font-size: 12px;">
+                                            <h4 style="margin: 0 0 10px 0; color: #d97706; font-weight: 600;">Full Project Details</h4>
+                                            <p style="margin: 5px 0;"><strong>Description:</strong> 150MW hyperscale data center campus with advanced cooling infrastructure and renewable energy integration. Phase 1 development targeting Q4 2026 completion.</p>
+                                            <p style="margin: 5px 0;"><strong>Valuation:</strong> $800M investment</p>
+                                            <p style="margin: 5px 0;"><strong>Contractor:</strong> Turner Construction Company</p>
+                                            <p style="margin: 5px 0;"><strong>Owner:</strong> Confidential Cloud Provider</p>
+                                            <p style="margin: 5px 0;"><strong>Permit Type:</strong> New Construction - Commercial Data Center</p>
+                                            <p style="margin: 5px 0;"><strong>Total Permits:</strong> 12 permits filed</p>
+                                            <div style="margin-top: 10px;">
+                                                <strong>Sample Permit IDs:</strong>
+                                                <ul style="margin: 5px 0; padding-left: 20px;">
+                                                    <li>PHX-2026-001234 - Foundation Work (Approved)</li>
+                                                    <li>PHX-2026-001235 - Electrical Infrastructure (Under Review)</li>
+                                                    <li>PHX-2026-001236 - HVAC Systems (Pending)</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px;">Austin, TX</td>
+                                    <td style="padding: 8px;">FM 969</td>
+                                    <td style="padding: 8px;">Construction</td>
+                                    <td style="padding: 8px;">Dec 2025</td>
+                                    <td style="padding: 8px;">Permit</td>
+                                    <td style="padding: 8px; text-align: center;">☆</td>
+                                    <td style="padding: 8px;">30.2672, -97.7431</td>
+                                    <td style="padding: 8px;">Cloud-ready facility, AI capabilities</td>
+                                    <td style="padding: 8px; text-align: right;">$1.2B</td>
+                                    <td style="padding: 8px; text-align: center;"><button onclick="toggleDemoDetails(1)" id="demoBtn1" style="padding: 2px 8px; background: #d97706; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 10px;">Expand</button></td>
+                                </tr>
+                                <tr id="demoDetails1" style="display: none; background: #fffbeb; border: 4px solid #d97706;">
+                                    <td colspan="10" style="padding: 15px;">
+                                        <div style="font-size: 12px;">
+                                            <h4 style="margin: 0 0 10px 0; color: #d97706; font-weight: 600;">Full Project Details</h4>
+                                            <p style="margin: 5px 0;"><strong>Description:</strong> Cloud-ready facility with AI/ML compute capabilities. Purpose-built for high-density GPU workloads with liquid cooling systems. Est. completion Q3 2026.</p>
+                                            <p style="margin: 5px 0;"><strong>Valuation:</strong> $1.2B total project cost</p>
+                                            <p style="margin: 5px 0;"><strong>Contractor:</strong> DPR Construction</p>
+                                            <p style="margin: 5px 0;"><strong>Owner:</strong> Meta Platforms Inc.</p>
+                                            <p style="margin: 5px 0;"><strong>Permit Type:</strong> Major Commercial Construction</p>
+                                            <p style="margin: 5px 0;"><strong>Total Permits:</strong> 24 permits filed</p>
+                                            <div style="margin-top: 10px;">
+                                                <strong>Sample Permit IDs:</strong>
+                                                <ul style="margin: 5px 0; padding-left: 20px;">
+                                                    <li>ATX-2025-008912 - Site Preparation (Completed)</li>
+                                                    <li>ATX-2025-008913 - Foundation & Structural (In Progress)</li>
+                                                    <li>ATX-2025-008914 - Generator Installation (Approved)</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <script>
+                            function toggleDemoDetails(idx) {
+                                const detailsRow = document.getElementById('demoDetails' + idx);
+                                const btn = document.getElementById('demoBtn' + idx);
+                                if (detailsRow && btn) {
+                                    const isVisible = detailsRow.style.display !== 'none';
+                                    detailsRow.style.display = isVisible ? 'none' : 'table-row';
+                                    btn.textContent = isVisible ? 'Expand' : 'Collapse';
+                                }
+                            }
+                            </script>
+                        </table>
+                    </div>
+                    <p style="font-size: 10px; color: #888; margin-top: 8px; text-align: center; font-style: italic;">
+                        Column background color indicates tier access level:
+                        <span style="display: inline-block; padding: 2px 8px; background: #10b981; color: #fff; margin: 0 4px;">Free</span>
+                        <span style="display: inline-block; padding: 2px 8px; background: #4a5568; color: #fff; margin: 0 4px;">Basic</span>
+                        <span style="display: inline-block; padding: 2px 8px; background: #6b46c1; color: #fff; margin: 0 4px;">Premium</span>
+                        <span style="display: inline-block; padding: 2px 8px; background: #d97706; color: #fff; margin: 0 4px;">Enterprise</span>
+                    </p>
+                </div>
+            
                 </div>
                 <button style="padding: 15px 40px; background: var(--brand-primary); color: #fff; border: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 6px;"
                         onclick="switchSection('pricing'); return false;">
@@ -3333,14 +3543,6 @@
 
             <div id="existingTabTableContent" style="display: none;">
                 <div style="background: #f9f9f9; padding: 20px; border: 2px solid var(--divider-strong);">
-                    <div style="margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
-                        <input id="existingSearch" type="text" placeholder="Filter existing DCs (name, city, state, provider, certs…)" style="flex: 1 1 240px; padding: 10px; border: 2px solid var(--divider-strong); font-size: 12px;">
-                        <button onclick="clearExistingFilter()" style="padding: 10px 14px; border: 2px solid var(--divider-strong); background: #fff; cursor: pointer; font-weight: bold; border-radius: 6px;">Clear</button>
-                        <div id="existingExportBtns" style="display: none; gap: 10px;">
-                            <button onclick="exportExistingDCsToCSV()" style="padding: 10px 16px; border: 2px solid var(--divider-strong); background: #fff; cursor: pointer; font-weight: bold; transition: all 0.2s; border-radius: 6px;">📄 CSV</button>
-                            <button onclick="exportExistingDCsToExcel()" style="padding: 10px 16px; border: 2px solid var(--divider-strong); background: #e8f5e9; cursor: pointer; font-weight: bold; transition: all 0.2s; border-radius: 6px;">📊 Excel</button>
-                        </div>
-                    </div>
                     <p style="text-align: center; margin-bottom: 15px;">Comprehensive table view of all existing data centers</p>
                     <div id="existingDCsTableView"></div>
                 </div>
@@ -3394,14 +3596,7 @@
             </div>
 
             <div id="upcomingTabTableContent" style="display: none;">
-                <div style="margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
-                    <input id="upcomingSearch" type="text" placeholder="Filter upcoming DCs (location, status, provider…)" style="flex: 1 1 240px; padding: 10px; border: 2px solid var(--divider-strong); font-size: 12px;">
-                    <button onclick="clearUpcomingFilter()" style="padding: 10px 14px; border: 2px solid var(--divider-strong); background: #fff; cursor: pointer; font-weight: bold; border-radius: 6px;">Clear</button>
-                    <div id="upcomingExportBtns" style="display: none; gap: 10px;">
-                        <button onclick="exportUpcomingDCsToCSV()" style="padding: 10px 16px; border: 2px solid var(--divider-strong); background: #fff; cursor: pointer; font-weight: bold; transition: all 0.2s; border-radius: 6px;">📄 CSV</button>
-                        <button onclick="exportUpcomingDCsToExcel()" style="padding: 10px 16px; border: 2px solid var(--divider-strong); background: #e8f5e9; cursor: pointer; font-weight: bold; transition: all 0.2s; border-radius: 6px;">📊 Excel</button>
-                    </div>
-                </div>
+                
                 <h3 class="h3-project-details">Project Details</h3>
                 <div id="upcomingDCsTable" style="background: #f9f9f9; padding: 20px; border: 2px solid var(--divider-strong); overflow-x: auto;"></div>
             </div>
@@ -3613,7 +3808,7 @@
                     <p style="margin: 0; color: #666;">Upgrade to continue exporting data center intelligence</p>
                 </div>
 
-                <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 15px; margin-bottom: 25px;">
+                <div style="background: #f0fdf4; border: 4px solid #10b981; padding: 15px; margin-bottom: 25px;">
                     <p style="margin: 0 0 10px 0; font-weight: bold; color: #059669;">Upgrade Benefits:</p>
                     <ul style="margin: 0; padding-left: 20px; line-height: 2;">
                         <li><strong>Unlimited exports</strong> (CSV & Excel)</li>
@@ -3626,18 +3821,18 @@
                 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px;">
                     <div style="border: 2px solid #4a5568; padding: 15px; text-align: center; border-radius: 5px;">
                         <div style="font-weight: bold; color: #4a5568; margin-bottom: 5px;">Basic</div>
-                        <div id="modal-price-basic" style="font-size: 24px; font-weight: bold; color: var(--text-primary);">$299</div>
+                        <div id="modal-price-basic" style="font-size: 24px; font-weight: bold; color: var(--text-primary);">$99</div>
                         <div style="font-size: 11px; color: #666;">per month</div>
                     </div>
                     <div style="border: 3px solid #6b46c1; padding: 15px; text-align: center; border-radius: 5px; background: #faf5ff;">
                         <div style="font-weight: bold; color: #6b46c1; margin-bottom: 5px;">Premium</div>
-                        <div id="modal-price-premium" style="font-size: 24px; font-weight: bold; color: var(--text-primary);">$999</div>
+                        <div id="modal-price-premium" style="font-size: 24px; font-weight: bold; color: var(--text-primary);">$199</div>
                         <div style="font-size: 11px; color: #666;">per month</div>
                         <div style="margin-top: 5px; background: #6b46c1; color: #fff; padding: 3px 8px; border-radius: 3px; font-size: 10px; font-weight: bold;">POPULAR</div>
                     </div>
                     <div style="border: 2px solid #d97706; padding: 15px; text-align: center; border-radius: 5px;">
                         <div style="font-weight: bold; color: #d97706; margin-bottom: 5px;">Enterprise</div>
-                        <div id="modal-price-enterprise" style="font-size: 24px; font-weight: bold; color: var(--text-primary);">$2,499</div>
+                        <div id="modal-price-enterprise" style="font-size: 24px; font-weight: bold; color: var(--text-primary);">$500</div>
                         <div style="font-size: 11px; color: #666;">per month</div>
                     </div>
                 </div>
@@ -3664,7 +3859,7 @@
                     <p id="upgradeModalSubtitle" style="margin: 0; color: #666;">Unlock this feature with a paid plan</p>
                 </div>
 
-                <div id="upgradeModalFeatures" style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 15px; margin-bottom: 20px;">
+                <div id="upgradeModalFeatures" style="background: #f0fdf4; border: 4px solid #10b981; padding: 15px; margin-bottom: 20px;">
                     <p style="margin: 0 0 10px 0; font-weight: bold; color: #059669;">What You'll Get:</p>
                     <ul id="upgradeFeatureList" style="margin: 0; padding-left: 20px; line-height: 2;">
                         <li>Full access to this feature</li>
@@ -3701,6 +3896,10 @@
 
         const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://127.0.0.1:8010' : 'https://api.datacenterhive.com';
         const API_KEY = 'keepongoing';
+
+        // Tier legend text - single source of truth for both yellow banner and tooltips
+        const TIER_LEGEND_EXISTING = 'Columns by tier: Free (Provider/Title/Certifications)  ·  Basic (+Sqft/Lat & Long)  ·  Premium (+Contact/Specs)  ·  Enterprise (+Full Address/API Access)';
+        const TIER_LEGEND_UPCOMING = 'Columns by tier: Free (Location/Address/Status/First Seen/Source)  ·  Basic (+Lat/Long)  ·  Premium (+Most Recent Description)  ·  Enterprise (+Permit quantity by address + full historical details)';
 
         // Public Data API Configuration (tier-based access via JWT)
         const PUBLIC_API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://127.0.0.1:8010' : 'https://api.datacenterhive.com';
@@ -3880,7 +4079,7 @@
             },
             basic: {
                 name: 'Basic',
-                price: 299,
+                price: 99,
                 period: 'month',
                 features: [
                     'Everything in Free',
@@ -3892,7 +4091,7 @@
             },
             premium: {
                 name: 'Premium',
-                price: 999,
+                price: 199,
                 period: 'month',
                 features: [
                     'Everything in Basic',
@@ -3905,7 +4104,7 @@
             },
             enterprise: {
                 name: 'Enterprise',
-                price: 2499,
+                price: 500,
                 period: 'month',
                 features: [
                     'Everything in Premium',
@@ -4330,11 +4529,23 @@
         let upcomingSourceFilter = 'all'; // Filter by data source: 'all', 'news', or 'permit'
 
         // Enhanced filter state for Upcoming DCs
+        // Default to last 6 months to avoid overwhelming users with 3,300+ historical records
+        const sixMonthsAgo = new Date();
+        sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+        const defaultDateFrom = sixMonthsAgo.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+        const defaultDateTo = new Date().toISOString().split('T')[0]; // Today
+
         let upcomingFilters = {
             states: [],
             statuses: [],
-            dateFrom: null,
-            dateTo: null
+            dateFrom: defaultDateFrom,
+            dateTo: defaultDateTo
+        };
+
+        // Pagination state for Upcoming Projects
+        let upcomingPage = {
+            current: 1,
+            size: 50  // Show 50 rows per page by default
         };
 
         // Enhanced filter state for Existing DCs
@@ -4367,6 +4578,113 @@
             return (str || '').toLowerCase().trim().replace(/\s+/g, ' ');
         }
 
+        // Helper: Normalize status values (clean up messy permit data)
+        function normalizeStatus(rawStatus) {
+            if (!rawStatus || !rawStatus.trim()) return 'Unknown';
+
+            const status = rawStatus.trim();
+
+            // Filter out permit tracking codes (e.g., M01310727-I1-MS, Q01258387-S1-FN)
+            if (/^[A-Z]\d{8}-[A-Z]\d+-[A-Z]{2}(-[A-Z]{2})?$/.test(status)) {
+                return null; // Will be excluded from dropdown
+            }
+
+            // Mapping object: variant status → normalized status
+            const statusMap = {
+                // Proposed
+                'proposed': 'Proposed',
+                'Proposed': 'Proposed',
+                // Approved
+                'approved': 'Approved',
+                'Approved': 'Approved',
+                'Permit Approved': 'Approved',
+                'License Approved': 'Approved',
+                'Ready To Issue': 'Approved',
+                'Accepted': 'Approved',
+                // Construction
+                'construction': 'Construction',
+                'Construction': 'Construction',
+                // Operational
+                'operational': 'Operational',
+                'Operational': 'Operational',
+                // Permit Issued
+                'Issued': 'Permit Issued',
+                'issued': 'Permit Issued',
+                'Permit Issued': 'Permit Issued',
+                'Active/Permit Issued': 'Permit Issued',
+                'TOP Issued': 'Permit Issued',
+                'TCO Issued': 'Permit Issued',
+                'LOC Issued': 'Permit Issued',
+                'Revision Issued': 'Permit Issued',
+                'Meter Release': 'Permit Issued',
+                // Completed
+                'Permit Finaled': 'Completed',
+                'Finaled': 'Completed',
+                'Final': 'Completed',
+                'complete': 'Completed',
+                'Complete': 'Completed',
+                'Completed': 'Completed',
+                'Closed - Complete': 'Completed',
+                'Certificate of Completion': 'Completed',
+                'Issued Certificate of Occupancy': 'Completed',
+                'Closed': 'Completed',
+                // Submitted
+                'Submitted': 'Submitted',
+                'Submitted - Online': 'Submitted',
+                'Application Submitted': 'Submitted',
+                'Incomplete Submittal': 'Submitted',
+                'filed': 'Submitted',
+                // In Review
+                'In Review': 'In Review',
+                'Under Review': 'In Review',
+                'Prescreen Review': 'In Review',
+                'Prescreen Review Corrections': 'In Review',
+                'Plan Review': 'In Review',
+                'Department Review Cycle 1': 'In Review',
+                'Department Review Cycle 2': 'In Review',
+                'Department Review Cycle 3': 'In Review',
+                'Routed for Review': 'In Review',
+                'QC Denied': 'In Review',
+                'Inspection Phase': 'In Review',
+                // Pending
+                'Active': 'Pending',
+                'Active - ERP': 'Pending',
+                'Active Bond': 'Pending',
+                'Pending': 'Pending',
+                'ACA Pending': 'Pending',
+                'Draft': 'Pending',
+                'Ready': 'Pending',
+                // Awaiting Action
+                'On Hold': 'Awaiting Action',
+                'Awaiting Client Reply': 'Awaiting Action',
+                'Awaiting Fees': 'Awaiting Action',
+                'Awaiting Signature': 'Awaiting Action',
+                'Fees Due': 'Awaiting Action',
+                'Payment Due': 'Awaiting Action',
+                'Additional Info Required': 'Awaiting Action',
+                'Respond and Resubmit': 'Awaiting Action',
+                'Revisions Required': 'Awaiting Action',
+                'VCC Hearing': 'Awaiting Action',
+                'Fine': 'Awaiting Action',
+                // Cancelled
+                'Cancelled': 'Cancelled',
+                'Withdrawn': 'Cancelled',
+                'Expired': 'Cancelled',
+                'suspend': 'Cancelled',
+                'VOIDED - Duplicate Permit': 'Cancelled',
+                'VOIDED - Applicant Withdrew Permit': 'Cancelled',
+                'Closed - Denied': 'Cancelled'
+            };
+
+            // Look up normalized version
+            if (statusMap[status]) {
+                return statusMap[status];
+            }
+
+            // If not in mapping, return Title Case
+            return status.charAt(0).toUpperCase() + status.slice(1).toLowerCase();
+        }
+
         // Helper: Parse date as UTC midnight (avoid timezone issues)
         function parseUTCDate(dateStr) {
             if (!dateStr) return null;
@@ -4395,8 +4713,10 @@
             // Filter by statuses (exact match after normalization)
             if (upcomingFilters.statuses.length > 0) {
                 filtered = filtered.filter(p => {
-                    const status = normalizeString(p.latest_status);
-                    return upcomingFilters.statuses.some(s => normalizeString(s) === status);
+                    const normalizedStatus = normalizeStatus(p.latest_status);
+                    return normalizedStatus && upcomingFilters.statuses.some(s =>
+                        normalizeString(s) === normalizeString(normalizedStatus)
+                    );
                 });
             }
 
@@ -4493,8 +4813,6 @@
 
         function clearExistingQuickLink() {
             window.activeQuickLinkCategory = null;
-            const input = document.getElementById('existingSearch');
-            if (input) input.value = '';
             loadExistingDCs();
         }
 
@@ -6079,30 +6397,35 @@
             const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
 
             // SERVICES (all 4 services shown - static, no rotation)
+            // Order matches Services page (tier-based: Basic → Premium → Enterprise)
             const services = [
                 {
                     type: "service",
-                    title: "DC MATCHMAKING SERVICE: Find Your Perfect Facility",
-                    desc: "We identify and qualify facilities matching your technical requirements. Leverage our 4,436+ facility database with certification data, capacity specs, and operator intel. Save weeks of research with curated shortlists. Available in Premium and Enterprise tiers.",
-                    link: "#services"
+                    title: "Market Intelligence",
+                    desc: "Real-time trends across 4,436+ facilities and 2.52M+ permits",
+                    link: "index.html#services-intelligence",
+                    tier: "Basic+"
                 },
                 {
                     type: "service",
-                    title: "MARKET INTELLIGENCE: Real-Time Data",
-                    desc: "Comprehensive tracking of 4,436+ facilities and upcoming DC projects nationwide. Daily updates on permits, construction activity, and operator movements. Historical data, trend analysis, and competitive intelligence. Available in all tiers: Basic (CSV exports), Premium (daily alerts), Enterprise (API access).",
-                    link: "#services"
+                    title: "DC Matchmaking",
+                    desc: "Curated shortlists from 4,436+ certified facilities",
+                    link: "index.html#services-matchmaking",
+                    tier: "Premium+"
                 },
                 {
                     type: "service",
-                    title: "SITE SELECTION: Expert Consulting",
-                    desc: "Advisory service for optimal DC location selection. Premium tier: 1 quarterly market analysis report + consultation call. Enterprise tier: Unlimited custom research, real-time permit tracking via API, 2 monthly consultation calls. We analyze 2.5M+ permits across 34 markets to identify growth opportunities and competitive positioning.",
-                    link: "#services"
+                    title: "Site Selection",
+                    desc: "Strategic market analysis and custom reports",
+                    link: "index.html#services-siteselection",
+                    tier: "Premium+"
                 },
                 {
                     type: "service",
-                    title: "DUE DILIGENCE: Asset Assessment",
-                    desc: "Enterprise-exclusive advisory service for DC asset evaluation. Comprehensive market positioning analysis, competitive landscape assessment, and strategic recommendations. Includes unlimited consultation calls and negotiation support. Success fee: 5-10% of first-year contract value for completed transactions.",
-                    link: "#services"
+                    title: "Due Diligence",
+                    desc: "Asset evaluation, risk analysis & compliance checks",
+                    link: "index.html#services-duediligence",
+                    tier: "Enterprise"
                 }
             ];
 
@@ -6244,12 +6567,18 @@
             // SECTION 1: PROFESSIONAL SERVICES (Static - shows all 4)
             // ========================================
             const servicesHTML = services.map((item, index) => {
+                // Extract anchor from link (e.g., "services-intelligence" from "index.html#services-intelligence")
+                const anchor = item.link.split('#')[1] || '';
                 return `
-                    <div class="classified-item" onclick="switchSection('services'); return false;" style="cursor: pointer; border-left: 4px solid var(--brand-primary);">
-                        <div class="classified-title">${item.title}</div>
-                        <div>${item.desc}</div>
-                        <div style="font-size: 10px; color: #0066cc; margin-top: 5px; font-weight: 600;">→ Click to learn more</div>
-                    </div>
+                    <a href="#" onclick="switchSection('services'); setTimeout(() => { document.getElementById('${anchor}')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100); return false;" style="text-decoration: none; color: inherit;">
+                        <div class="classified-item" style="cursor: pointer; border: 4px solid var(--brand-primary); transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                                <div class="classified-title" style="margin: 0;">${item.title}</div>
+                                <span style="font-size: 10px; padding: 2px 8px; background: #e0e7ff; color: #4338ca; border-radius: 10px; font-weight: 600; white-space: nowrap; margin-left: 8px;">${item.tier}</span>
+                            </div>
+                            <div>${item.desc}</div>
+                        </div>
+                    </a>
                 `;
             }).join('');
 
@@ -6265,12 +6594,12 @@
             const selectedUpdate = featureUpdates[updateIndex];
 
             const marketIntelHTML = `
-                <div class="classified-item" style="border-left: 4px solid #d97706; cursor: default;">
+                <div class="classified-item" style="border: 4px solid #d97706; cursor: default;">
                     <div class="classified-title">${selectedInsight.title}</div>
                     <div>${selectedInsight.desc}</div>
                     <div style="font-size: 10px; color: #d97706; margin-top: 5px; font-weight: bold;">📊 Market Intelligence</div>
                 </div>
-                <div class="classified-item" style="border-left: 4px solid #059669; cursor: default;">
+                <div class="classified-item" style="border: 4px solid #059669; cursor: default;">
                     <div class="classified-title">${selectedUpdate.title}</div>
                     <div>${selectedUpdate.desc}</div>
                     <div style="font-size: 10px; color: #059669; margin-top: 5px; font-weight: bold;">🚀 Platform Update</div>
@@ -6370,11 +6699,54 @@
             const navEl = document.getElementById(navId);
             if (navEl) navEl.classList.add('active');
 
-            if (section === 'knowledge') loadKnowledge();
-            if (section === 'services') loadServices();
-            if (section === 'existing-dcs') loadExistingDCs();
-            if (section === 'upcoming-dcs') loadUpcomingDCs();
-            if (section === 'watchlist') loadWatchlist();
+            // Try-catch wrapper to prevent one section failure from breaking navigation
+            try {
+                if (section === 'knowledge') loadKnowledge();
+                if (section === 'existing-dcs') loadExistingDCs();
+                if (section === 'upcoming-dcs') loadUpcomingDCs();
+                if (section === 'watchlist') loadWatchlist();
+            } catch (e) {
+                console.error('Section load failed:', section, e);
+
+                // Show user-friendly error message using safe DOM creation
+                const sectionMap = {
+                    'knowledge': 'knowledgeSection',
+                    'services': 'servicesSection',
+                    'existing-dcs': 'existingDCsSection',
+                    'upcoming-dcs': 'upcomingDCsSection',
+                    'watchlist': 'watchlistSection'
+                };
+
+                const containerId = sectionMap[section];
+                const contentArea = containerId ? document.getElementById(containerId) : null;
+
+                if (contentArea) {
+                    // Clear existing content safely
+                    contentArea.innerHTML = '';
+
+                    // Create error UI using DOM methods (safer than innerHTML concatenation)
+                    const wrap = document.createElement('div');
+                    wrap.style.padding = '20px';
+                    wrap.style.textAlign = 'center';
+                    wrap.style.color = '#dc2626';
+
+                    const h3 = document.createElement('h3');
+                    h3.textContent = 'Error Loading Section';
+
+                    const p1 = document.createElement('p');
+                    p1.textContent = 'Sorry, there was an error loading this section. Please try refreshing the page.';
+
+                    const p2 = document.createElement('p');
+                    p2.style.fontSize = '12px';
+                    p2.style.color = '#666';
+                    p2.textContent = `Error: ${e.message}`;
+
+                    wrap.appendChild(h3);
+                    wrap.appendChild(p1);
+                    wrap.appendChild(p2);
+                    contentArea.appendChild(wrap);
+                }
+            }
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -7135,38 +7507,7 @@
             }
         }
 
-        // Services - All 17 services
-        function loadServices() {
-            const services = [
-                { id: "brokerage", name: "Data Center Brokerage", desc: "Expert representation for buying, selling, or leasing data center facilities and capacity. Our team leverages extensive market knowledge and relationships to secure optimal terms for clients. We handle facility acquisitions, wholesale capacity transactions, and strategic advisory." },
-                { id: "intelligence", name: "Market Intelligence Platform", desc: "Real-time access to our comprehensive database of permits and over 1,000 confirmed data center projects across the United States. Includes permit tracking, valuation data, trend analysis, operator monitoring, and competitive intelligence. Don't see your city? Request coverage - we can add new markets to serve your needs." },
-                { id: "siteselection", name: "Site Selection Consulting", desc: "Comprehensive analysis of potential DC locations considering power availability, fiber connectivity, tax incentives, risk factors, and market dynamics. We identify optimal sites aligned with your technical and financial requirements." },
-                { id: "duediligence", name: "Due Diligence Services", desc: "Technical and financial assessment of DC assets including infrastructure review, lease analysis, operational benchmarking, and risk evaluation. Supports informed decision-making for acquisitions and investments." },
-                { id: "reports", name: "Custom Market Reports", desc: "Tailored research deliverables covering specific markets, operators, or project types. Available in weekly, monthly, or ad-hoc formats. Includes executive summaries, detailed analytics, and actionable recommendations." },
-                { id: "advisory", name: "Strategic Advisory", desc: "High-level guidance on DC strategy, capacity planning, market entry, portfolio optimization, and investment decisions. Our advisors bring decades of combined industry experience." },
-                { name: "DC Matchmaking Service", desc: "Connect buyers and sellers in the data center market. We match your specific requirements with available facilities, capacity, or development opportunities. Comprehensive screening, qualification, and negotiation support.", link: "showDCMatchmaking" },
-                { name: "Lead Referral Program", desc: "Earn commissions by referring qualified data center opportunities. We handle the full transaction process while you earn industry-leading referral fees. Perfect for consultants, brokers, and industry professionals.", link: "showLeadReferral" },
-                { name: "Premium Data Access", desc: "Advanced access to our full database with custom filtering, export capabilities, and API integration. Includes detailed project timelines, contractor information, and historical trend analysis.", link: "showPremiumData" },
-                { name: "API Integration", desc: "Integrate DC Intel data directly into your systems via our RESTful API. Real-time permit updates, search capabilities, and webhook notifications. Multiple tier options available.", link: "showAPIAccess" },
-                { name: "RFQ Management", desc: "Streamlined request for quotation process for data center capacity. Submit requirements once and receive competitive proposals from multiple providers. We manage the entire RFQ lifecycle.", link: "showRFQManagement" },
-                { name: "Email Alerts & Notifications", desc: "Receive instant notifications when new projects match your criteria. Configure custom alerts for specific markets, operators, project sizes, or other parameters.", link: "showEmailAlerts" },
-                { name: "Request Coverage Expansion", desc: "Don't see your city or region? Request us to add coverage for new markets. We prioritize expansion based on customer demand and can add new jurisdictions within 30-60 days.", link: "showRequestCoverage" },
-                { name: "Construction Timeline Predictions", desc: "AI-powered forecasting of project timelines based on historical permit data, contractor schedules, and market conditions. Predict when facilities will come online." },
-                { name: "DC Comparison Tool", desc: "Side-by-side comparison of multiple data center projects including specifications, locations, costs, and timelines. Export detailed comparison reports." },
-                { name: "Demand Heatmap Analytics", desc: "Visual analysis of data center demand and supply by geography. Identify underserved markets, saturation zones, and emerging opportunities." },
-                { name: "Sponsored Listings", desc: "Promote your data center project, available capacity, or services to our audience of industry professionals, investors, and enterprise buyers." }
-            ];
-
-            document.getElementById('servicesList').innerHTML = services.map(s => `
-                <div class="service-item">
-                    <h3>
-                        ${s.id ? `<a href="#" onclick="showServiceModal('${s.id}'); return false;" style="color: var(--text-primary); text-decoration: none;">${s.name}</a>` : s.name}
-                        ${s.link && !s.id ? ' <a href="#" onclick="' + s.link + '(); return false;" style="font-size: 12px; color: var(--text-primary); text-decoration: underline;">[Request Service]</a>' : ''}
-                    </h3>
-                    <p>${s.desc}</p>
-                </div>
-            `).join('');
-        }
+        // NOTE: loadServices() deleted - Services section is now fully static HTML (lines 3220-3278)
 
         // Show service-specific modal
         function showServiceModal(serviceId) {
@@ -7255,18 +7596,7 @@
             return existingFetchInFlight;
         }
 
-        // Step 2.5: Wire search input listener (idempotent)
-        function wireExistingSearchOnce() {
-            const input = document.getElementById('existingSearch');
-            if (!input || input.dataset.wired === '1') return;
-            input.dataset.wired = '1';
 
-            let debounceTimer;
-            input.addEventListener('input', () => {
-                clearTimeout(debounceTimer);
-                debounceTimer = setTimeout(() => renderExistingTableRows(), 300);
-            });
-        }
 
         // Step 3: Render filters once (init Choices.js once)
         function renderExistingFiltersOnce(allStates, allProviders) {
@@ -7278,48 +7608,68 @@
                 return; // Already rendered
             }
 
-            // Build filters HTML
-            let html = '<div id="existingEnhancedFilters" style="margin-bottom: 20px; padding: 20px; background: #f0f9ff; border: 2px solid #0284c7; border-radius: 6px;">';
-            html += '<h4 style="margin: 0 0 15px 0; font-size: 16px; color: #0369a1;">🔍 Advanced Filters</h4>';
-            html += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin-bottom: 15px;">';
+            // Create unified horizontal filter bar
+            let filterHTML = '<div id="existingEnhancedFilters" style="margin-bottom: 20px; padding: 15px; background: #f0f9ff; border: 2px solid #0284c7; border-radius: 6px;">';
+
+            // Main horizontal container
+            filterHTML += '<div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">';
+
+            // LEFT SIDE: Filters
+            filterHTML += '<div style="display: flex; gap: 12px; flex: 1; min-width: 0; flex-wrap: wrap;">';
 
             // State filter
-            html += '<div style="display: flex; flex-direction: column;">';
-            html += '<label style="font-size: 13px; font-weight: 600; margin-bottom: 5px; color: var(--text-primary);">Filter by State(s)</label>';
-            html += '<select id="existingStateFilter" multiple style="width: 100%; padding: 8px; border: 2px solid var(--border-default); border-radius: 4px; font-size: 13px;">';
+            filterHTML += '<div style="display: flex; flex-direction: column; min-width: 180px;">';
+            filterHTML += '<label style="font-size: 12px; font-weight: 600; margin-bottom: 4px; color: var(--text-primary);">State</label>';
+            filterHTML += '<select id="existingStateFilter" multiple style="width: 100%; padding: 6px; border: 2px solid var(--border-default); border-radius: 4px; font-size: 12px; max-height: 38px;">';
             allStates.forEach(state => {
                 const selected = existingFilters.states.includes(state) ? 'selected' : '';
-                html += `<option value="${state}" ${selected}>${state}</option>`;
+                filterHTML += `<option value="${state}" ${selected}>${state}</option>`;
             });
-            html += '</select>';
-            html += '</div>';
+            filterHTML += '</select>';
+            filterHTML += '</div>';
 
             // Provider filter
-            html += '<div style="display: flex; flex-direction: column;">';
-            html += '<label style="font-size: 13px; font-weight: 600; margin-bottom: 5px; color: var(--text-primary);">Filter by Provider(s)</label>';
-            html += '<select id="existingProviderFilter" multiple style="width: 100%; padding: 8px; border: 2px solid var(--border-default); border-radius: 4px; font-size: 13px;">';
+            filterHTML += '<div style="display: flex; flex-direction: column; min-width: 180px;">';
+            filterHTML += '<label style="font-size: 12px; font-weight: 600; margin-bottom: 4px; color: var(--text-primary);">Provider</label>';
+            filterHTML += '<select id="existingProviderFilter" multiple style="width: 100%; padding: 6px; border: 2px solid var(--border-default); border-radius: 4px; font-size: 12px; max-height: 38px;">';
             allProviders.forEach(provider => {
                 const selected = existingFilters.providers.includes(provider) ? 'selected' : '';
-                html += `<option value="${provider}" ${selected}>${provider}</option>`;
+                filterHTML += `<option value="${provider}" ${selected}>${provider}</option>`;
             });
-            html += '</select>';
-            html += '</div>';
+            filterHTML += '</select>';
+            filterHTML += '</div>';
 
-            html += '</div>'; // End grid
+            filterHTML += '</div>'; // End filters container
 
-            // Filter action buttons
-            html += '<div style="display: flex; gap: 10px; justify-content: center;">';
-            html += '<button onclick="clearExistingFilters()" style="padding: 8px 20px; background: #dc2626; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 600;">Clear Filters</button>';
+            // SEPARATOR
+            filterHTML += '<div style="width: 1px; height: 50px; background: #cbd5e1; align-self: center;"></div>';
+
+            // RIGHT SIDE: Actions
+            filterHTML += '<div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">';
+
+            // Reset button
+            filterHTML += '<button onclick="resetExistingFilters()" style="padding: 8px 16px; background: #dc2626; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; white-space: nowrap;">Reset Filters</button>';
+
+            // Active filter count
             const activeFiltersCount = existingFilters.states.length + existingFilters.providers.length;
             if (activeFiltersCount > 0) {
-                html += `<span style="padding: 8px 15px; background: #10b981; color: #fff; border-radius: 4px; font-size: 13px; font-weight: 600;">${activeFiltersCount} Filter(s) Active</span>`;
+                filterHTML += `<span style="padding: 6px 12px; background: #10b981; color: #fff; border-radius: 4px; font-size: 12px; font-weight: 600; white-space: nowrap;">${activeFiltersCount} Active</span>`;
             }
-            html += '</div>';
-            html += '</div>'; // End enhanced filters panel
 
-            filtersMount.innerHTML = html;
+            // Export buttons (show for BASIC+ tier)
+            if (userTier && ['basic', 'premium', 'enterprise'].includes(userTier)) {
+                filterHTML += '<button onclick="exportExistingDCsToCSV()" style="padding: 8px 14px; border: 2px solid var(--divider-strong); background: #fff; cursor: pointer; font-weight: 600; transition: all 0.2s; border-radius: 4px; font-size: 12px;">📄 CSV</button>';
+                filterHTML += '<button onclick="exportExistingDCsToExcel()" style="padding: 8px 14px; border: 2px solid var(--divider-strong); background: #e8f5e9; cursor: pointer; font-weight: 600; transition: all 0.2s; border-radius: 4px; font-size: 12px;">📊 Excel</button>';
+            }
 
-            // Initialize Choices.js ONCE (store instances globally to prevent re-init)
+            filterHTML += '</div>'; // End actions container
+            filterHTML += '</div>'; // End main horizontal container
+            filterHTML += '</div>'; // End filter panel
+
+            // Insert into mount point
+            filtersMount.innerHTML = filterHTML;
+
+            // Initialize Choices.js and wire event listeners
             setTimeout(() => {
                 const stateSelect = document.getElementById('existingStateFilter');
                 const providerSelect = document.getElementById('existingProviderFilter');
@@ -7333,8 +7683,9 @@
                     });
 
                     stateSelect.addEventListener('change', function() {
-                        existingFilters.states = choicesExistingStates.getValue(true);
-                        renderExistingTableRows(); // Only re-render rows
+                        const selected = Array.from(this.selectedOptions).map(opt => opt.value);
+                        existingFilters.states = selected;
+                        renderExistingTableRows();
                     });
                 }
 
@@ -7347,8 +7698,9 @@
                     });
 
                     providerSelect.addEventListener('change', function() {
-                        existingFilters.providers = choicesExistingProviders.getValue(true);
-                        renderExistingTableRows(); // Only re-render rows
+                        const selected = Array.from(this.selectedOptions).map(opt => opt.value);
+                        existingFilters.providers = selected;
+                        renderExistingTableRows();
                     });
                 }
             }, 100);
@@ -7371,18 +7723,19 @@
             lastExistingHeaderState = currentState;
 
             // Build header HTML with tier-specific columns
-            let headerHTML = '<tr style="background: var(--brand-primary); color: #fff;">';
+            // Using neutral backgrounds with colored left borders for better readability
+            let headerHTML = '<tr style="background: #f5f5f5;">';
 
-            // FREE tier columns
-            headerHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setExistingSort(\'provider\')">Provider</th>';
-            headerHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setExistingSort(\'title\')">Title</th>';
+            // FREE tier columns - green border
+            headerHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setExistingSort(\'provider\')">PROVIDER</th>';
+            headerHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setExistingSort(\'title\')">TITLE</th>';
 
-            // Save column for logged-in users
+            // Save column for logged-in users - blue border
             if (isLoggedIn()) {
-                headerHTML += '<th style="padding: 8px; text-align: center; background: #0284c7; color: #fff;">Save</th>';
+                headerHTML += '<th style="padding: 8px; text-align: center; background: #0284c7; color: #fff;">SAVE</th>';
             }
 
-            // EMAIL GATE columns (certifications - available after email registration)
+            // EMAIL GATE columns (certifications) - green border
             if (hasEmailGateAccess()) {
                 headerHTML += '<th style="padding: 8px; text-align: center; background: #10b981; color: #fff;">SOC2</th>';
                 headerHTML += '<th style="padding: 8px; text-align: center; background: #10b981; color: #fff;">HIPAA</th>';
@@ -7390,22 +7743,22 @@
                 headerHTML += '<th style="padding: 8px; text-align: center; background: #10b981; color: #fff;">ISO27001</th>';
             }
 
-            // BASIC tier columns
+            // BASIC tier columns - grey border
             if (hasTierAccess('basic')) {
-                headerHTML += '<th style="padding: 8px; text-align: right; background: #4a5568; color: #fff;">Sq Ft</th>';
-                headerHTML += '<th style="padding: 8px; text-align: center; background: #4a5568; color: #fff;">Latitude</th>';
-                headerHTML += '<th style="padding: 8px; text-align: center; background: #4a5568; color: #fff;">Longitude</th>';
+                headerHTML += '<th style="padding: 8px; text-align: right; background: #4a5568; color: #fff;">SQ FT</th>';
+                headerHTML += '<th style="padding: 8px; text-align: center; background: #4a5568; color: #fff;">LATITUDE</th>';
+                headerHTML += '<th style="padding: 8px; text-align: center; background: #4a5568; color: #fff;">LONGITUDE</th>';
             }
 
-            // PREMIUM tier columns
+            // PREMIUM tier columns - purple border
             if (hasTierAccess('premium')) {
-                headerHTML += '<th style="padding: 8px; text-align: left; background: #6b46c1; color: #fff;">Contact</th>';
-                headerHTML += '<th style="padding: 8px; text-align: left; background: #6b46c1; color: #fff;">Specs</th>';
+                headerHTML += '<th style="padding: 8px; text-align: left; background: #6b46c1; color: #fff;">CONTACT</th>';
+                headerHTML += '<th style="padding: 8px; text-align: left; background: #6b46c1; color: #fff;">SPECS</th>';
             }
 
-            // ENTERPRISE tier columns
+            // ENTERPRISE tier columns - orange border
             if (hasTierAccess('enterprise')) {
-                headerHTML += '<th style="padding: 8px; text-align: left; background: #d97706; color: #fff;">Full Address</th>';
+                headerHTML += '<th style="padding: 8px; text-align: left; background: #d97706; color: #fff;">FULL ADDRESS</th>';
             }
 
             headerHTML += '</tr>';
@@ -7437,19 +7790,6 @@
                 // Step 2: Apply enhanced filters (state, provider)
                 facilities = applyExistingFilters(facilities);
 
-                // Step 2.5: Apply text search filter
-                const searchQuery = (document.getElementById('existingSearch')?.value || '').trim().toLowerCase();
-                if (searchQuery) {
-                    facilities = facilities.filter(item => {
-                        const provider = (item.provider || '').toLowerCase();
-                        const name = (item.name || '').toLowerCase();
-                        const city = (item.city || '').toLowerCase();
-                        const state = (item.state || '').toLowerCase();
-                        const certs = (item.certifications || '').toLowerCase();
-                        return provider.includes(searchQuery) || name.includes(searchQuery) || city.includes(searchQuery) || state.includes(searchQuery) || certs.includes(searchQuery);
-                    });
-                }
-
                 // Step 3: Apply sort if set
                 if (existingSort.key) {
                     const key = existingSort.key;
@@ -7475,7 +7815,7 @@
                 }
 
                 // Build legend HTML
-                const legendHTML = '<div style="text-align: center; font-size: 16px; font-weight: bold; color: #d97706; background: #fef3c7; padding: 12px; border: 2px solid #f59e0b; border-radius: 5px; margin-bottom: 15px;">Columns by tier: Free (Provider/Title/Certifications)  ·  Basic (+Sqft/Lat & Long)  ·  Premium (+Contact/Specs)  ·  Enterprise (+Full Address/API Access)</div>';
+                const legendHTML = `<div style="text-align: center; font-size: 16px; font-weight: bold; color: #d97706; background: #fef3c7; padding: 12px; border: 2px solid #f59e0b; border-radius: 5px; margin-bottom: 15px;">${TIER_LEGEND_EXISTING}</div>`;
 
                 // Build upgrade banners
                 let upgradeBannerHTML = '';
@@ -7500,9 +7840,9 @@
                             <h4 style="margin: 0 0 10px 0; font-size: 16px; color: #7e22ce;">🚀 Get More Data with Paid Tiers</h4>
                             <p style="margin: 0 0 10px 0; font-size: 13px;">Unlock additional columns and features:</p>
                             <ul style="margin: 0 0 10px 0; padding-left: 20px; font-size: 12px;">
-                                <li><strong>Basic ($299/mo):</strong> + Sqft, Lat & Long</li>
-                                <li><strong>Premium ($999/mo):</strong> + Contact, Specs</li>
-                                <li><strong>Enterprise ($2,499/mo):</strong> + API Access</li>
+                                <li><strong>Basic ($99/mo):</strong> + Sqft, Lat & Long</li>
+                                <li><strong>Premium ($199/mo):</strong> + Contact, Specs</li>
+                                <li><strong>Enterprise ($500/mo):</strong> + API Access</li>
                             </ul>
                             <button onclick="switchSection('pricing')" style="padding: 8px 20px; background: var(--brand-primary); color: #fff; border: 3px solid #9333ea; border-radius: 3px; font-weight: bold; cursor: pointer;">
                                 View Pricing Plans
@@ -7515,7 +7855,9 @@
                 const summaryHTML = `
                     <div style="margin-top: 10px; padding: 10px; background: #f0f0f0; border: 2px solid var(--divider-strong); font-size: 12px;">
                         <strong>Total Facilities: ${facilities.length}</strong>
-                        <span style="float: right; font-size: 11px;">Current Tier: <strong style="text-transform: uppercase; color: #667eea;">${userTier}</strong></span>
+                        <span style="float: right; font-size: 11px;">Current Tier: <strong style="text-transform: uppercase; color: #667eea;">${userTier}</strong>
+                            <span style="cursor: help; margin-left: 4px;" title="${TIER_LEGEND_EXISTING}">ℹ️</span>
+                        </span>
                     </div>
                 `;
 
@@ -7641,6 +7983,65 @@
             return count;
         }
 
+        // ===================================================================
+        // PRODUCTION-GRADE ERROR RENDERING
+        // ===================================================================
+
+        /**
+         * Production-grade error rendering with actionable UI
+         * @param {string} containerId - ID of container to show error in
+         * @param {object} options - Error configuration
+         * @param {string} options.title - Error title
+         * @param {string} options.message - Error message
+         * @param {number} options.code - HTTP status code
+         * @param {string} options.endpoint - API endpoint that failed
+         * @param {function} options.onRetry - Callback for "Try Again" button
+         */
+        function renderError(containerId, { title, message, code, endpoint, onRetry }) {
+            const container = document.getElementById(containerId);
+            if (!container) {
+                console.error(`Error container #${containerId} not found`);
+                return;
+            }
+
+            // Build action buttons based on error type
+            let actions = '';
+
+            // Try Again button (always available if onRetry provided)
+            if (onRetry) {
+                actions += `<button onclick="(${onRetry.toString()})()" style="padding: 10px 20px; background: var(--brand-primary); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; margin-right: 10px; font-size: 14px;">Try Again</button>`;
+            }
+
+            // Specific actions based on error code
+            if (code === 401) {
+                actions += `<button onclick="switchSection('home'); setTimeout(() => { const loginModal = document.getElementById('loginModal'); if (loginModal && loginModal.showModal) loginModal.showModal(); }, 100)" style="padding: 10px 20px; background: var(--success); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; margin-right: 10px; font-size: 14px;">Log In</button>`;
+            } else if (code === 403) {
+                actions += `<button onclick="switchSection('pricing')" style="padding: 10px 20px; background: var(--warning); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; margin-right: 10px; font-size: 14px;">Upgrade to Premium</button>`;
+            }
+
+            // Contact Support (always available)
+            const supportSubject = encodeURIComponent(`DC Intel Error: ${code || 'Unknown'}`);
+            const supportBody = encodeURIComponent(`Error Details:\\n\\nEndpoint: ${endpoint || 'Unknown'}\\nStatus: ${code || 'Unknown'}\\nTime: ${new Date().toISOString()}\\nUser Tier: ${userTier || 'Unknown'}\\n\\nDescription: ${message}`);
+            const supportLink = `mailto:support@datacenterhive.com?subject=${supportSubject}&body=${supportBody}`;
+
+            actions += `<a href="${supportLink}" style="padding: 10px 20px; background: var(--text-secondary); color: #fff; text-decoration: none; border-radius: 6px; font-weight: 600; display: inline-block; font-size: 14px;">Contact Support</a>`;
+
+            // Render error UI
+            container.innerHTML = `
+                <tr><td colspan="15" style="padding: 0; border: none;">
+                <div style="padding: 40px 20px; text-align: center; background: #fef2f2; border: 2px solid #ef4444; border-radius: 8px; margin: 20px;">
+                    <div style="font-size: 48px; margin-bottom: 16px;">⚠️</div>
+                    <h3 style="margin: 0 0 12px 0; color: var(--text-primary); font-size: 20px;">${title}</h3>
+                    <p style="margin: 0 0 24px 0; color: var(--text-secondary); font-size: 14px; max-width: 600px; margin-left: auto; margin-right: auto;">${message}</p>
+                    <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                        ${actions}
+                    </div>
+                    ${code ? `<p style="margin-top: 20px; font-size: 11px; color: #999;">Error Code: ${code}</p>` : ''}
+                </div>
+                </td></tr>
+            `;
+        }
+
         // Existing DCs with heatmap visualization
         // Step 6: Orchestrator - coordinates all mount-point functions
         async function loadExistingDCs() {
@@ -7650,9 +8051,6 @@
             try {
                 // Step 1: Create mount points (idempotent - only creates once)
                 ensureExistingMountPoints();
-
-                // Step 1.5: Wire search input listener (idempotent)
-                wireExistingSearchOnce();
 
                 // Step 2: Ensure data is loaded (fetches once, caches)
                 await ensureExistingDataLoaded();
@@ -7697,9 +8095,56 @@
 
             } catch (error) {
                 console.error('Error loading existing DCs:', error);
+
+                // Production-grade error handling with specific messages
+                const status = error.response?.status;
                 const tbodyMount = document.getElementById('existingTbodyMount');
-                if (tbodyMount) {
-                    tbodyMount.innerHTML = '<tr><td colspan="10" style="text-align: center; padding: 20px;">Error loading data.</td></tr>';
+
+                if (!tbodyMount) {
+                    console.error('existingTbodyMount not found');
+                    return;
+                }
+
+                if (status === 401) {
+                    renderError('existingTbodyMount', {
+                        title: 'Authentication Required',
+                        message: 'Please log in to access data center information.',
+                        code: 401,
+                        endpoint: '/api/public/existing-dcs',
+                        onRetry: loadExistingDCs
+                    });
+                } else if (status === 403) {
+                    renderError('existingTbodyMount', {
+                        title: 'Upgrade Required',
+                        message: 'This feature is available to Premium and Enterprise users. Upgrade to access detailed data center information.',
+                        code: 403,
+                        endpoint: '/api/public/existing-dcs',
+                        onRetry: loadExistingDCs
+                    });
+                } else if (status === 429) {
+                    renderError('existingTbodyMount', {
+                        title: 'Rate Limit Exceeded',
+                        message: 'Too many requests. Please wait 30 seconds and try again.',
+                        code: 429,
+                        endpoint: '/api/public/existing-dcs',
+                        onRetry: loadExistingDCs
+                    });
+                } else if (status >= 500) {
+                    renderError('existingTbodyMount', {
+                        title: 'Server Error',
+                        message: 'Our servers are experiencing issues. We\'ve been notified and are working on it. Please try again in a few minutes.',
+                        code: status,
+                        endpoint: '/api/public/existing-dcs',
+                        onRetry: loadExistingDCs
+                    });
+                } else {
+                    renderError('existingTbodyMount', {
+                        title: 'Error Loading Data',
+                        message: error.message || 'Unable to load data center information. Please check your connection and try again.',
+                        code: status,
+                        endpoint: '/api/public/existing-dcs',
+                        onRetry: loadExistingDCs
+                    });
                 }
             } finally {
                 setLoading(container, false);
@@ -7998,19 +8443,25 @@
                 return cachedUpcomingData; // Already loaded
             }
 
-            const response = await fetch(`${PUBLIC_API_BASE}/upcoming-dcs?limit=5000`, {
-                headers: authHeaders()
-            });
+            // Load SINGLE ENRICHED DATASOURCE with coordinates, descriptions, AND rollups!
+            const response = await fetch('upcoming_dcs_enriched.json');
 
             if (!response.ok) {
-                throw new Error('Failed to fetch upcoming DCs');
+                throw new Error('Failed to fetch upcoming DCs enriched dataset');
             }
 
-            const apiData = await response.json();
-            cachedUpcomingData = apiData.items || [];
-
-            // Store globally for export
+            cachedUpcomingData = await response.json();
             window.upcomingDCsData = cachedUpcomingData;
+
+            console.log(`[DATA] Loaded ${cachedUpcomingData.length} upcoming DCs (ENRICHED - single source)`);
+            console.log('[DATA] sample keys:', Object.keys(cachedUpcomingData[0] || {}));
+            console.log('[DATA] sample data:', {
+                latitude: cachedUpcomingData[0]?.latitude,
+                longitude: cachedUpcomingData[0]?.longitude,
+                latest_description: cachedUpcomingData[0]?.latest_description,
+                latest_valuation_usd: cachedUpcomingData[0]?.latest_valuation_usd,
+                permits_count: cachedUpcomingData[0]?.permits_count  // ← THE ROLLUP!
+            });
 
             return cachedUpcomingData;
         }
@@ -8037,6 +8488,7 @@
                         <tbody id="upcomingTbodyMount"></tbody>
                     </table>
                 </div>
+                <div id="upcomingPaginationMount"></div>
             `;
         }
 
@@ -8050,15 +8502,22 @@
                 return; // Already rendered
             }
 
-            // Create filter panel HTML
-            let filterHTML = '<div id="enhancedFilters" style="margin-bottom: 20px; padding: 20px; background: #f0f9ff; border: 2px solid #0284c7; border-radius: 6px;">';
-            filterHTML += '<h4 style="margin: 0 0 15px 0; font-size: 16px; color: #0369a1;">🔍 Advanced Filters</h4>';
-            filterHTML += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 15px;">';
+            // Get current source filter state
+            const currentSource = window.currentUpcomingSourceFilter || 'all';
+
+            // Create unified horizontal filter bar with source toggles
+            let filterHTML = '<div id="enhancedFilters" style="margin-bottom: 20px; padding: 15px; background: #f0f9ff; border: 2px solid #0284c7; border-radius: 6px;">';
+
+            // Main horizontal container
+            filterHTML += '<div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">';
+
+            // LEFT SIDE: Filters
+            filterHTML += '<div style="display: flex; gap: 12px; flex: 1; min-width: 0; flex-wrap: wrap;">';
 
             // State filter
-            filterHTML += '<div style="display: flex; flex-direction: column;">';
-            filterHTML += '<label style="font-size: 13px; font-weight: 600; margin-bottom: 5px; color: var(--text-primary);">Filter by State(s)</label>';
-            filterHTML += '<select id="upcomingStateFilter" multiple style="width: 100%; padding: 8px; border: 2px solid var(--border-default); border-radius: 4px; font-size: 13px;">';
+            filterHTML += '<div style="display: flex; flex-direction: column; min-width: 180px;">';
+            filterHTML += '<label style="font-size: 12px; font-weight: 600; margin-bottom: 4px; color: var(--text-primary);">State</label>';
+            filterHTML += '<select id="upcomingStateFilter" multiple style="width: 100%; padding: 6px; border: 2px solid var(--border-default); border-radius: 4px; font-size: 12px; max-height: 38px;">';
             allStates.forEach(state => {
                 const selected = upcomingFilters.states.includes(state) ? 'selected' : '';
                 filterHTML += `<option value="${state}" ${selected}>${state}</option>`;
@@ -8067,9 +8526,9 @@
             filterHTML += '</div>';
 
             // Status filter
-            filterHTML += '<div style="display: flex; flex-direction: column;">';
-            filterHTML += '<label style="font-size: 13px; font-weight: 600; margin-bottom: 5px; color: var(--text-primary);">Filter by Status(es)</label>';
-            filterHTML += '<select id="upcomingStatusFilter" multiple style="width: 100%; padding: 8px; border: 2px solid var(--border-default); border-radius: 4px; font-size: 13px;">';
+            filterHTML += '<div style="display: flex; flex-direction: column; min-width: 180px;">';
+            filterHTML += '<label style="font-size: 12px; font-weight: 600; margin-bottom: 4px; color: var(--text-primary);">Status</label>';
+            filterHTML += '<select id="upcomingStatusFilter" multiple style="width: 100%; padding: 6px; border: 2px solid var(--border-default); border-radius: 4px; font-size: 12px; max-height: 38px;">';
             allStatuses.forEach(status => {
                 const selected = upcomingFilters.statuses.includes(status) ? 'selected' : '';
                 filterHTML += `<option value="${status}" ${selected}>${status}</option>`;
@@ -8077,34 +8536,67 @@
             filterHTML += '</select>';
             filterHTML += '</div>';
 
-            // Date range filter
-            filterHTML += '<div style="display: flex; flex-direction: column;">';
-            filterHTML += '<label style="font-size: 13px; font-weight: 600; margin-bottom: 5px; color: var(--text-primary);">Date Range (First Seen)</label>';
-            filterHTML += '<div style="display: flex; gap: 8px;">';
-            filterHTML += `<input type="text" id="upcomingDateFrom" placeholder="From" style="flex: 1 1 0%; box-sizing: border-box; min-width: 0; padding: 8px; border: 2px solid var(--border-default); border-radius: 4px; font-size: 13px;" value="${upcomingFilters.dateFrom || ''}">`;
-            filterHTML += `<input type="text" id="upcomingDateTo" placeholder="To" style="flex: 1 1 0%; box-sizing: border-box; min-width: 0; padding: 8px; border: 2px solid var(--border-default); border-radius: 4px; font-size: 13px;" value="${upcomingFilters.dateTo || ''}">`;
+            // Date Range with Quick Presets
+            filterHTML += '<div style="display: flex; flex-direction: column; min-width: 200px;">';
+            filterHTML += '<label style="font-size: 12px; font-weight: 600; margin-bottom: 4px; color: var(--text-primary);">First Seen (From - To)</label>';
+            filterHTML += '<div style="display: flex; gap: 4px; margin-bottom: 4px;">';
+            filterHTML += `<input type="text" id="upcomingDateFrom" placeholder="From" style="flex: 1; padding: 6px; border: 2px solid var(--border-default); border-radius: 4px; font-size: 12px; min-width: 80px;" value="${upcomingFilters.dateFrom || ''}">`;
+            filterHTML += `<input type="text" id="upcomingDateTo" placeholder="To" style="flex: 1; padding: 6px; border: 2px solid var(--border-default); border-radius: 4px; font-size: 12px; min-width: 80px;" value="${upcomingFilters.dateTo || ''}">`;
+            filterHTML += '</div>';
+            // Quick filter presets
+            filterHTML += '<div style="display: flex; gap: 4px; flex-wrap: wrap;">';
+            filterHTML += '<button onclick="applyUpcomingDatePreset(30)" style="padding: 3px 8px; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 3px; cursor: pointer; font-size: 10px; font-weight: 600; color: #374151; transition: background 0.2s;" onmouseover="this.style.background=\'#e5e7eb\'" onmouseout="this.style.background=\'#f3f4f6\'">Past 30d</button>';
+            filterHTML += '<button onclick="applyUpcomingDatePreset(90)" style="padding: 3px 8px; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 3px; cursor: pointer; font-size: 10px; font-weight: 600; color: #374151; transition: background 0.2s;" onmouseover="this.style.background=\'#e5e7eb\'" onmouseout="this.style.background=\'#f3f4f6\'">Past 90d</button>';
+            filterHTML += '<button onclick="applyUpcomingDatePreset(\'year\')" style="padding: 3px 8px; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 3px; cursor: pointer; font-size: 10px; font-weight: 600; color: #374151; transition: background 0.2s;" onmouseover="this.style.background=\'#e5e7eb\'" onmouseout="this.style.background=\'#f3f4f6\'">This Year</button>';
             filterHTML += '</div>';
             filterHTML += '</div>';
 
-            filterHTML += '</div>'; // End grid
+            // Source radio buttons
+            filterHTML += '<div style="display: flex; flex-direction: column; min-width: 180px;">';
+            filterHTML += '<label style="font-size: 12px; font-weight: 600; margin-bottom: 4px; color: var(--text-primary);">Data Source</label>';
+            filterHTML += '<div style="display: flex; gap: 8px; flex-wrap: wrap;">';
+            filterHTML += `<label style="display: flex; align-items: center; gap: 4px; font-size: 12px; cursor: pointer;"><input type="radio" name="upcomingSource" value="all" ${currentSource === 'all' ? 'checked' : ''} onchange="filterUpcomingBySource('all')"> All</label>`;
+            filterHTML += `<label style="display: flex; align-items: center; gap: 4px; font-size: 12px; cursor: pointer;"><input type="radio" name="upcomingSource" value="news" ${currentSource === 'news' ? 'checked' : ''} onchange="filterUpcomingBySource('news')"> News</label>`;
+            filterHTML += `<label style="display: flex; align-items: center; gap: 4px; font-size: 12px; cursor: pointer;"><input type="radio" name="upcomingSource" value="permit" ${currentSource === 'permit' ? 'checked' : ''} onchange="filterUpcomingBySource('permit')"> Permits</label>`;
+            filterHTML += '</div>';
+            filterHTML += '</div>';
 
-            // Filter action buttons
-            filterHTML += '<div style="display: flex; gap: 10px; justify-content: center;">';
-            filterHTML += '<button onclick="clearUpcomingFilters()" style="padding: 8px 20px; background: #dc2626; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 600;">Clear Filters</button>';
-            const activeFiltersCount = upcomingFilters.states.length + upcomingFilters.statuses.length + (upcomingFilters.dateFrom ? 1 : 0) + (upcomingFilters.dateTo ? 1 : 0);
+            filterHTML += '</div>'; // End filters container
+
+            // SEPARATOR
+            filterHTML += '<div style="width: 1px; height: 50px; background: #cbd5e1; align-self: center;"></div>';
+
+            // RIGHT SIDE: Actions
+            filterHTML += '<div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">';
+
+            // Reset button
+            filterHTML += '<button onclick="resetUpcomingFilters()" style="padding: 8px 16px; background: #dc2626; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; white-space: nowrap;">Reset Filters</button>';
+
+            // Active filter count
+            const activeFiltersCount = upcomingFilters.states.length + upcomingFilters.statuses.length + (upcomingFilters.dateFrom ? 1 : 0) + (upcomingFilters.dateTo ? 1 : 0) + (currentSource !== 'all' ? 1 : 0);
             if (activeFiltersCount > 0) {
-                filterHTML += `<span style="padding: 8px 15px; background: #10b981; color: #fff; border-radius: 4px; font-size: 13px; font-weight: 600;">${activeFiltersCount} Filter(s) Active</span>`;
+                filterHTML += `<span style="padding: 6px 12px; background: #10b981; color: #fff; border-radius: 4px; font-size: 12px; font-weight: 600; white-space: nowrap;">${activeFiltersCount} Active</span>`;
             }
-            filterHTML += '</div>';
-            filterHTML += '</div>'; // End enhanced filters panel
 
-            // Insert into mount point (NEVER rebuild this again)
+            // Export buttons (show for BASIC+ tier)
+            if (userTier && ['basic', 'premium', 'enterprise'].includes(userTier)) {
+                filterHTML += '<button onclick="exportUpcomingDCsToCSV()" style="padding: 8px 14px; border: 2px solid var(--divider-strong); background: #fff; cursor: pointer; font-weight: 600; transition: all 0.2s; border-radius: 4px; font-size: 12px;">📄 CSV</button>';
+                filterHTML += '<button onclick="exportUpcomingDCsToExcel()" style="padding: 8px 14px; border: 2px solid var(--divider-strong); background: #e8f5e9; cursor: pointer; font-weight: 600; transition: all 0.2s; border-radius: 4px; font-size: 12px;">📊 Excel</button>';
+            }
+
+            filterHTML += '</div>'; // End actions container
+            filterHTML += '</div>'; // End main horizontal container
+            filterHTML += '</div>'; // End filter panel
+
+            // Insert into mount point
             filtersMount.innerHTML = filterHTML;
 
-            // Initialize Choices.js and flatpickr ONCE
+            // Initialize Choices.js, flatpickr, and wire event listeners
             setTimeout(() => {
                 const stateSelect = document.getElementById('upcomingStateFilter');
                 const statusSelect = document.getElementById('upcomingStatusFilter');
+                const dateFromInput = document.getElementById('upcomingDateFrom');
+                const dateToInput = document.getElementById('upcomingDateTo');
 
                 if (stateSelect && typeof Choices !== 'undefined' && !choicesUpcomingStates) {
                     choicesUpcomingStates = new Choices(stateSelect, {
@@ -8117,7 +8609,7 @@
                     stateSelect.addEventListener('change', function() {
                         const selected = Array.from(this.selectedOptions).map(opt => opt.value);
                         upcomingFilters.states = selected;
-                        renderUpcomingTableRows(); // Only re-render tbody/summary
+                        renderUpcomingTableRows();
                     });
                 }
 
@@ -8132,20 +8624,16 @@
                     statusSelect.addEventListener('change', function() {
                         const selected = Array.from(this.selectedOptions).map(opt => opt.value);
                         upcomingFilters.statuses = selected;
-                        renderUpcomingTableRows(); // Only re-render table, not entire UI
+                        renderUpcomingTableRows();
                     });
                 }
-
-                // Initialize flatpickr for date pickers
-                const dateFromInput = document.getElementById('upcomingDateFrom');
-                const dateToInput = document.getElementById('upcomingDateTo');
 
                 if (dateFromInput && typeof flatpickr !== 'undefined' && !fpUpcomingFrom) {
                     fpUpcomingFrom = flatpickr(dateFromInput, {
                         dateFormat: 'Y-m-d',
                         onChange: function(selectedDates, dateStr) {
                             upcomingFilters.dateFrom = dateStr;
-                            renderUpcomingTableRows(); // Only re-render table, not entire UI
+                            renderUpcomingTableRows();
                         }
                     });
                 }
@@ -8155,13 +8643,14 @@
                         dateFormat: 'Y-m-d',
                         onChange: function(selectedDates, dateStr) {
                             upcomingFilters.dateTo = dateStr;
-                            renderUpcomingTableRows(); // Only re-render table, not entire UI
+                            renderUpcomingTableRows();
                         }
                     });
                 }
             }, 100);
         }
 
+        // 4) Render table header ONCE
         // 4) Render table header ONCE (or when tier changes)
         let lastUpcomingHeaderTier = null;
         function renderUpcomingTableHeaderOnce() {
@@ -8176,34 +8665,35 @@
             lastUpcomingHeaderTier = userTier;
 
             // Build header HTML with tier-specific columns
-            let headerHTML = '<tr style="background: var(--brand-primary); color: #fff;">';
+            // Using neutral backgrounds with colored left borders for better readability
+            let headerHTML = '<tr style="background: #f5f5f5;">';
 
-            // FREE tier columns
-            headerHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setUpcomingSort(\'location\')">Location</th>';
-            headerHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setUpcomingSort(\'address\')">Address</th>';
-            headerHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setUpcomingSort(\'status\')">Status</th>';
-            headerHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setUpcomingSort(\'firstSeen\')">First Seen</th>';
-            headerHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setUpcomingSort(\'source\')">Source</th>';
+            // FREE tier columns - green border
+            headerHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setUpcomingSort(\'location\')">LOCATION</th>';
+            headerHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setUpcomingSort(\'address\')">ADDRESS</th>';
+            headerHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setUpcomingSort(\'status\')">STATUS</th>';
+            headerHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setUpcomingSort(\'firstSeen\')">FIRST SEEN</th>';
+            headerHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #10b981; color: #fff;" onclick="setUpcomingSort(\'source\')">SOURCE</th>';
 
-            // Save column for logged-in users
+            // Save column for logged-in users - blue border
             if (isLoggedIn()) {
-                headerHTML += '<th style="padding: 8px; text-align: center; background: #0284c7; color: #fff;">Save</th>';
+                headerHTML += '<th style="padding: 8px; text-align: center; background: #0284c7; color: #fff;">SAVE</th>';
             }
 
-            // BASIC tier columns
+            // BASIC tier columns - grey border
             if (hasTierAccess('basic')) {
-                headerHTML += '<th style="padding: 8px; text-align: left; background: #4a5568; color: #fff;">Lat/Long</th>';
+                headerHTML += '<th style="padding: 8px; text-align: left; background: #4a5568; color: #fff;">LAT/LONG</th>';
             }
 
-            // PREMIUM tier columns
+            // PREMIUM tier columns - purple border
             if (hasTierAccess('premium')) {
-                headerHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #6b46c1; color: #fff;" onclick="setUpcomingSort(\'description\')">Description</th>';
+                headerHTML += '<th style="padding: 8px; text-align: left; cursor: pointer; background: #6b46c1; color: #fff;" onclick="setUpcomingSort(\'description\')">DESCRIPTION</th>';
             }
 
-            // ENTERPRISE tier columns
+            // ENTERPRISE tier columns - orange border
             if (hasTierAccess('enterprise')) {
-                headerHTML += '<th style="padding: 8px; text-align: right; cursor: pointer; background: #d97706; color: #fff;" onclick="setUpcomingSort(\'valuation\')">Valuation</th>';
-                headerHTML += '<th style="padding: 8px; text-align: center; background: #d97706; color: #fff;">Details</th>';
+                headerHTML += '<th style="padding: 8px; text-align: right; cursor: pointer; background: #d97706; color: #fff;" onclick="setUpcomingSort(\'valuation\')">VALUATION</th>';
+                headerHTML += '<th style="padding: 8px; text-align: center; background: #d97706; color: #fff;">DETAILS</th>';
             }
 
             headerHTML += '</tr>';
@@ -8320,7 +8810,7 @@
                 }
 
                 // Build legend HTML
-                const legendHTML = '<div style="text-align: center; font-size: 16px; font-weight: bold; color: #d97706; background: #fef3c7; padding: 12px; border: 2px solid #f59e0b; border-radius: 5px; margin-bottom: 15px;">Columns by tier: Free (Location/Address/Status/First Seen/Source)  ·  Basic (+Lat/Long)  ·  Premium (+Most Recent Description)  ·  Enterprise (+Total Permit Quantity per permit address/All previous Details)</div>';
+                const legendHTML = `<div style="text-align: center; font-size: 16px; font-weight: bold; color: #d97706; background: #fef3c7; padding: 12px; border: 2px solid #f59e0b; border-radius: 5px; margin-bottom: 15px;">${TIER_LEGEND_UPCOMING}</div>`;
 
                 // Build upgrade banner (only for free tier)
                 let upgradeBannerHTML = '';
@@ -8330,9 +8820,9 @@
                             <h4 style="margin: 0 0 10px 0; font-size: 16px; color: #7e22ce;">🚀 Unlock More Data with Paid Tiers</h4>
                             <p style="margin: 0 0 10px 0; font-size: 13px;">You're seeing basic columns. Upgrade to access:</p>
                             <ul style="margin: 0; padding-left: 20px; font-size: 12px;">
-                                <li><strong>Basic ($299/mo):</strong> + Lat/Long</li>
-                                <li><strong>Premium ($999/mo):</strong> + Most Recent Description</li>
-                                <li><strong>Enterprise ($2,499/mo):</strong> + Total Permit Quantity per permit address, All previous Details</li>
+                                <li><strong>Basic ($99/mo):</strong> + Lat/Long</li>
+                                <li><strong>Premium ($199/mo):</strong> + Most Recent Description</li>
+                                <li><strong>Enterprise ($500/mo):</strong> + Total Permit Quantity per permit address, All previous Details</li>
                             </ul>
                             <button onclick="switchSection('pricing')" style="margin-top: 10px; padding: 8px 20px; background: var(--brand-primary); color: #fff; border: 3px solid #9333ea; border-radius: 3px; font-weight: bold; cursor: pointer;">
                                 View Pricing Plans
@@ -8341,15 +8831,34 @@
                     `;
                 }
 
-                // Build summary HTML
+                // Calculate pagination
+                const totalProjects = projects.length;
+                const totalPages = Math.ceil(totalProjects / upcomingPage.size);
+
+                // Ensure current page is within bounds
+                if (upcomingPage.current > totalPages && totalPages > 0) {
+                    upcomingPage.current = totalPages;
+                } else if (upcomingPage.current < 1) {
+                    upcomingPage.current = 1;
+                }
+
+                // Calculate pagination slice
+                const startIdx = (upcomingPage.current - 1) * upcomingPage.size;
+                const endIdx = Math.min(startIdx + upcomingPage.size, totalProjects);
+                const paginatedProjects = projects.slice(startIdx, endIdx);
+
+                // Build summary HTML with pagination info
                 const newsCount = projects.filter(p => p.source === 'news').length;
                 const permitCount = projects.filter(p => p.source === 'permit').length;
                 const summaryHTML = `
                     <div style="margin-top: 10px; padding: 10px; background: #f0f0f0; border: 2px solid var(--divider-strong); font-size: 12px;">
-                        <strong>Total Projects: ${projects.length}</strong>
+                        <strong>Total Projects: ${totalProjects}</strong>
                         (<span style="color: #ffc107; font-weight: bold;">📰 ${newsCount} News Discoveries</span> +
                         <span style="color: #198754; font-weight: bold;">📋 ${permitCount} Permitted</span>)
-                        <span style="float: right; font-size: 11px;">Current Tier: <strong style="text-transform: uppercase; color: #667eea;">${userTier}</strong></span>
+                        | Showing: <strong>${startIdx + 1}-${endIdx}</strong>
+                        <span style="float: right; font-size: 11px;">Current Tier: <strong style="text-transform: uppercase; color: #667eea;">${userTier}</strong>
+                            <span style="cursor: help; margin-left: 4px;" title="${TIER_LEGEND_UPCOMING}">ℹ️</span>
+                        </span>
                     </div>
                 `;
 
@@ -8379,28 +8888,12 @@
                     `;
                 }
 
-                // Add source filter controls row
-                tbodyHTML += `
-                    <tr>
-                        <td colspan="${colspan}" style="padding: 0;">
-                            <div style="text-align: center; margin-bottom: 15px; padding: 15px; background: #f9f9f9; border: 2px solid var(--divider-strong);">
-                                <p style="font-size: 14px; margin-bottom: 10px; font-weight: bold;">Filter by Data Source:</p>
-                                <p style="font-size: 12px; margin-bottom: 12px; color: #555;">
-                                    <strong>News:</strong> Projects discovered from news articles and industry announcements.
-                                    <strong>Permits:</strong> Data center related permits tracking new facilities, construction and upgrades to existing facilities, data center hall expansions, infrastructure builds, and all project stages from initial permits through completion.
-                                </p>
-                                <div style="display: flex; gap: 10px; justify-content: center;">
-                                    <button onclick="filterUpcomingBySource('all')" id="filterAll" style="padding: 8px 16px; cursor: pointer; background: var(--brand-primary); color: #fff; border: none; font-weight: bold; border-radius: 6px;">All Sources</button>
-                                    <button onclick="filterUpcomingBySource('news')" id="filterNews" style="padding: 8px 16px; cursor: pointer; background: #fff; color: var(--text-primary); border: 2px solid var(--divider-strong); font-weight: bold; border-radius: 6px;">News Only</button>
-                                    <button onclick="filterUpcomingBySource('permit')" id="filterPermit" style="padding: 8px 16px; cursor: pointer; background: #fff; color: var(--text-primary); border: 2px solid var(--divider-strong); font-weight: bold; border-radius: 6px;">Permits Only</button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                `;
 
-                // Build data rows
-                projects.forEach((project, idx) => {
+
+                // Build data rows (paginated)
+                paginatedProjects.forEach((project, relativeIdx) => {
+                    // Calculate absolute index for enterprise expand/collapse functionality
+                    const idx = startIdx + relativeIdx;
                     const isNews = project.source === 'news';
                     const bgBase = isNews ? '#fff3cd' : '#d1e7dd';
                     const borderColor = isNews ? '#ffc107' : '#198754';
@@ -8419,7 +8912,7 @@
                         addressDisplay = '-';
                     }
 
-                    const status = project.latest_status || 'Unknown';
+                    const status = normalizeStatus(project.latest_status) || 'Unknown';
                     const firstSeen = project.first_seen_applied_date || '-';
                     const sourceLabel = isNews ? 'News' : 'Permit';
                     const description = project.latest_description || '-';
@@ -8432,7 +8925,7 @@
                     else if (statusLower.includes('review')) statusClass = 'review';
 
                     // Build row
-                    tbodyHTML += `<tr style="background: ${bgBase}; border-left: 4px solid ${borderColor}; border-bottom: 1px solid #ccc;" data-project-idx="${idx}">
+                    tbodyHTML += `<tr style="background: ${bgBase}; border: 4px solid ${borderColor}; border-bottom: 1px solid #ccc;" data-project-idx="${idx}">
                         <td style="padding: 8px;">${location}</td>
                         <td style="padding: 8px;">${addressDisplay}</td>
                         <td style="padding: 8px;"><span class="chip ${statusClass}">${status}</span></td>
@@ -8481,7 +8974,7 @@
                         const recordIds = (project.record_ids_sample || '').split(';').filter(id => id.trim());
                         const statuses = (project.statuses_sample || '').split(';').filter(s => s.trim());
 
-                        tbodyHTML += `<tr id="details-${idx}" style="display: none; background: #fffbeb; border-left: 4px solid #d97706;">
+                        tbodyHTML += `<tr id="details-${idx}" style="display: none; background: #fffbeb; border: 4px solid #d97706;">
                             <td colspan="${colspan}" style="padding: 15px;">
                                 <div style="font-size: 12px;">
                                     <h4 style="margin: 0 0 10px 0; color: #d97706;">Full Project Details</h4>
@@ -8505,16 +8998,45 @@
                     }
                 });
 
+                // Build pagination controls HTML
+                const paginationHTML = totalPages > 1 ? `
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin: 15px 0; padding: 10px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 4px;">
+                        <button onclick="goToUpcomingPage(1)" ${upcomingPage.current === 1 ? 'disabled' : ''} style="padding: 6px 12px; background: ${upcomingPage.current === 1 ? '#ccc' : 'var(--brand-primary)'}; color: #fff; border: none; border-radius: 3px; cursor: ${upcomingPage.current === 1 ? 'not-allowed' : 'pointer'}; font-size: 12px;">
+                            « First
+                        </button>
+                        <button onclick="goToUpcomingPage(${upcomingPage.current - 1})" ${upcomingPage.current === 1 ? 'disabled' : ''} style="padding: 6px 12px; background: ${upcomingPage.current === 1 ? '#ccc' : 'var(--brand-primary)'}; color: #fff; border: none; border-radius: 3px; cursor: ${upcomingPage.current === 1 ? 'not-allowed' : 'pointer'}; font-size: 12px;">
+                            ‹ Previous
+                        </button>
+                        <span style="font-size: 12px; font-weight: 600; color: var(--text-primary);">
+                            Page ${upcomingPage.current} of ${totalPages}
+                        </span>
+                        <button onclick="goToUpcomingPage(${upcomingPage.current + 1})" ${upcomingPage.current === totalPages ? 'disabled' : ''} style="padding: 6px 12px; background: ${upcomingPage.current === totalPages ? '#ccc' : 'var(--brand-primary)'}; color: #fff; border: none; border-radius: 3px; cursor: ${upcomingPage.current === totalPages ? 'not-allowed' : 'pointer'}; font-size: 12px;">
+                            Next ›
+                        </button>
+                        <button onclick="goToUpcomingPage(${totalPages})" ${upcomingPage.current === totalPages ? 'disabled' : ''} style="padding: 6px 12px; background: ${upcomingPage.current === totalPages ? '#ccc' : 'var(--brand-primary)'}; color: #fff; border: none; border-radius: 3px; cursor: ${upcomingPage.current === totalPages ? 'not-allowed' : 'pointer'}; font-size: 12px;">
+                            Last »
+                        </button>
+                        <select onchange="changeUpcomingPageSize(this.value)" style="padding: 6px; border: 2px solid var(--border-default); border-radius: 3px; font-size: 12px; background: #fff; cursor: pointer;">
+                            <option value="25" ${upcomingPage.size === 25 ? 'selected' : ''}>25 per page</option>
+                            <option value="50" ${upcomingPage.size === 50 ? 'selected' : ''}>50 per page</option>
+                            <option value="100" ${upcomingPage.size === 100 ? 'selected' : ''}>100 per page</option>
+                            <option value="200" ${upcomingPage.size === 200 ? 'selected' : ''}>200 per page</option>
+                        </select>
+                    </div>
+                ` : '';
+
                 // Update mount points (NEVER touch upcomingDCsTable.innerHTML)
                 const legendMount = document.getElementById('upcomingLegendMount');
                 const upgradeBannerMount = document.getElementById('upcomingUpgradeBannerMount');
                 const summaryMount = document.getElementById('upcomingSummaryMount');
                 const tbodyMount = document.getElementById('upcomingTbodyMount');
+                const paginationMount = document.getElementById('upcomingPaginationMount');
 
                 if (legendMount) legendMount.innerHTML = legendHTML;
                 if (upgradeBannerMount) upgradeBannerMount.innerHTML = upgradeBannerHTML;
                 if (summaryMount) summaryMount.innerHTML = summaryHTML;
                 if (tbodyMount) tbodyMount.innerHTML = tbodyHTML;
+                if (paginationMount) paginationMount.innerHTML = paginationHTML;
 
                 // Update sort indicators
                 updateUpcomingSortIndicators();
@@ -8551,7 +9073,7 @@
                     .filter(s => s && s !== 'TBD'))].sort();
 
                 const allStatuses = [...new Set(cachedUpcomingData
-                    .map(p => (p.latest_status || '').trim())
+                    .map(p => normalizeStatus(p.latest_status))
                     .filter(s => s && s.toLowerCase() !== 'unknown'))].sort();
 
                 // Step 4: Render filter panel once (idempotent - checks if already rendered)
@@ -8571,9 +9093,56 @@
 
             } catch (error) {
                 console.error('Error loading upcoming DCs:', error);
+
+                // Production-grade error handling with specific messages
+                const status = error.response?.status;
                 const tbodyMount = document.getElementById('upcomingTbodyMount');
-                if (tbodyMount) {
-                    tbodyMount.innerHTML = '<tr><td colspan="10" style="text-align: center; padding: 20px;">Error loading data.</td></tr>';
+
+                if (!tbodyMount) {
+                    console.error('upcomingTbodyMount not found');
+                    return;
+                }
+
+                if (status === 401) {
+                    renderError('upcomingTbodyMount', {
+                        title: 'Authentication Required',
+                        message: 'Please log in to access upcoming data center projects.',
+                        code: 401,
+                        endpoint: '/api/public/upcoming-dcs',
+                        onRetry: loadUpcomingDCs
+                    });
+                } else if (status === 403) {
+                    renderError('upcomingTbodyMount', {
+                        title: 'Upgrade Required',
+                        message: 'Access to upcoming projects is available to Premium and Enterprise users. Upgrade to stay ahead of the market.',
+                        code: 403,
+                        endpoint: '/api/public/upcoming-dcs',
+                        onRetry: loadUpcomingDCs
+                    });
+                } else if (status === 429) {
+                    renderError('upcomingTbodyMount', {
+                        title: 'Rate Limit Exceeded',
+                        message: 'Too many requests. Please wait 30 seconds and try again.',
+                        code: 429,
+                        endpoint: '/api/public/upcoming-dcs',
+                        onRetry: loadUpcomingDCs
+                    });
+                } else if (status >= 500) {
+                    renderError('upcomingTbodyMount', {
+                        title: 'Server Error',
+                        message: 'Our servers are experiencing issues. We\'ve been notified and are working on it. Please try again in a few minutes.',
+                        code: status,
+                        endpoint: '/api/public/upcoming-dcs',
+                        onRetry: loadUpcomingDCs
+                    });
+                } else {
+                    renderError('upcomingTbodyMount', {
+                        title: 'Error Loading Data',
+                        message: error.message || 'Unable to load upcoming project information. Please check your connection and try again.',
+                        code: status,
+                        endpoint: '/api/public/upcoming-dcs',
+                        onRetry: loadUpcomingDCs
+                    });
                 }
             } finally {
                 setLoading(container, false);
@@ -8884,18 +9453,168 @@
         });
 
         // Table filters - Existing DCs
-        function clearExistingFilter() {
-            const input = document.getElementById('existingSearch');
-            if (input) input.value = '';
+        
+        function resetExistingFilters() {
+            // Reset filter state
+            existingFilters.states = [];
+            existingFilters.providers = [];
+
+            // Reset Choices.js UI
+            if (choicesExistingStates) {
+                choicesExistingStates.removeActiveItems();
+            }
+            if (choicesExistingProviders) {
+                choicesExistingProviders.removeActiveItems();
+            }
+
+            // Re-render table and filters
             renderExistingTableRows();
+
+            // Force filter panel refresh to update active count
+            const filtersMount = document.getElementById('existingFiltersMount');
+            if (filtersMount) {
+                // CRITICAL FIX: Destroy Choices.js instances before removing filter panel
+                // This allows them to be properly re-initialized when panel is recreated
+                if (choicesExistingStates) {
+                    choicesExistingStates.destroy();
+                    choicesExistingStates = null;
+                }
+                if (choicesExistingProviders) {
+                    choicesExistingProviders.destroy();
+                    choicesExistingProviders = null;
+                }
+
+                const filterPanel = document.getElementById('existingEnhancedFilters');
+                if (filterPanel) filterPanel.remove();
+                if (cachedExistingData) {
+                    const allStates = [...new Set(cachedExistingData.map(f => (f.state || '').toUpperCase().trim()).filter(s => s))].sort();
+                    const allProviders = [...new Set(cachedExistingData.map(f => normalizeString(f.provider)).filter(p => p))].sort();
+                    renderExistingFiltersOnce(allStates, allProviders);
+                }
+            }
         }
 
+
+
         // Table filters - Upcoming DCs
-        function clearUpcomingFilter() {
-            const input = document.getElementById('upcomingSearch');
-            if (input) input.value = '';
+
+        /**
+         * Apply quick date range presets to Upcoming Projects filter
+         * @param {number|string} preset - Number of days (30, 90) or 'year'
+         */
+        function applyUpcomingDatePreset(preset) {
+            const today = new Date();
+            const todayStr = today.toISOString().split('T')[0];
+            let fromDate;
+
+            if (preset === 'year') {
+                // This year: January 1 to today
+                fromDate = new Date(today.getFullYear(), 0, 1);
+            } else {
+                // Past N days: N days ago to today
+                fromDate = new Date(today);
+                fromDate.setDate(fromDate.getDate() - preset);
+            }
+
+            const fromDateStr = fromDate.toISOString().split('T')[0];
+
+            // Update filter state
+            upcomingFilters.dateFrom = fromDateStr;
+            upcomingFilters.dateTo = todayStr;
+
+            // Update flatpickr UI if initialized
+            if (fpUpcomingFrom) {
+                fpUpcomingFrom.setDate(fromDateStr);
+            }
+            if (fpUpcomingTo) {
+                fpUpcomingTo.setDate(todayStr);
+            }
+
+            // Reload table with new date filter (and reset pagination)
+            upcomingPage.current = 1;
             loadUpcomingDCs();
         }
+
+        /**
+         * Navigate to a specific page in the Upcoming Projects table
+         * @param {number} pageNum - Page number to navigate to
+         */
+        function goToUpcomingPage(pageNum) {
+            if (pageNum >= 1) {
+                upcomingPage.current = pageNum;
+                loadUpcomingDCs();
+            }
+        }
+
+        /**
+         * Change the number of rows displayed per page
+         * @param {string|number} newSize - New page size (25, 50, 100, or 200)
+         */
+        function changeUpcomingPageSize(newSize) {
+            upcomingPage.size = parseInt(newSize, 10);
+            upcomingPage.current = 1;  // Reset to page 1 when changing size
+            loadUpcomingDCs();
+        }
+
+        function resetUpcomingFilters() {
+            // Reset filter state (clear all filters including dates)
+            upcomingFilters.states = [];
+            upcomingFilters.statuses = [];
+            upcomingFilters.dateFrom = null;
+            upcomingFilters.dateTo = null;
+
+            // Reset pagination to first page
+            upcomingPage.current = 1;
+
+            // Reset source to 'all'
+            window.currentUpcomingSourceFilter = 'all';
+            const allRadio = document.querySelector('input[name="upcomingSource"][value="all"]');
+            if (allRadio) allRadio.checked = true;
+
+            // Reset Choices.js UI
+            if (choicesUpcomingStates) {
+                choicesUpcomingStates.removeActiveItems();
+            }
+            if (choicesUpcomingStatuses) {
+                choicesUpcomingStatuses.removeActiveItems();
+            }
+
+            // Reset flatpickr to cleared state
+            if (fpUpcomingFrom) {
+                fpUpcomingFrom.clear();
+            }
+            if (fpUpcomingTo) {
+                fpUpcomingTo.clear();
+            }
+
+            // Re-render table and filters
+            loadUpcomingDCs();
+
+            // Force filter panel refresh
+            const filtersMount = document.getElementById('upcomingFiltersMount');
+            if (filtersMount) {
+                // CRITICAL FIX: Destroy Choices.js instances before removing filter panel
+                // This allows them to be properly re-initialized when panel is recreated
+                if (choicesUpcomingStates) {
+                    choicesUpcomingStates.destroy();
+                    choicesUpcomingStates = null;
+                }
+                if (choicesUpcomingStatuses) {
+                    choicesUpcomingStatuses.destroy();
+                    choicesUpcomingStatuses = null;
+                }
+
+                const filterPanel = document.getElementById('enhancedFilters');
+                if (filterPanel) filterPanel.remove();
+                if (window.upcomingDCsData) {
+                    const allStates = [...new Set(window.upcomingDCsData.map(p => (p.state || '').toUpperCase().trim()).filter(s => s))].sort();
+                    const allStatuses = [...new Set(window.upcomingDCsData.map(p => normalizeString(p.latest_status)).filter(s => s))].sort();
+                    renderUpcomingFiltersOnce(allStates, allStatuses);
+                }
+            }
+        }
+
+
 
         // Service request functions
         function showServiceModal(serviceName) {
@@ -9593,9 +10312,10 @@
 
         // Stripe Price IDs for each tier (LIVE MODE)
         const STRIPE_PRICES = {
-            basic: 'price_1SsyuhGdwDHUz4VLAqerBPEY',
-            premium: 'price_1SsyvNGdwDHUz4VLGT44yf80',
-            enterprise: 'price_1SsyvgGdwDHUz4VL6tmwEGoy'
+            individual: 'price_1Sy4WYGdwDHUz4VLwpDuMLm7',   // $99/month - Solo Intelligence
+            basic: 'price_1Sy08DGdwDHUz4VLCNm9VXN9',        // $99/month
+            premium: 'price_1SsyvNGdwDHUz4VLGT44yf80',     // $199/month
+            enterprise: 'price_1SsyvgGdwDHUz4VL6tmwEGoy'   // $500/month
         };
 
         // Handle subscription checkout
