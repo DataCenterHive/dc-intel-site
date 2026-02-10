@@ -5974,7 +5974,7 @@
         async function renderUpcomingHexbinHeatmap(containerId) {
             try {
                 // Load geocoded upcoming DC data
-                const response = await fetch('upcoming_dcs_geocoded.json');
+                const response = await fetch('docs/upcoming_dcs_geocoded.json');
                 const upcomingData = await response.json();
 
                 console.log(`Loaded ${upcomingData.length} upcoming DCs with coordinates`);
