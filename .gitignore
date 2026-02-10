@@ -39,3 +39,6 @@ yarn-error.log*
 *.tmp
 *.temp
 .cache/
+docs/masters/DC_Upcoming_Combined.csv
+masters/DC_Upcoming_Combined.csv
+DC_Upcoming_Combined.csv
