@@ -17,6 +17,8 @@ docs/daily_articles.json
 !package*.json
 !tsconfig*.json
 !knowledge/**/*.json
+!docs/upcoming_dcs_enriched.json
+!upcoming_dcs_enriched.json
 
 # OS files
 .DS_Store
