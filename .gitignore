@@ -19,6 +19,7 @@ docs/daily_articles.json
 !knowledge/**/*.json
 !docs/upcoming_dcs_enriched.json
 !upcoming_dcs_enriched.json
+!upcoming_dcs_geocoded.json
 
 # OS files
 .DS_Store
