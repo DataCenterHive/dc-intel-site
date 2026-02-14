@@ -4550,6 +4550,13 @@
             size: 50  // Show 50 rows per page by default
         };
 
+        // Pagination state for News Archive
+        let newsArchivePage = {
+            current: 1,
+            size: 50  // Show 50 articles per page by default
+        };
+        let newsArchiveArticles = [];  // Store all articles for pagination
+
         // Enhanced filter state for Existing DCs
         let existingFilters = {
             states: [],
@@ -9365,7 +9372,7 @@
         }
 // Load news archive
 
-        async function loadNewsArchive() {
+        async function loadNewsArchive(resetPage = true) {
             if (!hasTierAccess('enterprise')) {
                 showUpgradeModal('enterprise', 'news');
                 return;
@@ -9375,81 +9382,143 @@
             showLoading();
 
             try {
-                // Load from API (Enterprise only)
-                const response = await fetch(`${PUBLIC_API_BASE}/news-archive`, {
-                    headers: authHeaders()
-                });
+                // Load from API only if we don't have articles cached or resetting
+                if (newsArchiveArticles.length === 0 || resetPage) {
+                    const response = await fetch(`${PUBLIC_API_BASE}/news-archive`, {
+                        headers: authHeaders()
+                    });
 
-                if (!response.ok) {
-                    hideLoading();
-                    showToast('Unable to load news archive.', 'error');
-                    return;
-                }
+                    if (!response.ok) {
+                        hideLoading();
+                        showToast('Unable to load news archive.', 'error');
+                        return;
+                    }
 
-                const apiData = await response.json();
-                const articles = apiData.items || [];
+                    const apiData = await response.json();
+                    newsArchiveArticles = apiData.items || [];
 
-                if (articles.length === 0) {
-                    hideLoading();
-                    showToast('No archive articles available.', 'info');
-                    return;
+                    if (newsArchiveArticles.length === 0) {
+                        hideLoading();
+                        showToast('No archive articles available.', 'info');
+                        return;
+                    }
+
+                    newsArchiveArticles.sort((a, b) => {
+                        const dateA = a.published_utc || a.published || '';
+                        const dateB = b.published_utc || b.published || '';
+                        if (dateB > dateA) return 1;
+                        if (dateB < dateA) return -1;
+                        return 0;
+                    });
+
+                    if (resetPage) {
+                        newsArchivePage.current = 1;
+                    }
                 }
 
                 hideLoading();
 
-                articles.sort((a, b) => {
-                    const dateA = a.published_utc || a.published || '';
-                    const dateB = b.published_utc || b.published || '';
-                    if (dateB > dateA) return 1;
-                    if (dateB < dateA) return -1;
-                    return 0;
-                });
-
-                const contentArea = document.getElementById('contentArea');
-                contentArea.classList.remove('columns');
-                contentArea.classList.add('news-view');
-
-                let html = `<div class=\"headline-main\">DC News Archive - Enterprise Edition (${articles.length} articles)</div>`;
-                html += `<p style=\"text-align: center; margin-bottom: 14px; font-size: 13px; line-height: 1.5;\">Complete historical archive of data center industry news. Manage or upgrade via the <a href=\"#\" onclick=\"switchSection('pricing'); return false;\" style=\"font-weight: bold; text-decoration: underline;\">Enterprise tier</a>.</p>`;
-                html += `<div class=\"news-grid\">`;
-
-                articles.slice(0, 50).forEach((item, idx) => {
-                    const title = item.title || 'Untitled Article';
-                    const summary = item.summary || '';
-                    const url = item.url || '#';
-                    const published = item.published_utc || item.published || item.published_date || '';
-                    const source = item.source || '';
-
-                    const dateMatch = published.match(/(\\d{4}-\\d{2}-\\d{2})/);
-                    const displayDate = dateMatch ? dateMatch[1] : '';
-
-                    const byline = [source, displayDate].filter(Boolean).join(' | ');
-
-                    html += `
-                        <div class=\"news-card\">
-                            <h4>${idx + 1}. ${title}</h4>
-                            ${byline ? `<div class=\"news-meta\">${byline}</div>` : ''}
-                            <div class=\"article-content\">
-                                ${summary.substring(0, 240)}${summary.length > 240 ? '...' : ''}
-                            </div>
-                            ${url !== '#' ? `<a class=\"news-btn\" href=\"${url}\" target=\"_blank\" rel=\"noopener\">Read full article</a>` : ''}
-                        </div>
-                    `;
-                });
-
-                html += `</div>`;
-                if (articles.length > 50) {
-                    html += `<p style=\"text-align: center; margin-top: 20px; font-size: 13px; color: #666;\">Showing first 50 of ${articles.length} articles</p>`;
-                }
-
-                contentArea.innerHTML = html;
-                contentArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // Render current page
+                renderNewsArchivePage();
 
             } catch (error) {
                 hideLoading();
                 showToast('Error loading news archive: ' + error.message, 'error');
                 console.error('News archive load error:', error);
             }
+        }
+
+        function renderNewsArchivePage() {
+            const totalArticles = newsArchiveArticles.length;
+            const totalPages = Math.ceil(totalArticles / newsArchivePage.size);
+            const startIdx = (newsArchivePage.current - 1) * newsArchivePage.size;
+            const endIdx = Math.min(startIdx + newsArchivePage.size, totalArticles);
+            const currentPageArticles = newsArchiveArticles.slice(startIdx, endIdx);
+
+            const contentArea = document.getElementById('contentArea');
+            contentArea.classList.remove('columns');
+            contentArea.classList.add('news-view');
+
+            let html = `<div class="headline-main">DC News Archive - Enterprise Edition (${totalArticles} articles)</div>`;
+            html += `<p style="text-align: center; margin-bottom: 14px; font-size: 13px; line-height: 1.5;">Complete historical archive of data center industry news. Manage or upgrade via the <a href="#" onclick="switchSection('pricing'); return false;" style="font-weight: bold; text-decoration: underline;">Enterprise tier</a>.</p>`;
+
+            // Pagination controls at top
+            html += buildNewsArchivePagination(totalPages, startIdx, endIdx, totalArticles);
+
+            html += `<div class="news-grid">`;
+
+            currentPageArticles.forEach((item, idx) => {
+                const title = item.title || 'Untitled Article';
+                const summary = item.summary || '';
+                const url = item.url || '#';
+                const published = item.published_utc || item.published || item.published_date || '';
+                const source = item.source || '';
+
+                const dateMatch = published.match(/(\d{4}-\d{2}-\d{2})/);
+                const displayDate = dateMatch ? dateMatch[1] : '';
+
+                const byline = [source, displayDate].filter(Boolean).join(' | ');
+
+                html += `
+                    <div class="news-card">
+                        <h4>${startIdx + idx + 1}. ${title}</h4>
+                        ${byline ? `<div class="news-meta">${byline}</div>` : ''}
+                        <div class="article-content">
+                            ${summary.substring(0, 240)}${summary.length > 240 ? '...' : ''}
+                        </div>
+                        ${url !== '#' ? `<a class="news-btn" href="${url}" target="_blank" rel="noopener">Read full article</a>` : ''}
+                    </div>
+                `;
+            });
+
+            html += `</div>`;
+
+            // Pagination controls at bottom
+            html += buildNewsArchivePagination(totalPages, startIdx, endIdx, totalArticles);
+
+            contentArea.innerHTML = html;
+            contentArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function buildNewsArchivePagination(totalPages, startIdx, endIdx, totalArticles) {
+            if (totalPages <= 1) return '';
+
+            return `
+                <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin: 15px 0; padding: 10px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 4px;">
+                    <button onclick="goToNewsArchivePage(1)" ${newsArchivePage.current === 1 ? 'disabled' : ''} style="padding: 6px 12px; background: ${newsArchivePage.current === 1 ? '#ccc' : 'var(--brand-primary)'}; color: #fff; border: none; border-radius: 3px; cursor: ${newsArchivePage.current === 1 ? 'not-allowed' : 'pointer'}; font-size: 12px;">
+                        « First
+                    </button>
+                    <button onclick="goToNewsArchivePage(${newsArchivePage.current - 1})" ${newsArchivePage.current === 1 ? 'disabled' : ''} style="padding: 6px 12px; background: ${newsArchivePage.current === 1 ? '#ccc' : 'var(--brand-primary)'}; color: #fff; border: none; border-radius: 3px; cursor: ${newsArchivePage.current === 1 ? 'not-allowed' : 'pointer'}; font-size: 12px;">
+                        ‹ Previous
+                    </button>
+                    <span style="font-size: 12px; font-weight: 600; color: var(--text-primary);">
+                        Page ${newsArchivePage.current} of ${totalPages} (${startIdx + 1}-${endIdx} of ${totalArticles})
+                    </span>
+                    <button onclick="goToNewsArchivePage(${newsArchivePage.current + 1})" ${newsArchivePage.current === totalPages ? 'disabled' : ''} style="padding: 6px 12px; background: ${newsArchivePage.current === totalPages ? '#ccc' : 'var(--brand-primary)'}; color: #fff; border: none; border-radius: 3px; cursor: ${newsArchivePage.current === totalPages ? 'not-allowed' : 'pointer'}; font-size: 12px;">
+                        Next ›
+                    </button>
+                    <button onclick="goToNewsArchivePage(${totalPages})" ${newsArchivePage.current === totalPages ? 'disabled' : ''} style="padding: 6px 12px; background: ${newsArchivePage.current === totalPages ? '#ccc' : 'var(--brand-primary)'}; color: #fff; border: none; border-radius: 3px; cursor: ${newsArchivePage.current === totalPages ? 'not-allowed' : 'pointer'}; font-size: 12px;">
+                        Last »
+                    </button>
+                    <select onchange="changeNewsArchivePageSize(this.value)" style="padding: 6px; border: 2px solid var(--border-default); border-radius: 3px; font-size: 12px; background: #fff; cursor: pointer;">
+                        <option value="25" ${newsArchivePage.size === 25 ? 'selected' : ''}>25 per page</option>
+                        <option value="50" ${newsArchivePage.size === 50 ? 'selected' : ''}>50 per page</option>
+                        <option value="100" ${newsArchivePage.size === 100 ? 'selected' : ''}>100 per page</option>
+                        <option value="200" ${newsArchivePage.size === 200 ? 'selected' : ''}>200 per page</option>
+                    </select>
+                </div>
+            `;
+        }
+
+        function goToNewsArchivePage(pageNum) {
+            newsArchivePage.current = pageNum;
+            renderNewsArchivePage();
+        }
+
+        function changeNewsArchivePageSize(newSize) {
+            newsArchivePage.size = parseInt(newSize);
+            newsArchivePage.current = 1;  // Reset to first page when changing page size
+            renderNewsArchivePage();
         }
 // Search event listeners
 
