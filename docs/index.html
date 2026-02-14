@@ -9316,7 +9316,17 @@
                 contentArea.classList.add('news-view');
 
                 let html = `<div class=\"headline-main\">Latest Data Center News (${deduped.length} articles)</div>`;
-                html += `<p style=\"margin: 10px 0 14px; font-size: 13px; text-align: center; line-height: 1.5;\">This page displays the 20 most recent data center news articles. For the full historical archive, upgrade to the <a href=\"#\" onclick=\"switchSection('pricing'); return false;\" style=\"font-weight: bold; text-decoration: underline;\">Enterprise tier</a> to unlock News Archive (complete history, searchable) plus export-ready feeds.</p>`;
+                html += `<p style=\"margin: 10px 0 14px; font-size: 13px; text-align: center; line-height: 1.5;\">This page displays the latest data center news articles. For the full historical archive, upgrade to the <a href=\"#\" onclick=\"switchSection('pricing'); return false;\" style=\"font-weight: bold; text-decoration: underline;\">Enterprise tier</a> to unlock News Archive (complete history, searchable) plus export-ready feeds.</p>`;
+
+                // Add archive button for Enterprise users only
+                if (hasTierAccess('enterprise')) {
+                    html += `<div style=\"text-align: center; margin-bottom: 20px;\">
+                        <button class=\"plan-btn\" onclick=\"loadNewsArchive(); return false;\" style=\"padding: 12px 24px; font-size: 14px; max-width: 400px;\">
+                            📚 View Full Historical Archive (400+ articles)
+                        </button>
+                    </div>`;
+                }
+
                 html += `<div class=\"news-grid\">`;
 
                 deduped.forEach((item, idx) => {
