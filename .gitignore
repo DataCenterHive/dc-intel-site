@@ -13,10 +13,6 @@ docs/daily_articles.json
 # General patterns for large data files
 *.csv
 !knowledge/**/*.csv
-*.json
-!package*.json
-!tsconfig*.json
-!knowledge/**/*.json
 
 # OS files
 .DS_Store
