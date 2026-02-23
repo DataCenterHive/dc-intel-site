@@ -5,9 +5,9 @@
 docs/masters/DC_Upcoming_Combined.csv
 docs/masters/*_Combined.csv
 
-# Large JSON data files (close to or over limit)
+# Large JSON data files (over 100MB - now served from Cloudflare R2)
+docs/upcoming_dcs_enriched.json
 docs/upcoming_dcs_geocoded.json
-docs/*_geocoded.json
 docs/daily_articles.json
 
 # General patterns for large data files
@@ -17,9 +17,6 @@ docs/daily_articles.json
 !package*.json
 !tsconfig*.json
 !knowledge/**/*.json
-!docs/upcoming_dcs_enriched.json
-!upcoming_dcs_enriched.json
-!upcoming_dcs_geocoded.json
 
 # OS files
 .DS_Store

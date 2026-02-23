@@ -6295,9 +6295,9 @@
                 contentArea.classList.remove('news-view');
             }
             try {
-                // Load daily snippets from JSON file with cache busting
+                // Load daily snippets from Cloudflare R2 with cache busting
                 const timestamp = new Date().getTime();
-                const response = await fetch(`daily_articles.json?t=${timestamp}`);
+                const response = await fetch(`https://pub-6ca9abbee01e4a2a8b69e17d813fd3f4.r2.dev/daily_articles.json?t=${timestamp}`);
 
                 if (!response.ok) {
                     console.error('Could not load daily articles, using fallback');
@@ -8446,8 +8446,8 @@
                 return cachedUpcomingData; // Already loaded
             }
 
-            // Load SINGLE ENRICHED DATASOURCE with coordinates, descriptions, AND rollups!
-            const response = await fetch('upcoming_dcs_enriched.json');
+            // Load SINGLE ENRICHED DATASOURCE from Cloudflare R2 with coordinates, descriptions, AND rollups!
+            const response = await fetch('https://pub-6ca9abbee01e4a2a8b69e17d813fd3f4.r2.dev/upcoming_dcs_enriched.json');
 
             if (!response.ok) {
                 throw new Error('Failed to fetch upcoming DCs enriched dataset');
