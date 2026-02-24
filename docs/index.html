@@ -7,6 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DataCenter Hive Dashboard</title>
     <link rel="icon" type="image/png" href="9e224nbi.png">
+
+    <!-- Pako library for gzip decompression -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js" integrity="sha512-g2TeAWw5GPnX7z0Kn8nFbYfeHcvAu/tx6d6mrLe/90mkCxO+RcptyYpksUz35EO337F83bZwcmUyHiHamspkfg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <style>
         :root {
             /* Design Tokens for Premium B2B SaaS */
@@ -8449,24 +8453,32 @@
                 return cachedUpcomingData; // Already loaded
             }
 
-            // Load SINGLE ENRICHED DATASOURCE from Cloudflare R2 with coordinates, descriptions, AND rollups!
-            // Add cache-busting timestamp to force fresh fetch
+            // Load COMPRESSED dataset from Cloudflare R2 (3.5MB instead of 600MB!)
+            // Compression reduces file size by 99.4% while preserving all 399K records
             const timestamp = new Date().getTime();
 
-            console.log('[DATA] Loading 600MB dataset from R2... This may take 30-60 seconds.');
+            console.log('[DATA] Loading compressed dataset (3.5MB) from R2...');
             const startTime = Date.now();
 
-            const response = await fetch(`https://pub-6ca9abbee01e4a2a8b69e17d813fd3f4.r2.dev/upcoming_dcs_enriched.json?v=${timestamp}`, {
-                cache: 'no-store'  // Disable browser caching for large files
+            const response = await fetch(`https://pub-6ca9abbee01e4a2a8b69e17d813fd3f4.r2.dev/upcoming_dcs_enriched.json.gz?v=${timestamp}`, {
+                cache: 'no-store'
             });
 
             if (!response.ok) {
-                throw new Error('Failed to fetch upcoming DCs enriched dataset');
+                throw new Error('Failed to fetch upcoming DCs dataset');
             }
 
-            console.log(`[DATA] Download complete (${Math.round((Date.now() - startTime) / 1000)}s). Parsing JSON...`);
-            cachedUpcomingData = await response.json();
-            console.log(`[DATA] Parsing complete. Total time: ${Math.round((Date.now() - startTime) / 1000)}s`);
+            console.log(`[DATA] Download complete (${Math.round((Date.now() - startTime) / 1000)}s). Decompressing...`);
+
+            // Get compressed data as array buffer
+            const compressedData = await response.arrayBuffer();
+
+            // Decompress using pako (gzip decompression library)
+            const decompressed = pako.ungzip(new Uint8Array(compressedData), { to: 'string' });
+
+            console.log(`[DATA] Decompression complete. Parsing JSON...`);
+            cachedUpcomingData = JSON.parse(decompressed);
+            console.log(`[DATA] Complete! Total time: ${Math.round((Date.now() - startTime) / 1000)}s`);
             window.upcomingDCsData = cachedUpcomingData;
 
             console.log(`[DATA] Loaded ${cachedUpcomingData.length} upcoming DCs (ENRICHED - single source)`);
