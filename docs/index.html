@@ -8,8 +8,6 @@
     <title>DataCenter Hive Dashboard</title>
     <link rel="icon" type="image/png" href="9e224nbi.png">
 
-    <!-- Pako library for gzip decompression -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js" integrity="sha512-g2TeAWw5GPnX7z0Kn8nFbYfeHcvAu/tx6d6mrLe/90mkCxO+RcptyYpksUz35EO337F83bZwcmUyHiHamspkfg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <style>
         :root {
@@ -8453,14 +8451,13 @@
                 return cachedUpcomingData; // Already loaded
             }
 
-            // Load COMPRESSED dataset from Cloudflare R2 (3.5MB instead of 600MB!)
-            // Compression reduces file size by 99.4% while preserving all 399K records
+            // Load dataset directly from Cloudflare R2 (630MB JSON - large but works with .json() method)
             const timestamp = new Date().getTime();
 
-            console.log('[DATA] Loading compressed dataset (3.5MB) from R2...');
+            console.log('[DATA] Loading dataset from R2 (630MB)... This may take 10-30 seconds.');
             const startTime = Date.now();
 
-            const response = await fetch(`https://pub-6ca9abbee01e4a2a8b69e17d813fd3f4.r2.dev/upcoming_dcs_enriched_v2.json.gz?v=${timestamp}`, {
+            const response = await fetch(`https://pub-6ca9abbee01e4a2a8b69e17d813fd3f4.r2.dev/upcoming_dcs_enriched.json?v=${timestamp}`, {
                 cache: 'no-store'
             });
 
@@ -8468,21 +8465,10 @@
                 throw new Error('Failed to fetch upcoming DCs dataset');
             }
 
-            console.log(`[DATA] Download complete (${Math.round((Date.now() - startTime) / 1000)}s). Decompressing...`);
+            console.log(`[DATA] Download complete (${Math.round((Date.now() - startTime) / 1000)}s). Parsing JSON...`);
 
-            // Get compressed data as array buffer
-            const compressedData = await response.arrayBuffer();
-
-            // Decompress using pako - get Uint8Array instead of string
-            const decompressedBytes = pako.ungzip(new Uint8Array(compressedData));
-
-            console.log(`[DATA] Decompression complete. Parsing JSON...`);
-
-            // Use TextDecoder to convert bytes to string (handles large strings better)
-            const decoder = new TextDecoder('utf-8');
-            const jsonString = decoder.decode(decompressedBytes);
-
-            cachedUpcomingData = JSON.parse(jsonString);
+            // Use .json() method which is more memory-efficient than manual parsing
+            cachedUpcomingData = await response.json();
             console.log(`[DATA] Complete! Total time: ${Math.round((Date.now() - startTime) / 1000)}s`);
             window.upcomingDCsData = cachedUpcomingData;
 
