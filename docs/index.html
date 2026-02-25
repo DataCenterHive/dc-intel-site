@@ -8473,11 +8473,16 @@
             // Get compressed data as array buffer
             const compressedData = await response.arrayBuffer();
 
-            // Decompress using pako (gzip decompression library)
-            const decompressed = pako.ungzip(new Uint8Array(compressedData), { to: 'string' });
+            // Decompress using pako - get Uint8Array instead of string
+            const decompressedBytes = pako.ungzip(new Uint8Array(compressedData));
 
             console.log(`[DATA] Decompression complete. Parsing JSON...`);
-            cachedUpcomingData = JSON.parse(decompressed);
+
+            // Use TextDecoder to convert bytes to string (handles large strings better)
+            const decoder = new TextDecoder('utf-8');
+            const jsonString = decoder.decode(decompressedBytes);
+
+            cachedUpcomingData = JSON.parse(jsonString);
             console.log(`[DATA] Complete! Total time: ${Math.round((Date.now() - startTime) / 1000)}s`);
             window.upcomingDCsData = cachedUpcomingData;
 
