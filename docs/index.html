@@ -8451,32 +8451,19 @@
                 return cachedUpcomingData; // Already loaded
             }
 
-            // Load chunked dataset from GitHub Pages (13 chunks, ~50MB each)
-            // This solves the JavaScript memory limit issue by loading smaller pieces
+            // Load dataset directly from GitHub Pages (0.76MB - small enough for single load)
             const startTime = Date.now();
-            const baseUrl = window.location.origin + window.location.pathname.replace('/index.html', '');
-            const numChunks = 13;
+            const dataUrl = window.location.origin + window.location.pathname.replace('/index.html', '') + '/upcoming_dcs_enriched.json';
 
-            console.log(`[DATA] Loading dataset in ${numChunks} chunks...`);
+            console.log('[DATA] Loading upcoming DCs dataset...');
 
-            cachedUpcomingData = [];
+            const response = await fetch(dataUrl, { cache: 'no-store' });
 
-            // Load chunks sequentially to avoid overwhelming the browser
-            for (let i = 0; i < numChunks; i++) {
-                const chunkUrl = `${baseUrl}/chunks/upcoming_dcs_chunk_${String(i).padStart(2, '0')}.json`;
-                console.log(`[DATA] Loading chunk ${i + 1}/${numChunks}...`);
-
-                const response = await fetch(chunkUrl, { cache: 'no-store' });
-
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch chunk ${i}`);
-                }
-
-                const chunk = await response.json();
-                cachedUpcomingData = cachedUpcomingData.concat(chunk);
-
-                console.log(`[DATA] Chunk ${i + 1} loaded: ${chunk.length.toLocaleString()} records (total: ${cachedUpcomingData.length.toLocaleString()})`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch upcoming DCs dataset');
             }
+
+            cachedUpcomingData = await response.json();
             console.log(`[DATA] Complete! Total time: ${Math.round((Date.now() - startTime) / 1000)}s`);
             window.upcomingDCsData = cachedUpcomingData;
 

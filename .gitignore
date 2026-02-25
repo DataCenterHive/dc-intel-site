@@ -5,8 +5,8 @@
 docs/masters/DC_Upcoming_Combined.csv
 docs/masters/*_Combined.csv
 
-# Large JSON data files (over 100MB - now served from Cloudflare R2)
-docs/upcoming_dcs_enriched.json
+# Large JSON data files (over 100MB - served from Cloudflare R2)
+# Note: upcoming_dcs_enriched.json is now small (<1MB) and committed to git
 docs/upcoming_dcs_geocoded.json
 docs/daily_articles.json
 
