@@ -1,6 +1,6 @@
 {
-  "total_records": 399615,
-  "num_chunks": 13,
-  "records_per_chunk": 33261,
+  "total_records": 722,
+  "num_chunks": 1,
+  "records_per_chunk": 47313,
   "chunk_pattern": "upcoming_dcs_chunk_{:02d}.json"
 }
